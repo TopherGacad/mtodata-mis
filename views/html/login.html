@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../public/css/login.css">
+
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;900&display=swap" rel="stylesheet">
+
+
+</head>
+<body>  
+    <div class="login-container">
+        <div class="left-side">
+
+        </div>
+        <div class="right-side">
+            <header>
+                <img class="logo" src="../../public/assets/mtodata_logo.png" alt="">
+            </header>
+            <form>
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input 
+                    type="text" 
+                    id="username"
+                    name="username">
+                </div>
+               
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input 
+                    type="password"
+                    id="password"
+                    name="password">
+                </div>
+               
+            </form>
+            <button class="login-btn" id="login-btn" type="submit">Login</button>
+            <a class="forgot-pass" href="#">Forgot Password</a>
+
+        </div>
+    </div>
+
+
+
+    <script src="/services/login.js"></script>
+</body>
+</html>
