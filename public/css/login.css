@@ -1,9 +1,12 @@
+            /* C O L O R */
 :root{
     --dark-blue: #1842BD;
     --link-color: #6764EE;
     --border-color: #BABABA;
     --base-color: #FEFEFE;
     --default-font-color: #282828;
+    --active-dot:  #717171;
+    --login-left: #ECF4FF;
 }
 body{
     margin: 0;
@@ -20,64 +23,117 @@ body{
     background-size: cover;
     opacity: 0.6;
 }
+
+        /*L A Y O U T */
 .login-container{
-    display: flex;
-    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    display: flex;
+    position: fixed;
     margin: auto;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
     height: 500px;
     width: 800px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     background-color: var(--base-color);
 }
-.logo{
-    padding: 30px;
-    width: 267px;
+.login-container, 
+input, 
+.login-btn{
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
 }
+
+/* LOGIN LEFT-SIDE */
 .left-side{
+    text-align: center;
     width: 400px;
     height: 500px;
     border-right: 1px solid var(--border-color);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    background-color: var(--login-left);
 }
+.carousel-img{
+    padding-top: 40px;
+    width: 230px;
+}
+.dot-container{
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+}
+.dot {
+    height: 14px;
+    width: 14px;
+    margin: 0 2px;
+    background-color: var(--border-color);
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+}
+.active{
+    background-color: var(--active-dot);
+}
+.carousel-container-1,.carousel-container-2,.carousel-container-3{
+    position: absolute;
+    padding: 5px 15px;
+}
+
+
+/* LOGIN RIGHT-SIDE */
 .right-side{
-    display: flex;
-    flex-direction: column;
     align-items: center;
     width: 400px;
     height: 500px;
 }
-.field{
-    display: flex;
-    flex-direction: column;
-    font-size: 15px ;
-    padding: 15px 10px;
+.logo{
+    padding: 30px;
+    width: 267px;
 }
-input{
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
+
+.field,
+.login-btn{
     font-size: 15px;
     padding: 10px;
-    width: 300px;
+}
+.field,
+.right-side{
+    display: flex;
+    flex-direction: column;
+}
+input{
+    font-size: 15px;
+    padding: 10px 20px;
+    width: 290px;
     margin-top: 10px;
+}
+input::placeholder{
+    padding-left: 5px;
 }
 .login-btn{
     margin: 30px 0px 20px 0px;
-    padding: 10px;
-    width: 150px;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
+    height: 40px;
+    width: 340px;
     background-color: var(--dark-blue);
     color: whitesmoke;
     font-weight: 300;
-    font-size: 15px;
     cursor: pointer;
 }
+.login-btn:hover{
+    background-color: var(--link-color);
+}
+
+
+        /* LINK */
 .forgot-pass{
     font-size: 15px;
     color: var(--link-color);
 }
+.forgot-pass:hover{
+    color: var(--dark-blue);
+}
+
