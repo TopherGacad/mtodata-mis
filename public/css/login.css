@@ -15,7 +15,7 @@ body{
     color: var(--default-font-color);
     box-sizing: border-box;
 }
-.container{
+.bg-container{
     height: 100vh;
     width: 100vw;
     position: relative;
