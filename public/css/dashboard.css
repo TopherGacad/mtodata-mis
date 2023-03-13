@@ -1,0 +1,100 @@
+:root{
+    --base-color: #FEFEFE;
+    --dark-blue: #1842BD;
+    --font-color: #7EAFF6;
+    --hover-background: #BCCDE4;
+    --white-color: #FFFFFF;
+    --default-font-color: #282828;
+}
+body{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+}
+.bg-container{
+    background-image: url('../../public/assets/mtodata_bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0.1;
+    height: 100vh;
+    width: 100vw;
+}
+.side-nav{
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--base-color);
+}
+.header-nav{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    color: #7EAFF6;
+}
+.logo{
+    width: 220px;
+}
+.header-nav p{
+    font-size: 12px;
+    line-height: 0px;
+}
+ul{
+    margin-top: 30px;
+    padding: 0;
+    list-style: none;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+li{
+    line-height: 50px;
+    border-bottom: 1px solid #DAE4F2;
+    color: var(--font-color);
+    font-weight: 700;
+    width: 100%;
+} 
+li:hover{
+    background-color:var(--hover-background);
+    color:var(--white-color);
+}
+
+/* MAIN CONTENT */
+.header-main{
+    width: 100vw;
+    height: 100px;
+    border-top: 30px solid var(--hover-background);
+    position: fixed;
+    top: 0;
+}
+
+
+
+
+
+    /* FOOTER */
+footer{
+    justify-content: space-around;
+    height: 30px;
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    background-color: var(--font-color);
+    font-size:9px ;
+    color: var(--default-font-color);
+    
+}
+.flex{
+    display: flex;
+    align-items: center;
+}
+.border-right{
+    border-right: 1px solid var(--dark-blue);
+    padding-right: 10px;
+    padding-left: 5px;
+    margin-right: 5px;
+}
