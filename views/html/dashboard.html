@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User</title>
+    <link rel="stylesheet" href="../../public/css/dashboard.css">
+    
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;900&display=swap" rel="stylesheet">
+    <!-- FONT AWESOME/ICONS -->
+    <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <div class="bg-container"></div>
+    <div class="top-design"></div>
+
+    <!-- SIDE-NAV-BAR -->
+    <div class="side-nav">
+        <header class="header-nav">
+            <img class="logo" src="../../public/assets/mtodata_logo.png" alt="logo of mtodata system">
+            <p>ADMIN PANEL</p>
+        </header>
+        <div class="item-container">
+            <ul>
+                <li id="dash-btn"><i class="fa-solid fa-house"></i>  DASHBOARD</li>
+                <li id="users-btn"><i class="fa-solid fa-users"></i>  USERS</li>
+                <li id="member-btn"><i class="fa-solid fa-circle-info"></i>  MEMBER INFORMATION</li>
+                <li id="finance-btn"><i class="fa-solid fa-coins"></i>  FINANCE</li>
+                <li id="complain-btn"><i class="fa-solid fa-flag"></i>  COMPLAINTS</li>
+                <li id="programs-btn"><i class="fa-solid fa-calendar-days"></i>  EVENTS & PROGRAMS</li>
+                <li id="logout-btn">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+
+        <!-- DASHBOARD PANE -->
+            <div class="dashboard-container" id="dash-container">
+                <section class="top-dash">
+                    <div class="card dash-left border"></div>
+                    <div class="card dash-mid border"></div>
+                    <div class="card dash-right border"></div>
+                </section>
+                <div class="bot-dash border"></div>
+            </div>
+
+    <!-- FOOTER -->
+    <footer class="flex">
+        <p>&copy;mtodata 2023</p>
+        <div class="link-footer flex">
+            <p class="border-right">PUP Institute of Technology</p>
+            <a href="#" class="border-right">Terms of Use</a>
+            <p>Version 1.0</p>
+        </div>
+    </footer>
+    
+    <script src="../../services/dashboard.js"></script>
+</body>
+</html>
