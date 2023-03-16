@@ -29,14 +29,14 @@ body{
 .top-design{
     width: 100vw;
     height: 35px;
-    background: linear-gradient(to right, var(--dark-blue),var(--font-color));
+    background: linear-gradient(to left, var(--dark-blue),var(--white-color));
     position: fixed;
     top: 0;
 }
 
 /* SIDE NAV BAR */
 .side-nav{
-    width: 280px;
+    width: 20%;
     height: 100%;
     position: fixed;
     top: 0;
@@ -81,7 +81,7 @@ li:hover{
 /* MAIN CONTENT */
 .dashboard-container{
    height: 570px;
-   width: 1000px;
+   width: 70%;
    position: absolute;
    top: 30px;
    right: 50px;
@@ -89,7 +89,7 @@ li:hover{
 .border{
     border: 1px solid var(--border-color);
     border-radius: 20px;
-    box-shadow: 0px 5px 5px 1px var(--box-shadow);
+    box-shadow: 0px 4px 4px 1px var(--box-shadow);
     background-color: var(--base-color);
 }
 section{
@@ -103,15 +103,15 @@ section{
 }
 .card{
     height: inherit;
-    width: 200px;
+    width: 70%;
 
 }
 .dash-left{
-    width: 400px;
+    width: 40%;
 }
 .dash-mid,
 .dash-right{
-    width: 280px;
+    width: 28%;
 }
 .bot-dash{
     position: absolute;
