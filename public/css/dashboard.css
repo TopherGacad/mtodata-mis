@@ -5,7 +5,7 @@
     --font-color: #7EAFF6;
     --hover-background: #BCCDE4;
     --white-color: #FFFFFF;
-    --default-font-color: #282828;
+    --content-font-color: #282828;
     --box-shadow:  #00000040;
     --border-color: #DAE4F2;
 }
@@ -14,7 +14,7 @@ body{
     margin: 0;
     padding: 0;
     font-family: 'Inter', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
 }
 .bg-container{
     background-image:url('../../public/assets/mtodata_bg.png');
@@ -28,8 +28,8 @@ body{
             /* LAYOUT */
 .top-design{
     width: 100vw;
-    height: 30px;
-    background-color: var(--hover-background);
+    height: 35px;
+    background: linear-gradient(to right, var(--dark-blue),var(--font-color));
     position: fixed;
     top: 0;
 }
@@ -68,13 +68,13 @@ ul{
 li{
     line-height: 50px;
     border-bottom: 1px solid #DAE4F2;
-    color: var(--font-color);
+    color: var(--dark-blue);
     font-weight: 600;
     width: 100%;
     cursor: pointer;
 } 
 li:hover{
-    background-color:var(--hover-background);
+    background-color:var(--dark-blue);
     color:var(--white-color);
 }
 
@@ -129,7 +129,7 @@ footer{
     bottom: 0;
     background-color: var(--font-color);
     font-size:9px ;
-    color: var(--default-font-color);
+    color: var(--content-font-color);
 }
 .flex{
     display: flex;
@@ -148,4 +148,8 @@ footer{
 }
 .hide{
     display: none;
+}
+.btn-active{
+    background-color: var(--dark-blue);
+    color: var(--white-color);
 }
