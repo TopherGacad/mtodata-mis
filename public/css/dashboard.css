@@ -76,6 +76,7 @@ li{
 li:hover{
     background-color:var(--dark-blue);
     color:var(--white-color);
+    transition:.5s;
 }
 
 /* MAIN CONTENT */
@@ -152,4 +153,24 @@ footer{
 .btn-active{
     background-color: var(--dark-blue);
     color: var(--white-color);
+    
 }
+
+/* MODAL
+.logout-modal-container{
+    display: none;
+    width: 500px;
+    height: 200px;
+    border: 1px solid;
+    position: fixed;
+    background-color: rebeccapurple;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.modal-active{
+    display: block;
+} */
