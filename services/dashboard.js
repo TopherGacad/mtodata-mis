@@ -1,12 +1,15 @@
 const dashContain = document.getElementById("dash-container")
+const userContain = document.getElementById("users-container")
 const dashBtn = document.getElementById("dash-btn")
 const memBtn = document.getElementById("member-btn")
 const userBtn = document.getElementById("users-btn")
 const financeBtn = document.getElementById("finance-btn")
 const complainBtn = document.getElementById("complain-btn")
 const programsBtn = document.getElementById("programs-btn")
-const logoutBtn = document.getElementById("logout-btn")
+const adduserBtn = document.getElementById("addUser-btn")
 const modalContain = document.getElementById("modal-container")
+const modalBg = document.getElementById('bg')
+const cancelBtn = document.getElementById("adduser-cancel")
 
 
 
@@ -14,6 +17,7 @@ dashBtn.addEventListener("click", function(){
     //CONTENT STYLING ACTIVE
     dashContain.classList.remove('hide')
     dashContain.classList.toggle('active')
+    userContain.classList.remove('active')
     
     //BUTTON STYLING ACTIVE
     dashBtn.classList.add('btn-active')
@@ -25,6 +29,10 @@ dashBtn.addEventListener("click", function(){
 })
 
 userBtn.addEventListener("click", function(){
+    dashContain.classList.remove('active')
+    dashContain.classList.add('hide')
+    userContain.classList.add('active')
+
     //BUTTON STYLING ACTIVE
     dashBtn.classList.remove('btn-active')
     userBtn.classList.add('btn-active')
@@ -36,7 +44,8 @@ userBtn.addEventListener("click", function(){
 
 memBtn.addEventListener("click", function(){
     //CONTENT STYLING ACTIVE
-    dashContain.classList.toggle('hide')
+    dashContain.classList.remove('active')
+    dashContain.classList.add('hide')
     
     //BUTTON STYLING ACTIVE
     dashBtn.classList.remove('btn-active')
@@ -77,14 +86,13 @@ programsBtn.addEventListener("click", function(){
     programsBtn.classList.add('btn-active')
 })
 
-
-// logoutBtn.addEventListener("click", function(){
-//     modalContain.style.display = "block"
+adduserBtn.addEventListener("click", function(){
     
-// })
+    modalContain.style.display = "flex"
+    modalBg.style.display ="block"
+})
 
-// const cancelBtn = document.getElementById("logout-cancel")
-
-// cancelBtn.addEventListener("click", function(){
-//     modalContain.style.display = "none"
-// })
+cancelBtn.addEventListener("click", function(){
+    modalContain.style.display = "none"
+    modalBg.style.display ="none"
+})

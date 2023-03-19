@@ -39,6 +39,7 @@
 
     <!-- MAIN CONTENT -->
 
+
         <!-- DASHBOARD PANE -->
             <div class="dashboard-container" id="dash-container">
                 <section class="top-dash">
@@ -47,6 +48,47 @@
                     <div class="card dash-right border"></div>
                 </section>
                 <div class="bot-dash border"></div>
+            </div>
+
+        <!-- USER PANE -->
+            <div class="users-container" id="users-container">
+                <header>
+                    <h3>USER TYPE MANAGEMENT</h3>
+                    <p>ADMIN VIEW</p>
+                    <button class="adduserBtn" id="addUser-btn"><i class="fa-solid fa-plus"></i> Add User</button>
+                </header>
+               
+                <main>
+                    <table>
+                        <tr>
+                            <th>USER ID</th>
+                            <th>NAME</th>
+                            <th>PASSWORD</th>
+                            <th>ROLE</th>
+                        </tr>
+
+                        <tr>
+                            <td>01</td>
+                            <td>Christopher</td>
+                            <td>helloworld</td>
+                            <td>Developer</td>
+                        </tr>
+
+                        <tr>
+                            <td>01</td>
+                            <td>Christopher</td>
+                            <td>helloworld</td>
+                            <td>Developer</td>
+                        </tr>
+
+                        <tr>
+                            <td>01</td>
+                            <td>Christopher</td>
+                            <td>helloworld</td>
+                            <td>Developer</td>
+                        </tr>
+                    </table>
+                </main>
             </div>
 
     <!-- FOOTER -->
@@ -59,13 +101,17 @@
         </div>
     </footer>
     
-    <!-- LOGOUT MODAL
 
-    <div class="logout-modal-container" id="modal-container">
-        <h4>Are you sure you want to logout?</h4>
-        <button id="logout-cancel">Cancel</button>
+    <!-- ADD USER MODAL -->
+    <div class="bg" id="bg"></div>
+    <div class="addUser-modal-container" id="modal-container">
+        <h4>Add User</h4>
+        <input type="text" placeholder="Enter name">
+        <input type="text" placeholder="Enter role">
+        <input type="password" placeholder="Enter password">
+        <button id="adduser-cancel">Cancel</button>
         <button>Continue</button>
-    </div> -->
+    </div>
 
 
 

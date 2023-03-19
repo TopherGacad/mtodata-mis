@@ -81,11 +81,11 @@ li:hover{
 
 /* MAIN CONTENT */
 .dashboard-container{
-   height: 570px;
-   width: 70%;
-   position: absolute;
-   top: 30px;
-   right: 50px;
+    min-height: 570px;
+    width: 70%;
+    position: absolute;
+    top: 40px;
+    right: 50px;
 }
 .border{
     border: 1px solid var(--border-color);
@@ -120,6 +120,62 @@ section{
     height: 300px;
     width: 100%;
 }
+    /* USER PANE */
+.users-container{
+    display: none;
+    overflow: hidden;
+    height: 570px;
+    width:77%;
+    position: absolute;
+    top: 40px;
+    right: 20px;
+}
+header{
+    color: var(--font-color);
+    padding: 10px 10px;
+}
+header h3{
+    font-size: 19px;
+    line-height: 0px;
+}
+.adduserBtn{
+    background-color: var(--dark-blue);
+    color: var(--white-color);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    position: absolute;
+    top: 30px;
+    right: 15px;
+    cursor: pointer;
+}
+.adduserBtn:hover{
+    background-color: #7EAFF6;
+}
+main{
+    background-color: var(--base-color);
+    border: 2px solid var(--border-color);
+    height: 100%;
+}
+table{
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+th{
+    background-color: var(--border-color);
+    padding: 15px;
+    font-size: 15px;
+    color: var(--dark-blue);
+}
+td{
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 0px;
+}
+
+
+
+
 
 /* FOOTER */
 footer{
@@ -156,21 +212,34 @@ footer{
     
 }
 
-/* MODAL
-.logout-modal-container{
+/* MODAL */
+.addUser-modal-container{
     display: none;
+    flex-direction: column;
     width: 500px;
     height: 200px;
     border: 1px solid;
     position: fixed;
-    background-color: rebeccapurple;
+    background-color: var(--base-color);
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     margin: auto;
+    z-index: 9999;
 }
 
 .modal-active{
     display: block;
-} */
+}
+.bg{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+}
