@@ -78,9 +78,13 @@ input,
 .active{
     background-color: var(--active-dot);
 }
-.carousel-container-1,.carousel-container-2,.carousel-container-3{
+.img-slides{
     position: absolute;
     padding: 5px 15px;
+    margin: 7px;
+}
+.img-slides p{
+    font-size: 14px;
 }
 
 

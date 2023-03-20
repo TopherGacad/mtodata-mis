@@ -118,12 +118,51 @@
     <!-- ADD USER MODAL -->
     <div class="bg" id="bg"></div>
     <div class="addUser-modal-container" id="modal-container">
-        <h4>Add User</h4>
-        <input type="text" placeholder="Enter name">
-        <input type="text" placeholder="Enter role">
-        <input type="password" placeholder="Enter password">
-        <button id="adduser-cancel">Cancel</button>
-        <button>Continue</button>
+        <h2>ADD USER</h2>
+        <form action="">
+            <div class="fields">
+                <label for="firstname">Firstname</label>
+                <input 
+                type="text"
+                id="input-firstname" 
+                name="firstname"
+                placeholder="Firstname"
+                required
+                >
+            </div>
+            
+            <div class="fields">
+                <label for="lastname">Lastname</label>
+                <input 
+                type="text"
+                id="input-lastname"
+                name="lastname" 
+                placeholder="Lastname">
+            </div>
+
+            <div class="fields">
+                <label for="role">Select role</label>
+                <select name="role" id="select-role">
+                    <option value="Coordinator">Coordinator</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Complaints">Complaints</option>
+                </select>
+            </div>
+
+            <div class="fields">
+                <label for="password">Password</label>
+                <input 
+                type="password"
+                id="input-pass"
+                name="password" 
+                placeholder="Enter password"
+                required>
+            </div> 
+            <div class="btn-container">
+                <button class="cancel-btn" id="adduser-cancel">Cancel</button>
+                <button class="save-btn" id="save-btn" type="submit" >Save</button>
+            </div>
+        </form>
     </div>
 
 
