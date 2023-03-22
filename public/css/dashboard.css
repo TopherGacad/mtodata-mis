@@ -232,7 +232,7 @@ footer{
     backdrop-filter: blur(2px);
 }
 
-/* MODAL */
+        /* MODALS */
 .addUser-modal-container{
     display: none;
     flex-direction: column;
@@ -281,6 +281,17 @@ select{
     width: 89%;
     color: #1842BD;
 }
+.see-password-container{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.see-pass{
+    width: fit-content;
+}
+.see-pass-label{
+    padding-bottom: 0;
+}
 .btn-container{
     display: flex;
     align-items: center;
@@ -304,6 +315,7 @@ select{
     background-color: var(--dark-blue);
 }
 
+        /* FOR RESPONSIVENESS */
 @media screen and (min-width: 1600px) {
     /* SIDE NAVBAR */
     .side-nav{

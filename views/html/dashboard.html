@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
+        <!-- MAIN CONTENT -->
 
 
         <!-- DASHBOARD PANE -->
@@ -121,7 +121,7 @@
         <h2>ADD USER</h2>
         <form action="">
             <div class="fields">
-                <label for="firstname">Firstname</label>
+                <label for="input-firstname">Firstname</label>
                 <input 
                 type="text"
                 id="input-firstname" 
@@ -132,7 +132,7 @@
             </div>
             
             <div class="fields">
-                <label for="lastname">Lastname</label>
+                <label for="input-lastname">Last name</label>
                 <input 
                 type="text"
                 id="input-lastname"
@@ -141,7 +141,7 @@
             </div>
 
             <div class="fields">
-                <label for="role">Select role</label>
+                <label for="select-role">Select role</label>
                 <select name="role" id="select-role">
                     <option value="Coordinator">Coordinator</option>
                     <option value="Finance">Finance</option>
@@ -150,7 +150,7 @@
             </div>
 
             <div class="fields">
-                <label for="password">Password</label>
+                <label for="input-pass">Password</label>
                 <input 
                 type="password"
                 id="input-pass"
@@ -158,6 +158,12 @@
                 placeholder="Enter password"
                 required>
             </div> 
+
+            <div class="see-password-container">
+                <input class="see-pass" type="checkbox" id="see-pass">
+                <label class="see-pass-label" for="see-pass">See password</label>
+            </div>
+
             <div class="btn-container">
                 <button class="cancel-btn" id="adduser-cancel">Cancel</button>
                 <button class="save-btn" id="save-btn" type="submit" >Save</button>

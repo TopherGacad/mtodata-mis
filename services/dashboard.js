@@ -1,3 +1,6 @@
+
+//FOR IMPROVEMENT: FIX DOCUMENTATION 
+
 const dashContain = document.getElementById("dash-container")
 const userContain = document.getElementById("users-container")
 const dashBtn = document.getElementById("dash-btn")
@@ -10,7 +13,7 @@ const adduserBtn = document.getElementById("addUser-btn")
 const modalContain = document.getElementById("modal-container")
 const modalBg = document.getElementById('bg')
 const cancelBtn = document.getElementById("adduser-cancel")
-
+const seePass = document.getElementById("see-pass")
 
 
 dashBtn.addEventListener("click", function(){
@@ -95,4 +98,15 @@ adduserBtn.addEventListener("click", function(){
 cancelBtn.addEventListener("click", function(){
     modalContain.style.display = "none"
     modalBg.style.display ="none"
+})
+
+//FI: CREATE A FUNCTION FOR SHOW PASSWORD INSTEAD OF THIS 
+seePass.addEventListener("change", function(){
+    const inputPass = document.getElementById("input-pass")
+    if(inputPass.type === 'password'){
+        inputPass.type='text';
+    }
+    else{
+        inputPass.type='password';
+    }
 })
