@@ -1,5 +1,5 @@
 
-//FOR IMPROVEMENT: FIX DOCUMENTATION 
+//FOR GOOD PRACTICE: CHANGE GLOBAL VAR TO SCOPRE VAR
 
 const dashContain = document.getElementById("dash-container")
 const userContain = document.getElementById("users-container")
@@ -110,3 +110,18 @@ seePass.addEventListener("change", function(){
         inputPass.type='password';
     }
 })
+
+
+//TOAST 
+const delUser = document.querySelector('.fa-trash-can')
+delUser.addEventListener("click", function(){
+    console.log("click")
+    const toast = document.querySelector(".toast-container")
+    toast.style.display = "flex"
+
+    setTimeout(function(){
+        const toast = document.querySelector(".toast-container")
+        toast.classList.add('toast-container-hide')
+    },7000)
+})
+
