@@ -1,8 +1,11 @@
 
 //FOR GOOD PRACTICE: CHANGE GLOBAL VAR TO SCOPRE VAR
 
+// MAIN CONTAINERS
 const dashContain = document.getElementById("dash-container")
 const userContain = document.getElementById("users-container")
+
+// SIDE-NAV BTN
 const dashBtn = document.getElementById("dash-btn")
 const memBtn = document.getElementById("member-btn")
 const userBtn = document.getElementById("users-btn")
@@ -100,6 +103,7 @@ cancelBtn.addEventListener("click", function(){
     modalBg.style.display ="none"
 })
 
+
 //FI: CREATE A FUNCTION FOR SHOW PASSWORD INSTEAD OF THIS 
 seePass.addEventListener("change", function(){
     const inputPass = document.getElementById("input-pass")
@@ -123,5 +127,7 @@ delUser.addEventListener("click", function(){
         const toast = document.querySelector(".toast-container")
         toast.classList.add('toast-container-hide')
     },7000)
+
+    // TO DO: if confirm then delete user else stay
 })
 
