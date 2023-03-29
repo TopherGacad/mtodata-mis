@@ -321,7 +321,7 @@ select{
 }
 
         /* TOAST */
-.toast-container{
+.toast-container ,.show{
     display: none;
     position: fixed;
     bottom: 7%;

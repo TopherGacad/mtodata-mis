@@ -1,5 +1,5 @@
 
-//FOR GOOD PRACTICE: CHANGE GLOBAL VAR TO SCOPRE VAR
+//TO DO: TRANSFER GLOBAL VARS TO SCOPRE VAR
 
 // MAIN CONTAINERS
 const dashContain = document.getElementById("dash-container")
@@ -122,12 +122,14 @@ delUser.addEventListener("click", function(){
     console.log("click")
     const toast = document.querySelector(".toast-container")
     toast.style.display = "flex"
-
+    //TO DO: fix click event
     setTimeout(function(){
-        const toast = document.querySelector(".toast-container")
         toast.classList.add('toast-container-hide')
     },7000)
 
-    // TO DO: if confirm then delete user else stay
+    // TO DO: if confirm then delete selected user else stay
 })
 
+// TO DO: 
+// 1. create an array of objects to store the users inside datalist.js
+// 2. create a function that will render users on user pane from datalist.js
