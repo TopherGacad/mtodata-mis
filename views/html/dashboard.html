@@ -59,35 +59,13 @@
                 </header>
                
                 <main>
-                    <table>
+                    <table id="user-table">
                         <tr>
                             <th>USER ID</th>
                             <th>NAME</th>
                             <th>PASSWORD</th>
                             <th>ROLE</th>
                             <th>ACTION</th>
-                        </tr>
-
-                        <tr>
-                            <td>01</td>
-                            <td>Christopher</td>
-                            <td>helloworld</td>
-                            <td>Developer</td>
-                            <td>
-                                <i class="tools fa-solid fa-trash-can"></i>
-                                <i class="tools fa-solid fa-pen-to-square"></i>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>01</td>
-                            <td>Christopher</td>
-                            <td>helloworld</td>
-                            <td>Developer</td>
-                            <td>
-                                <i class="tools fa-solid fa-trash-can"></i>
-                                <i class="tools fa-solid fa-pen-to-square"></i>
-                            </td>
                         </tr>
 
                         <tr>
@@ -119,7 +97,7 @@
     <div class="bg" id="bg"></div>
     <div class="addUser-modal-container" id="modal-container">
         <h2>ADD USER</h2>
-        <form action="">
+        <form action="" id="user-data-form">
             <div class="fields">
                 <label for="input-firstname">Firstname</label>
                 <input 

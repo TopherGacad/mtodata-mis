@@ -46,6 +46,7 @@ userBtn.addEventListener("click", function(){
     financeBtn.classList.remove('btn-active')
     complainBtn.classList.remove('btn-active')
     programsBtn.classList.remove('btn-active')
+
 })
 
 memBtn.addEventListener("click", function(){
@@ -130,6 +131,55 @@ delUser.addEventListener("click", function(){
     // TO DO: if confirm then delete selected user else stay
 })
 
-// TO DO: 
-// 1. create an array of objects to store the users inside datalist.js
-// 2. create a function that will render users on user pane from datalist.js
+//move this array on another js file
+const userData = [
+    {
+     id: 1,
+     firstname: "Christopher",
+     lastname: "Gacad",
+     role: "Developer",
+     password: "hellotest1"
+    },
+
+    {
+    id: 2,
+    firstname: "Topher",
+    lastname: "Gacad",
+    role: "Admin",
+    password: "hellotest2"
+    },
+
+    {
+    id: 3,
+    firstname: "Benimaru",
+    lastname: "Tempest",
+    role: "General",
+    password: "passpass1"
+    }
+]
+
+function renderUser(){
+    const userTable = document.getElementById("user-table")
+    for(let i = 0; i < userData.length; i++){
+
+        userTable.innerHTML += `
+        <tr>
+            <td>${userData[i].id}</td>
+            <td>${userData[i].firstname} ${userData[i].lastname}</td>
+            <td>${userData[i].password}</td>
+            <td>${userData[i].role}</td>
+            <td>
+                <i class="tools fa-solid fa-trash-can"></i>
+                <i class="tools fa-solid fa-pen-to-square"></i>
+            </td>
+        </tr>
+        `
+    }
+}
+renderUser()
+
+/*TO DO: 
+1.add function to automate id increments
+2.add function that will push input values to user arr from addUser modal
+3.render newly push values 
+*/
