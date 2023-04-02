@@ -4,6 +4,7 @@
 // MAIN CONTAINERS
 const dashContain = document.getElementById("dash-container")
 const userContain = document.getElementById("users-container")
+const memContain = document.getElementById("member-container")
 
 // SIDE-NAV BTN
 const dashBtn = document.getElementById("dash-btn")
@@ -13,9 +14,12 @@ const financeBtn = document.getElementById("finance-btn")
 const complainBtn = document.getElementById("complain-btn")
 const programsBtn = document.getElementById("programs-btn")
 const adduserBtn = document.getElementById("addUser-btn")
-const modalContain = document.getElementById("modal-container")
+const addmemBtn = document.getElementById("addmem-btn")
+const userModal = document.getElementById("user-modal-container")
+const memberModal = document.getElementById("member-modal-container")
 const modalBg = document.getElementById('bg')
-const cancelBtn = document.getElementById("adduser-cancel")
+const userCancel = document.getElementById("adduser-cancel")
+const memberCancel = document.getElementById("member-cancel")
 const seePass = document.getElementById("see-pass")
 
 
@@ -23,6 +27,8 @@ dashBtn.addEventListener("click", function(){
     //CONTENT STYLING ACTIVE
     dashContain.classList.remove('hide')
     dashContain.classList.toggle('active')
+    memContain.classList.remove('active')
+    memContain.classList.add('hide')
     userContain.classList.remove('active')
     
     //BUTTON STYLING ACTIVE
@@ -37,6 +43,9 @@ dashBtn.addEventListener("click", function(){
 userBtn.addEventListener("click", function(){
     dashContain.classList.remove('active')
     dashContain.classList.add('hide')
+    memContain.classList.remove('active')
+    memContain.classList.add('hide')
+    userContain.classList.remove('hide')
     userContain.classList.add('active')
 
     //BUTTON STYLING ACTIVE
@@ -52,6 +61,10 @@ memBtn.addEventListener("click", function(){
     //CONTENT STYLING ACTIVE
     dashContain.classList.remove('active')
     dashContain.classList.add('hide')
+    userContain.classList.remove('active')
+    userContain.classList.add('hide')
+    memContain.classList.remove('hide')
+    memContain.classList.add('active')
     
     //BUTTON STYLING ACTIVE
     dashBtn.classList.remove('btn-active')
@@ -93,13 +106,21 @@ programsBtn.addEventListener("click", function(){
 })
 
 adduserBtn.addEventListener("click", function(){
-    
-    modalContain.style.display = "flex"
+    userModal.style.display = "flex"
+    modalBg.style.display ="block"
+})
+addmemBtn.addEventListener("click", function(){
+    memberModal.style.display = "flex"
     modalBg.style.display ="block"
 })
 
-cancelBtn.addEventListener("click", function(){
-    modalContain.style.display = "none"
+//refactor this event
+userCancel.addEventListener("click", function(){
+    userModal.style.display = "none"
+    modalBg.style.display ="none"
+})
+memberCancel.addEventListener("click",function(){
+    memberModal.style.display = "none"
     modalBg.style.display ="none"
 })
 

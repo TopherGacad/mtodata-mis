@@ -121,7 +121,7 @@ section{
 }
 
     /* USER PANE */
-.users-container{
+.users-container, .member-container{
     display: none;
     overflow: hidden;
     height: 85vh;
@@ -138,7 +138,7 @@ header h3{
     font-size: 19px;
     line-height: 0px;
 }
-.adduserBtn{
+.adduserBtn, .addmemBtn{
     background-color: var(--dark-blue);
     color: var(--white-color);
     border: none;
@@ -149,7 +149,7 @@ header h3{
     right: 15px;
     cursor: pointer;
 }
-.adduserBtn:hover{
+.adduserBtn:hover, .addmemBtn:hover{
     background-color: #7EAFF6;
 }
 main{
@@ -176,7 +176,6 @@ tr{
 }
 tr:hover{
     background-color: var(--hover-background);
-    text-shadow: 0px 0px 1px var(--content-font-color);
 }
 .tools{
     background-color:transparent;
@@ -238,7 +237,7 @@ footer{
 }
 
         /* MODALS */
-.addUser-modal-container{
+.addUser-modal-container, .addMem-modal-container{
     display: none;
     flex-direction: column;
     width: 40%;
@@ -254,7 +253,7 @@ footer{
     z-index: 9999;
     padding: 15px;
 }
-.addUser-modal-container h2{
+.modal-title{
     border-bottom: 1px solid var(--border-color);
     padding-left: 10px;
     padding-bottom: 5px;
