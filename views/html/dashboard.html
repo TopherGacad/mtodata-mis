@@ -152,53 +152,117 @@
     <div class="addUser-modal-container" id="user-modal-container">
         <h2 class="modal-title">ADD USER</h2>
         <form action="">
-            <div class="fields">
-                <label for="input-firstname">Firstname</label>
-                <input 
-                type="text"
-                id="input-firstname" 
-                name="firstname"
-                placeholder="Firstname"
-                required
-                >
-            </div>
-            
-            <div class="fields">
-                <label for="input-lastname">Last name</label>
-                <input 
-                type="text"
-                id="input-lastname"
-                name="lastname" 
-                placeholder="Lastname">
-            </div>
+            <div class="form-container">
+                <!-- FORM LEFT -->
+                <div class="memForm-left">
+                    <!-- MEMBERS ROLE -->
+                    <div class="fields">
+                        <label for="select-role">User's role</label>
+                        <select name="role" id="select-mem">
+                            <option value="Officer">Officer</option>
+                            <option value="Driver">Driver only</option>
+                            <option value="Operator">Operator only</option>
+                            <option value="both">Driver & Operator</option>
+                        </select>
+                    </div>
+                    <!-- LASTNAME -->
+                    <div class="fields">
+                        <label for="user-lastname">Lastname</label>
+                        <input 
+                        type="text"
+                        id="user-lastname"
+                        name="lastname" 
+                        placeholder="Lastname">   
+                    </div>
+                    <!-- FIRSTNAME -->
+                    <div class="fields">
+                        <label for="user-firstname">Firstname</label>
+                        <input 
+                        type="text"
+                        id="user-firstname" 
+                        name="firstname"
+                        placeholder="Firstname"
+                        required
+                        >
+                    </div>
+                    <!-- MIDNAME -->
+                    <div class="fields">
+                        <label for="user-midname">Middlename</label>
+                        <input 
+                        type="text"
+                        id="user-midname" 
+                        name="middlename"
+                        placeholder="Middlename"
+                        required
+                        >
+                    </div>
+                    <!-- EXTENSION NAME -->
+                    <div class="fields">
+                        <label for="user-extension">Extension Name</label>
+                        <input 
+                        type="text"
+                        pattern="[A-Za-z]{2,5}"
+                        id="user-extension" 
+                        name="extension"
+                        placeholder="eg. Jr, Sr"
+                        required
+                        >
+                    </div>
+                </div>
+                <!-- FORM-RIGHT -->
+                <div class="memForm-right">
+                    <!-- STREET -->
+                    <div class="fields">
+                        <label for="user-email">Email Adress</label>
+                        <input 
+                        type="text"
+                        id="user-email" 
+                        name="street"
+                        required
+                        >
+                    </div>
 
-            <div class="fields">
-                <label for="select-role">Select role</label>
-                <select name="role" id="select-role">
-                    <option value="Coordinator">Coordinator</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Complaints">Complaints</option>
-                </select>
-            </div>
-
-            <div class="fields">
-                <label for="input-pass">Password</label>
-                <input 
-                type="password"
-                id="input-pass"
-                name="password" 
-                placeholder="Enter password"
-                required>
-            </div> 
-
-            <div class="see-password-container">
-                <input class="see-pass" type="checkbox" id="see-pass">
-                <label class="see-pass-label" for="see-pass">See password</label>
-            </div>
-
-            <div class="btn-container">
-                <button class="cancel-btn" id="adduser-cancel">Cancel</button>
-                <button class="save-btn" id="save-btn" type="submit" >Save</button>
+                    <!-- BARANGAY -->
+                    <div class="fields">
+                        <label for="user-pass">Password</label>
+                        <input 
+                        type="password"
+                        id="user-pass" 
+                        name="barangay"
+                        required
+                        >
+                    </div>
+                    <!-- CITY -->
+                    <div class="fields">
+                        <label for="user-confirmPass">Confirm Password</label>
+                        <input 
+                        type="password"
+                        id="user-confirmPas" 
+                        name="city"
+                        required
+                        >
+                    </div>
+                    <!-- CONTACT NUMBER -->
+                    <div class="fields">
+                        <label for="mem-contact">Contact no.</label>
+                        <input 
+                        type="text"
+                        pattern="[0-9]{11}"
+                        id="mem-contact" 
+                        name="contact"
+                        placeholder="eg. 09592220954"
+                        required
+                        >
+                        <div class="btn-container">
+                            <input 
+                            type="submit" 
+                            value="Cancel" 
+                            class="cancel-btn" 
+                            id="adduser-cancel">
+                            <button class="save-btn" id="save-btn" type="submit" >Save</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -348,7 +412,6 @@
     </div>
 
     <!-- CONFIRM DELETE TOAST -->
-
     <div class="toast-container">
         <p>Are you sure you want to permanently delete this user?</p>
         <div class="toast-btn-container">
