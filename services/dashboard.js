@@ -123,6 +123,7 @@ memberCancel.addEventListener("click",function(){
     memberModal.style.display = "none"
     modalBg.style.display ="none"
     document.getElementById("mem-lastname").value = ""
+    //TO DO: declare all input fields.value to =""
 })
 
 
