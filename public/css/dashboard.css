@@ -306,6 +306,7 @@ select{
     display: flex;
     align-items: center;
     justify-content: start;
+    padding-bottom: 10px;
 }
 .see-pass{
     width: fit-content;
