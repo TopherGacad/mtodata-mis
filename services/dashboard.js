@@ -129,12 +129,15 @@ memberCancel.addEventListener("click",function(){
 
 //FI: CREATE A FUNCTION FOR SHOW PASSWORD INSTEAD OF THIS 
 seePass.addEventListener("change", function(){
-    const inputPass = document.getElementById("input-pass")
-    if(inputPass.type === 'password'){
+    const inputPass = document.getElementById("user-pass")
+    const confirmPass = document.getElementById("user-confirmPass")
+    if(inputPass.type === 'password' || confirmPass.type === 'password'){
         inputPass.type='text';
+        confirmPass.type ='text';
     }
     else{
         inputPass.type='password';
+        confirmPass.type ='password';
     }
 })
 

@@ -237,10 +237,15 @@
                         <label for="user-confirmPass">Confirm Password</label>
                         <input 
                         type="password"
-                        id="user-confirmPas" 
+                        id="user-confirmPass" 
                         name="city"
                         required
                         >
+                    </div>
+
+                    <div class="see-password-container">
+                        <input class="see-pass" type="checkbox" id="see-pass">
+                        <label class="see-pass-label" for="see-pass">See password</label>
                     </div>
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
@@ -258,7 +263,8 @@
                             type="submit" 
                             value="Cancel" 
                             class="cancel-btn" 
-                            id="adduser-cancel">
+                            id="adduser-cancel"
+                            formnovalidate>
                             <button class="save-btn" id="save-btn" type="submit" >Save</button>
                         </div>
                     </div>

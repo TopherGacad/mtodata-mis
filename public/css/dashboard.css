@@ -76,8 +76,8 @@ li{
     cursor: pointer;
 } 
 li:hover{
-    background-color:var(--dark-blue);
-    color:var(--white-color);
+    background-color:var(--hover-background);
+    color:var(--content-font-color);
     transition:.5s;
 }
 
@@ -241,7 +241,7 @@ footer{
     display: none;
     flex-direction: column;
     width: 70%;
-    height: 75%;
+    height: fit-content;
     border-radius: 10px;
     position: fixed;
     background-color: var(--base-color);
