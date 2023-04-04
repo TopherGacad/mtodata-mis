@@ -240,8 +240,8 @@ footer{
 .addUser-modal-container, .addMem-modal-container{
     display: none;
     flex-direction: column;
-    width: 40%;
-    height: fit-content;
+    width: 70%;
+    height: 75%;
     border-radius: 10px;
     position: fixed;
     background-color: var(--base-color);
@@ -258,6 +258,19 @@ footer{
     padding-left: 10px;
     padding-bottom: 5px;
     color: var(--dark-blue);
+}
+.form-container{
+    display: flex;
+}
+.modal-title{
+    border-bottom: 1px solid var(--border-color);
+    padding-left: 10px;
+    padding-bottom: 5px;
+    color: var(--dark-blue);
+}
+.memForm-right, .memForm-left{
+    width: 100vw;
+    padding: 0px 20px;
 }
 form{
     display: flex;
@@ -281,6 +294,10 @@ input,select{
     border-radius: 5px;
     border: 1px solid var(--border-color);
 }
+#mem-license::placeholder, 
+#mem-contact::placeholder{
+    font-size: 14px;
+}
 select{
     width: 89%;
     color: #1842BD;
@@ -302,11 +319,12 @@ select{
     justify-content: start;
     padding: 0;
 }
-.btn-container button{
+.btn-container button, .cancel-btn{
     width: 100px;
     margin-top: 30px;
     margin-left: 5px;
     padding: 10px;
+    font-size: 13px;
     cursor: pointer;
     border: none;
     color: var(--white-color);

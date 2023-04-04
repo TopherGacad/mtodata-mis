@@ -122,6 +122,7 @@ userCancel.addEventListener("click", function(){
 memberCancel.addEventListener("click",function(){
     memberModal.style.display = "none"
     modalBg.style.display ="none"
+    document.getElementById("mem-lastname").value = ""
 })
 
 

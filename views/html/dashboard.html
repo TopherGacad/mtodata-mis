@@ -208,53 +208,141 @@
     <div class="addMem-modal-container" id="member-modal-container">
         <h2 class="modal-title">ADD MEMBER</h2>
         <form action="">
-            <div class="fields">
-                <label for="input-firstname">Firstname</label>
-                <input 
-                type="text"
-                id="input-firstname" 
-                name="firstname"
-                placeholder="Firstname"
-                required
-                >
-            </div>
-            
-            <div class="fields">
-                <label for="input-lastname">Last name</label>
-                <input 
-                type="text"
-                id="input-lastname"
-                name="lastname" 
-                placeholder="Lastname">
-            </div>
+            <div class="form-container">
+                <!-- FORM LEFT -->
+                <div class="memForm-left">
+                    <!-- MEMBERS ROLE -->
+                    <div class="fields">
+                        <label for="select-mem">Member's role</label>
+                        <select name="role" id="select-mem">
+                            <option value="Officer">Officer</option>
+                            <option value="Driver">Driver only</option>
+                            <option value="Operator">Operator only</option>
+                            <option value="both">Driver & Operator</option>
+                        </select>
+                    </div>
+                    <!-- LASTNAME -->
+                    <div class="fields">
+                        <label for="mem-lastname">Lastname</label>
+                        <input 
+                        type="text"
+                        id="mem-lastname"
+                        name="lastname" 
+                        placeholder="Lastname">   
+                    </div>
+                    <!-- FIRSTNAME -->
+                    <div class="fields">
+                        <label for="mem-firstname">Firstname</label>
+                        <input 
+                        type="text"
+                        id="mem-firstname" 
+                        name="firstname"
+                        placeholder="Firstname"
+                        required
+                        >
+                    </div>
+                    <!-- MIDNAME -->
+                    <div class="fields">
+                        <label for="mem-midname">Middlename</label>
+                        <input 
+                        type="text"
+                        id="mem-midname" 
+                        name="middlename"
+                        placeholder="Middlename"
+                        required
+                        >
+                    </div>
+                    <!-- EXTENSION NAME -->
+                    <div class="fields">
+                        <label for="mem-extension">Extension Name</label>
+                        <input 
+                        type="text"
+                        pattern="[A-Za-z]{2,5}"
+                        id="mem-extension" 
+                        name="extension"
+                        placeholder="eg. Jr, Sr"
+                        required
+                        >
+                    </div>
+                    <!-- GENDER -->
+                    <div class="fields">
+                        <label for="select-gender">Gender</label>
+                        <select name="gender" id="select-gender">
+                            <option value="Coordinator">Male</option>
+                            <option value="Finance">Female</option>
+                            <option value="Complaints">Prefer not to say</option>
+                        </select>
+                    </div>
+                </div>
 
-            <div class="fields">
-                <label for="select-role">Select role</label>
-                <select name="role" id="select-role">
-                    <option value="Coordinator">Coordinator</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Complaints">Complaints</option>
-                </select>
-            </div>
+                <!-- FORM-RIGHT -->
+                <div class="memForm-right">
+                    <!-- STREET -->
+                    <div class="fields">
+                        <label for="mem-street">Street</label>
+                        <input 
+                        type="text"
+                        id="mem-street" 
+                        name="street"
+                        required
+                        >
+                    </div>
 
-            <div class="fields">
-                <label for="input-pass">Password</label>
-                <input 
-                type="password"
-                id="input-pass"
-                name="password" 
-                placeholder="Enter password"
-                required>
-            </div> 
-
-            <div class="see-password-container">
-                <input class="see-pass" type="checkbox" id="see-pass">
-                <label class="see-pass-label" for="see-pass">See password</label>
-            </div>
-
-            <div class="btn-container">
-                <button class="cancel-btn" id="member-cancel">Cancel</button>
-                <button class="save-btn" id="save-btn" type="submit" >Save</button>
+                    <!-- BARANGAY -->
+                    <div class="fields">
+                        <label for="mem-brgy">Barangay</label>
+                        <input 
+                        type="text"
+                        id="mem-brgy" 
+                        name="barangay"
+                        required
+                        >
+                    </div>
+                    <!-- CITY -->
+                    <div class="fields">
+                        <label for="mem-city">City</label>
+                        <input 
+                        type="text"
+                        id="mem-city" 
+                        name="city"
+                        required
+                        >
+                    </div>
+                    <!-- CONTACT NUMBER -->
+                    <div class="fields">
+                        <label for="mem-contact">Contact no.</label>
+                        <input 
+                        type="text"
+                        pattern="[0-9]{11}"
+                        id="mem-contact" 
+                        name="contact"
+                        placeholder="eg. 09592220954"
+                        required
+                        >
+                    
+                    </div>
+                    <!-- LICENSE NUMBER -->
+                    <div class="fields">
+                        <label for="mem-license">License no.</label>
+                        <input 
+                        type="text"
+                        id="mem-license" 
+                        pattern="[A-Z]{1}[0-9]{2}-[0-9]{2}-[0-9]{6}" 
+                        name="license"
+                        placeholder="eg. A34-34-345645"
+                        required
+                        >
+                    </div>
+                    <div class="btn-container">
+                        <input 
+                        type="submit" 
+                        value="Cancel" 
+                        class="cancel-btn" 
+                        id="member-cancel"
+                        formnovalidate>
+                        <button class="save-btn" id="save-btn" type="submit" >Save</button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
