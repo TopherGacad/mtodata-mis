@@ -152,7 +152,7 @@ delUser.addEventListener("click", function(){
     setTimeout(function(){
         toast.classList.add('toast-container-hide')
     },7000)
-
+    
     // TO DO: if confirm then delete selected user else stay
 })
 

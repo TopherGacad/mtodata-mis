@@ -149,6 +149,9 @@ header h3{
     right: 15px;
     cursor: pointer;
 }
+.fa-plus{
+    font-size: 12px;
+}
 .adduserBtn:hover, .addmemBtn:hover{
     background-color: #7EAFF6;
 }
