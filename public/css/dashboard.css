@@ -124,7 +124,8 @@ section{
 .users-container, 
 .member-container, 
 .finance-container,
-.complain-container{
+.complain-container,
+.event-container{
     display: none;
     overflow: hidden;
     height: 85vh;
@@ -144,7 +145,8 @@ header h3{
 .adduserBtn, 
 .addmemBtn, 
 .addFinanceBtn,
-.addComplainBtn{
+.addComplainBtn,
+.addEventBtn{
     background-color: var(--dark-blue);
     color: var(--white-color);
     border: none;
