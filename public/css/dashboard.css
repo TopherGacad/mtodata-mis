@@ -121,7 +121,10 @@ section{
 }
 
     /* USER PANE */
-.users-container, .member-container{
+.users-container, 
+.member-container, 
+.finance-container,
+.complain-container{
     display: none;
     overflow: hidden;
     height: 85vh;
@@ -138,7 +141,10 @@ header h3{
     font-size: 19px;
     line-height: 0px;
 }
-.adduserBtn, .addmemBtn{
+.adduserBtn, 
+.addmemBtn, 
+.addFinanceBtn,
+.addComplainBtn{
     background-color: var(--dark-blue);
     color: var(--white-color);
     border: none;
@@ -162,6 +168,9 @@ table{
     text-align: center;
     border-collapse: collapse;
 }
+abbr{
+    text-decoration: none;
+}
 th{
     background-color: var(--border-color);
     padding: 15px;
@@ -169,7 +178,7 @@ th{
     color: var(--dark-blue);
 }
 td{
-    padding: 10px 0px;
+    padding: 10px 5px;
 }
 tr{
     border-bottom: 1px solid var(--border-color);
