@@ -164,6 +164,7 @@ main{
     background-color: var(--base-color);
     border: 2px solid var(--border-color);
     height: 100%;
+    overflow: auto;
 }
 table{
     width: 100%;
@@ -178,6 +179,8 @@ th{
     padding: 15px;
     font-size: 15px;
     color: var(--dark-blue);
+    position: sticky;
+    top: 0;
 }
 td{
     padding: 10px 5px;
