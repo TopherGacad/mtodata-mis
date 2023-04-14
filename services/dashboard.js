@@ -5,6 +5,9 @@
 const dashContain = document.getElementById("dash-container")
 const userContain = document.getElementById("users-container")
 const memContain = document.getElementById("member-container")
+const financeContain = document.getElementById("finance-container")
+const complainContain = document.getElementById("complain-container")
+const EventContain = document.getElementById("event-container")
 
 // SIDE-NAV BTN
 const dashBtn = document.getElementById("dash-btn")
@@ -13,8 +16,10 @@ const userBtn = document.getElementById("users-btn")
 const financeBtn = document.getElementById("finance-btn")
 const complainBtn = document.getElementById("complain-btn")
 const programsBtn = document.getElementById("programs-btn")
+
 const adduserBtn = document.getElementById("addUser-btn")
 const addmemBtn = document.getElementById("addmem-btn")
+
 const userModal = document.getElementById("user-modal-container")
 const memberModal = document.getElementById("member-modal-container")
 const modalBg = document.getElementById('bg')
@@ -30,6 +35,12 @@ dashBtn.addEventListener("click", function(){
     memContain.classList.remove('active')
     memContain.classList.add('hide')
     userContain.classList.remove('active')
+    financeContain.classList.remove('active')
+    financeContain.classList.add('hide')
+    complainContain.classList.remove('active')
+    complainContain.classList.add('hide')
+    EventContain.classList.remove('active')
+    EventContain.classList.add('hide')
     
     //BUTTON STYLING ACTIVE
     dashBtn.classList.add('btn-active')
@@ -47,6 +58,12 @@ userBtn.addEventListener("click", function(){
     memContain.classList.add('hide')
     userContain.classList.remove('hide')
     userContain.classList.add('active')
+    financeContain.classList.remove('active')
+    financeContain.classList.add('hide')
+    complainContain.classList.remove('active')
+    complainContain.classList.add('hide')
+    EventContain.classList.remove('active')
+    EventContain.classList.add('hide')
 
     //BUTTON STYLING ACTIVE
     dashBtn.classList.remove('btn-active')
@@ -65,6 +82,12 @@ memBtn.addEventListener("click", function(){
     userContain.classList.add('hide')
     memContain.classList.remove('hide')
     memContain.classList.add('active')
+    financeContain.classList.remove('active')
+    financeContain.classList.add('hide')
+    complainContain.classList.remove('active')
+    complainContain.classList.add('hide')
+    EventContain.classList.remove('active')
+    EventContain.classList.add('hide')
     
     //BUTTON STYLING ACTIVE
     dashBtn.classList.remove('btn-active')
@@ -73,9 +96,24 @@ memBtn.addEventListener("click", function(){
     financeBtn.classList.remove('btn-active')
     complainBtn.classList.remove('btn-active')
     programsBtn.classList.remove('btn-active')
+    
 })
 
 financeBtn.addEventListener("click", function(){
+    //CONTENT STYLING ACTIVE
+    dashContain.classList.remove('active')
+    dashContain.classList.add('hide')
+    userContain.classList.remove('active')
+    userContain.classList.add('hide')
+    memContain.classList.remove('active')
+    memContain.classList.add('hide')
+    financeContain.classList.remove('hide')
+    financeContain.classList.add('active')
+    complainContain.classList.remove('active')
+    complainContain.classList.add('hide')
+    EventContain.classList.remove('active')
+    EventContain.classList.add('hide')
+
     //BUTTON STYLING ACTIVE
     dashBtn.classList.remove('btn-active')
     userBtn.classList.remove('btn-active')
@@ -86,6 +124,20 @@ financeBtn.addEventListener("click", function(){
 })
 
 complainBtn.addEventListener("click", function(){
+    //CONTENT STYLING ACTIVE
+    dashContain.classList.remove('active')
+    dashContain.classList.add('hide')
+    userContain.classList.remove('active')
+    userContain.classList.add('hide')
+    memContain.classList.remove('active')
+    memContain.classList.add('hide')
+    financeContain.classList.remove('active')
+    financeContain.classList.add('hide')
+    complainContain.classList.remove('hide')
+    complainContain.classList.add('active')
+    EventContain.classList.remove('active')
+    EventContain.classList.add('hide')
+
     //BUTTON STYLING ACTIVE
     dashBtn.classList.remove('btn-active')
     userBtn.classList.remove('btn-active')
@@ -96,6 +148,20 @@ complainBtn.addEventListener("click", function(){
 })
 
 programsBtn.addEventListener("click", function(){
+    //CONTENT STYLING ACTIVE
+    dashContain.classList.remove('active')
+    dashContain.classList.add('hide')
+    userContain.classList.remove('active')
+    userContain.classList.add('hide')
+    memContain.classList.remove('active')
+    memContain.classList.add('hide')
+    financeContain.classList.remove('active')
+    financeContain.classList.add('hide')
+    complainContain.classList.remove('active')
+    complainContain.classList.add('hide')
+    EventContain.classList.remove('hide')
+    EventContain.classList.add('active')
+
     //BUTTON STYLING ACTIVE
     dashBtn.classList.remove('btn-active')
     userBtn.classList.remove('btn-active')
