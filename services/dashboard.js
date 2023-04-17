@@ -189,16 +189,16 @@ function renderUser(){
             },7000)
             toast.classList.remove("toast-container-hide")
         });
-           console.log(`Edit user with ID ${userData[i].id}`);
+        
+        editIcon.addEventListener("click", function() {
+            // code to edit the user with this ID
+            console.log(`Edit user with ID ${userData[i].id}`);
         });
         
         userTable.appendChild(userRow);
     }
 }
 renderUser()
-        editIcon.addEventListener("click", function() {
-            // code to edit the user with this ID
-         
 
 /*TO DO: 
 1.add function to automate id increments
