@@ -273,10 +273,10 @@ function renderUser(){
             toast.style.display = "flex"
             //TO DO: fix click event
             setTimeout(function(){
-                toast.classList.add('toast-container-hide')
+                toast.classList.toggle('toast-container-hide')
                 toast.style.display = "none"
             },7000)
-            toast.classList.remove("toast-container-hide")
+            toast.classList.remove('toast-container-hide')
         });
         
         editIcon.addEventListener("click", function() {
