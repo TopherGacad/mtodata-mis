@@ -254,7 +254,7 @@ footer{
 }
 
         /* MODALS */
-.addUser-modal-container, .addMem-modal-container{
+.addUser-modal-container, .addMem-modal-container, .editUser-modal-container{
     display: none;
     flex-direction: column;
     width: 70%;
