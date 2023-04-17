@@ -217,10 +217,76 @@ delUser.addEventListener("click", function(){
     //TO DO: fix click event
     setTimeout(function(){
         toast.classList.add('toast-container-hide')
+        toast.style.display = "none"
     },7000)
-    
+    toast.classList.remove("toast-container-hide")
     // TO DO: if confirm then delete selected user else stay
 })
+
+const userData = [
+    {
+     id: 1,
+     firstname: "Christopher",
+     lastname: "Gacad",
+     role: "Developer",
+     password: "hellotest1"
+    },
+
+    {
+    id: 2,
+    firstname: "Topher",
+    lastname: "Gacad",
+    role: "Admin",
+    password: "hellotest2"
+    },
+
+    {
+    id: 3,
+    firstname: "Benimaru",
+    lastname: "Tempest",
+    role: "General",
+    password: "passpass1"
+    }
+]
+
+function renderUser(){
+    const userTable = document.getElementById("user-table")
+    for(let i = 0; i < userData.length; i++){
+        const userRow = document.createElement("tr")
+        
+        userRow.innerHTML = `
+            <td>${userData[i].id}</td>
+            <td>${userData[i].firstname} ${userData[i].lastname}</td>
+            <td>${userData[i].password}</td>
+            <td>${userData[i].role}</td>
+            <td>
+                <i class="tools fa-solid fa-trash-can"></i>
+                <i class="tools fa-solid fa-pen-to-square"></i>
+            </td>
+        `
+        const delIcon =userRow.querySelector(".fa-trash-can") 
+        const editIcon = userRow.querySelector(".fa-pen-to-square")
+
+        delIcon.addEventListener("click", function() {
+            console.log(`Delete user with ID ${userData[i].id}`);
+            const toast = document.querySelector(".toast-container")
+            toast.style.display = "flex"
+            //TO DO: fix click event
+            setTimeout(function(){
+                toast.classList.add('toast-container-hide')
+                toast.style.display = "none"
+            },7000)
+            toast.classList.remove("toast-container-hide")
+        });
+        
+        editIcon.addEventListener("click", function() {
+            // code to edit the user with this ID
+            console.log(`Edit user with ID ${userData[i].id}`)
+        });
+        userTable.appendChild(userRow)
+    }
+}
+renderUser()
 
 // TO DO: 
 // 1. create an array of objects to store the users inside datalist.js
