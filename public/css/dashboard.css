@@ -76,8 +76,8 @@ li{
     cursor: pointer;
 } 
 li:hover{
-    background-color:var(--dark-blue);
-    color:var(--white-color);
+    background-color:var(--hover-background);
+    color:var(--content-font-color);
     transition:.5s;
 }
 
@@ -91,8 +91,8 @@ li:hover{
 }
 .border{
     border: 1px solid var(--border-color);
-    border-radius: 20px;
-    box-shadow: 0px 4px 4px 1px var(--box-shadow);
+    border-radius: 10px;
+    box-shadow: 0px 2px 2px .5px var(--box-shadow);
     background-color: var(--base-color);
 }
 section{
@@ -121,7 +121,11 @@ section{
 }
 
     /* USER PANE */
-.users-container{
+.users-container, 
+.member-container, 
+.finance-container,
+.complain-container,
+.event-container{
     display: none;
     overflow: hidden;
     height: 85vh;
@@ -138,7 +142,11 @@ header h3{
     font-size: 19px;
     line-height: 0px;
 }
-.adduserBtn{
+.adduserBtn, 
+.addmemBtn, 
+.addFinanceBtn,
+.addComplainBtn,
+.addEventBtn{
     background-color: var(--dark-blue);
     color: var(--white-color);
     border: none;
@@ -149,34 +157,42 @@ header h3{
     right: 15px;
     cursor: pointer;
 }
-.adduserBtn:hover{
+.fa-plus{
+    font-size: 12px;
+}
+.adduserBtn:hover, .addmemBtn:hover{
     background-color: #7EAFF6;
 }
 main{
     background-color: var(--base-color);
     border: 2px solid var(--border-color);
     height: 100%;
+    overflow: auto;
 }
 table{
     width: 100%;
     text-align: center;
     border-collapse: collapse;
 }
+abbr{
+    text-decoration: none;
+}
 th{
     background-color: var(--border-color);
     padding: 15px;
     font-size: 15px;
     color: var(--dark-blue);
+    position: sticky;
+    top: 0;
 }
 td{
-    padding: 10px 0px;
+    padding: 10px 5px;
 }
 tr{
     border-bottom: 1px solid var(--border-color);
 }
 tr:hover{
     background-color: var(--hover-background);
-    text-shadow: 0px 0px 1px var(--content-font-color);
 }
 .tools{
     background-color:transparent;
@@ -238,10 +254,10 @@ footer{
 }
 
         /* MODALS */
-.addUser-modal-container{
+.addUser-modal-container, .addMem-modal-container{
     display: none;
     flex-direction: column;
-    width: 40%;
+    width: 70%;
     height: fit-content;
     border-radius: 10px;
     position: fixed;
@@ -254,11 +270,24 @@ footer{
     z-index: 9999;
     padding: 15px;
 }
-.addUser-modal-container h2{
+.modal-title{
     border-bottom: 1px solid var(--border-color);
     padding-left: 10px;
     padding-bottom: 5px;
     color: var(--dark-blue);
+}
+.form-container{
+    display: flex;
+}
+.modal-title{
+    border-bottom: 1px solid var(--border-color);
+    padding-left: 10px;
+    padding-bottom: 5px;
+    color: var(--dark-blue);
+}
+.memForm-right, .memForm-left{
+    width: 100vw;
+    padding: 0px 20px;
 }
 form{
     display: flex;
@@ -282,6 +311,10 @@ input,select{
     border-radius: 5px;
     border: 1px solid var(--border-color);
 }
+#mem-license::placeholder, 
+#mem-contact::placeholder{
+    font-size: 14px;
+}
 select{
     width: 89%;
     color: #1842BD;
@@ -303,11 +336,12 @@ select{
     justify-content: start;
     padding: 0;
 }
-.btn-container button{
+.btn-container button, .cancel-btn{
     width: 100px;
-    margin-top: 30px;
+    margin-top: 15px;
     margin-left: 5px;
     padding: 10px;
+    font-size: 13px;
     cursor: pointer;
     border: none;
     color: var(--white-color);
