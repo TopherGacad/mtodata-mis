@@ -126,7 +126,10 @@ delUser.addEventListener("click", function(){
     //TO DO: fix click event
     setTimeout(function(){
         toast.classList.add('toast-container-hide')
+        toast.style.display = "none"
     },7000)
+    toast.classList.remove("toast-container-hide")
+
 
     // TO DO: if confirm then delete selected user else stay
 })
@@ -161,9 +164,8 @@ const userData = [
 function renderUser(){
     const userTable = document.getElementById("user-table")
     for(let i = 0; i < userData.length; i++){
-
-        userTable.innerHTML += `
-        <tr>
+        const userRow = document.createElement("tr")
+        userRow.innerHTML = `
             <td>${userData[i].id}</td>
             <td>${userData[i].firstname} ${userData[i].lastname}</td>
             <td>${userData[i].password}</td>
@@ -172,14 +174,34 @@ function renderUser(){
                 <i class="tools fa-solid fa-trash-can"></i>
                 <i class="tools fa-solid fa-pen-to-square"></i>
             </td>
-        </tr>
         `
+        const delIcon =userRow.querySelector(".fa-trash-can") 
+        const editIcon = userRow.querySelector(".fa-pen-to-square")
+
+        delIcon.addEventListener("click", function() {
+            console.log(`Delete user with ID ${userData[i].id}`);
+            const toast = document.querySelector(".toast-container")
+            toast.style.display = "flex"
+            //TO DO: fix click event
+            setTimeout(function(){
+                toast.classList.add('toast-container-hide')
+                toast.style.display = "none"
+            },7000)
+            toast.classList.remove("toast-container-hide")
+        });
+           console.log(`Edit user with ID ${userData[i].id}`);
+        });
+        
+        userTable.appendChild(userRow);
     }
 }
 renderUser()
+        editIcon.addEventListener("click", function() {
+            // code to edit the user with this ID
+         
 
 /*TO DO: 
 1.add function to automate id increments
 2.add function that will push input values to user arr from addUser modal
 3.render newly push values 
-*/
+*/    
