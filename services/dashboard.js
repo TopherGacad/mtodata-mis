@@ -235,15 +235,15 @@ const userData = [
      id: 1,
      firstname: "Christopher",
      lastname: "Gacad",
-     role: "Developer",
+     role: "Super Admin",
      password: "hellotest1"
     },
 
     {
     id: 2,
-    firstname: "Topher",
-    lastname: "Gacad",
-    role: "Admin",
+    firstname: "John Iverson",
+    lastname: "Santos",
+    role: "President",
     password: "hellotest2"
     },
 
