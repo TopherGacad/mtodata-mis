@@ -254,7 +254,7 @@ footer{
 }
 
         /* MODALS */
-.addUser-modal-container, .addMem-modal-container{
+.addUser-modal-container, .addMem-modal-container, .editUser-modal-container{
     display: none;
     flex-direction: column;
     width: 70%;
@@ -323,7 +323,6 @@ select{
     display: flex;
     align-items: center;
     justify-content: start;
-    padding-bottom: 10px;
 }
 .see-pass{
     width: fit-content;
@@ -339,7 +338,7 @@ select{
 }
 .btn-container button, .cancel-btn{
     width: 100px;
-    margin-top: 30px;
+    margin-top: 15px;
     margin-left: 5px;
     padding: 10px;
     font-size: 13px;

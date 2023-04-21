@@ -22,9 +22,12 @@ const addmemBtn = document.getElementById("addmem-btn")
 
 const userModal = document.getElementById("user-modal-container")
 const memberModal = document.getElementById("member-modal-container")
+const editUser = document.getElementById("editUser-modal")
+
 const modalBg = document.getElementById('bg')
 const userCancel = document.getElementById("adduser-cancel")
 const memberCancel = document.getElementById("member-cancel")
+const editUserCancel = document.getElementById("editUser-cancel")
 const seePass = document.getElementById("see-pass")
 
 
@@ -191,6 +194,10 @@ memberCancel.addEventListener("click",function(){
     document.getElementById("mem-lastname").value = ""
     //TO DO: declare all input fields.value to =""
 })
+editUserCancel.addEventListener("click", function(){
+    editUser.style.display = "none"
+    modalBg.style.display = "none"
+})
 
 
 //FI: CREATE A FUNCTION FOR SHOW PASSWORD INSTEAD OF THIS 
@@ -217,10 +224,81 @@ delUser.addEventListener("click", function(){
     //TO DO: fix click event
     setTimeout(function(){
         toast.classList.add('toast-container-hide')
+        toast.style.display = "none"
     },7000)
-    
+    toast.classList.remove("toast-container-hide")
     // TO DO: if confirm then delete selected user else stay
 })
+
+const userData = [
+    {
+     id: 1,
+     firstname: "Christopher",
+     lastname: "Gacad",
+     role: "Super Admin",
+     password: "hellotest1"
+    },
+
+    {
+    id: 2,
+    firstname: "John Iverson",
+    lastname: "Santos",
+    role: "President",
+    password: "hellotest2"
+    },
+
+    {
+    id: 3,
+    firstname: "Benimaru",
+    lastname: "Tempest",
+    role: "General",
+    password: "passpass1"
+    }
+]
+
+function renderUser(){
+    const userTable = document.getElementById("user-table")
+    for(let i = 0; i < userData.length; i++){
+        const userRow = document.createElement("tr")
+        
+        userRow.innerHTML = `
+            <td>${userData[i].id}</td>
+            <td>${userData[i].firstname} ${userData[i].lastname}</td>
+            <td>${userData[i].password}</td>
+            <td>${userData[i].role}</td>
+            <td>
+                <i class="tools fa-solid fa-trash-can"></i>
+                <i class="tools fa-solid fa-pen-to-square"></i>
+            </td>
+        `
+        const delIcon =userRow.querySelector(".fa-trash-can") 
+        const editIcon = userRow.querySelector(".fa-pen-to-square")
+
+        delIcon.addEventListener("click", function() {
+            console.log(`Delete user with ID ${userData[i].id}`);
+            const toast = document.querySelector(".toast-container")
+            toast.style.display = "flex"
+            //TO DO: fix click event
+            setTimeout(function(){
+                toast.classList.toggle('toast-container-hide')
+                toast.style.display = "none"
+            },7000)
+            toast.classList.remove('toast-container-hide')
+        })
+        
+        editIcon.addEventListener("click", function() {
+            // code to edit the user with this ID
+            console.log(`Edit user with ID ${userData[i].id}`)
+
+            editUser.style.display = "flex"
+            modalBg.style.display = "block"
+            
+        })
+        userTable.appendChild(userRow)
+        
+    }
+}
+renderUser()
 
 // TO DO: 
 // 1. create an array of objects to store the users inside datalist.js
