@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,8 +14,9 @@
 
 
 </head>
-<body>  
-    
+
+<body>
+
     <div class="bg-container"></div>
 
     <div class="login-container">
@@ -24,57 +26,85 @@
                 <img class="carousel-img" src="../../public/assets/carousel_1.png" alt="icon for membership info">
                 <h3>Membership Management</h3>
                 <p>maintain a database of all the members of the association, their personal details, and their membership status.</p>
-            </div>  
+            </div>
 
             <div class="carousel-container-2 img-slides" id="carousel-2">
                 <img class="carousel-img" src="../../public/assets/carousel_2.png" alt="icon for membership info">
                 <h3>Financial Management</h3>
                 <p>manage the financial transactions, including membership fees, renewal fees, donations, and other charges.</p>
-            </div>  
+            </div>
 
             <div class="carousel-container-3 img-slides" id="carousel-3">
                 <img class="carousel-img" src="../../public/assets/carousel_3.png" alt="icon for membership info">
                 <h3>Reporting and Analytics</h3>
                 <p>provide reports and analytics on various aspects of the association's operations, including financial performance, membership status, and other member's activity.</p>
             </div>
-            
+
             <div class="dot-container">
-                <span id="dotBtn1" class="dot"></span> 
-                <span id="dotBtn2" class="dot"></span> 
-                <span id="dotBtn3" class="dot"></span> 
-            </div>  
+                <span id="dotBtn1" class="dot"></span>
+                <span id="dotBtn2" class="dot"></span>
+                <span id="dotBtn3" class="dot"></span>
+            </div>
         </div>
 
         <!-- LOGIN FORM RIGHT SIDE -->
         <div class="right-side">
             <img class="logo" src="../../public/assets/mtodata_logo.png" alt="logo of mtodata system">
-            <form id="login-form">
+
+            <form action="../php/login.php" method="post">
+
                 <div class="field">
-                    <label for="username">Username</label>
+                    <label>User Name</label>
                     <input 
                     type="text" 
-                    id="username"
-                    name="username"
-                    placeholder="username@gmail.com"
+                    name="uname" 
+                    placeholder="User Name" 
                     required>
                 </div>
-               
                 <div class="field">
-                    <label for="password">Password</label>
+                    <label>Password</label>
                     <input 
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="8-12 characters"
+                    type="password" 
+                    name="password" 
+                    placeholder="8-12 characters" 
                     required>
-
-                    <button class="login-btn" id="login-btn" type="submit">Login</button>
+                    <button class="login-btn" id="login-btn " type="submit ">Login</button>
                 </div>
+
             </form>
-            <a class="forgot-pass" href="../html/dashboard.html">Forgot Password?</a>
+
+            <a class="forgot-pass " href="# ">Forgot Password?</a>
+
         </div>
     </div>
-   
-    <script src="../../services/login.js"></script>
+
+    <script src="../../services/login.js "></script>
 </body>
+
 </html>
+
+
+<!-- 
+
+    <form id="login-form " action="../php/login.php " method="post ">
+                <?php if (isset($_GET['error'])) { ?>
+                <p class="error ">
+                    <?php echo $_GET['error']; ?>
+                </p>
+                <?php } ?>
+                <div class="field ">
+                    Username Field
+        <label for="username ">Username</label>
+        <input type="text " id="username " name="username " placeholder="username@gmail.com ">
+        </div>
+
+        <div class="field ">
+            Password Field
+            <label for="password ">Password</label>
+            <input type="password " id="password " name="password " placeholder="8-12 characters ">
+            Login Button
+            <button class="login-btn " id="login-btn " type="submit ">Login</button>
+        </div>
+
+        </form>
+-->
