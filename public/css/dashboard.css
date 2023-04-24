@@ -10,6 +10,11 @@
     --border-color: #DAE4F2;
     --green-color:  #28a745;
     --warning: #fab8c3;
+    --dash-orange: #F78F1E;
+    --dash-green: #42A147;
+    --dash-yellow: #FFC50C;
+    --dash-cyan: #0A97A9;
+    --dash-viewreport-bg:  rgba(236, 236, 236, 0.842);
 }
 body{
     box-sizing: border-box;
@@ -129,19 +134,19 @@ section{
     border-radius:10px ;
 }
 .fa-user-group{
-    background-color: #F78F1E;
+    background-color: var(--dash-orange);
     color: var(--white-color);
 }
 .fa-hand-holding-dollar{
-    background-color: #42A147;
+    background-color:var(--dash-green);
     color: var(--white-color);
 }
 .fa-circle-dollar-to-slot{
-    background-color: #FFC50C;
+    background-color:var(--dash-yellow);
     color: var(--white-color);
 }
 .fa-file-circle-exclamation{
-    background-color: #0A97A9;
+    background-color:var(--dash-cyan);
     color: var(--white-color);
 }
 .count-container{
@@ -163,7 +168,7 @@ section{
     left: 0;
     right: 0;
     border-radius: 0px 10px 10px 10px;
-    background-color: rgba(236, 236, 236, 0.842);
+    background-color:var(--dash-viewreport-bg);
 }
 .link-container a{
     text-decoration: none;
@@ -521,7 +526,7 @@ select{
         top: 20%;
         font-size: 35px;
     }
-    
+
     /* USER PANE */
     header{
         padding: 15px 10px;
