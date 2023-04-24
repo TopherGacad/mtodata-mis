@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;900&display=swap" rel="stylesheet">
     <!-- FONT AWESOME/ICONS -->
     <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
 </head>
 
@@ -48,9 +49,9 @@
                             <h4 class="">Total Member Count</h4>
                         </div>
                         <div class="count-container">
-                            <h1>31</h1>
+                            <p>31</p>
                         </div>
-                        <div class="link-container">
+                        <div class="link-container memCount">
                             <a href="#">View Report</a>
                         </div>
                     </div>
@@ -58,10 +59,10 @@
                     <div class="card border">
                         <div class="card-header">
                             <i class="card-icon fa-solid fa-hand-holding-dollar"></i>
-                            <h4 class="">Donations Collected</h4>
+                            <h4 class="">Donations Received</h4>
                         </div>
                         <div class="count-container">
-                            <h1>31</h1>
+                            <p><span>&#8369;</span> 1000000</p>
                         </div>
                         <div class="link-container">
                             <a href="#">View Report</a>
@@ -74,7 +75,7 @@
                             <h4 class="">Contribution Collected</h4>
                         </div>
                         <div class="count-container">
-                            <h1>31</h1>
+                            <p><span>&#8369;</span>31</p>
                         </div>
                         <div class="link-container">
                             <a href="#">View Report</a>
@@ -87,14 +88,20 @@
                             <h4 class="">Complaints Recieved</h4>
                         </div>
                         <div class="count-container">
-                            <h1>31</h1>
+                            <p>31</p>
                         </div>
                         <div class="link-container">
                             <a href="#">View Report</a>
                         </div>
                     </div>
                 </section>
-                <div class="bot-dash border"></div>
+                <div class="botleft-dash border"></div>
+                <div class="botright-dash border">
+                    <div class="card-header">
+                        <h4>Member Age Range</h4>
+                    </div>
+                    <canvas id="ageChart" style="width:100%;max-width:600px;height: 300px;"></canvas>
+                </div>
             </div>
 
         <!-- USER PANE -->
@@ -102,7 +109,7 @@
                 <header>
                     <h3>USER TYPE MANAGEMENT</h3>
                     <p>ADMIN VIEW</p>
-                    <button class="usermoreBtn"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></i></button>
                     <input 
                     type="text"
                     class="user-search"
@@ -910,8 +917,23 @@
                             required
                             >
                         </div>
-                        <!-- GENDER -->
+                        <!-- AGE -->
                         <div class="fields">
+                            <label for="mem-age">Age</label>
+                            <input 
+                            type="text"
+                            id="mem-age" 
+                            pattern="[0-9]{3}" 
+                            name="age"
+                            required
+                            >
+                        </div>
+                    </div>
+
+                    <!-- FORM-RIGHT -->
+                    <div class="memForm-right">
+                         <!-- GENDER -->
+                         <div class="fields">
                             <label for="select-gender">Gender</label>
                             <select name="gender" id="select-gender">
                                 <option value="Coordinator">Male</option>
@@ -919,10 +941,6 @@
                                 <option value="Complaints">Prefer not to say</option>
                             </select>
                         </div>
-                    </div>
-
-                    <!-- FORM-RIGHT -->
-                    <div class="memForm-right">
                         <!-- STREET -->
                         <div class="fields">
                             <label for="mem-street">Street</label>
@@ -979,6 +997,7 @@
                             required
                             >
                         </div>
+
                         <div class="btn-container">
                             <input 
                             type="submit" 

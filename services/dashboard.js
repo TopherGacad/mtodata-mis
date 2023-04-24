@@ -300,6 +300,25 @@ function renderUser(){
 }
 renderUser()
 
+// AGE DEMOGRAPHIC CHART
+var xValues = ["Below 30","Between 30 & 50","50 to 60","60 & Above"]
+var yValues = [12, 14, 4, 10]
+var barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#1e7145"
+]
+new Chart("ageChart", {
+  type: "doughnut",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+})
 // TO DO: 
 // 1. create an array of objects to store the users inside datalist.js
 // 2. create a function that will render users on user pane from datalist.js

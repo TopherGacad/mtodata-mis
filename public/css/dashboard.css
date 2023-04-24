@@ -99,7 +99,7 @@ section{
     justify-content: space-between;
     position: absolute;
     top: 30px;
-    height: 60%;
+    height: 50%;
     width: 100%;
 }
 .card{
@@ -112,26 +112,49 @@ section{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    color: var(--base-color);
-    background-color: var(--font-color);
+    /* background-color: var(--font-color); */
     line-height: 0;
     box-shadow: 0px 0px 2px .5px var(--box-shadow);
     border-radius: 10px 10px 0px 0px;
+    border-bottom: 1px solid var(--border-color);
     padding: 10px 0px;
     font-size: 14px;
 }
+.card-header h4{
+    color: var(--dark-blue);
+}
 .card-icon{
-    color:white;
     font-size: 20px;
+    padding: 10px;
+    border-radius:10px ;
+}
+.fa-user-group{
+    background-color: #F78F1E;
+    color: var(--white-color);
+}
+.fa-hand-holding-dollar{
+    background-color: #42A147;
+    color: var(--white-color);
+}
+.fa-circle-dollar-to-slot{
+    background-color: #FFC50C;
+    color: var(--white-color);
+}
+.fa-file-circle-exclamation{
+    background-color: #0A97A9;
+    color: var(--white-color);
 }
 .count-container{
     position: absolute;
-    top: 30%;
+    top: 35%;
     left:0 ;
     right: 0;
-
     padding: 7px;
     font-size: 20px;
+}
+.count-container span{
+    position: absolute;
+    left: 10px;
 }
 .link-container{
     position: absolute;
@@ -140,16 +163,24 @@ section{
     left: 0;
     right: 0;
     border-radius: 0px 10px 10px 10px;
-    background-color: var(--border-color);
+    background-color: rgba(236, 236, 236, 0.842);
 }
 .link-container a{
     text-decoration: none;
 }
-.bot-dash{
+.botleft-dash{
     position: absolute;
+    left: 0;
     bottom: 0;
-    height: 55%;
-    width: 100%;
+    height: 60%;
+    width: 55%;
+}
+.botright-dash{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 60%;
+    width: 40%;
 }
 
     /* USER PANE */
@@ -201,10 +232,10 @@ header h3{
     color: var(--white-color);
     border: none;
     border-radius: 10px;
-    padding: 10px 15px;
+    padding: 10px;
     position: absolute;
     top: 30px;
-    right: 365px;
+    right: 380px;
     cursor: pointer;
 }
 .fa-plus{
@@ -487,10 +518,10 @@ select{
         left: 23%;
     }
     .count-container{
-        top: 25%;
+        top: 20%;
         font-size: 35px;
     }
-
+    
     /* USER PANE */
     header{
         padding: 15px 10px;
@@ -502,15 +533,22 @@ select{
         font-size: 25px;
     }
     .user-search{
-        top: 50px;
+        top: 45px;
         right: 165px;
+        height: 20px;
     }
     .usermoreBtn{
-        top: 50px;
+        top: 45px;
         right: 440px;
+        font-size: 15px;
+        padding: 12px;
     }
-    .adduserBtn{
-        padding: 15px 30px;
+    .adduserBtn,
+    .addmemBtn, 
+    .addFinanceBtn,
+    .addComplainBtn,
+    .addEventBtn{
+        padding: 12px 25px;
         top: 45px;
         right: 15px;
         font-size: 15px;
