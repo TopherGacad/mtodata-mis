@@ -715,14 +715,14 @@
         <div class="bg" id="bg"></div>
         <div class="addUser-modal-container" id="user-modal-container">
             <h2 class="modal-title">ADD USER</h2>
-            <form action="">
+            <form action="../php/adduser.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'>
                 <div class="form-container">
                     <!-- FORM LEFT -->
                     <div class="memForm-left">
                         <!-- USERS ROLE -->
                         <div class="fields">
                             <label for="select-role">User's role</label>
-                            <select name="role" id="select-mem">
+                            <select name="userrole" id="select-mem">
                                 <option value="pres">President</option>
                                 <option value="vpres">Vice President</option>
                                 <option value="secretary">Secretary</option>
@@ -807,6 +807,8 @@
                             type="password"
                             id="user-pass" 
                             name="barangay"
+                            minlength="8"
+                            maxlength="12"
                             required
                             >
                         </div>
