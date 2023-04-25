@@ -121,7 +121,7 @@ input::placeholder{
     padding-left: 5px;
 }
 .login-btn{
-    margin: 80px 0px 20px 0px;
+    margin: 30px 0px 20px 0px;
     height: 40px;
     width: 340px;
     background-color: var(--dark-blue);
@@ -134,13 +134,14 @@ input::placeholder{
 }
 
 
-/* .forgot-pass{
+        /* LINK */
+.forgot-pass{
     font-size: 15px;
     color: var(--link-color);
 }
 .forgot-pass:hover{
     color: var(--dark-blue);
-} */
+}
 
 /* TOAST */
 .toast-container{
