@@ -134,14 +134,14 @@ input::placeholder{
 }
 
 
-        /* LINK */
+/*        
 .forgot-pass{
     font-size: 15px;
     color: var(--link-color);
 }
 .forgot-pass:hover{
     color: var(--dark-blue);
-}
+} */
 
 /* TOAST */
 .toast-container{
