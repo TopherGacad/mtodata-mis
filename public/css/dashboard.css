@@ -256,8 +256,8 @@ header h3{
 main{
     background-color: var(--base-color);
     border: 2px solid var(--border-color);
-    height: 100%;
-    overflow: auto;
+    height: 80%;
+    overflow-y: auto;
 }
 table{
     width: 100%;
