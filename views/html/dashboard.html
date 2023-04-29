@@ -98,23 +98,26 @@
                 <div class="botleft-dash border"></div>
                 <div class="botright-dash border">
                     <div class="card-header">
-                        <h4>Member Age Range</h4>
+                        <h4>Events</h4>
                     </div>
-                    <canvas id="ageChart" style="width:100%;max-width:600px;height: 300px;"></canvas>
                 </div>
             </div>
 
         <!-- USER PANE -->
             <div class="users-container" id="users-container">
                 <header>
-                    <h3>USER TYPE MANAGEMENT</h3>
-                    <p>ADMIN VIEW</p>
-                    <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></i></button>
-                    <input 
-                    type="text"
-                    class="user-search"
-                    placeholder="Search">
-                    <button class="adduserBtn" id="addUser-btn"><i class="fa-solid fa-plus"></i> Add User</button>
+                    <div class="head-left">
+                        <h3>USER TYPE MANAGEMENT</h3>
+                        <p>ADMIN VIEW</p>
+                    </div>
+                    <div class="head-right">
+                        <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
+                        <input 
+                        type="text"
+                        class="user-search"
+                        placeholder="Search">
+                        <button class="adduserBtn" id="addUser-btn"><i class="fa-solid fa-plus"></i> Add User</button>
+                    </div>
                 </header>
                 
                 <main>
@@ -133,9 +136,18 @@
         <!-- MEMBER INFO PANE -->
             <div class="member-container" id="member-container">
                 <header>
-                    <h3>TODA MEMBERS INFORMATION</h3>
-                    <p>ADMIN VIEW</p>
-                    <button class="addmemBtn" id="addmem-btn"><i class="fa-solid fa-plus"></i> Add Member</button>
+                    <div class="head-left">
+                        <h3>TODA MEMBERS INFORMATION</h3>
+                        <p>ADMIN VIEW</p>
+                    </div>
+                    <div class="head-right">
+                        <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
+                        <input 
+                        type="text"
+                        class="user-search"
+                        placeholder="Search">
+                        <button class="addmemBtn" id="addmem-btn"><i class="fa-solid fa-plus"></i> Add Member</button>
+                    </div>
                 </header>
 
                 <main>
@@ -318,9 +330,18 @@
         <!-- FINANCE PANE -->
             <div class="finance-container" id="finance-container">
                 <header>
-                    <h3>FINANCE</h3>
-                    <p>FINANCE STAFF VIEW</p>
-                    <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
+                    <div class="head-left">
+                        <h3>FINANCE</h3>
+                        <p>FINANCE STAFF VIEW</p>
+                    </div>
+                    <div class="head-right">
+                        <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
+                        <input 
+                        type="text"
+                        class="user-search"
+                        placeholder="Search">
+                        <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
+                    </div>
                 </header>
 
                 <main>
@@ -514,9 +535,18 @@
         <!-- COMPLAINT PANE -->
         <div class="complain-container" id="complain-container">
             <header>
-                <h3>COMPLAINTS</h3>
-                <p>USER VIEW</p>
-                <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New Complaint</button>
+                <div class="head-left">
+                    <h3>COMPLAINTS</h3>
+                    <p>USER VIEW</p>
+                </div>
+                <div class="head-right">
+                    <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
+                    <input 
+                    type="text"
+                    class="user-search"
+                    placeholder="Search">
+                    <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New Complaint</button>
+                </div>
             </header>
 
             <main>
@@ -690,9 +720,18 @@
         <!-- EVENTS & PROGRAMS PANE -->
         <div class="event-container" id="event-container">
             <header>
-                <h3>EVENTS & PROGRAMS</h3>
-                <p>ADMIN VIEW</p>
-                <button class="addEventBtn" id="addEvent-btn"><i class="fa-solid fa-plus"></i> Add Events</button>
+                <div class="head-left">
+                    <h3>EVENTS & PROGRAMS</h3>
+                    <p>ADMIN VIEW</p>
+                </div>
+                <div class="head-right">
+                    <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
+                    <input 
+                    type="text"
+                    class="user-search"
+                    placeholder="Search">
+                    <button class="addEventBtn" id="addEvent-btn"><i class="fa-solid fa-plus"></i> Add Events</button>
+                </div>
             </header>
 
             <div class="content">
@@ -737,7 +776,8 @@
                             type="text"
                             id="user-lastname"
                             name="lastname" 
-                            placeholder="Lastname">   
+                            placeholder="Lastname"
+                            required>   
                         </div>
                         <!-- FIRSTNAME -->
                         <div class="fields">
@@ -831,7 +871,7 @@
                         
                         <div class="btn-container">
                             <input 
-                            type="submit" 
+                            type="button" 
                             value="Cancel" 
                             class="cancel-btn" 
                             id="adduser-cancel"
@@ -849,7 +889,7 @@
             <h2 class="modal-title">EDIT USER DETAILS</h2>
             <div class="btn-container">
                 <input 
-                type="submit" 
+                type="button" 
                 value="Cancel" 
                 class="cancel-btn" 
                 id="editUser-cancel"
@@ -883,7 +923,8 @@
                             type="text"
                             id="mem-lastname"
                             name="lastname" 
-                            placeholder="Lastname">   
+                            placeholder="Lastname"
+                            required>
                         </div>
                         <!-- FIRSTNAME -->
                         <div class="fields">
@@ -919,23 +960,9 @@
                             required
                             >
                         </div>
-                        <!-- AGE -->
-                        <div class="fields">
-                            <label for="mem-age">Age</label>
-                            <input 
-                            type="text"
-                            id="mem-age" 
-                            pattern="[0-9]{3}" 
-                            name="age"
-                            required
-                            >
-                        </div>
-                    </div>
 
-                    <!-- FORM-RIGHT -->
-                    <div class="memForm-right">
-                         <!-- GENDER -->
-                         <div class="fields">
+                        <!-- GENDER -->
+                        <div class="fields">
                             <label for="select-gender">Gender</label>
                             <select name="gender" id="select-gender">
                                 <option value="Coordinator">Male</option>
@@ -943,6 +970,11 @@
                                 <option value="Complaints">Prefer not to say</option>
                             </select>
                         </div>
+                      
+                    </div>
+
+                    <!-- FORM-RIGHT -->
+                    <div class="memForm-right">
                         <!-- STREET -->
                         <div class="fields">
                             <label for="mem-street">Street</label>
@@ -1002,7 +1034,7 @@
 
                         <div class="btn-container">
                             <input 
-                            type="submit" 
+                            type="button" 
                             value="Cancel" 
                             class="cancel-btn" 
                             id="member-cancel"
@@ -1023,7 +1055,11 @@
                 <button>Cancel</button>
             </div>
         </div>
-
+        <!-- 
+            TO DO: 
+            1. USER SUCCESSFULLY ADDED 
+            2. USER 
+        -->
 
     <script src="../../services/dashboard.js"></script>
 </body>
