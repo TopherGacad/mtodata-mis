@@ -229,7 +229,7 @@ delUser.addEventListener("click", function(){
     toast.classList.remove("toast-container-hide")
     // TO DO: if confirm then delete selected user else stay
 })
-
+/*
 const userData = [
     {
      id: 1,
@@ -289,7 +289,6 @@ function renderUser(){
         editIcon.addEventListener("click", function() {
             // code to edit the user with this ID
             console.log(`Edit user with ID ${userData[i].id}`)
-
             editUser.style.display = "flex"
             modalBg.style.display = "block"
             
@@ -297,7 +296,7 @@ function renderUser(){
         userTable.appendChild(userRow)
         
     }
-}
+} 
 renderUser()
 // TO DO: 
 // 1. create an array of objects to store the users inside datalist.js
