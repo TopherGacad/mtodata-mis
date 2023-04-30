@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    if(isset($_SESSION['user_name'])){
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +39,7 @@
                 <li id="finance-btn"><i class="fa-solid fa-coins"></i>  FINANCE</li>
                 <li id="complain-btn"><i class="fa-solid fa-flag"></i>  COMPLAINTS</li>
                 <li id="programs-btn"><i class="fa-solid fa-calendar-days"></i>  EVENTS & PROGRAMS</li>
-                <li id="logout-btn">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></li>
+                <li id="logout-btn"><a href="logout.php">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></a></li>
             </ul>
         </div>
     </div>
@@ -1090,3 +1094,9 @@
     <script src="../../services/dashboard.js"></script>
 </body>
 </html>
+<?php
+}else{
+        header("location:login.php");
+        exit();
+    }
+?>
