@@ -348,7 +348,9 @@ footer{
 }
 
         /* MODALS */
-.addUser-modal-container, .addMem-modal-container, .editUser-modal-container{
+.addUser-modal-container, 
+.addMem-modal-container, 
+.editUser-modal-container{
     display: none;
     flex-direction: column;
     width: 70%;
@@ -446,6 +448,23 @@ select{
 }
 .cancel-btn{
     background-color: var(--dark-blue);
+}
+
+/* EDIT USER MODAL */
+.user-details-container{
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+}
+.editUser-modal-container img{
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+}
+.details-left, .details-right{
+    border: 1px solid;
+    padding-left: 10px;
+    width: 100%;
 }
 
         /* TOAST */

@@ -392,12 +392,6 @@
                             <td>01</td>
                             <td>Contribution</td>
                             <td>CON-130423</td> 
-                            <!--CODE FORMAT WILL BE: 
-                                CONTRIBUTION = CON
-                                BUTAW = BUT
-                                DONATION = DON
-                                FOLLOWED BY DATE SUBMITTED MM/DD/YY
-                            -->
                             <td>&#8369; 100.00</td>
                             <td>03-23-23</td>
                             <td>
@@ -920,6 +914,27 @@
         <div class="bg" id="bg"></div>
         <div class="editUser-modal-container" id="editUser-modal">
             <h2 class="modal-title">EDIT USER DETAILS</h2>
+            <div class="user-details-container">
+                <img src="../../public/assets/user.jpg" alt="user-icon">
+                <div class="details-left">
+                    <p>Role</p>
+                    <h4>President</h4>
+                    <p>Fullname</p>
+                    <h4>President</h4>
+                    <p>Firstname</p>
+                    <h4>President</h4>
+                    <p>Middlename</p>
+                    <h4>President</h4>
+                    <p>Surname</p>
+                    <h4>President</h4>
+                </div>
+                <div class="details-right">
+                    <p>Password</p>
+                    <h4>President</h4>
+                    <p>Contact Number</p>
+                    <h4>President</h4>
+                </div>
+            </div>
             <div class="btn-container">
                 <input 
                 type="button" 
