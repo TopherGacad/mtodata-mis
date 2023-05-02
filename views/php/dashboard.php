@@ -920,20 +920,23 @@
                     <p>Role</p>
                     <h4>President</h4>
                     <p>Fullname</p>
-                    <h4>President</h4>
+                    <h4>Maria James Bond SR.</h4>
                     <p>Firstname</p>
-                    <h4>President</h4>
+                    <h4>Maria James</h4>
                     <p>Middlename</p>
-                    <h4>President</h4>
+                    <h4>Labudbod</h4>
                     <p>Surname</p>
-                    <h4>President</h4>
+                    <h4>Bond</h4>
                 </div>
                 <div class="details-right">
+                    <p>Extension Name</p>
+                    <h4>SR.</h4>
                     <p>Password</p>
                     <h4>President</h4>
                     <p>Contact Number</p>
                     <h4>President</h4>
                 </div>
+                <i class="tools fa-solid fa-pen-to-square"></i>
             </div>
             <div class="btn-container">
                 <input 

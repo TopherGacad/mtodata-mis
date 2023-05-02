@@ -463,10 +463,9 @@ select{
 }
 .details-left, .details-right{
     border: 1px solid;
-    padding-left: 10px;
+    padding-left: 40px;
     width: 100%;
 }
-
         /* TOAST */
 .toast-container ,.show{
     display: none;
