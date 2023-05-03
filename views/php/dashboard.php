@@ -312,9 +312,31 @@
                 </div>
             </header>
 
-            <div class="content">
-                <h4></h4>
-            </div>
+            <main>
+                <table>
+                    <tr>
+                        <th><abbr title="complain-btn Id">ID</abbr></th>
+                        <th>EVENT</th>
+                        <th>EVENT DATE</th>
+                        <th>TIME</th>
+                        <th>LOCATION</th>
+                        <th>ACTION</th>
+                    </tr>
+
+                    <tr>
+                        <td>01</td>
+                        <td>Christmas Party</td>
+                        <td>December 23, 2023</td>
+                        <td>1:00 PM</td> 
+                        <td>Grand Villa</td>
+                        <td>
+                            <i class="tools fa-solid fa-trash-can"></i>
+                            <i class="tools fa-solid fa-pen-to-square"></i>
+                        </td>
+                    </tr>
+
+                </table>
+            </main>
         </div>
 
     <!-- FOOTER -->
