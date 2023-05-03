@@ -23,11 +23,13 @@ const addmemBtn = document.getElementById("addmem-btn")
 const userModal = document.getElementById("user-modal-container")
 const memberModal = document.getElementById("member-modal-container")
 const editUser = document.getElementById("editUser-modal")
+const editMem = document.getElementById("editMem-modal")
 
 const modalBg = document.getElementById('bg')
 const userCancel = document.getElementById("adduser-cancel")
 const memberCancel = document.getElementById("member-cancel")
 const editUserCancel = document.getElementById("editUser-cancel")
+const editMemCancel = document.getElementById("editMem-cancel")
 const seePass = document.getElementById("see-pass")
 
 
@@ -192,12 +194,16 @@ memberCancel.addEventListener("click",function(){
     memberModal.style.display = "none"
     modalBg.style.display ="none"
     document.getElementById("mem-lastname").value = ""
-    //TO DO: declare all input fields.value to =""
 })
 editUserCancel.addEventListener("click", function(){
     editUser.style.display = "none"
     modalBg.style.display = "none"
 })
+editMemCancel.addEventListener("click", function(){
+    editMem.style.display = "none"
+    modalBg.style.display = "none"
+})
+
 
 
 //FI: CREATE A FUNCTION FOR SHOW PASSWORD INSTEAD OF THIS 
@@ -229,12 +235,19 @@ delUser.addEventListener("click", function(){
     toast.classList.remove("toast-container-hide")
     // TO DO: if confirm then delete selected user else stay
 })
+
 const editIcon = document.querySelector(".fa-pen-to-square")
 editIcon.addEventListener("click", function() {
                 // code to edit the user with this ID
                 editUser.style.display = "flex"
                 modalBg.style.display = "block"
             })
+
+const editMemIcon = document.getElementById("edit-member-icon")
+editMemIcon.addEventListener("click", function(){
+    editMem.style.display = "flex"
+    modalBg.style.display = "block"
+})
 // TO DO: 
 // 1. create an array of objects to store the users inside datalist.js
 // 2. create a function that will render users on user pane from datalist.js
