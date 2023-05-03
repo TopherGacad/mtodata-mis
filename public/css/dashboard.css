@@ -42,6 +42,10 @@ body{
 }
 
 /* SIDE NAV BAR */
+.item-container{
+    margin-top: 50px;
+    border: 1px solid;
+}
 .side-nav{
     width: 20%;
     height: 100vh;
@@ -220,7 +224,7 @@ header{
     display: flex;
     align-items: end;
     justify-content: space-between;
-    width: max-content;
+    min-width: 40%;
 }
 header h3{
     font-size: 19px;
@@ -240,6 +244,15 @@ header h3{
     border: none;
     border-radius: 10px;
     padding: 10px 15px;
+    cursor: pointer;
+}
+.addComplainBtn{
+    background-color: var(--dark-blue);
+    color: var(--white-color);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    margin-left: 10px;
     cursor: pointer;
 }
 .usermoreBtn{
@@ -539,9 +552,13 @@ select{
     .header-nav p{
         font-size: 17px;
     }
+    .item-container{
+        margin-top: 50px;
+        border: 1px solid;
+    }
     li{
         font-size: 17px;
-        line-height: 65px;
+        line-height: 55px;
     }
 
     /* DASHBOARD PANE */
@@ -575,16 +592,15 @@ select{
     .addmemBtn, 
     .addFinanceBtn,
     .addEventBtn{
-        width: 40%;
+        width: 35%;
         font-size: 15px;
-        padding: 12px 13px;
+        padding: 12px 10px;
         margin-left:10px;
     }
     .addComplainBtn{
-        width: 40%;
+        width: 35%;
         font-size: 15px;
         padding: 12px 13px;
-        margin-left: 15px;
     }
     th{
         padding: 20px;
@@ -597,5 +613,29 @@ select{
     /* FOOTER */
     footer{
         font-size: 11px;
+    }
+}
+@media screen and (min-width: 1920px) {
+    .item-container{
+        margin-top: 80px;
+        border: 1px solid;
+    }
+    li{
+        font-size: 20px;
+        line-height: 65px;
+    }
+    .adduserBtn,
+    .addmemBtn, 
+    .addFinanceBtn,
+    .addEventBtn{
+        width: 30%;
+        font-size: 15px;
+        padding: 12px 10px;
+        margin-left:10px;
+    }
+    .addComplainBtn{
+        width: 30%;
+        font-size: 15px;
+        padding: 12px 13px;
     }
 }
