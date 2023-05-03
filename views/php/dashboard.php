@@ -37,7 +37,7 @@
         <div class="item-container">
             <ul>
                 <li id="dash-btn"><i class="fa-solid fa-house"></i>  DASHBOARD</li>
-                <li href="#user-container" id="users-btn"><i class="fa-solid fa-users"></i>  USERS</li>
+                <li id="users-btn"><i class="fa-solid fa-users"></i>  USERS</li>
                 <li id="member-btn"><i class="fa-solid fa-circle-info"></i>  MEMBER INFORMATION</li>
                 <li id="finance-btn"><i class="fa-solid fa-coins"></i>  FINANCE</li>
                 <li id="complain-btn"><i class="fa-solid fa-flag"></i>  COMPLAINTS</li>
