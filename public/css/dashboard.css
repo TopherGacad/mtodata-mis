@@ -44,7 +44,6 @@ body{
 /* SIDE NAV BAR */
 .item-container{
     margin-top: 50px;
-    border: 1px solid;
 }
 .side-nav{
     width: 20%;
@@ -554,7 +553,6 @@ select{
     }
     .item-container{
         margin-top: 50px;
-        border: 1px solid;
     }
     li{
         font-size: 17px;
@@ -618,7 +616,6 @@ select{
 @media screen and (min-width: 1920px) {
     .item-container{
         margin-top: 80px;
-        border: 1px solid;
     }
     li{
         font-size: 20px;
