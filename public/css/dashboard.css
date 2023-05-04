@@ -466,7 +466,7 @@ select{
     display: none;
     flex-direction: column;
     width: 65%;
-    height: 70%;
+    height: 75%;
     border-radius: 10px;
     position: fixed;
     background-color: var(--base-color);
@@ -480,7 +480,7 @@ select{
 }
 .user-details-container,
 .member-details-container{
-    padding:10px 20px 50px 20px;
+    padding:10px 20px 40px 20px;
     display: flex;
     align-items: start;
     justify-content: space-between;
@@ -657,6 +657,28 @@ select{
     footer{
         font-size: 11px;
     }
+    /* EDIT USER MODAL */
+    .editUser-modal-container,
+    .editMember-modal-container{
+        display: none;
+        flex-direction: column;
+        width: 65%;
+        height: 60%;
+        border-radius: 10px;
+        position: fixed;
+        background-color: var(--base-color);
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        z-index: 9999;
+        padding: 15px;
+    }
+    .btn-container button, .cancel-btn{
+        width: 120px;
+        font-size: 16px;
+    }
 }
 @media screen and (min-width: 1920px) {
     .item-container{
@@ -679,5 +701,33 @@ select{
         width: 30%;
         font-size: 15px;
         padding: 12px 13px;
+    }
+
+    /* EDIT USER MODAL */
+    .editUser-modal-container,
+    .editMember-modal-container{
+        height: 60%;
+        padding: 15px;
+    }
+    .user-details-container,
+    .member-details-container{
+        padding:20px 20px 50px 20px;
+    }
+    .user-details-container .fa-pen-to-square{
+        padding: 25px;
+        font-size: 22px;
+    }   
+    .details p{
+        font-size: 17px;
+        line-height: 7px;
+    }
+    .details h4{
+        font-size: 18px;
+    }
+    .btn-container button, .cancel-btn{
+        width: 130px;
+        margin-left: 10px;
+        padding: 15px;
+        font-size: 18px;
     }
 }
