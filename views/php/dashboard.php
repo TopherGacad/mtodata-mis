@@ -133,8 +133,8 @@
                         <tr>
                             <th>USER ID </th>
                             <th>NAME</th>
-                            <th>PASSWORD</th>
                             <th>ROLE</th>
+                            <th>DATE CREATED</th>
                             <th>ACTION</th>
                         </tr>
 
@@ -189,7 +189,8 @@
                             <th>MEMBER ID</th>
                             <th>NAME</th>
                             <th>AREA OF OPERATION</th>
-                            <th>LICENSE PLATE</th>
+                            <th>LICENSE NO.</th>
+                            <th>STATUS</th>
                             <th>ACTION</th>
                         </tr>
 
@@ -198,6 +199,11 @@
                             <td>Christopher</td>
                             <td>helloworld</td>
                             <td>Developer</td>
+                            <td>
+                                <div class="status-contain">
+                                    <p>• Active</p>
+                                </div>
+                            </td>
                             <td>
                                 <i class="tools fa-solid fa-trash-can"></i>
                                 <i class="tools fa-solid fa-pen-to-square" id="edit-member-icon"></i>
@@ -656,7 +662,7 @@
 
                         <!-- USER PROFILE PICTURE -->
                         <div class="fields">
-                            <label for="mem-pic">Upload Porfile Icon</label>
+                            <label for="mem-pic">Upload Profile Icon</label>
                             <input 
                             type="file"
                             accept=".png, .jpg, .jpeg"
@@ -684,8 +690,11 @@
         <div class="editMember-modal-container" id="editMem-modal">
             <h2 class="modal-title">EDIT USER DETAILS</h2>
             <div class="member-details-container">
+                <div class="profile-container"></div>
                 <img class="user-icon" src="../../public/assets/user.jpg" alt="user-icon">
                 <div class="details-left details">
+                    <p>Status</p>
+                    <h4 class="status">• Active</h4>
                     <p>Fullname</p>
                     <h4>Maria James Bond SR.</h4>
                     <p>Role</p>

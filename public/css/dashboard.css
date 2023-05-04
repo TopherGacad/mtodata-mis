@@ -267,7 +267,6 @@ header h3{
 .adduserBtn:hover, .addmemBtn:hover{
     background-color: #7EAFF6;
 }
-            /* HEADER END */
 main{
     background-color: var(--base-color);
     border: 2px solid var(--border-color);
@@ -296,6 +295,15 @@ td{
 tr{
     border-bottom: 1px solid var(--border-color);
 }
+.status-contain{
+    height: fit-content;
+    width: 60%;
+    border-radius: 10px;
+    background-color:var(--dash-green);
+    font-size: 14px;
+    color: var(--base-color);
+    margin: 0px auto;
+}
 tr:hover{
     background-color: var(--hover-background);
 }
@@ -306,9 +314,6 @@ tr:hover{
     padding: 0 5px;
     cursor: pointer;
 }
-
-
-
 
 /* FOOTER */
 footer{
@@ -499,6 +504,14 @@ select{
     height: 50%;
     border-radius: 50%;
     padding: 20px;
+}
+.details .status{
+    text-align: center;
+    padding: 1px;
+    background-color: var(--dash-green);
+    color: var(--base-color);
+    width: 50%;
+    border-radius: 10px;
 }
 .details p{
     font-size: 15px;
