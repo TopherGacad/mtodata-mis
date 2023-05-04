@@ -406,11 +406,10 @@
                             <label for="user-extension">Extension Name</label>
                             <input 
                             type="text"
-                            pattern="[A-Za-z]{2,5}"
+                            pattern="[A-Za-z.]{2,5}"
                             id="user-extension" 
                             name="extension"
                             placeholder="eg. Jr, Sr"
-                            required
                             >
                         </div>
                     </div>
@@ -581,7 +580,6 @@
                             id="mem-extension" 
                             name="extension"
                             placeholder="eg. Jr, Sr"
-                            required
                             >
                         </div>
 
@@ -656,6 +654,17 @@
                             >
                         </div>
 
+                        <!-- USER PROFILE PICTURE -->
+                        <div class="fields">
+                            <label for="mem-pic">Upload Porfile Icon</label>
+                            <input 
+                            type="file"
+                            accept=".png, .jpg, .jpeg"
+                            id="mem-pic" 
+                            name="profile"
+                            >
+                        </div>
+
                         <div class="btn-container">
                             <input 
                             type="button" 
@@ -670,7 +679,7 @@
             </form>
         </div>
 
-        <!-- EDIT USER MODAL -->    
+        <!-- EDIT MEMBER MODAL -->    
         <div class="bg" id="bg"></div>
         <div class="editUser-modal-container" id="editMem-modal">
             <h2 class="modal-title">EDIT USER DETAILS</h2>
