@@ -486,21 +486,21 @@
         <div class="bg" id="bg"></div>
         <div class="editUser-modal-container" id="editUser-modal">
             <h2 class="modal-title">EDIT USER DETAILS</h2>
-            <div class="user-details-container">
-                <img src="../../public/assets/user.jpg" alt="user-icon">
-                <div class="details-left">
-                    <p>Role</p>
-                    <h4>President</h4>
+            <div class="user-details-container" id="user-details-contain">
+                <img class="user-icon" src="../../public/assets/defuser_icon.png" alt="user-icon">
+                <div class="details-left details">
                     <p>Fullname</p>
                     <h4>Maria James Bond SR.</h4>
+                    <p>Role</p>
+                    <h4>President</h4>
                     <p>Firstname</p>
                     <h4>Maria James</h4>
                     <p>Middlename</p>
                     <h4>Labudbod</h4>
+                </div>
+                <div class="details-right details">
                     <p>Surname</p>
                     <h4>Bond</h4>
-                </div>
-                <div class="details-right">
                     <p>Extension Name</p>
                     <h4>SR.</h4>
                     <p>Password</p>
@@ -508,14 +508,14 @@
                     <p>Contact Number</p>
                     <h4>President</h4>
                 </div>
-                <i class="tools fa-solid fa-pen-to-square"></i>
+                <i class="tools fa-solid fa-pen-to-square" id="edit-details"></i>
             </div>
             <div class="btn-container">
                 <input 
                 type="button" 
-                value="Cancel" 
+                value="Close" 
                 class="cancel-btn" 
-                id="editUser-cancel"
+                id="editUser-close"
                 formnovalidate>
                 <button class="save-btn" id="save-btn" type="submit" >Save</button>
             </div>
@@ -681,23 +681,23 @@
 
         <!-- EDIT MEMBER MODAL -->    
         <div class="bg" id="bg"></div>
-        <div class="editUser-modal-container" id="editMem-modal">
+        <div class="editMember-modal-container" id="editMem-modal">
             <h2 class="modal-title">EDIT USER DETAILS</h2>
-            <div class="user-details-container">
-                <img src="../../public/assets/user.jpg" alt="user-icon">
-                <div class="details-left">
-                    <p>Role</p>
-                    <h4>President</h4>
+            <div class="member-details-container">
+                <img class="user-icon" src="../../public/assets/user.jpg" alt="user-icon">
+                <div class="details-left details">
                     <p>Fullname</p>
                     <h4>Maria James Bond SR.</h4>
+                    <p>Role</p>
+                    <h4>President</h4>
                     <p>Firstname</p>
                     <h4>Maria James</h4>
                     <p>Middlename</p>
                     <h4>Labudbod</h4>
+                </div>
+                <div class="details-right details">
                     <p>Surname</p>
                     <h4>Bond</h4>
-                </div>
-                <div class="details-right">
                     <p>Extension Name</p>
                     <h4>SR.</h4>
                     <p>Password</p>
@@ -705,14 +705,14 @@
                     <p>Contact Number</p>
                     <h4>President</h4>
                 </div>
-                <i class="tools fa-solid fa-pen-to-square"></i>
+                <i class="tools fa-solid fa-pen-to-square edit"></i>
             </div>
             <div class="btn-container">
                 <input 
                 type="button" 
-                value="Cancel" 
+                value="Close" 
                 class="cancel-btn" 
-                id="editMem-cancel"
+                id="editMem-close"
                 formnovalidate>
                 <button class="save-btn" id="save-btn" type="submit" >Save</button>
             </div>

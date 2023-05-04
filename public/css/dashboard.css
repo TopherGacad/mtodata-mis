@@ -124,7 +124,6 @@ section{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    /* background-color: var(--font-color); */
     line-height: 0;
     box-shadow: 0px 0px 2px .5px var(--box-shadow);
     border-radius: 10px 10px 0px 0px;
@@ -361,8 +360,7 @@ footer{
 
         /* MODALS */
 .addUser-modal-container, 
-.addMem-modal-container, 
-.editUser-modal-container{
+.addMem-modal-container{
     display: none;
     flex-direction: column;
     width: 70%;
@@ -463,21 +461,68 @@ select{
 }
 
 /* EDIT USER MODAL */
-.user-details-container{
+.editUser-modal-container,
+.editMember-modal-container{
+    display: none;
+    flex-direction: column;
+    width: 65%;
+    height: 70%;
+    border-radius: 10px;
+    position: fixed;
+    background-color: var(--base-color);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 9999;
+    padding: 15px;
+}
+.user-details-container,
+.member-details-container{
+    padding:10px 20px 50px 20px;
     display: flex;
     align-items: start;
     justify-content: space-between;
+    height: 65%;
 }
-.editUser-modal-container img{
-    width: 20%;
-    height: 20%;
+.user-details-container .fa-pen-to-square{
+    padding: 20px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.user-details-container .fa-pen-to-square:hover{
+    color: var(--hover-background);
+}
+.user-icon{
+    width: 50;
+    height: 50%;
     border-radius: 50%;
+    padding: 20px;
 }
-.details-left, .details-right{
-    border: 1px solid;
-    padding-left: 40px;
-    width: 100%;
+.details p{
+    font-size: 15px;
+    color: var(--content-font-color);
+    font-family: 'Roboto', sans-serif;
+    line-height: 5px;
 }
+.details h4{
+    font-size: 16px;
+    color: var(--dark-blue);
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+    padding-bottom: 10px;
+}
+.details-left{
+    padding: 20px 60px 0px 50px;
+    width: 90%;
+}
+.details-right{
+    padding: 20px 40px 0px 40px;
+    width: 110%;
+}
+
+
         /* TOAST */
 .toast-container ,.show{
     display: none;

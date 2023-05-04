@@ -28,8 +28,8 @@ const editMem = document.getElementById("editMem-modal")
 const modalBg = document.getElementById('bg')
 const userCancel = document.getElementById("adduser-cancel")
 const memberCancel = document.getElementById("member-cancel")
-const editUserCancel = document.getElementById("editUser-cancel")
-const editMemCancel = document.getElementById("editMem-cancel")
+const editUserClose = document.getElementById("editUser-close")
+const editMemClose = document.getElementById("editMem-close")
 const seePass = document.getElementById("see-pass")
 
 
@@ -195,13 +195,15 @@ memberCancel.addEventListener("click",function(){
     modalBg.style.display ="none"
     document.getElementById("mem-lastname").value = ""
 })
-editUserCancel.addEventListener("click", function(){
+editUserClose.addEventListener("click", function(){
     editUser.style.display = "none"
     modalBg.style.display = "none"
+    userDetailsContain.style.display = "flex"
 })
-editMemCancel.addEventListener("click", function(){
+editMemClose.addEventListener("click", function(){
     editMem.style.display = "none"
     modalBg.style.display = "none"
+
 })
 
 
@@ -248,6 +250,22 @@ editMemIcon.addEventListener("click", function(){
     editMem.style.display = "flex"
     modalBg.style.display = "block"
 })
+
+const editDetails = document.getElementById("edit-details")
+const userDetailsContain = document.getElementById("user-details-contain")
+editDetails.addEventListener("click", function(){
+    userDetailsContain.style.display = "none"
+    
+})
+
+
+
+
+
+
+
+
+
 // TO DO: 
 // 1. create an array of objects to store the users inside datalist.js
 // 2. create a function that will render users on user pane from datalist.js
