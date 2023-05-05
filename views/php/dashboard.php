@@ -366,7 +366,7 @@
                     <div class="userForm-left">
                         <!-- USERS ROLE -->
                         <div class="fields">
-                            <label for="select-role">User's role</label>
+                            <label for="select-role">User's role<span> *</span></label>
                             <select name="userrole" id="select-mem">
                                 <option value="pres">President</option>
                                 <option value="vpres">Vice President</option>
@@ -377,7 +377,7 @@
                         </div>
                         <!-- LASTNAME -->
                         <div class="fields">
-                            <label for="user-lastname">Lastname</label>
+                            <label for="user-lastname">Lastname<span> *</span></label>
                             <input 
                             type="text"
                             id="user-lastname"
@@ -387,7 +387,7 @@
                         </div>
                         <!-- FIRSTNAME -->
                         <div class="fields">
-                            <label for="user-firstname">Firstname</label>
+                            <label for="user-firstname">Firstname<span> *</span></label>
                             <input 
                             type="text"
                             id="user-firstname" 
@@ -404,7 +404,6 @@
                             id="user-midname" 
                             name="middlename"
                             placeholder="Middlename"
-                            required
                             >
                         </div>
                         <!-- EXTENSION NAME -->
@@ -423,7 +422,7 @@
                     <div class="userForm-right">
                         <!-- EMAIL -->
                         <div class="fields">
-                            <label for="user-email">Email Adress</label>
+                            <label for="user-email">Email Adress<span> *</span></label>
                             <input 
                             type="text"
                             id="user-email" 
@@ -434,7 +433,7 @@
 
                         <!-- CONTACT NUMBER -->
                         <div class="fields">
-                            <label for="mem-contact">Contact no.</label>
+                            <label for="mem-contact">Contact no.<span> *</span></label>
                             <input 
                             type="text"
                             pattern="[0-9]{11}"
@@ -447,7 +446,7 @@
 
                         <!-- PASSWORD -->
                         <div class="fields">
-                            <label for="user-pass">Password</label>
+                            <label for="user-pass">Password<span> *</span></label>
                             <input 
                             type="password"
                             id="user-pass" 
@@ -459,7 +458,7 @@
                         </div>
                         <!-- CONFIRM PASSWORD -->
                         <div class="fields">
-                            <label for="user-confirmPass">Confirm Password</label>
+                            <label for="user-confirmPass">Confirm Password<span> *</span></label>
                             <input 
                             type="password"
                             id="user-confirmPass" 
@@ -498,7 +497,7 @@
                     <div class="memForm-left">
                         <!-- MEMBERS ROLE -->
                         <div class="fields">
-                            <label for="select-mem">Member's role</label>
+                            <label for="select-mem">Member's role<span> *</span></label>
                             <select name="role" id="select-mem">
                                 <option value="Officer">Officer</option>
                                 <option value="Driver">Driver only</option>
@@ -508,7 +507,7 @@
                         </div>
                         <!-- LASTNAME -->
                         <div class="fields">
-                            <label for="mem-lastname">Lastname</label>
+                            <label for="mem-lastname">Lastname<span> *</span></label>
                             <input 
                             type="text"
                             id="mem-lastname"
@@ -518,7 +517,7 @@
                         </div>
                         <!-- FIRSTNAME -->
                         <div class="fields">
-                            <label for="mem-firstname">Firstname</label>
+                            <label for="mem-firstname">Firstname<span> *</span></label>
                             <input 
                             type="text"
                             id="mem-firstname" 
@@ -535,7 +534,6 @@
                             id="mem-midname" 
                             name="middlename"
                             placeholder="Middlename"
-                            required
                             >
                         </div>
                         <!-- EXTENSION NAME -->
@@ -552,7 +550,7 @@
 
                         <!-- GENDER -->
                         <div class="fields">
-                            <label for="select-gender">Sex</label>
+                            <label for="select-gender">Sex<span> *</span></label>
                             <select name="gender" id="select-gender">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
@@ -566,7 +564,7 @@
                     <div class="memForm-right">
                         <!-- STREET -->
                         <div class="fields">
-                            <label for="mem-street">Street</label>
+                            <label for="mem-street">Street<span> *</span></label>
                             <input 
                             type="text"
                             id="mem-street" 
@@ -577,7 +575,7 @@
 
                         <!-- BARANGAY -->
                         <div class="fields">
-                            <label for="mem-brgy">Barangay</label>
+                            <label for="mem-brgy">Barangay<span> *</span></label>
                             <input 
                             type="text"
                             id="mem-brgy" 
@@ -587,7 +585,7 @@
                         </div>
                         <!-- CITY -->
                         <div class="fields">
-                            <label for="mem-city">City</label>
+                            <label for="mem-city">City<span> *</span></label>
                             <input 
                             type="text"
                             id="mem-city" 
@@ -597,7 +595,7 @@
                         </div>
                         <!-- CONTACT NUMBER -->
                         <div class="fields">
-                            <label for="mem-contact">Contact no.</label>
+                            <label for="mem-contact">Contact no.<span> *</span></label>
                             <input 
                             type="text"
                             pattern="[0-9]{11}"
@@ -610,7 +608,7 @@
                         </div>
                         <!-- LICENSE NUMBER -->
                         <div class="fields">
-                            <label for="mem-license">License no.</label>
+                            <label for="mem-license">License no.<span> *</span></label>
                             <input 
                             type="text"
                             id="mem-license" 
@@ -656,7 +654,8 @@
                     <div class="financeForm-left">
                         <!-- FINANCE TYPE -->
                         <div class="fields">
-                            <label for="select-type">Finance Type</label>
+                            <label for="select-type">Finance Type<span> *</span>
+                        </label>
                             <select name="type" id="select-type" onchange="disableInputs()">
                                 <option value="accounting">Accounting</option>
                                 <option value="donation">Donation</option>
@@ -665,7 +664,7 @@
                         </div>
                         <!-- LASTNAME -->
                         <div class="fields">
-                            <label for="lastname">Lastname</label>
+                            <label for="lastname">Lastname<span> *</span></label>
                             <input 
                             type="text"
                             id="lastname"
@@ -675,7 +674,7 @@
                         </div>
                         <!-- FIRSTNAME -->
                         <div class="fields">
-                            <label for="firstname">Firstname</label>
+                            <label for="firstname">Firstname<span> *</span></label>
                             <input 
                             type="text"
                             id="firstname" 
@@ -692,7 +691,6 @@
                             id="midname" 
                             name="middlename"
                             placeholder="Middlename"
-                            required
                             >
                         </div>
                         <!-- EXTENSION NAME -->
@@ -709,7 +707,7 @@
 
                         <!-- GENDER -->
                         <div class="fields">
-                            <label for="select-gender">Sex</label>
+                            <label for="select-gender">Sex<span> *</span></label>
                             <select name="gender" id="select-gender">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
@@ -723,7 +721,7 @@
                     <div class="financeForm-right">
                         <!-- CONTACT NUMBER -->
                         <div class="fields">
-                            <label for="contact">Contact no.</label>
+                            <label for="contact">Contact no.<span> *</span></label>
                             <input 
                             type="text"
                             pattern="[0-9]{11}"
@@ -736,7 +734,7 @@
                         </div>
                         <!-- ACCOUNT TYPE -->
                         <div class="fields">
-                            <label for="acc-type">Account Type</label>
+                            <label for="acc-type">Account Type<span> *</span></label>
                             <select name="acc-type" id="acc-type">
                                 <option value="acc-1">Account 1</option>
                                 <option value="acc-2">Account 2</option>
@@ -746,7 +744,7 @@
 
                         <!-- ACCOUNT ID -->
                         <div class="fields">
-                            <label for="acc-id">Account ID</label>
+                            <label for="acc-id">Account ID<span> *</span></label>
                             <input 
                             type="text"
                             id="acc-id" 
@@ -756,7 +754,7 @@
                         </div>
                         <!-- BODY NO. -->
                         <div class="fields">
-                            <label for="body-no">Body No.</label>
+                            <label for="body-no">Body No.<span> *</span></label>
                             <input 
                             type="text"
                             id="body-no" 
@@ -766,7 +764,7 @@
                         </div>
                         <!--  AMOUNT  -->
                         <div class="fields">
-                            <label for="amount">Amount</label>
+                            <label for="amount">Amount<span> *</span></label>
                             <input 
                             type="text"
                             id="amount" 

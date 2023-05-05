@@ -247,6 +247,9 @@ header h3{
     padding: 10px 15px;
     cursor: pointer;
 }
+.fields span{
+    color: red;
+}
 .usermoreBtn{
     background-color: var(--dark-blue);
     color: var(--white-color);
