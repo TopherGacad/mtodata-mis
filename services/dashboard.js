@@ -222,11 +222,17 @@ addfinanceBtn.addEventListener("click", function(){
 function disableInputs() {
     const selectType = document.getElementById("select-type");
     const midnameInput = document.getElementById("midname");
+    const contactInput = document.getElementById("contact");
+    const accType = document.getElementById("acc-type");
     
     if (selectType.value === "butaw") {
       midnameInput.disabled = true;
+      contactInput.disabled = true;
+      accType.disabled = true;
     } else {
       midnameInput.disabled = false;
+      contactInput.disabled = false;
+      accType.disabled = true
     }
   }
   

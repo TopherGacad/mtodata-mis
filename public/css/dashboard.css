@@ -356,10 +356,11 @@ footer{
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(2px);
 }
-input:disabled{
+input:disabled,select:disabled{
     color: #999999;
     background-color: #dddddd;
 }
+
 
         /* MODALS */
 .addUser-modal-container, 
