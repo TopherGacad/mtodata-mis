@@ -232,7 +232,7 @@ function disableInputs() {
     } else {
       midnameInput.disabled = false;
       contactInput.disabled = false;
-      accType.disabled = true
+      accType.disabled = false;
     }
   }
   
