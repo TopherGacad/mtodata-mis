@@ -360,10 +360,10 @@
         <div class="bg" id="bg"></div>
         <div class="addUser-modal-container" id="user-modal-container">
             <h2 class="modal-title">ADD USER</h2>
-            <form action="../php/adduser.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'>
+            <form action="../php/adduser.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")' id="user-form">
                 <div class="form-container">
                     <!-- FORM LEFT -->
-                    <div class="memForm-left">
+                    <div class="userForm-left">
                         <!-- USERS ROLE -->
                         <div class="fields">
                             <label for="select-role">User's role</label>
@@ -420,7 +420,7 @@
                         </div>
                     </div>
                     <!-- FORM-RIGHT -->
-                    <div class="memForm-right">
+                    <div class="userForm-right">
                         <!-- EMAIL -->
                         <div class="fields">
                             <label for="user-email">Email Adress</label>
@@ -487,51 +487,12 @@
                 </div>
             </form>
         </div>
-        
-        <!-- EDIT USER MODAL -->    
-        <div class="bg" id="bg"></div>
-        <div class="editUser-modal-container" id="editUser-modal">
-            <h2 class="modal-title">EDIT USER DETAILS</h2>
-            <div class="user-details-container" id="user-details-contain">
-                <img class="user-icon" src="../../public/assets/defuser_icon.png" alt="user-icon">
-                <div class="details-left details">
-                    <p>Fullname</p>
-                    <h4>Maria James Bond SR.</h4>
-                    <p>Role</p>
-                    <h4>President</h4>
-                    <p>Firstname</p>
-                    <h4>Maria James</h4>
-                    <p>Middlename</p>
-                    <h4>Labudbod</h4>
-                </div>
-                <div class="details-right details">
-                    <p>Surname</p>
-                    <h4>Bond</h4>
-                    <p>Extension Name</p>
-                    <h4>SR.</h4>
-                    <p>Password</p>
-                    <h4>President</h4>
-                    <p>Contact Number</p>
-                    <h4>President</h4>
-                </div>
-                <i class="tools fa-solid fa-pen-to-square" id="edit-details"></i>
-            </div>
-            <div class="btn-container">
-                <input 
-                type="button" 
-                value="Close" 
-                class="cancel-btn" 
-                id="editUser-close"
-                formnovalidate>
-                <button class="save-btn" id="save-btn" type="submit" >Save</button>
-            </div>
-        </div>
 
         <!-- ADD MEMBER MODAL -->
         <div class="bg" id="bg"></div>
         <div class="addMem-modal-container" id="member-modal-container">
             <h2 class="modal-title">MEMBER REGISTRATION</h2>
-            <form action="">
+            <form action="" id="member-form">
                 <div class="form-container">
                     <!-- FORM LEFT -->
                     <div class="memForm-left">
@@ -591,11 +552,11 @@
 
                         <!-- GENDER -->
                         <div class="fields">
-                            <label for="select-gender">Gender</label>
+                            <label for="select-gender">Sex</label>
                             <select name="gender" id="select-gender">
-                                <option value="Coordinator">Male</option>
-                                <option value="Finance">Female</option>
-                                <option value="Complaints">Prefer not to say</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="none">Prefer not to say</option>
                             </select>
                         </div>
                       
@@ -683,6 +644,189 @@
                     </div>
                 </div>
             </form>
+        </div>
+
+        <!-- ADD FINANCE MODAL -->
+        <div class="bg" id="bg"></div>
+        <div class="addFinance-modal-container" id="finance-modal-container">
+            <h2 class="modal-title">ADD FINANCIAL RECORD</h2>
+            <form action="" id="finance-form">
+                <div class="form-container">
+                    <!-- FORM LEFT -->
+                    <div class="financeForm-left">
+                        <!-- FINANCE TYPE -->
+                        <div class="fields">
+                            <label for="select-type">Finance Type</label>
+                            <select name="type" id="select-type" onchange="disableInputs()">
+                                <option value="accounting">Accounting</option>
+                                <option value="donation">Donation</option>
+                                <option value="butaw">Butaw</option>
+                            </select>
+                        </div>
+                        <!-- LASTNAME -->
+                        <div class="fields">
+                            <label for="lastname">Lastname</label>
+                            <input 
+                            type="text"
+                            id="lastname"
+                            name="lastname" 
+                            placeholder="Lastname"
+                            required>
+                        </div>
+                        <!-- FIRSTNAME -->
+                        <div class="fields">
+                            <label for="firstname">Firstname</label>
+                            <input 
+                            type="text"
+                            id="firstname" 
+                            name="firstname"
+                            placeholder="Firstname"
+                            required
+                            >
+                        </div>
+                        <!-- MIDNAME -->
+                        <div class="fields">
+                            <label for="midname">Middlename</label>
+                            <input 
+                            type="text"
+                            id="midname" 
+                            name="middlename"
+                            placeholder="Middlename"
+                            required
+                            >
+                        </div>
+                        <!-- EXTENSION NAME -->
+                        <div class="fields">
+                            <label for="extension">Extension Name</label>
+                            <input 
+                            type="text"
+                            pattern="[A-Za-z.]{2,5}"
+                            id="extension" 
+                            name="extension"
+                            placeholder="eg. Jr, Sr"
+                            >
+                        </div>
+
+                        <!-- GENDER -->
+                        <div class="fields">
+                            <label for="select-gender">Sex</label>
+                            <select name="gender" id="select-gender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="none">Prefer not to say</option>
+                            </select>
+                        </div>
+                      
+                    </div>
+
+                    <!-- FORM-RIGHT -->
+                    <div class="financeForm-right">
+                        <!-- CONTACT NUMBER -->
+                        <div class="fields">
+                            <label for="contact">Contact no.</label>
+                            <input 
+                            type="text"
+                            pattern="[0-9]{11}"
+                            id="contact" 
+                            name="contact"
+                            placeholder="eg. 09592220954"
+                            required
+                            >
+                        
+                        </div>
+                        <!-- ACCOUNT TYPE -->
+                        <div class="fields">
+                            <label for="acc-type">Account Type</label>
+                            <select name="acc-type" id="acc-type">
+                                <option value="acc-1">Account 1</option>
+                                <option value="acc-2">Account 2</option>
+                                <option value="acc-3">Account 3</option>
+                            </select>
+                        </div>
+
+                        <!-- ACCOUNT ID -->
+                        <div class="fields">
+                            <label for="acc-id">Account ID</label>
+                            <input 
+                            type="text"
+                            id="acc-id" 
+                            name="acc-id"
+                            required
+                            >
+                        </div>
+                        <!-- BODY NO. -->
+                        <div class="fields">
+                            <label for="body-no">Body No.</label>
+                            <input 
+                            type="text"
+                            id="body-no" 
+                            name="bodynum"
+                            required
+                            >
+                        </div>
+                        <!--  AMOUNT  -->
+                        <div class="fields">
+                            <label for="amount">Amount</label>
+                            <input 
+                            type="text"
+                            id="amount" 
+                            name="amount"
+                            placeholder="₱"
+                            required
+                            >
+                        </div>
+
+                        <div class="btn-container">
+                            <input 
+                            type="button" 
+                            value="Cancel" 
+                            class="cancel-btn" 
+                            id="finance-cancel"
+                            formnovalidate>
+                            <button class="save-btn" id="save-btn" type="submit" >Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- EDIT USER MODAL -->    
+        <div class="bg" id="bg"></div>
+        <div class="editUser-modal-container" id="editUser-modal">
+            <h2 class="modal-title">EDIT USER DETAILS</h2>
+            <div class="user-details-container" id="user-details-contain">
+                <img class="user-icon" src="../../public/assets/defuser_icon.png" alt="user-icon">
+                <div class="details-left details">
+                    <p>Fullname</p>
+                    <h4>Maria James Bond SR.</h4>
+                    <p>Role</p>
+                    <h4>President</h4>
+                    <p>Firstname</p>
+                    <h4>Maria James</h4>
+                    <p>Middlename</p>
+                    <h4>Labudbod</h4>
+                </div>
+                <div class="details-right details">
+                    <p>Surname</p>
+                    <h4>Bond</h4>
+                    <p>Extension Name</p>
+                    <h4>SR.</h4>
+                    <p>Password</p>
+                    <h4>President</h4>
+                    <p>Contact Number</p>
+                    <h4>President</h4>
+                </div>
+                <i class="tools fa-solid fa-pen-to-square" id="edit-details"></i>
+            </div>
+            <div class="btn-container">
+                <input 
+                type="button" 
+                value="Close" 
+                class="cancel-btn" 
+                id="editUser-close"
+                formnovalidate>
+                <button class="save-btn" id="save-btn" type="submit" >Save</button>
+            </div>
         </div>
 
         <!-- EDIT MEMBER MODAL -->    

@@ -356,10 +356,15 @@ footer{
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(2px);
 }
+input:disabled{
+    color: #999999;
+    background-color: #dddddd;
+}
 
         /* MODALS */
 .addUser-modal-container, 
-.addMem-modal-container{
+.addMem-modal-container,
+.addFinance-modal-container{
     display: none;
     flex-direction: column;
     width: 70%;
@@ -390,7 +395,12 @@ footer{
     padding-bottom: 5px;
     color: var(--dark-blue);
 }
-.memForm-right, .memForm-left{
+.userForm-left,
+.userForm-right,
+.memForm-right, 
+.memForm-left,
+.financeForm-left,
+.financeForm-right{
     width: 100vw;
     padding: 0px 20px;
 }

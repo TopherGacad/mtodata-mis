@@ -1,6 +1,4 @@
 
-//TO DO: TRANSFER GLOBAL VARS TO SCOPRE VAR
-
 // MAIN CONTAINERS
 const dashContain = document.getElementById("dash-container")
 const userContain = document.getElementById("users-container")
@@ -17,20 +15,28 @@ const financeBtn = document.getElementById("finance-btn")
 const complainBtn = document.getElementById("complain-btn")
 const programsBtn = document.getElementById("programs-btn")
 
+//ADD BUTTONS
 const adduserBtn = document.getElementById("addUser-btn")
 const addmemBtn = document.getElementById("addmem-btn")
+const addfinanceBtn = document.getElementById("addFinance-btn")
 
+// MODALS
 const userModal = document.getElementById("user-modal-container")
 const memberModal = document.getElementById("member-modal-container")
+const financeModal = document.getElementById("finance-modal-container")
 const editUser = document.getElementById("editUser-modal")
 const editMem = document.getElementById("editMem-modal")
 
 const modalBg = document.getElementById('bg')
+const seePass = document.getElementById("see-pass")
+
+// CANCEL BUTTONS
 const userCancel = document.getElementById("adduser-cancel")
 const memberCancel = document.getElementById("member-cancel")
+const financeCancel = document.getElementById("finance-cancel")
+// EDIT-CLOSE BUTTONS
 const editUserClose = document.getElementById("editUser-close")
 const editMemClose = document.getElementById("editMem-close")
-const seePass = document.getElementById("see-pass")
 
 
 dashBtn.addEventListener("click", function(){
@@ -176,6 +182,7 @@ programsBtn.addEventListener("click", function(){
     programsBtn.classList.add('btn-active')
 })
 
+// FORM MODALS 
 adduserBtn.addEventListener("click", function(){
     userModal.style.display = "flex"
     modalBg.style.display ="block"
@@ -184,17 +191,64 @@ addmemBtn.addEventListener("click", function(){
     memberModal.style.display = "flex"
     modalBg.style.display ="block"
 })
+addfinanceBtn.addEventListener("click", function(){
+    financeModal.style.display = "flex"
+    modalBg.style.display = "block"
+})
 
-//refactor this event
+//DROPDOWN
+// function disableInputs(){
+//     const Fintype = document.getElementById("select-type")
+//     const lastname = document.getElementById("lastname")
+//     const firstname = document.getElementById("firstname")
+//     const midname = document.getElementById("midname")
+//     const extension = document.getElementById("extension")
+//     const gender = document.getElementById("select-gender")
+//     const contact = document.getElementById("contact")
+//     const accType = document.getElementById("acc-type")
+//     const accId = document.getElementById("acc-id")
+//     const bodyNum = document.getElementById("body-no")
+//     const amount = document.getElementById("amount")
+
+//     if(Fintype == "accounting"){
+//         accType.disabled = true
+//     }
+//     else if(Fintype == "donation"){
+//         accType.disabled = false
+//     }else if(Fintype == "butaw"){
+//         accType.disabled = false
+//     }
+// }
+function disableInputs() {
+    const selectType = document.getElementById("select-type");
+    const midnameInput = document.getElementById("midname");
+    
+    if (selectType.value === "butaw") {
+      midnameInput.disabled = true;
+    } else {
+      midnameInput.disabled = false;
+    }
+  }
+  
+
+// CANCEL BUTTONS
 userCancel.addEventListener("click", function(){
+    document.getElementById("user-form").reset()
     userModal.style.display = "none"
     modalBg.style.display ="none"
 })
 memberCancel.addEventListener("click",function(){
+    document.getElementById("member-form").reset()
     memberModal.style.display = "none"
     modalBg.style.display ="none"
-    document.getElementById("mem-lastname").value = ""
 })
+financeCancel.addEventListener("click",function(){
+    document.getElementById("finance-form").reset()
+    financeModal.style.display = "none"
+    modalBg.style.display = "none"
+})
+
+// EDIT-CLOSE BUTTONS
 editUserClose.addEventListener("click", function(){
     editUser.style.display = "none"
     modalBg.style.display = "none"
