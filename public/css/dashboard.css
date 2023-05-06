@@ -14,6 +14,7 @@
     --dash-green: #42A147;
     --dash-yellow: #FFC50C;
     --dash-cyan: #0A97A9;
+    --span-red: red;
     --dash-viewreport-bg:  rgba(236, 236, 236, 0.842);
 }
 body{
@@ -248,7 +249,7 @@ header h3{
     cursor: pointer;
 }
 .fields span{
-    color: red;
+    color: var(--span-red);
 }
 .usermoreBtn{
     background-color: var(--dark-blue);
