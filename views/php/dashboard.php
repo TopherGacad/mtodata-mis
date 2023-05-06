@@ -491,7 +491,7 @@
         <div class="bg" id="bg"></div>
         <div class="addMem-modal-container" id="member-modal-container">
             <h2 class="modal-title">MEMBER REGISTRATION</h2>
-            <form action="" id="member-form">
+            <form action="../php/addmember.php" method="post" id="member-form">
                 <div class="form-container">
                     <!-- FORM LEFT -->
                     <div class="memForm-left">
