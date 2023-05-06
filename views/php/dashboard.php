@@ -149,13 +149,13 @@
                     }
 
                     // retrieve data from the MySQL table
-                    $sql = "SELECT user_id, CONCAT(F_name, ' ', L_name) AS Name, psword, roles FROM user";
+                    $sql = "SELECT user_id, CONCAT(F_name, ' ', L_name) AS Name, roles, date_created FROM user";
                     $result = $conn->query($sql);
 
                     
                         // output data of each row
                         while ($row = $result->fetch_assoc()) {
-                            echo "<tr><td>" . $row["user_id"] . "</td><td>" . $row["Name"] . "</td><td>" . $row["psword"] . "</td><td>" . $row["roles"] . "</td><td><i class='tools fa-solid fa-trash-can'></i><i class='tools fa-solid fa-pen-to-square'></i></td></tr>";
+                            echo "<tr><td>" . $row["user_id"] . "</td><td>" . $row["Name"] . "</td><td>" . $row["roles"] . "</td><td>" . $row["date_created"] . "</td><td><i class='tools fa-solid fa-trash-can'></i><i class='tools fa-solid fa-pen-to-square'></i></td></tr>";
                         }
                   
                     // close MySQL connection
@@ -368,11 +368,11 @@
                         <div class="fields">
                             <label for="select-role">User's role<span> *</span></label>
                             <select name="userrole" id="select-mem">
-                                <option value="pres">President</option>
-                                <option value="vpres">Vice President</option>
+                                <option value="President">President</option>
+                                <option value="Vice President">Vice President</option>
                                 <option value="secretary">Secretary</option>
-                                <option value="treasurer">Treasurer</option>
-                                <option value="auditor">Auditor</option>
+                                <option value="Treasurer">Treasurer</option>
+                                <option value="Auditor">Auditor</option>
                             </select>
                         </div>
                         <!-- LASTNAME -->
