@@ -182,7 +182,7 @@ if (!isset($_SESSION['user_name'])) {
 
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
-                        echo "<tr><td>" . $row["user_id"] . "</td><td>" . $row["Name"] . "</td><td>" . $row["roles"] . "</td><td>" . $row["date_created"] . "</td><td><i class='tools fa-solid fa-trash-can'></i><i class='tools fa-solid fa-pen-to-square'></i></td></tr>";
+                        echo "<tr><td>" . $row["user_id"] . "</td><td>" . $row["Name"] . "</td><td>" . $row["roles"] . "</td><td>" . $row["date_created"] . "</td><td><i class='tools fa-solid fa-trash-can'></i><i class='tools fa-solid fa-eye'></i></td></tr>";
                     }
 
                     // close MySQL connection

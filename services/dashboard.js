@@ -298,7 +298,7 @@ delUser.addEventListener("click", function(){
     // TO DO: if confirm then delete selected user else stay
 })
 
-const editIcon = document.querySelector(".fa-pen-to-square")
+const editIcon = document.querySelector(".fa-eye")
 editIcon.addEventListener("click", function() {
                 // code to edit the user with this ID
                 editUser.style.display = "flex"
