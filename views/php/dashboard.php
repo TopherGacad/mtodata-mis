@@ -195,19 +195,30 @@
                         </tr>
 
                         <tr>
-                            <td>01</td>
-                            <td>Christopher</td>
-                            <td>helloworld</td>
-                            <td>Developer</td>
-                            <td>
-                                <div class="status-contain">
-                                    <p>• Active</p>
-                                </div>
-                            </td>
-                            <td>
-                                <i class="tools fa-solid fa-trash-can"></i>
-                                <i class="tools fa-solid fa-pen-to-square" id="edit-member-icon"></i>
-                            </td>
+                        <?php
+    // connect to the MySQL database
+    include "db_conn.php";
+
+    // check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // retrieve data from the MySQL table
+    $sql = "SELECT * FROM mem_info";
+    $result = $conn->query($sql);
+
+    // output data of each row
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        echo "<tr><td>" . $row["id"] . "</td><td>" . $row["fname"] . "</td><td>" . $row["barangay"] . "</td><td>" . $row["license_no"] . "</td><td><div class='status-contain'><p>• Active</p></div></td><td><i class='tools fa-solid fa-trash-can'></i><i class='tools fa-solid fa-pen-to-square' id='edit-member-icon'></i></td></tr>";
+    } else {
+        echo "0 results";
+    }
+
+    // close MySQL connection
+    $conn->close();
+?>
                         </tr>
 
                     </table>
