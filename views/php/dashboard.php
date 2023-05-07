@@ -571,7 +571,6 @@ if (!isset($_SESSION['user_name'])) {
                         <label for="select-type">Finance Type<span> *</span>
                         </label>
                         <select name="type" id="select-type" onchange="disableInputs()">
-                            <option value="accounting">Accounting</option>
                             <option value="donation">Donation</option>
                             <option value="butaw">Butaw</option>
                         </select>
