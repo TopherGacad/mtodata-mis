@@ -182,7 +182,7 @@ if (!isset($_SESSION['user_name'])) {
 
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
-                        echo "<tr><td>" . $row["user_id"] . "</td><td>" . $row["Name"] . "</td><td>" . $row["roles"] . "</td><td>" . $row["date_created"] . "</td><td><i class='tools fa-solid fa-trash-can'></i><i class='tools fa-solid fa-eye'></i></td></tr>";
+                        echo "<tr><td>" . $row["user_id"] . "</td><td>" . $row["Name"] . "</td><td>" . $row["roles"] . "</td><td>" . $row["date_created"] . "</td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye'></i></abbr></td></tr>";
                     }
 
                     // close MySQL connection
@@ -235,7 +235,7 @@ if (!isset($_SESSION['user_name'])) {
                     // output data of each row
                     if ($result->num_rows > 0) {
                         $row = $result->fetch_assoc();
-                        echo "<tr><td>" . $row["id"] . "</td><td>" . $row["fname"] . "</td><td>" . $row["barangay"] . "</td><td>" . $row["license_no"] . "</td><td><div class='status-contain'><p>• Active</p></div></td><td><i class='tools fa-solid fa-trash-can'></i><i class='tools fa-solid fa-pen-to-square' id='edit-member-icon'></i></td></tr>";
+                        echo "<tr><td>" . $row["id"] . "</td><td>" . $row["fname"] . "</td><td>" . $row["barangay"] . "</td><td>" . $row["license_no"] . "</td><td><div class='status-contain'><p>• Active</p></div></td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr></td></tr>";
                     } else {
                         echo "0 results";
                     }
