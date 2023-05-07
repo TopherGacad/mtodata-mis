@@ -250,8 +250,13 @@ header{
     display: flex;
     align-items: end;
 }
-.head-right button,
-.head-right input{
+.userMoreBtn,
+.user-search,
+.adduserBtn,
+.addmemBtn, 
+.addFinanceBtn,
+.addComplainBtn,
+.addEventBtn{
     margin-left: 20px;
 }
 header h3{
@@ -259,7 +264,8 @@ header h3{
     line-height: 0px;
 }
 .user-search{
-    width: 50%;
+    margin-right:0;
+    width: 70%;
     height: 15px;
 }
 .adduserBtn,
@@ -278,7 +284,7 @@ header h3{
 .fields span{
     color: var(--span-red);
 }
-.usermoreBtn{
+.usermoreBtn,.user-searchBtn{
     background-color: var(--dark-blue);
     color: var(--white-color);
     border: none;

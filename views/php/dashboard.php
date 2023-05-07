@@ -150,7 +150,10 @@ if (!isset($_SESSION['user_name'])) {
             </div>
             <div class="head-right">
                 <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
-                <input type="text" class="user-search" placeholder="Search">
+                <div class="search-container">
+                    <input type="text" class="user-search" placeholder="Search">
+                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
                 <button class="adduserBtn" id="addUser-btn"><i class="fa-solid fa-plus"></i> Add User</button>
             </div>
         </header>
@@ -202,7 +205,10 @@ if (!isset($_SESSION['user_name'])) {
             </div>
             <div class="head-right">
                 <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
-                <input type="text" class="user-search" placeholder="Search">
+                <div class="search-container">
+                    <input type="text" class="user-search" placeholder="Search">
+                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
                 <button class="addmemBtn" id="addmem-btn"><i class="fa-solid fa-plus"></i> Add Member</button>
             </div>
         </header>
@@ -258,7 +264,10 @@ if (!isset($_SESSION['user_name'])) {
             </div>
             <div class="head-right">
                 <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
-                <input type="text" class="user-search" placeholder="Search">
+                <div class="search-container">
+                    <input type="text" class="user-search" placeholder="Search">
+                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
                 <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
             </div>
         </header>
@@ -299,7 +308,10 @@ if (!isset($_SESSION['user_name'])) {
             </div>
             <div class="head-right">
                 <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
-                <input type="text" class="user-search" placeholder="Search">
+                <div class="search-container">
+                    <input type="text" class="user-search" placeholder="Search">
+                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
                 <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New Complaint</button>
             </div>
         </header>
@@ -339,7 +351,10 @@ if (!isset($_SESSION['user_name'])) {
             </div>
             <div class="head-right">
                 <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
-                <input type="text" class="user-search" placeholder="Search">
+                <div class="search-container">
+                    <input type="text" class="user-search" placeholder="Search">
+                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
                 <button class="addEventBtn" id="addEvent-btn"><i class="fa-solid fa-plus"></i> Add Events</button>
             </div>
         </header>
