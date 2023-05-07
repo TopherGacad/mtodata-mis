@@ -131,6 +131,7 @@ section{
     border-bottom: 1px solid var(--border-color);
     padding: 10px 0px;
     font-size: 14px;
+    background-color: var(--base-color);
 }
 .card-header h4{
     color: var(--dark-blue);
@@ -193,8 +194,34 @@ section{
     bottom: 0;
     height: 60%;
     width: 40%;
+    overflow: auto;
+    z-index: 1;
 }
-
+.events{
+    position: sticky;
+    top: 0;
+}
+.events-link{
+    position: sticky;
+    bottom: 0;
+    text-align: center;
+    background-color: var(--border-color);
+}
+.dash-content{
+    font-family: 'Roboto', sans-serif;
+    padding: 5px;
+}
+.agenda-box{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--content-font-color);
+    font-size: 13px;
+}
+.agenda-box h3{
+    color: var(--dark-blue);
+}
     /* USER PANE */
 .users-container, 
 .member-container, 

@@ -105,10 +105,38 @@ if (!isset($_SESSION['user_name'])) {
                 </div>
             </div>
         </section>
-        <div class="botleft-dash border"></div>
-        <div class="botright-dash border">
+        <div class="botleft-dash border">
             <div class="card-header">
+                <h4>Recent Financial Entry</h4>
+            </div>
+        </div>
+        <div class="botright-dash border">
+            <div class="card-header events">
                 <h4>Events</h4>
+            </div>
+            <div class="dash-content">
+                <div class="agenda-box">
+                    <h3>◉ WHO:</h3>
+                    <p>MTODA Officers</p>
+                </div>
+
+                <div class="agenda-box">
+                    <h3>◉ WHAT:</h3>
+                    <p>Meeting agenda for annual election 2023-2024</p>
+                </div>
+
+                <div class="agenda-box">
+                    <h3>◉ WHEN:</h3>
+                    <p>May 05, 2023 10:00PM</p>
+                </div>
+
+                <div class="agenda-box">
+                    <h3>◉ WHERE:</h3>
+                    <p>MTODA line Terminal </p>
+                </div>
+            </div>
+            <div class="link-container events-link">
+                    <a href="#">View Report</a>
             </div>
         </div>
     </div>
