@@ -342,10 +342,24 @@ function exportToExcel() {
     });
 }
 
-
 // Attach exportToExcel function to the export button
 const exportBtn = document.querySelector("#mem-export");
 exportBtn.addEventListener("click", exportToExcel);
+
+var sessionTimeoutMilliseconds = 60 * 60 * 1000;
+var timeoutTimer;
+
+function resetTimeout() {
+    clearTimeout(timeoutTimer);
+    timeoutTimer = setTimeout(logout, sessionTimeoutMilliseconds);
+}
+
+function logout() {
+    window.location.href = "../html/login.html";
+}
+
+document.addEventListener("mousemove", resetTimeout);
+
 
 // TO DO: 
 // 1. create an array of objects to store the users inside datalist.js
