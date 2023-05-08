@@ -151,57 +151,82 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 
     <!-- USER PANE -->
     <div class="users-container" id="users-container">
-        <header>
-            <div class="head-left">
-                <h3>USER TYPE MANAGEMENT</h3>
-                <p>ADMIN VIEW</p>
+    <header>
+        <div class="head-left">
+            <h3>USER TYPE MANAGEMENT</h3>
+            <p>ADMIN VIEW</p>
+        </div>
+        <div class="head-right">
+            <div class="search-container">
+                <input type="text" class="user-search" id="user-search" placeholder="Search">
+                <button class="user-searchBtn" id="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
-            <div class="head-right">
-                <div class="search-container">
-                    <input type="text" class="user-search" placeholder="Search">
-                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-                <button class="adduserBtn" id="addUser-btn"><i class="fa-solid fa-plus"></i> Add User</button>
-            </div>
-        </header>
+            <button class="adduserBtn" id="addUser-btn"><i class="fa-solid fa-plus"></i> Add User</button>
+        </div>
+    </header>
 
-        <main>
-            <table id="user-table">
+    <main>
+        <table id="user-table">
+            <thead>
                 <tr>
-                    <th>USER ID </th>
+                    <th>USER ID</th>
                     <th>NAME</th>
                     <th>ROLE</th>
                     <th>DATE CREATED</th>
                     <th>ACTION</th>
                 </tr>
+            </thead>
 
-                <tr>
-                    <?php
-                    // connect to the MySQL database
-                    include "db_conn.php";
+            <tbody id="user-table-body">
+                <?php
+                // connect to the MySQL database
+                include "db_conn.php";
 
-                    // check connection
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
+                // check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
 
-                    // retrieve data from the MySQL table
-                    $sql = "SELECT user_id, CONCAT(F_name, ' ', L_name) AS Name, roles, date_created FROM user";
-                    $result = $conn->query($sql);
+                // retrieve data from the MySQL table
+                $sql = "SELECT user_id, CONCAT(F_name, ' ', L_name) AS Name, roles, date_created FROM user";
+                $result = $conn->query($sql);
 
+                // output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr><td>" . $row["user_id"] . "</td><td>" . $row["Name"] . "</td><td>" . $row["roles"] . "</td><td>" . $row["date_created"] . "</td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye'></i></abbr></td></tr>";
+                }
 
-                    // output data of each row
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr><td>" . $row["user_id"] . "</td><td>" . $row["Name"] . "</td><td>" . $row["roles"] . "</td><td>" . $row["date_created"] . "</td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye'></i></abbr></td></tr>";
-                    }
+                // close MySQL connection
+                $conn->close();
+                ?>
+            </tbody>
+        </table>
+    </main>
+</div>
 
-                    // close MySQL connection
-                    $conn->close();
-                    ?>
-                </tr>
-            </table>
-        </main>
-    </div>
+<script>
+    const searchBtn = document.getElementById('user-searchBtn');
+    const searchBar = document.getElementById('user-search');
+    const tableBody = document.getElementById('user-table-body');
+
+    searchBtn.addEventListener('click', () => {
+        const searchText = searchBar.value.toLowerCase();
+
+        // loop through all table rows and hide those that do not match the search query
+        for (let i = 0; i < tableBody.rows.length; i++) {
+            const row = tableBody.rows[i];
+            const userId = row.cells[0].textContent.toLowerCase();
+            const name = row.cells[1].textContent.toLowerCase();
+            const role = row.cells[2].textContent.toLowerCase();
+
+            if (userId.indexOf(searchText) > -1 || name.indexOf(searchText) > -1 || role.indexOf(searchText) > -1) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        }
+    });
+</script>
 
     <!-- MEMBER INFO PANE -->
     <div class="member-container" id="member-container">
