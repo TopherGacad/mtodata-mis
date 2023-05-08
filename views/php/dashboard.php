@@ -144,7 +144,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </div>
             </div>
             <div class="link-container events-link">
-                    <a href="#">View Report</a>
+                <a href="#">View Report</a>
             </div>
         </div>
     </div>
@@ -241,17 +241,16 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         die("Connection failed: " . $conn->connect_error);
                     }
 
-                    // retrieve data from the MySQL table
-                    $sql = "SELECT * FROM mem_info";
+                    // retrieve data from the MySQL table with concatenated fname and lname
+                    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, license_no FROM mem_info";
                     $result = $conn->query($sql);
 
                     // output data of each row
                     if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()){
-                            echo "<tr><td>" . $row["id"] . "</td><td>" . $row["fname"] . "</td><td>" . $row["barangay"] . "</td><td>" . $row["license_no"] . "</td><td><div class='status-contain'><p>• Active</p></div></td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr></td></tr>";
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr><td>" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["barangay"] . "</td><td>" . $row["license_no"] . "</td><td><div class='status-contain'><p>• Active</p></div></td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr></td></tr>";
                         }
-                    } 
-                    else {
+                    } else {
                         echo "0 results";
                     }
 
