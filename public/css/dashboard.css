@@ -250,7 +250,8 @@ header{
     display: flex;
     align-items: end;
 }
-.userMoreBtn,
+.usermoreBtn,
+.exportBtn,
 .user-search,
 .adduserBtn,
 .addmemBtn, 
@@ -284,7 +285,9 @@ header h3{
 .fields span{
     color: var(--span-red);
 }
-.usermoreBtn,.user-searchBtn{
+.usermoreBtn,
+.exportBtn,
+.user-searchBtn{
     background-color: var(--dark-blue);
     color: var(--white-color);
     border: none;

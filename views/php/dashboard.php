@@ -149,7 +149,6 @@ if (!isset($_SESSION['user_name'])) {
                 <p>ADMIN VIEW</p>
             </div>
             <div class="head-right">
-                <button class="usermoreBtn" type="button"><i class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -204,7 +203,7 @@ if (!isset($_SESSION['user_name'])) {
                 <p>ADMIN VIEW</p>
             </div>
             <div class="head-right">
-                <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
+                <button class="memExportBtn exportBtn" id="mem-export"><i class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -214,7 +213,7 @@ if (!isset($_SESSION['user_name'])) {
         </header>
 
         <main>
-            <table>
+            <table id="mem-table">
                 <tr>
                     <th>MEMBER ID</th>
                     <th>NAME</th>
@@ -265,7 +264,7 @@ if (!isset($_SESSION['user_name'])) {
                 <p>FINANCE STAFF VIEW</p>
             </div>
             <div class="head-right">
-                <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
+                <button class="financeExportBtn exportBtn" id="finance-export"><i class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -309,7 +308,7 @@ if (!isset($_SESSION['user_name'])) {
                 <p>USER VIEW</p>
             </div>
             <div class="head-right">
-                <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
+                <button class="complaintExportBtn exportBtn" id="complaint-export"><i class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -352,7 +351,6 @@ if (!isset($_SESSION['user_name'])) {
                 <p>ADMIN VIEW</p>
             </div>
             <div class="head-right">
-                <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
