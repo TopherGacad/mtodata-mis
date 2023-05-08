@@ -203,7 +203,7 @@ if (!isset($_SESSION['user_name'])) {
                 <p>ADMIN VIEW</p>
             </div>
             <div class="head-right">
-                <button class="memExportBtn exportBtn" id="mem-export"><i class="fa-solid fa-download"></i></button>
+                <abbr title="Export Report"><button class="memExportBtn exportBtn" id="mem-export"><i class="fa-solid fa-download"></i></button></abbr>
                 <div class="search-container">
                     <input type="text" class="user-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
