@@ -149,7 +149,7 @@ if (!isset($_SESSION['user_name'])) {
                 <p>ADMIN VIEW</p>
             </div>
             <div class="head-right">
-                <button class="usermoreBtn"><i class="fa-solid fa-ellipsis"></i></button>
+                <button class="usermoreBtn" type="button"><i class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -240,9 +240,11 @@ if (!isset($_SESSION['user_name'])) {
 
                     // output data of each row
                     if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                        echo "<tr><td>" . $row["id"] . "</td><td>" . $row["fname"] . "</td><td>" . $row["barangay"] . "</td><td>" . $row["license_no"] . "</td><td><div class='status-contain'><p>• Active</p></div></td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr></td></tr>";
-                    } else {
+                        while($row = $result->fetch_assoc()){
+                            echo "<tr><td>" . $row["id"] . "</td><td>" . $row["fname"] . "</td><td>" . $row["barangay"] . "</td><td>" . $row["license_no"] . "</td><td><div class='status-contain'><p>• Active</p></div></td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr></td></tr>";
+                        }
+                    } 
+                    else {
                         echo "0 results";
                     }
 
@@ -751,7 +753,7 @@ if (!isset($_SESSION['user_name'])) {
             1. USER SUCCESSFULLY ADDED 
             2. USER 
         -->
-
+    <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
     <script src="../../services/dashboard.js"></script>
 </body>
 
