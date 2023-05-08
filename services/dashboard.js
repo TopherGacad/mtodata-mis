@@ -294,7 +294,7 @@ editDetails.addEventListener("click", function(){
     
 })
 
-
+//EXPORT FUNCTION 
 function exportToExcel() {
     const table = document.getElementById("mem-table");
     const rows = table.getElementsByTagName("tr");
@@ -357,10 +357,5 @@ function resetTimeout() {
 function logout() {
     window.location.href = "../html/login.html";
 }
-
 document.addEventListener("mousemove", resetTimeout);
 
-
-// TO DO: 
-// 1. create an array of objects to store the users inside datalist.js
-// 2. create a function that will render users on user pane from datalist.js

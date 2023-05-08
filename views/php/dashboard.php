@@ -4,7 +4,6 @@ if (!isset($_SESSION['user_name'])) {
     header("location:login.php");
     exit();
 }
-
 //FOR SESSION TIMEOUT AFTER 1 HOUR NO MOUNSE MOVEMENT
 $sessionTimeoutSeconds = 3600;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $sessionTimeoutSeconds) {
