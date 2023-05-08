@@ -488,11 +488,11 @@ if (!isset($_SESSION['user_name'])) {
                     <!-- MEMBERS ROLE -->
                     <div class="fields">
                         <label for="select-mem">Member's role<span> *</span></label>
-                        <select name="role" id="select-mem">
+                        <select name="role" id="select-mem" required>
                             <option value="Officer">Officer</option>
                             <option value="Driver">Driver only</option>
                             <option value="Operator">Operator only</option>
-                            <option value="both">Driver & Operator</option>
+                            <option value="Both">Driver & Operator</option>
                         </select>
                     </div>
                     <!-- LASTNAME -->

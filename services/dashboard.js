@@ -195,30 +195,6 @@ addfinanceBtn.addEventListener("click", function(){
     financeModal.style.display = "flex"
     modalBg.style.display = "block"
 })
-
-//DROPDOWN
-// function disableInputs(){
-//     const Fintype = document.getElementById("select-type")
-//     const lastname = document.getElementById("lastname")
-//     const firstname = document.getElementById("firstname")
-//     const midname = document.getElementById("midname")
-//     const extension = document.getElementById("extension")
-//     const gender = document.getElementById("select-gender")
-//     const contact = document.getElementById("contact")
-//     const accType = document.getElementById("acc-type")
-//     const accId = document.getElementById("acc-id")
-//     const bodyNum = document.getElementById("body-no")
-//     const amount = document.getElementById("amount")
-
-//     if(Fintype == "accounting"){
-//         accType.disabled = true
-//     }
-//     else if(Fintype == "donation"){
-//         accType.disabled = false
-//     }else if(Fintype == "butaw"){
-//         accType.disabled = false
-//     }
-// }
 function disableInputs() {
     const selectType = document.getElementById("select-type");
     const midnameInput = document.getElementById("midname");
