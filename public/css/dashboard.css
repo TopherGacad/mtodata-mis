@@ -408,7 +408,8 @@ input:disabled,select:disabled{
         /* MODALS */
 .addUser-modal-container, 
 .addMem-modal-container,
-.addFinance-modal-container{
+.addFinance-modal-container,
+.addComplaint-modal-container{
     display: none;
     flex-direction: column;
     width: 70%;
@@ -439,12 +440,7 @@ input:disabled,select:disabled{
     padding-bottom: 5px;
     color: var(--dark-blue);
 }
-.userForm-left,
-.userForm-right,
-.memForm-right, 
-.memForm-left,
-.financeForm-left,
-.financeForm-right{
+.addForm{
     width: 100vw;
     padding: 0px 20px;
 }
@@ -513,6 +509,7 @@ select{
     background-color: var(--dark-blue);
 }
 
+/* ADD COMPLAINT MODAL */
 /* EDIT USER MODAL */
 .editUser-modal-container,
 .editMember-modal-container{

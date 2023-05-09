@@ -19,11 +19,14 @@ const programsBtn = document.getElementById("programs-btn")
 const adduserBtn = document.getElementById("addUser-btn")
 const addmemBtn = document.getElementById("addmem-btn")
 const addfinanceBtn = document.getElementById("addFinance-btn")
+const addComplainBtn = document.getElementById("addComplain-btn")
 
 // MODALS
 const userModal = document.getElementById("user-modal-container")
 const memberModal = document.getElementById("member-modal-container")
 const financeModal = document.getElementById("finance-modal-container")
+const complainModal = document.getElementById("complaint-modal-container")
+
 const editUser = document.getElementById("editUser-modal")
 const editMem = document.getElementById("editMem-modal")
 
@@ -34,6 +37,8 @@ const seePass = document.getElementById("see-pass")
 const userCancel = document.getElementById("adduser-cancel")
 const memberCancel = document.getElementById("member-cancel")
 const financeCancel = document.getElementById("finance-cancel")
+const complaintCancel = document.getElementById("complaint-cancel")
+
 // EDIT-CLOSE BUTTONS
 const editUserClose = document.getElementById("editUser-close")
 const editMemClose = document.getElementById("editMem-close")
@@ -195,6 +200,11 @@ addfinanceBtn.addEventListener("click", function(){
     financeModal.style.display = "flex"
     modalBg.style.display = "block"
 })
+addComplainBtn.addEventListener("click",function(){
+    complainModal.style.display = "flex"
+    modalBg.style.display = "block"
+})
+
 function disableInputs() {
     const selectType = document.getElementById("select-type");
     const midnameInput = document.getElementById("midname");
@@ -229,6 +239,11 @@ financeCancel.addEventListener("click",function(){
     financeModal.style.display = "none"
     modalBg.style.display = "none"
 })
+complaintCancel.addEventListener("click", function(){
+    document.getElementById("complaint-form").reset()
+    complainModal.style.display = "none"
+    modalBg.style.display = "none"
+})
 
 // EDIT-CLOSE BUTTONS
 editUserClose.addEventListener("click", function(){
@@ -239,7 +254,6 @@ editUserClose.addEventListener("click", function(){
 editMemClose.addEventListener("click", function(){
     editMem.style.display = "none"
     modalBg.style.display = "none"
-
 })
 
 

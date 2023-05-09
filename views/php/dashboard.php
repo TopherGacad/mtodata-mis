@@ -411,7 +411,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <form action="../php/adduser.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")' id="user-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
-                <div class="userForm-left">
+                <div class="userForm-left addForm">
                     <!-- USERS ROLE -->
                     <div class="fields">
                         <label for="select-role">User's role<span> *</span></label>
@@ -446,7 +446,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     </div>
                 </div>
                 <!-- FORM-RIGHT -->
-                <div class="userForm-right">
+                <div class="userForm-right addForm">
                     <!-- EMAIL -->
                     <div class="fields">
                         <label for="user-email">Email Adress<span> *</span></label>
@@ -492,7 +492,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <form action="../php/addmember.php" method="post" id="member-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
-                <div class="memForm-left">
+                <div class="memForm-left addForm">
                     <!-- MEMBERS ROLE -->
                     <div class="fields">
                         <label for="select-mem">Member's role<span> *</span></label>
@@ -538,7 +538,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </div>
 
                 <!-- FORM-RIGHT -->
-                <div class="memForm-right">
+                <div class="memForm-right addForm">
                     <!-- STREET -->
                     <div class="fields">
                         <label for="mem-street">Street<span> *</span></label>
@@ -589,7 +589,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <form action="" id="finance-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
-                <div class="financeForm-left">
+                <div class="financeForm-left addForm">
                     <!-- FINANCE TYPE -->
                     <div class="fields">
                         <label for="select-type">Finance Type<span> *</span>
@@ -633,7 +633,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </div>
 
                 <!-- FORM-RIGHT -->
-                <div class="financeForm-right">
+                <div class="financeForm-right addForm">
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="contact">Contact no.<span> *</span></label>
@@ -668,6 +668,87 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 
                     <div class="btn-container">
                         <input type="button" value="Cancel" class="cancel-btn" id="finance-cancel" formnovalidate>
+                        <button class="save-btn" id="save-btn" type="submit">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- ADD COMPLAINT MODAL -->
+    <div class="bg" id="bg"></div>
+    <div class="addComplaint-modal-container" id="complaint-modal-container">
+        <h2 class="modal-title">ADD COMPLAINT</h2>
+        <form action="../php/adduser.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")' id="complaint-form">
+            <div class="form-container">
+                <!-- FORM LEFT -->
+                <div class="complaintForm-left addForm ">
+                    <!-- USERS ROLE -->
+                    <div class="fields">
+                        <label for="select-role">User's role<span> *</span></label>
+                        <select name="userrole" id="select-mem">
+                            <option value="">--- Select Role ---</option>
+                            <option value="President">President</option>
+                            <option value="Vice President">Vice President</option>
+                            <option value="secretary">Secretary</option>
+                            <option value="Treasurer">Treasurer</option>
+                            <option value="Auditor">Auditor</option>
+                        </select>
+                    </div>
+                    <!-- LASTNAME -->
+                    <div class="fields">
+                        <label for="user-lastname">Lastname<span> *</span></label>
+                        <input type="text" id="user-lastname" name="lastname" placeholder="Lastname" required>
+                    </div>
+                    <!-- FIRSTNAME -->
+                    <div class="fields">
+                        <label for="user-firstname">Firstname<span> *</span></label>
+                        <input type="text" id="user-firstname" name="firstname" placeholder="Firstname" required>
+                    </div>
+                    <!-- MIDNAME -->
+                    <div class="fields">
+                        <label for="user-midname">Middlename</label>
+                        <input type="text" id="user-midname" name="middlename" placeholder="Middlename">
+                    </div>
+                    <!-- EXTENSION NAME -->
+                    <div class="fields">
+                        <label for="user-extension">Extension Name</label>
+                        <input type="text" pattern="[A-Za-z.]{2,5}" id="user-extension" name="extension" placeholder="eg. Jr, Sr">
+                    </div>
+                </div>
+                <!-- FORM-RIGHT -->
+                <div class="complaintForm-right addForm">
+                    <!-- EMAIL -->
+                    <div class="fields">
+                        <label for="user-email">Email Adress<span> *</span></label>
+                        <input type="text" id="user-email" name="street" required>
+                    </div>
+
+                    <!-- CONTACT NUMBER -->
+                    <div class="fields">
+                        <label for="mem-contact">Contact no.<span> *</span></label>
+                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
+                    </div>
+
+                    <!-- PASSWORD -->
+                    <div class="fields">
+                        <label for="user-pass">Password<span> *</span></label>
+                        <input type="password" id="user-pass" name="barangay" minlength="8" maxlength="12" required>
+                    </div>
+                    <!-- CONFIRM PASSWORD -->
+                    <div class="fields">
+                        <label for="user-confirmPass">Confirm Password<span> *</span></label>
+                        <input type="password" id="user-confirmPass" name="city" required>
+                    </div>
+
+                    <!-- SEE PASSWORD -->
+                    <div class="see-password-container">
+                        <input class="see-pass" type="checkbox" id="see-pass">
+                        <label class="see-pass-label" for="see-pass">See password</label>
+                    </div>
+
+                    <div class="btn-container">
+                        <input type="button" value="Cancel" class="cancel-btn" id="complaint-cancel" formnovalidate>
                         <button class="save-btn" id="save-btn" type="submit">Save</button>
                     </div>
                 </div>
