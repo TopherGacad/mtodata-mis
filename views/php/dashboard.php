@@ -753,11 +753,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <button>Cancel</button>
         </div>
     </div>
-    <!-- 
-            TO DO: 
-            1. USER SUCCESSFULLY ADDED 
-            2. USER 
-        -->
+    
     <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
     <script src="../../services/dashboard.js"></script>
 </body>
