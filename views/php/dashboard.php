@@ -741,13 +741,13 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class="timeDate-container">
                             <!-- TIME -->
                         <div class="fields">
-                            <label for="user-confirmPass">Time<span> *</span></label>
+                            <label for="user-confirmPass">Time of Incident<span> *</span></label>
                             <input type="time" id="user-confirmPass" name="city" required>
                         </div>
 
                         <!-- DATE -->
                         <div class="fields">
-                            <label for="user-confirmPass">Date<span> *</span></label>
+                            <label for="user-confirmPass">Date of Incident<span> *</span></label>
                             <input type="date" id="user-confirmPass" name="city" required>
                         </div>
                     </div>
