@@ -466,6 +466,7 @@ select{
     width: 85%;
     border-radius: 5px;
     border: 1px solid var(--border-color);
+    color:var(--content-font-color) ;
 }
 #mem-license::placeholder, 
 #mem-contact::placeholder{
@@ -515,6 +516,9 @@ textarea{
     resize: none;
     width: 90%;
     border: 1px solid var(--border-color);
+    font-size: 16px;
+    padding: 10px;
+    color: var(--content-font-color);
 }
 .timeDate-container{
     display: flex;

@@ -735,7 +735,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- DESCRIPTION -->
                     <div class="fields">
                         <label for="user-pass">Description<span> *</span></label>
-                        <textarea name="" id="" cols="30" rows="10" maxlength="300">Type here</textarea>
+                        <textarea name="" id="" cols="30" rows="10" maxlength="350"></textarea>
                     </div>
 
                     <div class="timeDate-container">
