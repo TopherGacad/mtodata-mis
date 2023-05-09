@@ -722,7 +722,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <div class="complaintForm-right addForm">
                     <!-- SUBJECT -->
                     <div class="fields">
-                        <label for="mem-contact">Subject to complaint<span> *</span></label>
+                        <label for="mem-contact">Person to Complain<span> *</span></label>
                         <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
                     </div>
 

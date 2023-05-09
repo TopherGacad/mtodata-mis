@@ -519,11 +519,12 @@ textarea{
     font-size: 16px;
     padding: 10px;
     color: var(--content-font-color);
+    font-family: 'Roboto', sans-serif;
 }
 .timeDate-container{
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 20px;
 }
 /* EDIT USER MODAL */
 .editUser-modal-container,
