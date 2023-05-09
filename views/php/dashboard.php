@@ -416,6 +416,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class="fields">
                         <label for="select-role">User's role<span> *</span></label>
                         <select name="userrole" id="select-mem">
+                            <option value="">--- Select Role ---</option>
                             <option value="President">President</option>
                             <option value="Vice President">Vice President</option>
                             <option value="secretary">Secretary</option>
@@ -496,6 +497,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class="fields">
                         <label for="select-mem">Member's role<span> *</span></label>
                         <select name="role" id="select-mem" required>
+                            <option value="">--- Select Role ---</option>
                             <option value="Officer">Officer</option>
                             <option value="Driver">Driver only</option>
                             <option value="Operator">Operator only</option>
@@ -753,7 +755,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <button>Cancel</button>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
     <script src="../../services/dashboard.js"></script>
 </body>
