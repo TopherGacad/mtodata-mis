@@ -683,18 +683,6 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="complaintForm-left addForm ">
-                    <!-- USERS ROLE -->
-                    <div class="fields">
-                        <label for="select-role">User's role<span> *</span></label>
-                        <select name="userrole" id="select-mem">
-                            <option value="">--- Select Role ---</option>
-                            <option value="President">President</option>
-                            <option value="Vice President">Vice President</option>
-                            <option value="secretary">Secretary</option>
-                            <option value="Treasurer">Treasurer</option>
-                            <option value="Auditor">Auditor</option>
-                        </select>
-                    </div>
                     <!-- LASTNAME -->
                     <div class="fields">
                         <label for="user-lastname">Lastname<span> *</span></label>
@@ -715,38 +703,55 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <label for="user-extension">Extension Name</label>
                         <input type="text" pattern="[A-Za-z.]{2,5}" id="user-extension" name="extension" placeholder="eg. Jr, Sr">
                     </div>
-                </div>
-                <!-- FORM-RIGHT -->
-                <div class="complaintForm-right addForm">
-                    <!-- EMAIL -->
+                    <!-- GENDER -->
                     <div class="fields">
-                        <label for="user-email">Email Adress<span> *</span></label>
-                        <input type="text" id="user-email" name="street" required>
+                        <label for="select-gender">Sex<span> *</span></label>
+                        <select name="gender" id="select-gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="none">Prefer not to say</option>
+                        </select>
                     </div>
-
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="mem-contact">Contact no.<span> *</span></label>
                         <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
                     </div>
-
-                    <!-- PASSWORD -->
+                </div>
+                <!-- FORM-RIGHT -->
+                <div class="complaintForm-right addForm">
+                    <!-- SUBJECT -->
                     <div class="fields">
-                        <label for="user-pass">Password<span> *</span></label>
-                        <input type="password" id="user-pass" name="barangay" minlength="8" maxlength="12" required>
+                        <label for="mem-contact">Subject to complaint<span> *</span></label>
+                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
                     </div>
-                    <!-- CONFIRM PASSWORD -->
+
+                    <!-- BODY NUMBER -->
                     <div class="fields">
-                        <label for="user-confirmPass">Confirm Password<span> *</span></label>
-                        <input type="password" id="user-confirmPass" name="city" required>
+                        <label for="mem-contact">Body no.<span> *</span></label>
+                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
                     </div>
 
-                    <!-- SEE PASSWORD -->
-                    <div class="see-password-container">
-                        <input class="see-pass" type="checkbox" id="see-pass">
-                        <label class="see-pass-label" for="see-pass">See password</label>
+                    <!-- DESCRIPTION -->
+                    <div class="fields">
+                        <label for="user-pass">Description<span> *</span></label>
+                        <textarea name="" id="" cols="30" rows="10" maxlength="300">Type here</textarea>
                     </div>
 
+                    <div class="timeDate-container">
+                            <!-- TIME -->
+                        <div class="fields">
+                            <label for="user-confirmPass">Time<span> *</span></label>
+                            <input type="time" id="user-confirmPass" name="city" required>
+                        </div>
+
+                        <!-- DATE -->
+                        <div class="fields">
+                            <label for="user-confirmPass">Date<span> *</span></label>
+                            <input type="date" id="user-confirmPass" name="city" required>
+                        </div>
+                    </div>
+            
                     <div class="btn-container">
                         <input type="button" value="Cancel" class="cancel-btn" id="complaint-cancel" formnovalidate>
                         <button class="save-btn" id="save-btn" type="submit">Save</button>
