@@ -346,6 +346,7 @@ function exportToExcel() {
 const exportBtn = document.querySelector("#mem-export");
 exportBtn.addEventListener("click", exportToExcel);
 
+//SESSION TIMEOUT
 var sessionTimeoutMilliseconds = 60 * 60 * 1000;
 var timeoutTimer;
 
@@ -359,3 +360,56 @@ function logout() {
 }
 document.addEventListener("mousemove", resetTimeout);
 
+//USER SEARCH
+const UsersearchBar = document.getElementById('user-search');
+const UsertableBody = document.getElementById('user-table-body');
+
+UsersearchBar.addEventListener('input', () => {
+  const searchText = UsersearchBar.value.toLowerCase();
+
+  for (let i = 0; i < UsertableBody.rows.length; i++) {
+    const row = UsertableBody.rows[i];
+    const userId = row.cells[0].textContent.toLowerCase();
+    const userName = row.cells[1].textContent.toLowerCase();
+    const userRole = row.cells[2].textContent.toLowerCase();
+
+    if (
+      userId.includes(searchText) ||
+      userName.includes(searchText) ||
+      userRole.includes(searchText)
+    ) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  }
+});
+
+//MEMBER SEARCH
+const MemsearchBar = document.getElementById('mem-search');
+const MemtableBody = document.getElementById('mem-table-body');
+
+MemsearchBar.addEventListener('input', () => {
+  const MemsearchText = MemsearchBar.value.toLowerCase();
+
+  for (let i = 0; i < MemtableBody.rows.length; i++) {
+    const row = MemtableBody.rows[i];
+    const memId = row.cells[0].textContent.toLowerCase();
+    const memName = row.cells[1].textContent.toLowerCase();
+    const memOperation = row.cells[2].textContent.toLowerCase();
+    const memLicense = row.cells[3].textContent.toLowerCase();
+    const memStat = row.cells[4].textContent.toLowerCase();
+
+    if (
+      memId.includes(MemsearchText) ||
+      memName.includes(MemsearchText) ||
+      memOperation.includes(MemsearchText) ||
+      memLicense.includes(MemsearchText) ||
+      memStat.includes(MemsearchText)
+    ){
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  }
+});
