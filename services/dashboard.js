@@ -456,3 +456,21 @@ form.addEventListener('submit', (event) => {
         },2000)
     }
 });
+
+// WARNING TOAST FOR ADD MEMBER
+const selectMemRole = document.getElementById('select-mem');
+const memForm = document.querySelector('#member-form');
+const memError = document.getElementById("mem-warningToast")
+
+memForm.addEventListener('submit', (event) => {
+    if (selectMemRole.value === '') {
+        event.preventDefault();
+        memError.style.display = "flex"
+
+        setTimeout(function(){
+            memError.style.display = "none"
+        },2000)
+    }
+});
+
+
