@@ -20,12 +20,14 @@ const adduserBtn = document.getElementById("addUser-btn")
 const addmemBtn = document.getElementById("addmem-btn")
 const addfinanceBtn = document.getElementById("addFinance-btn")
 const addComplainBtn = document.getElementById("addComplain-btn")
+const addEventBtn = document.getElementById("addEvent-btn")
 
 // MODALS
 const userModal = document.getElementById("user-modal-container")
 const memberModal = document.getElementById("member-modal-container")
 const financeModal = document.getElementById("finance-modal-container")
 const complainModal = document.getElementById("complaint-modal-container")
+const eventModal = document.getElementById("event-modal-container")
 
 const editUser = document.getElementById("editUser-modal")
 const editMem = document.getElementById("editMem-modal")
@@ -38,6 +40,7 @@ const userCancel = document.getElementById("adduser-cancel")
 const memberCancel = document.getElementById("member-cancel")
 const financeCancel = document.getElementById("finance-cancel")
 const complaintCancel = document.getElementById("complaint-cancel")
+const eventCancel = document.getElementById("event-cancel")
 
 // EDIT-CLOSE BUTTONS
 const editUserClose = document.getElementById("editUser-close")
@@ -204,7 +207,12 @@ addComplainBtn.addEventListener("click",function(){
     complainModal.style.display = "flex"
     modalBg.style.display = "block"
 })
+addEventBtn.addEventListener("click",function(){
+    eventModal.style.display = "flex"
+    modalBg.style.display = "block"
+})
 
+// USER TYPE DISABLE INPUTS
 function disableInputs() {
     const selectType = document.getElementById("select-type");
     const midnameInput = document.getElementById("midname");
@@ -242,6 +250,11 @@ financeCancel.addEventListener("click",function(){
 complaintCancel.addEventListener("click", function(){
     document.getElementById("complaint-form").reset()
     complainModal.style.display = "none"
+    modalBg.style.display = "none"
+})
+eventCancel.addEventListener("click",function(){
+    document.getElementById("event-form").reset()
+    eventModal.style.display = "none"
     modalBg.style.display = "none"
 })
 
@@ -428,7 +441,8 @@ MemsearchBar.addEventListener('input', () => {
   }
 });
 
-const selectRole = document.getElementById('select-mem');
+//WARNING TOAST FOR ADD USER
+const selectRole = document.getElementById('select-role');
 const form = document.querySelector('form');
 const error = document.getElementById("warningToast")
 

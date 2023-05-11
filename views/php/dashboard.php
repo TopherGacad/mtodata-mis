@@ -415,8 +415,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- USERS ROLE -->
                     <div class="fields">
                         <label for="select-role">User's role<span> *</span></label>
-                        <select name="userrole" id="select-mem">
-                            <option value="" selected disabled>--- Select Role ---</option>
+                        <select name="userrole" id="select-role">
+                            <option value="" selected disabled>Select Role</option>
                             <option value="President">President</option>
                             <option value="Vice President">Vice President</option>
                             <option value="secretary">Secretary</option>
@@ -693,31 +693,31 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <form action="../php/adduser.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")' id="complaint-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
-                <div class="complaintForm-left addForm ">
+                <div class="complaintForm-left addForm">
                     <!-- LASTNAME -->
                     <div class="fields">
-                        <label for="user-lastname">Lastname<span> *</span></label>
-                        <input type="text" id="user-lastname" name="lastname" placeholder="Lastname" required>
+                        <label for="complainant-lastname">Lastname<span> *</span></label>
+                        <input type="text" id="complainant-lastname" name="lastname" placeholder="Lastname" required>
                     </div>
                     <!-- FIRSTNAME -->
                     <div class="fields">
-                        <label for="user-firstname">Firstname<span> *</span></label>
-                        <input type="text" id="user-firstname" name="firstname" placeholder="Firstname" required>
+                        <label for="complainant-firstname">Firstname<span> *</span></label>
+                        <input type="text" id="complainant-firstname" name="firstname" placeholder="Firstname" required>
                     </div>
                     <!-- MIDNAME -->
                     <div class="fields">
-                        <label for="user-midname">Middlename</label>
-                        <input type="text" id="user-midname" name="middlename" placeholder="Middlename">
+                        <label for="complainant-midname">Middlename</label>
+                        <input type="text" id="complainant-midname" name="middlename" placeholder="Middlename">
                     </div>
                     <!-- EXTENSION NAME -->
                     <div class="fields">
-                        <label for="user-extension">Extension Name</label>
-                        <input type="text" pattern="[A-Za-z.]{2,5}" id="user-extension" name="extension" placeholder="eg. Jr, Sr">
+                        <label for="complainant-extension">Extension Name</label>
+                        <input type="text" pattern="[A-Za-z.]{2,5}" id="complainant-extension" name="extension" placeholder="eg. Jr, Sr">
                     </div>
                     <!-- GENDER -->
                     <div class="fields">
-                        <label for="select-gender">Sex<span> *</span></label>
-                        <select name="gender" id="select-gender">
+                        <label for="complainant-gender">Sex<span> *</span></label>
+                        <select name="gender" id="complainant-gender">
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="none">Prefer not to say</option>
@@ -725,46 +725,103 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     </div>
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
-                        <label for="mem-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
+                        <label for="complainant-contact">Contact no.<span> *</span></label>
+                        <input type="text" pattern="[0-9]{11}" id="complainant-contact" name="contact" placeholder="eg. 09592220954" required>
                     </div>
                 </div>
                 <!-- FORM-RIGHT -->
                 <div class="complaintForm-right addForm">
                     <!-- SUBJECT -->
                     <div class="fields">
-                        <label for="mem-contact">Person to Complain<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
+                        <label for="subject">Person to Complain<span> *</span></label>
+                        <input type="text" pattern="[0-9]{11}" id="subject" name="subject" required>
                     </div>
 
                     <!-- BODY NUMBER -->
                     <div class="fields">
-                        <label for="mem-contact">Body no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
+                        <label for="subject-bodyNum">Body no.<span> *</span></label>
+                        <input type="text" pattern="[0-9]{11}" id="subject-bodyNum" name="subject-bodyNum" required>
                     </div>
 
                     <!-- DESCRIPTION -->
                     <div class="fields">
-                        <label for="user-pass">Description<span> *</span></label>
-                        <textarea name="" id="" cols="30" rows="9" maxlength="350"></textarea>
+                        <label for="desc">Description<span> *</span></label>
+                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350"></textarea>
                     </div>
 
                     <div class="timeDate-container">
                             <!-- TIME -->
                         <div class="fields">
-                            <label for="user-confirmPass">Time of Incident<span> *</span></label>
-                            <input type="time" id="user-confirmPass" name="city" required>
+                            <label for="time-incident">Time of Incident<span> *</span></label>
+                            <input type="time" id="time-incident" name="time-incident" required>
                         </div>
 
                         <!-- DATE -->
                         <div class="fields">
-                            <label for="user-confirmPass">Date of Incident<span> *</span></label>
-                            <input type="date" id="user-confirmPass" name="city" required>
+                            <label for="date-incident">Date of Incident<span> *</span></label>
+                            <input type="date" id="date-incident" name="date-incident" required>
                         </div>
                     </div>
             
                     <div class="btn-container">
                         <input type="button" value="Cancel" class="cancel-btn" id="complaint-cancel" formnovalidate>
+                        <button class="save-btn" id="save-btn" type="submit">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- ADD EVENTS & PROGRAMS -->
+    <div class="bg" id="bg"></div>
+    <div class="addEvent-modal-container" id="event-modal-container">
+        <h2 class="modal-title">SCHEDULE AN EVENT OR PROGRAM</h2>
+        <form action="../php/adduser.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")' id="event-form">
+            <div class="form-container">
+                <!-- FORM LEFT -->
+                <div class="complaintForm-left addForm">
+                    <!-- EVENT TITLE -->
+                    <div class="fields">
+                        <label for="complainant-lastname">Event Title (What)<span> *</span></label>
+                        <input type="text" id="complainant-lastname" name="lastname" placeholder="Event title" required>
+                    </div>
+
+                     <!-- DESCRIPTION -->
+                     <div class="fields">
+                        <label for="desc">Description<span> *</span></label>
+                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350"></textarea>
+                    </div>
+                </div>
+                <!-- FORM-RIGHT -->
+                <div class="complaintForm-right addForm">
+                     <!-- EVENT ORGANIZER -->
+                     <div class="fields">
+                        <label for="complainant-firstname">Event Organizer<span> *</span></label>
+                        <input type="text" id="complainant-firstname" name="firstname" placeholder="Firstname" required>
+                    </div>
+
+                    <!-- EVENT LOCATION -->
+                    <div class="fields">
+                        <label for="complainant-firstname">Event Location (Where)<span> *</span></label>
+                        <input type="text" id="complainant-firstname" name="firstname" required>
+                    </div>
+
+                    <div class="timeDate-container">
+                        <!-- TIME -->
+                        <div class="fields">
+                            <label for="time-incident">Time of Event (When)<span> *</span></label>
+                            <input type="time" id="time-incident" name="time-incident" required>
+                        </div>
+
+                        <!-- DATE -->
+                        <div class="fields">
+                            <label for="date-incident">Date of Event (When)<span> *</span></label>
+                            <input type="date" id="date-incident" name="date-incident" required>
+                        </div>
+                    </div>
+            
+                    <div class="btn-container">
+                        <input type="button" value="Cancel" class="cancel-btn" id="event-cancel" formnovalidate>
                         <button class="save-btn" id="save-btn" type="submit">Save</button>
                     </div>
                 </div>

@@ -406,12 +406,12 @@ input:disabled,select:disabled{
     background-color: #dddddd;
 }
 
-
         /* MODALS */
 .addUser-modal-container, 
 .addMem-modal-container,
 .addFinance-modal-container,
-.addComplaint-modal-container{
+.addComplaint-modal-container,
+.addEvent-modal-container{
     display: none;
     flex-direction: column;
     width: 70%;
