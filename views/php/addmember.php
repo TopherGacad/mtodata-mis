@@ -21,8 +21,11 @@ $phone = $_POST["contact"];
 $license_no = $_POST["license"];
 $profilepic = $_POST["profile"];
 
+$mem_stat = 'Active';
+
+
 // Prepare SQL query
-$sql = "INSERT INTO mem_info (mem_role, lname, fname, mname, exname, gender, street, barangay, city, phone, license_no, profilepic) VALUES ('$mem_role', '$lname', '$fname', '$mname', '$exname', '$gender', '$street', '$barangay', '$city', '$phone', '$license_no', '$profilepic')";
+$sql = "INSERT INTO mem_info (mem_role, lname, fname, mname, exname, gender, street, barangay, city, phone, license_no, profilepic, mem_stat) VALUES ('$mem_role', '$lname', '$fname', '$mname', '$exname', '$gender', '$street', '$barangay', '$city', '$phone', '$license_no', '$profilepic', '$mem_stat')";
 
 // Execute query
 if (mysqli_query($conn, $sql)) {
