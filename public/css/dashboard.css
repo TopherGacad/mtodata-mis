@@ -16,6 +16,8 @@
     --dash-cyan: #0A97A9;
     --span-red: red;
     --dash-viewreport-bg:  rgba(236, 236, 236, 0.842);
+    --error-color:#E53B34;
+    --toast-font-color: color: rgba(0, 0, 0, 0.7);
 }
 body{
     box-sizing: border-box;
@@ -660,6 +662,43 @@ textarea{
       width: 0%;
     }
   }
+
+  /* ERROR TOAST */
+  .warningToast-container{
+    display: none;
+    align-items: center;
+    position: fixed;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    top: 2%;
+    left: 0;
+    right: 0;
+    height: 10%;
+    width: 25%;
+    margin: auto;
+    background-color: var(--base-color);
+    color: var(--toast-font-color);
+}
+.warningToast-icon{
+    font-size: 25px;
+}
+.warningToast-left{
+    background-color: var(--dash-yellow);
+    border-radius: 5px 0px 0px 5px;
+    height: 100%;
+    width: 15%;
+    color: var(--base-color);
+}
+.warningToast-left, .warningToast-right{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.warningToast-right p{
+    padding-left: 15px;
+}
+
 
         /* FOR RESPONSIVENESS */
 @media screen and (min-width: 1600px) {

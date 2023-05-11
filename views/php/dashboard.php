@@ -414,28 +414,17 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <div class="userForm-left addForm">
                     <!-- USERS ROLE -->
                     <div class="fields">
-    <label for="select-role">User's role<span> *</span></label>
-    <select name="userrole" id="select-mem">
-        <option value="" selected disabled>--- Select Role ---</option>
-        <option value="President">President</option>
-        <option value="Vice President">Vice President</option>
-        <option value="secretary">Secretary</option>
-        <option value="Treasurer">Treasurer</option>
-        <option value="Auditor">Auditor</option>
-    </select>
-</div>
+                        <label for="select-role">User's role<span> *</span></label>
+                        <select name="userrole" id="select-mem">
+                            <option value="" selected disabled>--- Select Role ---</option>
+                            <option value="President">President</option>
+                            <option value="Vice President">Vice President</option>
+                            <option value="secretary">Secretary</option>
+                            <option value="Treasurer">Treasurer</option>
+                            <option value="Auditor">Auditor</option>
+                        </select>
+                    </div>
 
-<script>
-    const selectRole = document.getElementById('select-mem');
-    const form = document.querySelector('form');
-    
-    form.addEventListener('submit', (event) => {
-        if (selectRole.value === '') {
-            event.preventDefault();
-            alert('Please select a role.');
-        }
-    });
-</script>
                     <!-- LASTNAME -->
                     <div class="fields">
                         <label for="user-lastname">Lastname<span> *</span></label>
@@ -495,6 +484,16 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </div>
             </div>
         </form>
+
+        <!-- WARNING TOAST -->
+        <div class="warningToast-container" id="warningToast">
+            <div class="warningToast-left">
+                <i class="warningToast-icon fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="warningToast-right">
+                <p><strong>Try Again</strong>  Please Select User Role!</p>
+            </div>
+        </div>
     </div>
 
     <!-- ADD MEMBER MODAL -->

@@ -427,3 +427,18 @@ MemsearchBar.addEventListener('input', () => {
     }
   }
 });
+
+const selectRole = document.getElementById('select-mem');
+const form = document.querySelector('form');
+const error = document.getElementById("warningToast")
+
+form.addEventListener('submit', (event) => {
+    if (selectRole.value === '') {
+        event.preventDefault();
+        error.style.display = "flex"
+
+        setTimeout(function(){
+            error.style.display = "none"
+        },2000)
+    }
+});
