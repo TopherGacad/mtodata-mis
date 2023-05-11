@@ -507,7 +507,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- MEMBERS ROLE -->
                     <div class="fields">
                         <label for="select-mem">Member's role<span> *</span></label>
-                        <select name="role" id="select-mem" required>
+                        <select name="role" id="select-mem">
                             <option value="">--- Select Role ---</option>
                             <option value="Officer">Officer</option>
                             <option value="Driver">Driver only</option>
@@ -591,6 +591,15 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </div>
             </div>
         </form>
+        <!-- WARNING TOAST -->
+        <div class="warningToast-container" id="mem-warningToast">
+            <div class="warningToast-left">
+                <i class="warningToast-icon fa-solid fa-circle-exclamation"></i>
+            </div>
+            <div class="warningToast-right">
+                <p><strong>Try Again</strong>  Please Select User Role!</p>
+            </div>
+        </div>
     </div>
 
     <!-- ADD FINANCE MODAL -->
