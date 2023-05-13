@@ -14,6 +14,10 @@
     <!-- FONT AWESOME -->
     <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
 
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
 </head>
 
 <body>
@@ -55,21 +59,12 @@
             <form action="../php/login.php" method="post">
 
                 <div class="field">
-                    <label>Username</label>
-                    <input 
-                    type="text" 
-                    name="uname" 
-                    placeholder="username" 
-                    required
-                    autofocus>
+                    <label>email</label>
+                    <input type="text" name="email" placeholder="email">
                 </div>
                 <div class="field">
                     <label>Password</label>
-                    <input 
-                    type="password" 
-                    name="password" 
-                    placeholder="8-12 characters" 
-                    required>
+                    <input type="password" name="password" placeholder="8-12 characters">
                     <button class="login-btn" id="login-btn " type="submit ">Login</button>
                 </div>
             </form>
@@ -77,16 +72,7 @@
     </div>
 
     <!-- LOGIN TOAST NOTIFICATION -->
-        <!-- ERROR TOAST -->
-    <div class="toast-container">
-        <div class="toast-left">
-            <i class="toast-icon fa-solid fa-triangle-exclamation"></i>
-        </div>
-        <div class="toast-right">
-            <p>ERROR: Wrong Password!</p>
-        </div>
-    </div>
-
+    <!-- ERROR TOAST -->
 
 
     <script src="../../services/login.js "></script>
@@ -118,4 +104,13 @@
         </div>
 
         </form>
+
+        <div class="toast-container">
+        <div class="toast-left">
+            <i class="toast-icon fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div class="toast-right">
+            <p>ERROR: Wrong Password!</p>
+        </div>
+    </div>
 -->
