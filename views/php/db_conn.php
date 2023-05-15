@@ -1,13 +1,13 @@
 <?php
 
 $sname= "localhost";
-$email= "root";
+$uname= "root";
 $password = "";
 
 
 $db_name = "mtodata";
 
-$conn = mysqli_connect($sname, $email, $password, $db_name);
+$conn = mysqli_connect($sname, $uname, $password, $db_name);
 
 if (!$conn) {
 	echo "Connection failed!";
