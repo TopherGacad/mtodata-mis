@@ -3,12 +3,7 @@ session_start();
 include "db_conn.php";
 
 if (isset($_POST['uname']) && isset($_POST['password'])) {
-	
-	die("Connection failed: " . mysqli_connect_error());
-}
 
-if (isset($_POST['email']) && isset($_POST['password'])) {
-	
 	function validate($data){
        $data = trim($data);
 	   $data = stripslashes($data);
@@ -16,38 +11,38 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 	   return $data;
 	}
 
-	$uname = validate($_POST['uname']);
+	$email = validate($_POST['uname']);
 	$pass = validate($_POST['password']);
 
-	if (empty($uname)) {
-		header("Location: ../html/login.html?error=UserName is required");
+	if (empty($email)) {
+		header("Location: ../php/dashboard.php?error=User Name is required");
 	    exit();
 	}else if(empty($pass)){
-        header("Location: ../html/login.html?error=Password is required");
+        header("Location: ../php/dashboard.php?error=Password is required");
 	    exit();
 	}else{
-		$sql = "SELECT * FROM login WHERE user_name='$uname' AND password='$pass'";
+		$sql = "SELECT * FROM user WHERE email='$email' AND psword='$pass'";
 
 		$result = mysqli_query($conn, $sql);
-
-		if (mysqli_num_rows($result) == 1) {
+		if (mysqli_num_rows($result) === 1) {
 			$row = mysqli_fetch_assoc($result);
-            if ($row['user_name'] == $uname && $row['password'] == $pass) {
-            	$_SESSION['user_name'] = $row['user_name'];
+            if ($row['email'] === $email && $row['psword'] === $pass) {
+            	$_SESSION['email'] = $row['email'];
+            	$_SESSION['name'] = $row['name'];
             	$_SESSION['id'] = $row['id'];
             	header("Location: ../php/dashboard.php");
 		        exit();
             }else{
-				header("Location: ../html/login.html?error=Incorect User name or password");
+				header("Location: ../php/dashboard.php?error=Incorect User name or password");
 		        exit();
 			}
 		}else{
-			header("Location: ../html/login.html?error=Incorect User name or password");
+			header("Location: ../php/dashboard.php?error=Incorect User name or password");
 	        exit();
 		}
 	}
 	
 }else{
-	header("Location: ../html/login.html");
+	header("Location: ../php/dashboard.php");
 	exit();
 }
