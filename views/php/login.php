@@ -43,6 +43,6 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 	}
 	
 }else{
-	header("Location: ../php/dashboard.php");
+	header("Location: ../html/login.html");
 	exit();
 }
