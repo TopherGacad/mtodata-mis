@@ -1,7 +1,7 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_name'])) {
-    header("location:login.php");
+if (!isset($_SESSION['email'])) {
+    header("location: ../html/login.html");
     exit();
 }
 //FOR SESSION TIMEOUT AFTER 1 HOUR NO MOUNSE MOVEMENT

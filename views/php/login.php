@@ -28,7 +28,6 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 			$row = mysqli_fetch_assoc($result);
             if ($row['email'] === $email && $row['psword'] === $pass) {
             	$_SESSION['email'] = $row['email'];
-            	$_SESSION['name'] = $row['name'];
             	$_SESSION['id'] = $row['id'];
             	header("Location: ../php/dashboard.php");
 		        exit();
