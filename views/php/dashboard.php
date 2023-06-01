@@ -233,32 +233,53 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </tr>
 
                 <tbody id="mem-table-body">
-                    <?php
-                    // connect to the MySQL database
-                    include "db_conn.php";
+    <?php
+    // connect to the MySQL database
+    include "db_conn.php";
 
-                    // check connection
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
+    // check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // retrieve data from the MySQL table with concatenated fname and lname
+    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, license_no, mem_stat FROM mem_info";
+    $result = $conn->query($sql);
+
+    // output data of each row
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr id='row-" . $row["id"] . "'><td>" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["barangay"] . "</td><td>" . $row["license_no"] . "</td><td> <div class='status-contain'><p>•" . $row["mem_stat"] . "</p></div></td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToast(" . $row["id"] . ")'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr></td></tr>";
+        }
+    } else {
+        echo "0 results";
+    }
+
+    // close MySQL connection
+    $conn->close();
+    ?>
+
+    <script>
+        function showToast(id) {
+            if (confirm("Are you sure you want to delete this member?")) {
+                // send AJAX request to delete the member from the database and remove the row from the table
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "delete_member.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        // remove the row from the table
+                        var row = document.getElementById("row-" + id);
+                        row.parentNode.removeChild(row);
+                        // display success message
+                        alert(xhr.responseText);
                     }
-
-                    // retrieve data from the MySQL table with concatenated fname and lname
-                    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, license_no, mem_stat FROM mem_info";
-                    $result = $conn->query($sql);
-
-                    // output data of each row
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr><td>" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["barangay"] . "</td><td>" . $row["license_no"] . "</td><td> <div class='status-contain'><p>•" . $row["mem_stat"] . "</p></div></td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr></td></tr>";
-                        }
-                    } else {
-                        echo "0 results";
-                    }
-
-                    // close MySQL connection
-                    $conn->close();
-                    ?>
-                </tbody>
+                };
+                xhr.send("id=" + id);
+            }
+        }
+    </script>
+</tbody>
             </table>
         </main>
     </div>
