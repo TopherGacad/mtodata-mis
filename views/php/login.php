@@ -11,32 +11,29 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 	   return $data;
 	}
 
-	$uname = validate($_POST['uname']);
+	$email = validate($_POST['uname']);
 	$pass = validate($_POST['password']);
 
-	if (empty($uname)) {
+	if (empty($email)) {
 		header("Location: ../html/login.html?error=User Name is required");
 	    exit();
 	}else if(empty($pass)){
         header("Location: ../html/login.html?error=Password is required");
 	    exit();
 	}else{
-		$sql = "SELECT * FROM login WHERE user_name='$uname' AND password='$pass'";
+		$sql = "SELECT * FROM user WHERE email='$email' AND psword='$pass'";
 
 		$result = mysqli_query($conn, $sql);
-
 		if (mysqli_num_rows($result) === 1) {
 			$row = mysqli_fetch_assoc($result);
-            if ($row['user_name'] === $uname && $row['password'] === $pass) {
-            	$_SESSION['user_name'] = $row['user_name'];
-            	$_SESSION['name'] = $row['name'];
+            if ($row['email'] === $email && $row['psword'] === $pass) {
+            	$_SESSION['email'] = $row['email'];
             	$_SESSION['id'] = $row['id'];
             	header("Location: ../php/dashboard.php");
 		        exit();
             }else{
 				header("Location: ../html/login.html?error=Incorect User name or password");
 		        exit();
-
 			}
 		}else{
 			header("Location: ../html/login.html?error=Incorect User name or password");
@@ -47,5 +44,4 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 }else{
 	header("Location: ../html/login.html");
 	exit();
-	
 }
