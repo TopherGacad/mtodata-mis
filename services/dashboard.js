@@ -474,3 +474,83 @@ memForm.addEventListener('submit', (event) => {
 });
 
 
+
+//RENDERING CONTAINERS AND PREVENT FROM RETURNING TO DASHBOARD
+const selectedModule = localStorage.getItem('selectedModule');
+
+// Set the initial selected module or the default module if none is stored
+const initialModule = selectedModule || 'dash';
+renderModule(initialModule);
+
+// Attach event listeners to the buttons
+dashBtn.addEventListener('click', function () {
+  renderModule('dash');
+});
+memBtn.addEventListener('click', function () {
+  renderModule('member');
+});
+userBtn.addEventListener('click', function () {
+  renderModule('users');
+});
+financeBtn.addEventListener('click', function () {
+  renderModule('finance');
+});
+complainBtn.addEventListener('click', function () {
+    renderModule('complain');
+  });
+programsBtn.addEventListener('click', function () {
+    renderModule('programs');
+  });
+
+// Render the module based on the selected module
+function renderModule(module) {
+  // Hide all modules and deactivate all buttons
+  dashContain.style.display = 'none';
+  userContain.style.display = 'none';
+  memContain.style.display = 'none';
+  financeContain.style.display = 'none';
+  complainContain.style.display = 'none';
+  EventContain.style.display = 'none';
+
+  dashBtn.classList.remove('btn-active');
+  memBtn.classList.remove('btn-active');
+  userBtn.classList.remove('btn-active');
+  financeBtn.classList.remove('btn-active');
+  complainBtn.classList.remove('btn-active');
+  programsBtn.classList.remove('btn-active');
+
+  // Show the selected module and activate its button
+  if (module === 'dash') {
+    dashContain.style.display = 'block';
+    dashBtn.classList.add('btn-active');
+  } else if (module === 'member') {
+    memContain.style.display = 'block';
+    memBtn.classList.add('btn-active');
+  } else if (module === 'users') {
+    userContain.style.display = 'block';
+    userBtn.classList.add('btn-active');
+  } else if (module === 'complain') {
+    complainContain.style.display = 'block';
+    complainBtn.classList.add('btn-active');
+  } else if (module === 'finance') {
+    financeContain.style.display = 'block'
+    financeBtn.classList.add('btn-active')
+  } else if(module === 'programs') {
+    EventContain.style.display = 'block';
+    programsBtn.classList.add('btn-active');
+  }
+
+  // Store the selected module in browser storage
+  localStorage.setItem('selectedModule', module);
+}
+
+// Function to handle logout
+function handleLogout() {
+  localStorage.removeItem('selectedModule'); // Remove the selected module from storage
+  renderModule('dash'); // Set the dashboard as the default module
+  // Perform any additional logout actions here
+}
+
+// Add event listener to the logout button
+const logoutBtn = document.getElementById("logout-btn");
+logoutBtn.addEventListener("click", handleLogout);
