@@ -310,12 +310,16 @@ main{
     background-color: var(--base-color);
     border:none;
     height: 80%;
-    overflow-y: auto;
+    overflow-y: scroll;
+}
+main::-webkit-scrollbar{
+    display: none;
 }
 table{
     width: 100%;
     text-align: center;
     border-collapse: collapse;
+    background-color: var(--white-color);
 }
 abbr{
     text-decoration: none;
@@ -331,6 +335,22 @@ th{
 td{
     padding: 10px 5px;
 }
+.id,.action{
+    min-width: 60px;
+    max-width: 60px;
+}
+.username,.memname,.name{
+    min-width: 140px;
+    max-width: 140px;
+}
+.email{
+    min-width: 120px;
+    max-width: 120px;
+}
+.role{
+    min-width: 90px;
+    max-width: 90px;
+}
 tr{
     border-bottom: 1px solid var(--border-color);
 }
@@ -343,6 +363,9 @@ tr{
     color: var(--base-color);
     margin: 0px auto;
 }
+.status-contain p{
+    margin: 0px;
+}
 tr:hover{
     background-color: var(--hover-background);
 }
@@ -350,7 +373,7 @@ tr:hover{
     background-color:transparent;
     color: var(--dark-blue);
     font-size: 16px;
-    padding: 0 5px;
+    padding: 0 3px;
     cursor: pointer;
 }
 

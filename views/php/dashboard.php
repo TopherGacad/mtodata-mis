@@ -169,11 +169,12 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <table id="user-table">
                 <thead>
                     <tr>
-                        <th>USER ID</th>
-                        <th>NAME</th>
-                        <th>ROLE</th>
-                        <th>DATE CREATED</th>
-                        <th>ACTION</th>
+                        <th class="id">USER ID</th>
+                        <th class="username">NAME</th>
+                        <th class="role">ROLE</th>
+                        <th class="email">EMAIL</th>
+                        <th class="datecreated">DATE CREATED</th>
+                        <th class="action">ACTION</th>
                     </tr>
                 </thead>
 
@@ -188,12 +189,24 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     }
 
                     // retrieve data from the MySQL table
-                    $sql = "SELECT user_id, CONCAT(F_name, ' ', L_name) AS Name, roles, date_created FROM user";
+                    $sql = "SELECT user_id, CONCAT(F_name, ' ', L_name) AS Name, roles, email, date_created FROM user";
                     $result = $conn->query($sql);
 
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
-                        echo "<tr><td>" . $row["user_id"] . "</td><td>" . $row["Name"] . "</td><td>" . $row["roles"] . "</td><td>" . $row["date_created"] . "</td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye'></i></abbr></td></tr>";
+                        echo "
+                        <tr>
+                            <td class='userid'>" . $row["user_id"] . "</td>
+                            <td class='username'>" . $row["Name"] . "</td>
+                            <td class='role'>" . $row["roles"] . "</td>
+                            <td class='email'>". $row["email"] . "</td>
+                            <td class='datecreated'>" . $row["date_created"] . "</td>
+                            <td class='action'>
+                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr>
+                                <abbr title='View more'><i class='tools fa-solid fa-eye'></i></abbr>
+                                <a href=''><i class='tools fa-solid fa-pen-to-square'></i></a>
+                            </td>
+                        </tr>";
                     }
 
                     // close MySQL connection
@@ -224,12 +237,13 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <main>
             <table id="mem-table">
                 <tr>
-                    <th>MEMBER ID</th>
-                    <th>NAME</th>
-                    <th>AREA OF OPERATION</th>
-                    <th>LICENSE NO.</th>
-                    <th>STATUS</th>
-                    <th>ACTION</th>
+                    <th class="id">ID</th>
+                    <th class="memname">NAME</th>
+                    <th class="area">AREA OF OPERATION</th>
+                    <th class="role">ROLE</th>
+                    <th class="license">LICENSE NO.</th>
+                    <th class="status">STATUS</th>
+                    <th class="action">ACTION</th>
                 </tr>
 
                 <tbody id="mem-table-body">
@@ -243,13 +257,30 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     }
 
                     // retrieve data from the MySQL table with concatenated fname and lname
-                    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, license_no, mem_stat FROM mem_info";
+                    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, mem_role, license_no, mem_stat FROM mem_info";
                     $result = $conn->query($sql);
 
                     // output data of each row
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
-                            echo "<tr><td>" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["barangay"] . "</td><td>" . $row["license_no"] . "</td><td> <div class='status-contain'><p>•" . $row["mem_stat"] . "</p></div></td><td><abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr><abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr></td></tr>";
+                            echo "
+                            <tr>
+                                <td class='memid'>" . $row["id"] . "</td>
+                                <td class='memname'>" . $row["name"] . "</td>
+                                <td class='area'>" . $row["barangay"] . "</td>
+                                <td class='memrole'>" . $row["mem_role"] . "</td>
+                                <td class='license'>" . $row["license_no"] . "</td>
+                                <td class='status'> 
+                                    <div class='status-contain'>
+                                        <p>•" . $row["mem_stat"] . "</p>
+                                    </div>
+                                </td>
+                                <td class='action'>
+                                    <abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr>
+                                    <abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr>
+                                    <i class='tools fa-solid fa-pen-to-square'></i>
+                                </td>
+                            </tr>";
                         }
                     } else {
                         echo "0 results";
@@ -327,19 +358,21 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <main>
             <table>
                 <tr>
-                    <th><abbr title="complain-btn Id">ID</abbr></th>
-                    <th>COMPLAINANT</th>
-                    <th>SUBJECT TO COMPLAINT</th>
-                    <th>DATE</th>
-                    <th>ACTION</th>
+                    <th class="id"><abbr title="complain-btn Id">ID</abbr></th>
+                    <th class="name">COMPLAINANT</th>
+                    <th class="contact">CONTACT NO.</th>
+                    <th class="name">SUBJECT TO COMPLAINT</th>
+                    <th class="date">DATE</th>
+                    <th class="action">ACTION</th>
                 </tr>
 
                 <tr>
-                    <td>01</td>
-                    <td>Jonathan Peol</td>
-                    <td>Sean Gomez</td>
-                    <td>03-23-23</td>
-                    <td>
+                    <td class="id">01</td>
+                    <td class="name">Jonathan Peol</td>
+                    <td class="contact">09898765465</td>
+                    <td class="name">Sean Gomez</td>
+                    <td class="date">03-23-23</td>
+                    <td class="action">
                         <i class="tools fa-solid fa-trash-can"></i>
                         <i class="tools fa-solid fa-pen-to-square"></i>
                     </td>
