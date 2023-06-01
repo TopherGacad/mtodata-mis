@@ -562,7 +562,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class="fields">
                         <label for="select-mem">Member's role<span> *</span></label>
                         <select name="role" id="select-mem">
-                            <option value="">--- Select Role ---</option>
+                            <option value="" selected disabled>--- Select Role ---</option>
                             <option value="Officer">Officer</option>
                             <option value="Driver">Driver only</option>
                             <option value="Operator">Operator only</option>
