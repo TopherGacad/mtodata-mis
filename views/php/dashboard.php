@@ -517,7 +517,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- PASSWORD -->
                     <div class="fields">
                         <label for="user-pass">Password<span> *</span></label>
-                        <input type="password" id="user-pass" name="barangay" minlength="8" maxlength="12" required>
+                        <input type="password" id="user-pass" name="password" minlength="8" maxlength="12" required>
                     </div>
                     <!-- CONFIRM PASSWORD -->
                     <div class="fields">
@@ -760,17 +760,17 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- LASTNAME -->
                     <div class="fields">
                         <label for="complainant-lastname">Lastname<span> *</span></label>
-                        <input type="text" id="complainant-lastname" name="lastname" placeholder="Lastname" required>
+                        <input type="text" id="complainant-lastname" name="complaintLastname" placeholder="Lastname" required>
                     </div>
                     <!-- FIRSTNAME -->
                     <div class="fields">
                         <label for="complainant-firstname">Firstname<span> *</span></label>
-                        <input type="text" id="complainant-firstname" name="firstname" placeholder="Firstname" required>
+                        <input type="text" id="complainant-firstname" name="complaintFirstname" placeholder="Firstname" required>
                     </div>
                     <!-- MIDNAME -->
                     <div class="fields">
                         <label for="complainant-midname">Middlename</label>
-                        <input type="text" id="complainant-midname" name="middlename" placeholder="Middlename">
+                        <input type="text" id="complainant-midname" name="complaintMiddlename" placeholder="Middlename">
                     </div>
                     <!-- EXTENSION NAME -->
                     <div class="fields">
@@ -797,13 +797,13 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- SUBJECT -->
                     <div class="fields">
                         <label for="subject">Person to Complain<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="subject" name="subject" required>
+                        <input type="text" pattern="[0-9]{11}" id="subject" name="subject">
                     </div>
 
                     <!-- BODY NUMBER -->
                     <div class="fields">
                         <label for="subject-bodyNum">Body no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="subject-bodyNum" name="subject-bodyNum" required>
+                        <input type="text" pattern="[0-9]{11}" id="subject-bodyNum" name="subject-bodyNum">
                     </div>
 
                     <!-- DESCRIPTION -->
@@ -816,13 +816,13 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             <!-- TIME -->
                         <div class="fields">
                             <label for="time-incident">Time of Incident<span> *</span></label>
-                            <input type="time" id="time-incident" name="time-incident" required>
+                            <input type="time" id="time-incident" name="time-incident">
                         </div>
 
                         <!-- DATE -->
                         <div class="fields">
                             <label for="date-incident">Date of Incident<span> *</span></label>
-                            <input type="date" id="date-incident" name="date-incident" required>
+                            <input type="date" id="date-incident" name="date-incident">
                         </div>
                     </div>
             
