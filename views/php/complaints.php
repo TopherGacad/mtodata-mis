@@ -22,7 +22,22 @@ $description = $_POST["desc"];
 $timeOfIncident = $_POST["time-incident"];
 $dateOfIncident = $_POST["date-incident"];
 
-
 // Complainant Details
-$sql = "INSERT INTO complaint_info (lname, fname, mname, exname, gender, phone) VALUES ('$complaintLastName', '$complaintFirstName', '$complaintMiddleName', '$complaintExtensionName', '$complaintGender', '$contactNumber;)";
+$sql = "INSERT INTO complaint_info (lname, fname, mname, exname, gender, phone) VALUES ('$complaintLastName', '$complaintFirstName', '$complaintMiddleName', '$complaintExtensionName', '$complaintGender', '$contactNumber')";
+if (mysqli_query($conn, $sql)) {
+    echo "Data inserted successfully";
+} else {
+    echo "Error inserting data: " . mysqli_error($conn);
+}
+
 // Complainant Information
+$sql = "INSERT INTO complaint_details (complaint_person, body_no, details, date_created) VALUES ('$personToComplain', '$bodyNumber', '$description', '$dateOfIncident')";
+if (mysqli_query($conn, $sql)) {
+    echo "Data inserted successfully";
+} else {
+    echo "Error inserting data: " . mysqli_error($conn);
+}
+
+// Close database connection
+mysqli_close($conn);
+?>
