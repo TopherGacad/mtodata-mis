@@ -386,19 +386,69 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <th class="date">DATE</th>
                     <th class="action">ACTION</th>
                 </tr>
+                <tbody id="user-table-body">
+                <?php
+                    // connect to the MySQL database
+                    include "db_conn.php";
 
-                <tr>
-                    <td class="id">01</td>
-                    <td class="name">Jonathan Peol</td>
-                    <td class="contact">09898765465</td>
-                    <td class="name">Sean Gomez</td>
-                    <td class="date">03-23-23</td>
-                    <td class="action">
-                        <i class="tools fa-solid fa-trash-can"></i>
-                        <i class="tools fa-solid fa-pen-to-square"></i>
-                    </td>
-                </tr>
+                    // check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+                    // retrieve data from the MySQL table
+                    $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, complaint_details.date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.id";
+                    $result = $conn->query($sql);
 
+                    // output data of each row
+                    while ($row = $result->fetch_assoc()) {
+                        echo "
+                        <tr>
+                            <td class = 'uid'>" . $row["id"] . "</td>
+                            <td class = 'username'>" .$row["complainant"] . "</td>
+                            <td class = 'contacts'>" .$row["phone"] . "</td>
+                            <td class = 'complaintPerson'>" .$row["complaint_person"] ."</td>
+                            <td class = 'actionDate'>" .$row["date_created"] ."</td>
+
+                            <td class='action'>
+                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToast(" . $row["id"] . ")'></i></abbr>
+                                <abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr>
+                                <i class='tools fa-solid fa-pen-to-square'></i>
+                            </td>
+                        </tr>";
+                    }
+                    // close MySQL connection
+                    $conn->close();
+                    ?>
+                    <!-- Deleting User -->
+                    <script>
+                        function showToast(id) {
+                            if (confirm("Are you sure you want to delete this complaint?")) {
+                                // send AJAX request to delete the complaint from the database and remove the row from the table
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", "deleteComplaint.php", true);
+                                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState === 4 && xhr.status === 200) {
+                                        console.log("Response received:", xhr.responseText);
+                                        // remove the row from the table
+                                        var rowId = "row-" + id;
+                                        console.log("Row ID:", rowId);
+                                        var row = document.getElementById(rowId);
+                                        console.log("Row element:", row);
+                                        if (row) {
+                                            row.parentNode.removeChild(row);
+                                            // display success message
+                                            alert(xhr.responseText);
+                                        } else {
+                                            console.log("Row not found");
+                                        }
+                                    }
+                                };
+                                xhr.send("id=" + id);
+                            }
+                        }
+                    </script>
+                </tbody>
             </table>
         </main>
 
@@ -517,7 +567,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- PASSWORD -->
                     <div class="fields">
                         <label for="user-pass">Password<span> *</span></label>
-                        <input type="password" id="user-pass" name="barangay" minlength="8" maxlength="12" required>
+                        <input type="password" id="user-pass" name="password" minlength="8" maxlength="12" required>
                     </div>
                     <!-- CONFIRM PASSWORD -->
                     <div class="fields">
@@ -753,24 +803,24 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="bg" id="bg"></div>
     <div class="addComplaint-modal-container" id="complaint-modal-container">
         <h2 class="modal-title">ADD COMPLAINT</h2>
-        <form action="../php/adduser.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")' id="complaint-form">
+        <form action="../php/complaints.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")' id="complaint-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="complaintForm-left addForm">
                     <!-- LASTNAME -->
                     <div class="fields">
                         <label for="complainant-lastname">Lastname<span> *</span></label>
-                        <input type="text" id="complainant-lastname" name="lastname" placeholder="Lastname" required>
+                        <input type="text" id="complainant-lastname" name="complaintLastname" placeholder="Lastname" required>
                     </div>
                     <!-- FIRSTNAME -->
                     <div class="fields">
                         <label for="complainant-firstname">Firstname<span> *</span></label>
-                        <input type="text" id="complainant-firstname" name="firstname" placeholder="Firstname" required>
+                        <input type="text" id="complainant-firstname" name="complaintFirstname" placeholder="Firstname" required>
                     </div>
                     <!-- MIDNAME -->
                     <div class="fields">
                         <label for="complainant-midname">Middlename</label>
-                        <input type="text" id="complainant-midname" name="middlename" placeholder="Middlename">
+                        <input type="text" id="complainant-midname" name="complaintMiddlename" placeholder="Middlename">
                     </div>
                     <!-- EXTENSION NAME -->
                     <div class="fields">
@@ -797,13 +847,13 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- SUBJECT -->
                     <div class="fields">
                         <label for="subject">Person to Complain<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="subject" name="subject" required>
+                        <input type="text" id="subject" name="subject">
                     </div>
 
                     <!-- BODY NUMBER -->
                     <div class="fields">
                         <label for="subject-bodyNum">Body no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="subject-bodyNum" name="subject-bodyNum" required>
+                        <input type="text" id="subject-bodyNum" name="subject-bodyNum">
                     </div>
 
                     <!-- DESCRIPTION -->
@@ -816,13 +866,13 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             <!-- TIME -->
                         <div class="fields">
                             <label for="time-incident">Time of Incident<span> *</span></label>
-                            <input type="time" id="time-incident" name="time-incident" required>
+                            <input type="time" id="time-incident" name="time-incident">
                         </div>
 
                         <!-- DATE -->
                         <div class="fields">
                             <label for="date-incident">Date of Incident<span> *</span></label>
-                            <input type="date" id="date-incident" name="date-incident" required>
+                            <input type="date" id="date-incident" name="date-incident">
                         </div>
                     </div>
             
