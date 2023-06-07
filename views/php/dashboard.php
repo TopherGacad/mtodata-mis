@@ -278,7 +278,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
               <td class='action'>
                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToast(" . $row["id"] . ")'></i></abbr>
                 <abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr>
-                <i class='tools fa-solid fa-pen-to-square'></i>
+                <a href='../../views/pages/editmem.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
               </td>
             </tr>";
         }
