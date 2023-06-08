@@ -30,6 +30,24 @@
             </div>
 
             <!-- <input type="hidden" name="id" value=""> -->
+            <div class="pic-container">
+                <h3>
+                    Profile Picture
+                </h3>
+                <div class="main">
+                    <div class="section left-pic">
+                        <img src="../../public/assets/defuser_icon.png" alt="" id="profileImage">
+                        <!-- PROFILE PICTURE -->
+                        <div class="fields">
+                            <label for="mem-pic">Upload Profile Icon</label>
+                            <input type="file" accept=".png, .jpg, .jpeg" id="mem-pic" name="profile">
+                        </div>
+                    </div>
+                    <div class="section right-pic">
+                        
+                    </div>
+                </div>
+            </div>
             <div class="user-container">
                 <h3>Personal Information</h3>
                 <div class="main">
@@ -135,5 +153,7 @@
             </div>
         </form>
     </div>
+
+    <script src="../../services/editMember.js"></script>
 </body>
 </html>

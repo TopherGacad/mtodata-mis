@@ -87,6 +87,13 @@ body{
 .update-btn:hover{
     background-color: var(--update-hover);
 }
+.section img{
+    width: 200px;
+    height: 200px;
+    margin-left: 15px;
+    border: 1px solid var(--backdrop-color);
+
+}
 .fields{
     display: flex;
     flex-direction:column ;
@@ -108,6 +115,19 @@ form{
 .password-container{
     width: 75%;
     height: fit-content;
+    margin-right: 5%;
+    margin-bottom: 20px;
+    background-color: var(--def-white);
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    padding: 15px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.pic-container{
+    width: 75%;
+    height: 340px;
     margin-right: 5%;
     margin-bottom: 20px;
     background-color: var(--def-white);
