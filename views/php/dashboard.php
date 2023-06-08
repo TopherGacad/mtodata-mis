@@ -150,72 +150,102 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     </div>
 
     <!-- USER PANE -->
-    <div class="users-container" id="users-container">
-        <header>
-            <div class="head-left">
-                <h3>USER TYPE MANAGEMENT</h3>
-                <p>ADMIN VIEW</p>
+<div class="users-container" id="users-container">
+    <header>
+        <div class="head-left">
+            <h3>USER TYPE MANAGEMENT</h3>
+            <p>ADMIN VIEW</p>
+        </div>
+        <div class="head-right">
+            <div class="search-container">
+                <input type="text" class="user-search" id="user-search" placeholder="Search">
+                <button class="user-searchBtn" id="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
-            <div class="head-right">
-                <div class="search-container">
-                    <input type="text" class="user-search" id="user-search" placeholder="Search">
-                    <button class="user-searchBtn" id="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
-                </div>
-                <button class="adduserBtn" id="addUser-btn"><i class="fa-solid fa-plus"></i> Add User</button>
-            </div>
-        </header>
+            <button class="adduserBtn" id="addUser-btn"><i class="fa-solid fa-plus"></i> Add User</button>
+        </div>
+    </header>
 
-        <main>
-            <table id="user-table">
-                <thead>
-                    <tr>
-                        <th class="id">USER ID</th>
-                        <th class="username">NAME</th>
-                        <th class="role">ROLE</th>
-                        <th class="email">EMAIL</th>
-                        <th class="datecreated">DATE CREATED</th>
-                        <th class="action">ACTION</th>
-                    </tr>
-                </thead>
+    <main>
+        <table id="user-table">
+            <thead>
+                <tr>
+                    <th class="id">USER ID</th>
+                    <th class="username">NAME</th>
+                    <th class="role">ROLE</th>
+                    <th class="email">EMAIL</th>
+                    <th class="datecreated">DATE CREATED</th>
+                    <th class="action">ACTION</th>
+                </tr>
+            </thead>
 
-                <tbody id="user-table-body">
-                    <?php
-                    // connect to the MySQL database
-                    include "db_conn.php";
+            <tbody id="user-table-body">
+                <?php
+                // connect to the MySQL database
+                include "db_conn.php";
 
-                    // check connection
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
+                // check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
 
-                    // retrieve data from the MySQL table
-                    $sql = "SELECT user_id, CONCAT(F_name, ' ', L_name) AS Name, roles, email, date_created FROM user";
-                    $result = $conn->query($sql);
+                // retrieve data from the MySQL table
+                $sql = "SELECT user_id, CONCAT(F_name, ' ', L_name) AS Name, roles, email, date_created FROM user";
+                $result = $conn->query($sql);
 
-                    // output data of each row
-                    while ($row = $result->fetch_assoc()) {
-                        echo "
-                        <tr>
-                            <td class='userid'>" . $row["user_id"] . "</td>
-                            <td class='username'>" . $row["Name"] . "</td>
-                            <td class='role'>" . $row["roles"] . "</td>
-                            <td class='email'>". $row["email"] . "</td>
-                            <td class='datecreated'>" . $row["date_created"] . "</td>
-                            <td class='action'>
-                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr>
-                                <abbr title='View more'><i class='tools fa-solid fa-eye'></i></abbr>
-                                <a href='../../views/php/pages/editUser.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
-                            </td>
-                        </tr>";
-                    }
+                // output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    echo "
+                    <tr id='user-" . $row["user_id"] . "'>
+                        <td class='userid'>" . $row["user_id"] . "</td>
+                        <td class='username'>" . $row["Name"] . "</td>
+                        <td class='role'>" . $row["roles"] . "</td>
+                        <td class='email'>". $row["email"] . "</td>
+                        <td class='datecreated'>" . $row["date_created"] . "</td>
+                        <td class='action'>
+                            <abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr>
+                            <abbr title='View more'><i class='tools fa-solid fa-eye'></i></abbr>
+                            <a href='../../views/php/pages/editUser.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                        </td>
+                    </tr>";
+                }
 
-                    // close MySQL connection
-                    $conn->close();
-                    ?>
-                </tbody>
-            </table>
-        </main>
-    </div>
+                // close MySQL connection
+                $conn->close();
+                ?>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+<script>
+    function deleteUser(id) {
+        if (confirm("Are you sure you want to delete this user?")) {
+            // send AJAX request to delete the user from the database and remove the row from the table
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "delete_user.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // remove the row from the table
+                    var row = document.getElementById("user-" + id);
+                    row.parentNode.removeChild(row);
+                    // display success message
+                    alert(xhr.responseText);
+                }
+            };
+            xhr.send("id=" + id);
+        }
+    }
+
+    // Attach event listeners to delete buttons
+    var deleteButtons = document.getElementsByClassName("tools fa-trash-can");
+    for (var i = 0; i < deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener("click", function() {
+            var userId = this.closest("tr").querySelector(".userid").textContent;
+            deleteUser(userId);
+        });
+    }
+</script>
 
     <!-- MEMBER INFO PANE -->
     <div class="member-container" id="member-container">
