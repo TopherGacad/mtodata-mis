@@ -203,7 +203,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <td class='action'>
                             <abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr>
                             <abbr title='View more'><i class='tools fa-solid fa-eye'></i></abbr>
-                            <a href='../../views/php/pages/editUser.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                            <a href='../../views/pages/edituser.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
                         </td>
                     </tr>";
                 }
