@@ -581,6 +581,12 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </div>
                 <!-- FORM-RIGHT -->
                 <div class="userForm-right addForm">
+
+                    <!-- USERNAME -->
+                     <div class="fields">
+                        <label for="user-uname">Username<span> *</span></label>
+                        <input type="text" id="user-uname" name="user-uname" required>
+                    </div>
                     <!-- EMAIL -->
                     <div class="fields">
                         <label for="user-email">Email Adress<span> *</span></label>
