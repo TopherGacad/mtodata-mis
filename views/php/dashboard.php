@@ -305,7 +305,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </div>
               </td>
               <td class='action'>
-                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToast(" . $row["id"] . ")'></i></abbr>
+                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastMember(" . $row["id"] . ")'></i></abbr>
                 <abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr>
                 <a href='../../views/pages/editmem.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
               </td>
@@ -320,7 +320,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     ?>
 
     <script>
-        function showToast(id) {
+        function showToastMember(id) {
             if (confirm("Are you sure you want to delete this member?")) {
                 // send AJAX request to delete the member from the database and remove the row from the table
                 var xhr = new XMLHttpRequest();
@@ -439,7 +439,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             <td class = 'actionDate'>" .$row["date_created"] ."</td>
 
                             <td class='action'>
-                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToast(" . $row["id"] . ")'></i></abbr>
+                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastComplaint(" . $row["id"] . ")'></i></abbr>
                                 <abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr>
                                 <a href='../../views/pages/editcomplaint.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
                             </td>
@@ -450,7 +450,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     ?>
                     <!-- Deleting User -->
                     <script>
-                        function showToast(id) {
+                        function showToastComplaint(id) {
                             if (confirm("Are you sure you want to delete this complaint?")) {
                                 // send AJAX request to delete the complaint from the database and remove the row from the table
                                 var xhr = new XMLHttpRequest();
