@@ -25,7 +25,7 @@
                 <h3><a href="../../views/php/dashboard.php"><i class="fa-solid fa-arrow-left"></i></a>Edit Member Information</h3>
                 <div class="btn-container">
                     <a href="../../views/php/dashboard.php"><input type="button" value="Discard" class="cancelBtn modal-btn" id="cancel-btn"></a>
-                    <button class="update-btn modal-btn" id="user-update" type="submit" name="user-update">Update</button>
+                    <button class="update-btn modal-btn" id="member-update" type="submit" name="member-update">Update</button>
                 </div>
             </div>
 
@@ -37,14 +37,25 @@
                 <div class="main">
                     <div class="section left-pic">
                         <img src="../../public/assets/defuser_icon.png" alt="" id="profileImage">
+                    </div>
+                    <div class="section right-pic">
                         <!-- PROFILE PICTURE -->
                         <div class="fields">
                             <label for="mem-pic">Upload Profile Icon</label>
                             <input type="file" accept=".png, .jpg, .jpeg" id="mem-pic" name="profile">
                         </div>
-                    </div>
-                    <div class="section right-pic">
-                        
+
+                        <!-- MEMBER STATUS -->
+                        <div class="fields">
+                            <label for="mem-status">Member Status</label>
+                            <select name="mem-status" id="mem-status">
+                                <option value="" selected disabled>Select Status</option>
+                                <option value="Active">Active Member</option>
+                                <option value="Transferred">Transferred</option>
+                                <option value="Removed">Removed</option>
+                                <option value="Retired">Retired</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>

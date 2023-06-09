@@ -441,7 +441,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             <td class='action'>
                                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToast(" . $row["id"] . ")'></i></abbr>
                                 <abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr>
-                                <i class='tools fa-solid fa-pen-to-square'></i>
+                                <a href='../../views/pages/editcomplaint.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
                             </td>
                         </tr>";
                     }
@@ -548,7 +548,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- USERS ROLE -->
                     <div class="fields">
                         <label for="select-role">User's role<span> *</span></label>
-                        <select name="userrole" id="select-role">
+                        <select name="userrole" id="select-role" required>
                             <option value="" selected disabled>Select Role</option>
                             <option value="President">President</option>
                             <option value="Vice President">Vice President</option>
@@ -640,7 +640,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- MEMBERS ROLE -->
                     <div class="fields">
                         <label for="select-mem">Member's role<span> *</span></label>
-                        <select name="role" id="select-mem">
+                        <select name="role" id="select-mem" required>
                             <option value="" selected disabled>--- Select Role ---</option>
                             <option value="Officer">Officer</option>
                             <option value="Driver">Driver only</option>
@@ -672,7 +672,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- GENDER -->
                     <div class="fields">
                         <label for="select-gender">Sex<span> *</span></label>
-                        <select name="gender" id="select-gender">
+                        <select name="gender" id="select-gender" required>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="none">Prefer not to say</option>

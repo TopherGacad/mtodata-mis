@@ -112,22 +112,10 @@ form{
 }
 .user-container,
 .profile-container,
-.password-container{
-    width: 75%;
-    height: fit-content;
-    margin-right: 5%;
-    margin-bottom: 20px;
-    background-color: var(--def-white);
-    border-radius: 10px;
-    box-shadow: var(--box-shadow);
-    padding: 15px 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+.password-container,
 .pic-container{
     width: 75%;
-    height: 340px;
+    height: fit-content;
     margin-right: 5%;
     margin-bottom: 20px;
     background-color: var(--def-white);
@@ -141,8 +129,13 @@ form{
 .main{
     display: flex;
 }
+textarea{
+    resize: none;
+    height: 110px;
+}
 .fields input,
-.fields select{
+.fields select,
+textarea{
     padding: 10px 15px;
     border-radius: 7px;
     border: 1px solid var(--border-color);
