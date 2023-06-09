@@ -284,7 +284,7 @@ seePass.addEventListener("change", function() {
 })
 
 
-//TOAST 
+/*TOAST 
 const delUser = document.querySelector('.fa-trash-can')
 delUser.addEventListener("click", function() {
     console.log("click")
@@ -296,8 +296,8 @@ delUser.addEventListener("click", function() {
         toast.style.display = "none"
     }, 7000)
     toast.classList.remove("toast-container-hide")
-        // TO DO: if confirm then delete selected user else stay
-})
+    // TO DO: if confirm then delete selected user else stay
+}) */
 
 const editIcon = document.querySelector(".fa-eye")
 editIcon.addEventListener("click", function() {
