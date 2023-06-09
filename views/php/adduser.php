@@ -9,12 +9,12 @@ if (!$conn) {
 // Get data from form submission
 $roles = $_POST["userrole"];
 $L_name = $_POST["lastname"];
-$F_name = $_POST["firstname"];
+$F_name = $_POST["firstname"]; 
 $M_name = $_POST["middlename"];
 $ex_name = $_POST["extension"];
 $email = $_POST["street"];
 $contact = $_POST["contact"];
-$psword = $_POST["barangay"];
+$psword = $_POST["password"];
 
 // Check if email already exists in the database
 $email_check_query = "SELECT * FROM user WHERE email='$email' LIMIT 1";
