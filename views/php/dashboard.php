@@ -518,7 +518,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <td>Grand Villa</td>
                     <td>
                         <i class="tools fa-solid fa-trash-can"></i>
-                        <i class="tools fa-solid fa-pen-to-square"></i>
+                        <a href="../../views/pages/editprograms.php"><i class="tools fa-solid fa-pen-to-square"></i></a>
                     </td>
                 </tr>
 
