@@ -1,3 +1,18 @@
+<?php
+session_start();
+if (!isset($_SESSION['email'])) {
+    header("location: ../html/login.html");
+    exit();
+}
+//FOR SESSION TIMEOUT AFTER 1 HOUR NO MOUNSE MOVEMENT
+$sessionTimeoutSeconds = 3600;
+if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $sessionTimeoutSeconds) {
+    session_unset();
+    session_destroy();
+    header("location: login.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
