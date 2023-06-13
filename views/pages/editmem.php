@@ -51,9 +51,7 @@
                             <select name="mem-status" id="mem-status">
                                 <option value="" selected disabled>Select Status</option>
                                 <option value="Active">Active Member</option>
-                                <option value="Transferred">Transferred</option>
-                                <option value="Removed">Removed</option>
-                                <option value="Retired">Retired</option>
+                                <option value="Transferred">Expired</option>
                             </select>
                         </div>
                     </div>
