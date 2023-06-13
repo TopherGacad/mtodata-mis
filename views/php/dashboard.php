@@ -305,7 +305,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </div>
               </td>
               <td class='action'>
-                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToast(" . $row["id"] . ")'></i></abbr>
+                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastMember(" . $row["id"] . ")'></i></abbr>
                 <abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr>
                 <a href='../../views/pages/editmem.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
               </td>
@@ -320,7 +320,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     ?>
 
     <script>
-        function showToast(id) {
+        function showToastMember(id) {
             if (confirm("Are you sure you want to delete this member?")) {
                 // send AJAX request to delete the member from the database and remove the row from the table
                 var xhr = new XMLHttpRequest();
@@ -439,7 +439,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             <td class = 'actionDate'>" .$row["date_created"] ."</td>
 
                             <td class='action'>
-                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToast(" . $row["id"] . ")'></i></abbr>
+                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastComplaint(" . $row["id"] . ")'></i></abbr>
                                 <abbr title='View more'><i class='tools fa-solid fa-eye' id='edit-member-icon'></i></abbr>
                                 <a href='../../views/pages/editcomplaint.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
                             </td>
@@ -450,7 +450,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     ?>
                     <!-- Deleting User -->
                     <script>
-                        function showToast(id) {
+                        function showToastComplaint(id) {
                             if (confirm("Are you sure you want to delete this complaint?")) {
                                 // send AJAX request to delete the complaint from the database and remove the row from the table
                                 var xhr = new XMLHttpRequest();
@@ -634,6 +634,96 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             </div>
         </div>
     </div>
+    <!-- TOAST -->
+<div class="successToast-container" id="user-successToast">
+    <div class="successToast-left">
+        <i class="successToast-icon fa-solid fa-circle-check"></i>
+    </div>
+    <div class="successToast-right">
+        <p><strong>Success!</strong> User successfully added.</p>
+    </div>
+</div>
+
+<style>
+    /* Add the following CSS styles for the success toast notification */
+    .successToast-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: none;
+        z-index: 9999;
+    }
+
+    .successToast-left {
+        float: left;
+        padding: 10px;
+    }
+
+    .successToast-icon {
+        font-size: 24px;
+        color: green;
+    }
+
+    .successToast-right {
+        float: left;
+        padding: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+<script>
+    document.getElementById("user-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        // Check if user role is selected
+        var role = document.getElementById("select-role").value;
+        if (role === "") {
+            // Display warning toast
+            var warningToast = document.getElementById("warningToast");
+            warningToast.style.display = "block";
+
+            // Hide toast after 3 seconds
+            setTimeout(function() {
+                warningToast.style.display = "none";
+            }, 3000);
+            return;
+        }
+
+        // Send an AJAX request to add the user to the database
+        var formData = new FormData(this);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "../php/adduser.php", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    // Display success toast
+                    var successToast = document.getElementById("user-successToast");
+                    successToast.style.display = "block";
+
+                    // Hide toast after 2 seconds
+                    setTimeout(function() {
+                        successToast.style.display = "none";
+                        // Refresh the page
+                        location.reload();
+                    }, 2000);
+
+                    // Reset the form
+                    document.getElementById("user-form").reset();
+
+                    // Hide the modal
+                    var userModalContainer = document.getElementById("user-modal-container");
+                    userModalContainer.style.display = "none";
+                } else {
+                    // Handle the error case
+                    console.error("Error: " + xhr.status);
+                }
+            }
+        };
+        xhr.send(formData);
+    });
+</script>
 
     <!-- ADD MEMBER MODAL -->
     <div class="bg" id="bg"></div>
