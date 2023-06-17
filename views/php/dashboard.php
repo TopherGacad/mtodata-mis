@@ -597,7 +597,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="mem-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
+                        <input type="text" pattern="[0-9]{11}" id="user-contact" name="contact" placeholder="eg. 09592220954" required>
                         <span id="contact-validation"></span> <!-- Display validation message here -->
                     </div>
 
@@ -733,7 +733,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         });
 
         // Event listener for input changes
-        document.getElementById('mem-contact').addEventListener('input', function() {
+        document.getElementById('user-contact').addEventListener('input', function() {
             var contactInput = this.value;
             var contactValidation = document.getElementById('contact-validation');
 
@@ -877,17 +877,17 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <input type="text" id="mem-city" name="city" required>
                     </div>
                     <!-- CONTACT NUMBER -->
-                    <div class="fields">
-                        <label for="mem-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
-
-                    </div>
+<div class="fields">
+    <label for="mem-contact">Contact no.<span> *</span></label>
+    <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
+    <span id="mem-contact-validation"></span> <!-- Display validation message here -->
+</div>
                     <!-- LICENSE NUMBER -->
-                    <div class="fields">
-                        <label for="mem-license">License no.<span> *</span></label>
-                        <input type="text" id="mem-license" pattern="[A-Z]{1}[0-9]{2}-[0-9]{2}-[0-9]{6}" name="license" placeholder="eg. A34-34-345645" required>
-                    </div>
-
+<div class="fields">
+    <label for="mem-license">License no.<span> *</span></label>
+    <input type="text" id="mem-license" pattern="[A-Z]{1}[0-9]{2}-[0-9]{2}-[0-9]{6}" name="license" placeholder="eg. A34-34-345645" required>
+    <span id="license-validation"></span> <!-- Display validation message here -->
+</div>
                     <!-- USER PROFILE PICTURE -->
                     <div class="fields">
                         <label for="mem-pic">Upload Profile Icon</label>
@@ -951,6 +951,106 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     </style>
 
     <script>
+        // Function to check if the contact number exists in the database for mem-contact
+function checkMemContactExists(phone) {
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../php/checkmemcontact.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                resolve(response === 'exists');
+            }
+        };
+        xhr.send('contact=' + phone);
+    });
+}
+
+// Event listener for input changes in mem-contact
+document.getElementById('mem-contact').addEventListener('input', function() {
+    var contactInput = this.value;
+    var contactValidation = document.getElementById('mem-contact-validation');
+    var saveButton = document.getElementById('member-form').querySelector('#save-btn');
+
+    checkMemContactExists(contactInput)
+        .then(function(exists) {
+            if (exists) {
+                contactValidation.textContent = 'Contact number already exists in the database.';
+            } else {
+                contactValidation.textContent = '';
+            }
+
+            checkLicenseExists(document.getElementById('mem-license').value)
+                .then(function(exists) {
+                    var licenseValidation = document.getElementById('license-validation');
+                    if (exists) {
+                        licenseValidation.textContent = 'License number already exists in the database.';
+                    } else {
+                        licenseValidation.textContent = '';
+                    }
+
+                    saveButton.disabled = exists || contactValidation.textContent !== '' || licenseValidation.textContent !== '';
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+});
+
+// Function to check if the license number exists in the database
+function checkLicenseExists(license_no) {
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../php/checklicense.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                resolve(response === 'exists');
+            }
+        };
+        xhr.send('license=' + license_no);
+    });
+}
+
+// Event listener for input changes in mem-license
+document.getElementById('mem-license').addEventListener('input', function() {
+    var licenseInput = this.value;
+    var licenseValidation = document.getElementById('license-validation');
+    var saveButton = document.getElementById('member-form').querySelector('#save-btn');
+
+    checkLicenseExists(licenseInput)
+        .then(function(exists) {
+            if (exists) {
+                licenseValidation.textContent = 'License number already exists in the database.';
+            } else {
+                licenseValidation.textContent = '';
+            }
+
+            checkMemContactExists(document.getElementById('mem-contact').value)
+                .then(function(exists) {
+                    var contactValidation = document.getElementById('mem-contact-validation');
+                    if (exists) {
+                        contactValidation.textContent = 'Contact number already exists in the database.';
+                    } else {
+                        contactValidation.textContent = '';
+                    }
+
+                    saveButton.disabled = exists || licenseValidation.textContent !== '' || contactValidation.textContent !== '';
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+});
+
         document.getElementById("member-form").addEventListener("submit", function(event) {
             event.preventDefault();
 
