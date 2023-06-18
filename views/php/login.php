@@ -22,12 +22,12 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 		header("Location: ../html/login.html?error=Password is required");
 		exit();
 	} else {
-		$sql = "SELECT * FROM user WHERE email='$email' AND psword='$pass'";
+		$sql = "SELECT * FROM user WHERE email='$email' || username = '$email' AND psword='$pass'";
 
 		$result = mysqli_query($conn, $sql);
 		if (mysqli_num_rows($result) === 1) {
 			$row = mysqli_fetch_assoc($result);
-			if ($row['email'] === $email && $row['psword'] === $pass) {
+			if ($row['email'] || $row['username'] === $email && $row['psword'] === $pass) {
 				if ($row['roles'] === 'President') {
 					echo "Hello " . $row['roles'];
 				} else if ($row['roles'] === 'Vice President') {
