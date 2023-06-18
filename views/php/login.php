@@ -36,10 +36,14 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 
 			// header("Location: ../php/dashboard.php");
 			exit();
-		} else {
-			header("Location: ../html/login.html?error=Incorect User name or password");
-			exit();
 		}
-	}
 
+	} else if (mysqli_num_rows($result) === 0) {
+		$_SESSION['login_error'] = true;
+		header("Location: ../html/login.html?error=1");
+		exit();
+	} else {
+		header("Location: ../html/login.html");
+		exit();
+	}
 }
