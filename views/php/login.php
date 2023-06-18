@@ -22,7 +22,7 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 		header("Location: ../html/login.html?error=Password is required");
 		exit();
 	} else {
-		$sql = "SELECT * FROM user WHERE email='$email' || username = '$email' AND psword='$pass'";
+		$sql = "SELECT * FROM user WHERE (email='$email' OR username='$email') AND psword='$pass'";
 
 		$result = mysqli_query($conn, $sql);
 		if (mysqli_num_rows($result) === 1) {
