@@ -61,12 +61,11 @@ addEventBtn.addEventListener("click", function() {
 })
 
 // USER TYPE DISABLE INPUTS
-function disableInputs() {
-    const selectType = document.getElementById("select-type");
+const selectType = document.getElementById("select-type");
     const midnameInput = document.getElementById("midname");
     const contactInput = document.getElementById("contact");
     const accType = document.getElementById("acc-type");
-
+function disableInputs() {
     if (selectType.value === "butaw") {
         midnameInput.disabled = true;
         contactInput.disabled = true;
@@ -77,7 +76,6 @@ function disableInputs() {
         accType.disabled = false;
     }
 }
-
 
 // CANCEL BUTTONS
 userCancel.addEventListener("click", function() {
@@ -94,6 +92,9 @@ financeCancel.addEventListener("click", function() {
     document.getElementById("finance-form").reset()
     financeModal.style.display = "none"
     modalBg.style.display = "none"
+    midnameInput.disabled = false;
+    contactInput.disabled = false;
+    accType.disabled = false;
 })
 complaintCancel.addEventListener("click", function() {
     document.getElementById("complaint-form").reset()

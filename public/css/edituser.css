@@ -73,6 +73,11 @@ body{
     font-size: 12px;
     box-shadow: var(--box-shadow);
 }
+.view{
+    color: var(--def-white);
+    background-color: var(--primary-font-color);
+    width: 70px;
+}
 .btn-container{
     margin-right: 60px;
 }
@@ -115,7 +120,8 @@ form{
 .user-container,
 .profile-container,
 .password-container,
-.pic-container{
+.pic-container,
+.container{
     width: 75%;
     height: fit-content;
     margin-right: 5%;

@@ -258,7 +258,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <abbr title="Export Report"><button class="memExportBtn exportBtn" id="mem-export"><i class="fa-solid fa-download"></i></button></abbr>
                 <div class="search-container">
                     <input type="text" class="mem-search" id="mem-search" placeholder="Search">
-                    <button class="mem-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <a href="../../views/pages/addunit.php"><button class="mem-searchBtn" id="add-unit"><i class="fa-solid fa-id-card-clip"></i></button></a>
                 </div>
                 <button class="addmemBtn" id="addmem-btn"><i class="fa-solid fa-plus"></i> Add Member</button>
             </div>
@@ -774,8 +774,11 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <label for="select-type">Finance Type<span> *</span>
                         </label>
                         <select name="type" id="select-type" onchange="disableInputs()">
-                            <option value="donation">Donation</option>
-                            <option value="butaw">Butaw</option>
+                            <option value="" selected disabled>Select Account type</option>
+                            <option value="donation">Butaw/Contribution</option>
+                            <option value="butaw">Donation</option>
+                            <option value="butaw">Expenses</option>
+                            <option value="butaw">Payment</option>
                         </select>
                     </div>
                     <!-- LASTNAME -->
