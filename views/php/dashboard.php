@@ -656,7 +656,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class="fields">
                         <label for="select-mem">Member's role<span> *</span></label>
                         <select name="role" id="select-mem" required>
-                            <option value="" selected disabled>--- Select Role ---</option>
+                            <option value="" selected disabled>Select Role</option>
                             <option value="Officer">Officer</option>
                             <option value="Driver">Driver only</option>
                             <option value="Operator">Operator only</option>
@@ -666,22 +666,22 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- LASTNAME -->
                     <div class="fields">
                         <label for="mem-lastname">Lastname<span> *</span></label>
-                        <input type="text" id="mem-lastname" name="lastname" placeholder="Lastname" required>
+                        <input type="text" id="mem-lastname" name="lastname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
                     </div>
                     <!-- FIRSTNAME -->
                     <div class="fields">
                         <label for="mem-firstname">Firstname<span> *</span></label>
-                        <input type="text" id="mem-firstname" name="firstname" placeholder="Firstname" required>
+                        <input type="text" id="mem-firstname" name="firstname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
                     </div>
                     <!-- MIDNAME -->
                     <div class="fields">
                         <label for="mem-midname">Middlename</label>
-                        <input type="text" id="mem-midname" name="middlename" placeholder="Middlename">
+                        <input type="text" id="mem-midname" name="middlename" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
                     </div>
                     <!-- EXTENSION NAME -->
                     <div class="fields">
                         <label for="mem-extension">Extension Name</label>
-                        <input type="text" pattern="[A-Za-z.]{2,5}" id="mem-extension" name="extension" placeholder="eg. Jr, Sr">
+                        <input type="text" id="mem-extension" name="extension" maxlength="5" pattern="[A-Za-z1-9]{2,5}" placeholder="eg. Jr, Sr">
                     </div>
 
                     <!-- GENDER -->
@@ -701,18 +701,18 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- STREET -->
                     <div class="fields">
                         <label for="mem-street">Street<span> *</span></label>
-                        <input type="text" id="mem-street" name="street" required>
+                        <input type="text" maxlength="25" id="mem-street" name="street" required>
                     </div>
 
                     <!-- BARANGAY -->
                     <div class="fields">
                         <label for="mem-brgy">Barangay<span> *</span></label>
-                        <input type="text" id="mem-brgy" name="barangay" required>
+                        <input type="text" maxlength="25" id="mem-brgy" name="barangay" required>
                     </div>
                     <!-- CITY -->
                     <div class="fields">
                         <label for="mem-city">City<span> *</span></label>
-                        <input type="text" id="mem-city" name="city" required>
+                        <input type="text" maxlength="25" pattern="[A-Za-z ]{2,25}" id="mem-city" name="city" required>
                     </div>
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
