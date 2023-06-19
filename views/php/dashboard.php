@@ -188,7 +188,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     }
 
                     // retrieve data from the MySQL table
-                    $sql = "SELECT user_id, CONCAT(F_name, ' ', L_name) AS Name, roles, email, date_created FROM user";
+                    $sql = "SELECT user_id, CONCAT(F_name, ' ', L_name) AS Name, roles, email, date_created FROM user ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
                     // output data of each row
@@ -286,7 +286,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     }
 
                     // retrieve data from the MySQL table with concatenated fname and lname
-                    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, mem_role, license_no, mem_stat FROM mem_info";
+                    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, mem_role, license_no, mem_stat FROM mem_info ORDER BY ";
                     $result = $conn->query($sql);
 
                     // output data of each row
@@ -425,7 +425,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         die("Connection failed: " . $conn->connect_error);
                     }
                     // retrieve data from the MySQL table
-                    $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, complaint_details.date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.id";
+                    $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, complaint_details.date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.id ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
                     // output data of each row
@@ -761,7 +761,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <p><strong>Success!</strong> Member successfully added.</p>
         </div>
     </div>
-    
+
     <!-- ADD FINANCE MODAL -->
     <div class="bg" id="bg"></div>
     <div class="addFinance-modal-container" id="finance-modal-container">
