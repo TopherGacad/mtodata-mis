@@ -558,22 +558,22 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- LASTNAME -->
                     <div class="fields">
                         <label for="user-lastname">Lastname<span> *</span></label>
-                        <input type="text" id="user-lastname" name="lastname" placeholder="Lastname" required>
+                        <input type="text" id="user-lastname" name="lastname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
                     </div>
                     <!-- FIRSTNAME -->
                     <div class="fields">
                         <label for="user-firstname">Firstname<span> *</span></label>
-                        <input type="text" id="user-firstname" name="firstname" placeholder="Firstname" required>
+                        <input type="text" id="user-firstname" name="firstname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
                     </div>
                     <!-- MIDNAME -->
                     <div class="fields">
                         <label for="user-midname">Middlename</label>
-                        <input type="text" id="user-midname" name="middlename" placeholder="Middlename">
+                        <input type="text" id="user-midname" name="middlename" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
                     </div>
                     <!-- EXTENSION NAME -->
                     <div class="fields">
                         <label for="user-extension">Extension Name</label>
-                        <input type="text" pattern="[A-Za-z.]{2,5}" id="user-extension" name="extension" placeholder="eg. Jr, Sr">
+                        <input type="text" maxlength="5" pattern="[A-Za-z]{2,5}" id="user-extension" name="extension" placeholder="eg. Jr, Sr">
                     </div>
                 </div>
                 <!-- FORM-RIGHT -->
@@ -582,12 +582,12 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- USERNAME -->
                     <div class="fields">
                         <label for="user-uname">Username<span> *</span></label>
-                        <input type="text" id="user-uname" name="user-uname" required>
+                        <input type="text" id="user-uname" name="user-uname" maxlength="25" placeholder="juandelacruz123" required>
                     </div>
                     <!-- EMAIL -->
                     <div class="fields">
                         <label for="user-email">Email Address<span> *</span></label>
-                        <input type="text" id="user-email" name="street" required>
+                        <input type="email" id="user-email" name="street" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="juan@example.com" required>
                         <span id="email-validation"></span> <!-- Display validation message here -->
                     </div>
 
@@ -601,7 +601,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- PASSWORD -->
                     <div class="fields">
                         <label for="user-pass">Password<span> *</span></label>
-                        <input type="password" id="user-pass" name="password" minlength="8" maxlength="12" required>
+                        <input type="password" id="user-pass" name="password" minlength="8" maxlength="16" placeholder="8-16 characters only" required>
                     </div>
                     <!-- CONFIRM PASSWORD -->
                     <div class="fields">
