@@ -38,13 +38,20 @@ body{
 }
             /* LAYOUT */
 .top-design{
+    display: flex;
+    align-items: center;
+    justify-content: end;
     width: 100vw;
     height: 6%;
     background: linear-gradient(to left, var(--dark-blue),var(--white-color));
     position: fixed;
     top: 0;
 }
-
+.top-design p{
+    color: var(--base-color);
+    z-index: 9999;
+    padding-right:10px ;
+}
 /* SIDE NAV BAR */
 .item-container{
     margin-top: 50px;

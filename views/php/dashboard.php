@@ -34,7 +34,9 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 
 <body>
     <div class="bg-container"></div>
-    <div class="top-design"></div>
+    <div class="top-design">
+        <p><strong>Welcome! </strong><?php echo $_SESSION['email']?></p>
+    </div>
 
     <!-- SIDE-NAV-BAR -->
     <div class="side-nav">
