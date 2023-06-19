@@ -948,41 +948,41 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <div class="complaintForm-left addForm">
                     <!-- EVENT TITLE -->
                     <div class="fields">
-                        <label for="complainant-lastname">Event Title (What)<span> *</span></label>
-                        <input type="text" id="complainant-lastname" name="lastname" placeholder="Event title" required>
+                        <label for="event-title">Event Title (What)<span> *</span></label>
+                        <input type="text" id="event-title" name="event-title" maxlength="25" placeholder="Event title" required>
                     </div>
 
                     <!-- DESCRIPTION -->
                     <div class="fields">
-                        <label for="desc">Description<span> *</span></label>
-                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350"></textarea>
+                        <label for="event-desc">Description<span> *</span></label>
+                        <textarea name="desc" id="event-desc" cols="30" rows="9" maxlength="350"></textarea>
                     </div>
                 </div>
                 <!-- FORM-RIGHT -->
                 <div class="complaintForm-right addForm">
                     <!-- EVENT ORGANIZER -->
                     <div class="fields">
-                        <label for="complainant-firstname">Event Organizer<span> *</span></label>
-                        <input type="text" id="complainant-firstname" name="firstname" placeholder="Firstname" required>
+                        <label for="events-organizer">Event Organizer<span> *</span></label>
+                        <input type="text" id="events-organizer" name="events-organizer" maxlength="30" required>
                     </div>
 
                     <!-- EVENT LOCATION -->
                     <div class="fields">
-                        <label for="complainant-firstname">Event Location (Where)<span> *</span></label>
-                        <input type="text" id="complainant-firstname" name="firstname" required>
+                        <label for="events-location">Event Location (Where)<span> *</span></label>
+                        <input type="text" id="events-location" name="events-location" maxlength="50" required>
                     </div>
 
                     <div class="timeDate-container">
                         <!-- TIME -->
                         <div class="fields">
-                            <label for="time-incident">Time of Event (When)<span> *</span></label>
-                            <input type="time" id="time-incident" name="time-incident" required>
+                            <label for="events-time">Time of Event (When)<span> *</span></label>
+                            <input type="time" id="events-time" name="events-time" required>
                         </div>
 
                         <!-- DATE -->
                         <div class="fields">
-                            <label for="date-incident">Date of Event (When)<span> *</span></label>
-                            <input type="date" id="date-incident" name="date-incident" required>
+                            <label for="events-date">Date of Event (When)<span> *</span></label>
+                            <input type="date" id="events-date" name="events-date" required>
                         </div>
                     </div>
 
