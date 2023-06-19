@@ -8,6 +8,7 @@
     --btn-color: #2490ef;
     --btn-save: #28a745;
     --update-hover: #1f7e35;
+    --dark-blue: #1842BD;
 }
 body{
     margin: 0;
@@ -41,7 +42,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--def-white);
+    background: linear-gradient(to right, var(--dark-blue),var(--def-white));
     box-shadow: var(--box-shadow);
     position: fixed;
     top: 40px;
@@ -49,10 +50,11 @@ body{
 }
 .ot-header h3{
     padding-left: 100px;
-    color: var(--primary-font-color);
+    color: var(--def-white);
 }
 .ot-header h3 a{
     padding-right: 10px;
+    color: var(--def-white);
 }
 .content-container {
     margin-top: 120px;
@@ -75,7 +77,7 @@ body{
     margin-right: 60px;
 }
 .cancelBtn{
-    background-color: var(--primary-font-color);
+    background-color: var(--btn-color);
     color: var(--def-white);
 }
 .cancelBtn:hover{
