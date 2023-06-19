@@ -301,7 +301,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
               <td class='license'>" . $row["license_no"] . "</td>
               <td class='status'> 
                 <div class='status-contain'>
-                  <p>•" . $row["mem_stat"] . "</p>
+                  <p>" . $row["mem_stat"] . "</p>
                 </div>
               </td>
               <td class='action'>
@@ -647,35 +647,6 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         </div>
     </div>
 
-    <style>
-        /* Add the following CSS styles for the success toast notification */
-        .successToast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: none;
-            z-index: 9999;
-        }
-
-        .successToast-left {
-            float: left;
-            padding: 10px;
-        }
-
-        .successToast-icon {
-            font-size: 24px;
-            color: green;
-        }
-
-        .successToast-right {
-            float: left;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-
     <script>
         // Function to check if the email address exists in the database
         function checkEmailExists(email) {
@@ -920,35 +891,6 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <p><strong>Success!</strong> Member successfully added.</p>
         </div>
     </div>
-
-    <style>
-        /* Add the following CSS styles for the success toast notification */
-        .successToast-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: none;
-            z-index: 9999;
-        }
-
-        .successToast-left {
-            float: left;
-            padding: 10px;
-        }
-
-        .successToast-icon {
-            font-size: 24px;
-            color: green;
-        }
-
-        .successToast-right {
-            float: left;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-    </style>
 
     <script>
         // Function to check if the contact number exists in the database for mem-contact

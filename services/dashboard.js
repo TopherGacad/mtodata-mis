@@ -45,150 +45,6 @@ const eventCancel = document.getElementById("event-cancel")
 const editUserClose = document.getElementById("editUser-close")
 const editMemClose = document.getElementById("editMem-close")
 
-
-dashBtn.addEventListener("click", function() {
-    //CONTENT STYLING ACTIVE
-    dashContain.classList.remove('hide')
-    dashContain.classList.toggle('active')
-    memContain.classList.remove('active')
-    memContain.classList.add('hide')
-    userContain.classList.remove('active')
-    financeContain.classList.remove('active')
-    financeContain.classList.add('hide')
-    complainContain.classList.remove('active')
-    complainContain.classList.add('hide')
-    EventContain.classList.remove('active')
-    EventContain.classList.add('hide')
-
-    //BUTTON STYLING ACTIVE
-    dashBtn.classList.add('btn-active')
-    userBtn.classList.remove('btn-active')
-    memBtn.classList.remove('btn-active')
-    financeBtn.classList.remove('btn-active')
-    complainBtn.classList.remove('btn-active')
-    programsBtn.classList.remove('btn-active')
-})
-
-userBtn.addEventListener("click", function() {
-    dashContain.classList.remove('active')
-    dashContain.classList.add('hide')
-    memContain.classList.remove('active')
-    memContain.classList.add('hide')
-    userContain.classList.remove('hide')
-    userContain.classList.add('active')
-    financeContain.classList.remove('active')
-    financeContain.classList.add('hide')
-    complainContain.classList.remove('active')
-    complainContain.classList.add('hide')
-    EventContain.classList.remove('active')
-    EventContain.classList.add('hide')
-
-    //BUTTON STYLING ACTIVE
-    dashBtn.classList.remove('btn-active')
-    userBtn.classList.add('btn-active')
-    memBtn.classList.remove('btn-active')
-    financeBtn.classList.remove('btn-active')
-    complainBtn.classList.remove('btn-active')
-    programsBtn.classList.remove('btn-active')
-})
-
-memBtn.addEventListener("click", function() {
-    //CONTENT STYLING ACTIVE
-    dashContain.classList.remove('active')
-    dashContain.classList.add('hide')
-    userContain.classList.remove('active')
-    userContain.classList.add('hide')
-    memContain.classList.remove('hide')
-    memContain.classList.add('active')
-    financeContain.classList.remove('active')
-    financeContain.classList.add('hide')
-    complainContain.classList.remove('active')
-    complainContain.classList.add('hide')
-    EventContain.classList.remove('active')
-    EventContain.classList.add('hide')
-
-    //BUTTON STYLING ACTIVE
-    dashBtn.classList.remove('btn-active')
-    userBtn.classList.remove('btn-active')
-    memBtn.classList.add('btn-active')
-    financeBtn.classList.remove('btn-active')
-    complainBtn.classList.remove('btn-active')
-    programsBtn.classList.remove('btn-active')
-
-})
-
-financeBtn.addEventListener("click", function() {
-    //CONTENT STYLING ACTIVE
-    dashContain.classList.remove('active')
-    dashContain.classList.add('hide')
-    userContain.classList.remove('active')
-    userContain.classList.add('hide')
-    memContain.classList.remove('active')
-    memContain.classList.add('hide')
-    financeContain.classList.remove('hide')
-    financeContain.classList.add('active')
-    complainContain.classList.remove('active')
-    complainContain.classList.add('hide')
-    EventContain.classList.remove('active')
-    EventContain.classList.add('hide')
-
-    //BUTTON STYLING ACTIVE
-    dashBtn.classList.remove('btn-active')
-    userBtn.classList.remove('btn-active')
-    memBtn.classList.remove('btn-active')
-    financeBtn.classList.add('btn-active')
-    complainBtn.classList.remove('btn-active')
-    programsBtn.classList.remove('btn-active')
-})
-
-complainBtn.addEventListener("click", function() {
-    //CONTENT STYLING ACTIVE
-    dashContain.classList.remove('active')
-    dashContain.classList.add('hide')
-    userContain.classList.remove('active')
-    userContain.classList.add('hide')
-    memContain.classList.remove('active')
-    memContain.classList.add('hide')
-    financeContain.classList.remove('active')
-    financeContain.classList.add('hide')
-    complainContain.classList.remove('hide')
-    complainContain.classList.add('active')
-    EventContain.classList.remove('active')
-    EventContain.classList.add('hide')
-
-    //BUTTON STYLING ACTIVE
-    dashBtn.classList.remove('btn-active')
-    userBtn.classList.remove('btn-active')
-    memBtn.classList.remove('btn-active')
-    financeBtn.classList.remove('btn-active')
-    complainBtn.classList.add('btn-active')
-    programsBtn.classList.remove('btn-active')
-})
-
-programsBtn.addEventListener("click", function() {
-    //CONTENT STYLING ACTIVE
-    dashContain.classList.remove('active')
-    dashContain.classList.add('hide')
-    userContain.classList.remove('active')
-    userContain.classList.add('hide')
-    memContain.classList.remove('active')
-    memContain.classList.add('hide')
-    financeContain.classList.remove('active')
-    financeContain.classList.add('hide')
-    complainContain.classList.remove('active')
-    complainContain.classList.add('hide')
-    EventContain.classList.remove('hide')
-    EventContain.classList.add('active')
-
-    //BUTTON STYLING ACTIVE
-    dashBtn.classList.remove('btn-active')
-    userBtn.classList.remove('btn-active')
-    memBtn.classList.remove('btn-active')
-    financeBtn.classList.remove('btn-active')
-    complainBtn.classList.remove('btn-active')
-    programsBtn.classList.add('btn-active')
-})
-
 // FORM MODALS 
 adduserBtn.addEventListener("click", function() {
     userModal.style.display = "flex"
@@ -439,36 +295,108 @@ MemsearchBar.addEventListener('input', () => {
     }
 });
 
-//WARNING TOAST FOR ADD USER
-const selectRole = document.getElementById('select-role');
-const form = document.querySelector('form');
-const error = document.getElementById("warningToast")
+//WARNING & SUCCESS TOAST FOR ADD USER
+document.getElementById("user-form").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-form.addEventListener('submit', (event) => {
-    if (selectRole.value === '') {
-        event.preventDefault();
-        error.style.display = "flex"
+    // Check if user role is selected
+    var role = document.getElementById("select-role").value;
+    if (role === "") {
+        // Display warning toast
+        var warningToast = document.getElementById("warningToast");
+        warningToast.style.display = "block";
 
+        // Hide toast after 3 seconds
         setTimeout(function() {
-            error.style.display = "none"
-        }, 2000)
+            warningToast.style.display = "none";
+        }, 3000);
+        return;
     }
+
+    // Send an AJAX request to add the user to the database
+    var formData = new FormData(this);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "../php/adduser.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Display success toast
+                var successToast = document.getElementById("user-successToast");
+                successToast.style.display = "flex";
+                modalBg.style.display="none"
+
+                // Hide toast after 2 seconds
+                setTimeout(function() {
+                    successToast.style.display = "none";
+                    // Refresh the page
+                    location.reload();
+                }, 2000);
+
+                // Reset the form
+                document.getElementById("user-form").reset();
+
+                // Hide the modal
+                var userModalContainer = document.getElementById("user-modal-container");
+                userModalContainer.style.display = "none";
+            } else {
+                // Handle the error case
+                console.error("Error: " + xhr.status);
+            }
+        }
+    };
+    xhr.send(formData);
 });
 
-// WARNING TOAST FOR ADD MEMBER
-const selectMemRole = document.getElementById('select-mem');
-const memForm = document.querySelector('#member-form');
-const memError = document.getElementById("mem-warningToast")
+//WARNING & SUCCESS TOAST FOR ADD MEMBER
+document.getElementById("member-form").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-memForm.addEventListener('submit', (event) => {
-    if (selectMemRole.value === '') {
-        event.preventDefault();
-        memError.style.display = "flex"
+    // Check if user role is selected
+    var role = document.getElementById("select-mem").value;
+    if (role === "") {
+        // Display warning toast
+        var warningToast = document.getElementById("mem-warningToast");
+        warningToast.style.display = "block";
 
+        // Hide toast after 3 seconds
         setTimeout(function() {
-            memError.style.display = "none"
-        }, 2000)
+            warningToast.style.display = "none";
+        }, 3000);
+        return;
     }
+
+    // Send an AJAX request to add the member to the database
+    var formData = new FormData(this);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "../php/addmember.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Display success toast
+                var successToast = document.getElementById("mem-successToast");
+                successToast.style.display = "flex";
+                modalBg.style.display="none"
+
+                // Hide toast after 2 seconds
+                setTimeout(function() {
+                    successToast.style.display = "none";
+                    // Refresh the page
+                    location.reload();
+                }, 2000);
+
+                // Reset the form
+                document.getElementById("member-form").reset();
+
+                // Hide the modal
+                var memberModalContainer = document.getElementById("member-modal-container");
+                memberModalContainer.style.display = "none";
+            } else {
+                // Handle the error case
+                console.error("Error: " + xhr.status);
+            }
+        }
+    };
+    xhr.send(formData);
 });
 
 
