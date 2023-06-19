@@ -28,9 +28,6 @@ const financeModal = document.getElementById("finance-modal-container")
 const complainModal = document.getElementById("complaint-modal-container")
 const eventModal = document.getElementById("event-modal-container")
 
-const editUser = document.getElementById("editUser-modal")
-const editMem = document.getElementById("editMem-modal")
-
 const modalBg = document.getElementById('bg')
 const seePass = document.getElementById("see-pass")
 
@@ -40,10 +37,6 @@ const memberCancel = document.getElementById("member-cancel")
 const financeCancel = document.getElementById("finance-cancel")
 const complaintCancel = document.getElementById("complaint-cancel")
 const eventCancel = document.getElementById("event-cancel")
-
-// EDIT-CLOSE BUTTONS
-const editUserClose = document.getElementById("editUser-close")
-const editMemClose = document.getElementById("editMem-close")
 
 // FORM MODALS 
 adduserBtn.addEventListener("click", function() {
@@ -113,19 +106,6 @@ eventCancel.addEventListener("click", function() {
     modalBg.style.display = "none"
 })
 
-// EDIT-CLOSE BUTTONS
-editUserClose.addEventListener("click", function() {
-    editUser.style.display = "none"
-    modalBg.style.display = "none"
-    userDetailsContain.style.display = "flex"
-})
-editMemClose.addEventListener("click", function() {
-    editMem.style.display = "none"
-    modalBg.style.display = "none"
-})
-
-
-
 //FI: CREATE A FUNCTION FOR SHOW PASSWORD INSTEAD OF THIS 
 seePass.addEventListener("change", function() {
     const inputPass = document.getElementById("user-pass")
@@ -154,26 +134,6 @@ delUser.addEventListener("click", function() {
     toast.classList.remove("toast-container-hide")
     // TO DO: if confirm then delete selected user else stay
 }) */
-
-const editIcon = document.querySelector(".fa-eye")
-editIcon.addEventListener("click", function() {
-    // code to edit the user with this ID
-    editUser.style.display = "flex"
-    modalBg.style.display = "block"
-})
-
-const editMemIcon = document.getElementById("edit-member-icon")
-editMemIcon.addEventListener("click", function() {
-    editMem.style.display = "flex"
-    modalBg.style.display = "block"
-})
-
-const editDetails = document.getElementById("edit-details")
-const userDetailsContain = document.getElementById("user-details-contain")
-editDetails.addEventListener("click", function() {
-    userDetailsContain.style.display = "none"
-
-})
 
 //EXPORT FUNCTION 
 function exportToExcel() {
