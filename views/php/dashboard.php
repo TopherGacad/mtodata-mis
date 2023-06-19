@@ -862,23 +862,23 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <div class="complaintForm-left addForm">
                     <!-- LASTNAME -->
                     <div class="fields">
-                        <label for="complainant-lastname">Lastname<span> *</span></label>
-                        <input type="text" id="complainant-lastname" name="complaintLastname" placeholder="Lastname" required>
+                        <label for="complainant-lastname">Complainant Lastname<span> *</span></label>
+                        <input type="text" id="complainant-lastname" name="complaintLastname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
                     </div>
                     <!-- FIRSTNAME -->
                     <div class="fields">
-                        <label for="complainant-firstname">Firstname<span> *</span></label>
-                        <input type="text" id="complainant-firstname" name="complaintFirstname" placeholder="Firstname" required>
+                        <label for="complainant-firstname">Complainant Firstname<span> *</span></label>
+                        <input type="text" id="complainant-firstname" name="complaintFirstname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
                     </div>
                     <!-- MIDNAME -->
                     <div class="fields">
-                        <label for="complainant-midname">Middlename</label>
-                        <input type="text" id="complainant-midname" name="complaintMiddlename" placeholder="Middlename">
+                        <label for="complainant-midname">Complainant Middlename</label>
+                        <input type="text" id="complainant-midname" name="complaintMiddlename" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
                     </div>
                     <!-- EXTENSION NAME -->
                     <div class="fields">
                         <label for="complainant-extension">Extension Name</label>
-                        <input type="text" pattern="[A-Za-z.]{2,5}" id="complainant-extension" name="extension" placeholder="eg. Jr, Sr">
+                        <input type="text" id="complainant-extension" name="extension" maxlength="5" pattern="[A-Za-z1-9]{2,5}" placeholder="eg. Jr, Sr">
                     </div>
                     <!-- GENDER -->
                     <div class="fields">
@@ -900,32 +900,32 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- SUBJECT -->
                     <div class="fields">
                         <label for="subject">Person to Complain<span> *</span></label>
-                        <input type="text" id="subject" name="subject">
+                        <input type="text" id="subject" name="subject" maxlength="30" pattern="[A-Za-z ]{2,30}" placeholder="Name of person to complain">
                     </div>
 
                     <!-- BODY NUMBER -->
                     <div class="fields">
                         <label for="subject-bodyNum">Body no.<span> *</span></label>
-                        <input type="text" id="subject-bodyNum" name="subject-bodyNum">
+                        <input type="text" id="subject-bodyNum" name="subject-bodyNum" required>
                     </div>
 
                     <!-- DESCRIPTION -->
                     <div class="fields">
                         <label for="desc">Description<span> *</span></label>
-                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350"></textarea>
+                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" required></textarea>
                     </div>
 
                     <div class="timeDate-container">
                         <!-- TIME -->
                         <div class="fields">
                             <label for="time-incident">Time of Incident<span> *</span></label>
-                            <input type="time" id="time-incident" name="time-incident">
+                            <input type="time" id="time-incident" name="time-incident" required>
                         </div>
 
                         <!-- DATE -->
                         <div class="fields">
                             <label for="date-incident">Date of Incident<span> *</span></label>
-                            <input type="date" id="date-incident" name="date-incident">
+                            <input type="date" id="date-incident" name="date-incident" required>
                         </div>
                     </div>
 
