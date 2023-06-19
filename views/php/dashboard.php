@@ -286,7 +286,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     }
 
                     // retrieve data from the MySQL table with concatenated fname and lname
-                    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, mem_role, license_no, mem_stat FROM mem_info ORDER BY ";
+                    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, mem_role, license_no, mem_stat FROM mem_info";
                     $result = $conn->query($sql);
 
                     // output data of each row
