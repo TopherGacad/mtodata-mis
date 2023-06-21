@@ -28,23 +28,35 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <link rel='icon' href='../../public/assets/browse_logo.png'>
     <!-- FONT AWESOME/ICONS -->
     <script src='https://kit.fontawesome.com/aa37050208.js' crossorigin='anonymous'></script>
+    <!-- SCRIPT VALIDATION -->
+    <script src='../../services/addunit.js'></script>
 </head>
 
 <body>
+
+    <!-- ERROR TOAST -->
+    <div class="toast-container">
+        <div class="toast-left">
+            <i class="toast-icon fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <div class="toast-right">
+            <p>ERROR: Wrong Password!</p>
+        </div>
+    </div>
 
     <div class='head-container'>
         <img class='main-logo' src='../../public/assets/mtodata_logo.png' alt='mtodata logo'>
     </div>
 
     <div class='content-container'>
-        <form name='addunit_form' method ='post' action='insertunit.php'>
+        <form name='addunit_form' method='post' action='insertunit.php' onsubmit='return validate_isNum()'>
             <div class='ot-header'>
                 <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>Add Unit
                     Information</h3>
                 <div class='btn-container'>
                     <a href='../../views/php/dashboard.php'><input type='button' value='Cancel'
                             class='cancelBtn modal-btn' id='cancel-btn'></a>
-                    <button class='update-btn modal-btn' id='user-update' type='submit'  name='user-update'>Save</button>
+                    <button class='update-btn modal-btn' id='user-update' type='submit' name='user-update'>Save</button>
                 </div>
             </div>
 
@@ -63,9 +75,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                 // connect to the MySQL database
                                 include "../php/db_conn.php";
 
-                                //retrieve data from input fields
+                                //retrieve data from input fields   
                                 
-
                                 // check connection
                                 if ($conn->connect_error) {
                                     die("Connection failed: " . $conn->connect_error);
@@ -107,7 +118,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- BODY NO. -->
                         <div class='fields'>
                             <label for='unit-bodyno'>Body No. <span> *</span></label>
-                            <input type='text' id='unit-bodyno' name='unitbody_no' required>
+                            <input type='text' id='unit-bodyno' name='unitbody_no' onkeypress="validate_isNum()"
+                                required>
                         </div>
 
                         <!-- BODY COLOR -->
@@ -119,7 +131,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- FRANCHISE NO. -->
                         <div class='fields'>
                             <label for='unit_franno'>Franchise No. <span> *</span></label>
-                            <input type='text' id='unit-franno' name='unitfran_no' required>
+                            <input type='text' id='unit-franno' name='unitfran_no' onkeypress="validate_isNum()"
+                                required>
                         </div>
                     </div>
 
@@ -140,7 +153,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- AREA CODE -->
                         <div class='fields'>
                             <label for='unit-area'>Area Code <span> *</span></label>
-                            <input type='text' id='unit-area' name='unit_area' requuired>
+                            <input type='text' id='unit-area' name='unit_area' required>
                         </div>
                     </div>
                 </div>
@@ -151,29 +164,30 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <div class='main'>
                     <div class='section'>
                         <div class='fields'>
-                            <label for=''>Motor No. <span> *</span></label>
-                            <input type='text' id='unit-motorno' name = 'unit_motorno'required>
+                            <label for='unit_motorno'>Motor No. <span> *</span></label>
+                            <input type='text' id='unit-motorno' name='unit_motorno' onkeypress="validate_isNum()"
+                                required>
                         </div>
 
                         <div class='fields'>
-                            <label for=''>Chasis No. <span> *</span></label>
-                            <input type='text' id='unit-chasis' name = 'unit_chasis' required>
+                            <label for='unit_chasis'>Chasis No. <span> *</span></label>
+                            <input type='text' id='unit-chasis' name='unit_chasis' required>
                         </div>
 
                         <div class='fields'>
-                            <label for=''>Plate No. <span> *</span></label>
-                            <input type='text' id='unit-plateno' name= 'unit_plateno' required>
+                            <label for='unit_plateno'>Plate No. <span> *</span></label>
+                            <input type='text' id='unit-plateno' name='unit_plateno' required>
                         </div>
                     </div>
                     <div class='section'>
                         <div class='fields'>
-                            <label for=''>LTO OR <span> *</span></label>
-                            <input type='text' id='unit-OR' name='unit_OR'required>
+                            <label for='unit_OR'>LTO OR <span> *</span></label>
+                            <input type='text' id='unit-OR' name='unit_OR' required>
                         </div>
 
                         <div class='fields'>
-                            <label for=''>LTO CR <span> *</span></label>
-                            <input type='text' id='unit-CR' name='unit_CR'required>
+                            <label for='unit_CR'>LTO CR <span> *</span></label>
+                            <input type='text' id='unit-CR' name='unit_CR' required>
                         </div>
                     </div>
                 </div>
@@ -184,14 +198,14 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <div class='main'>
                     <div class='section'>
                         <div class='fields'>
-                            <label for=''>District <span> *</span></label>
+                            <label for='unit_District'>District <span> *</span></label>
                             <input type='text' id='unit-District' name='unit_District' required>
                         </div>
                     </div>
                     <div class='section'>
                         <div class='fields'>
-                            <label for=''>Control Plate <span> *</span></label>
-                            <input type='text' id='unit-Control' name='unit_Control'required>
+                            <label for='unit_Control'>Control Plate <span> *</span></label>
+                            <input type='text' id='unit-Control' name='unit_Control' required>
                         </div>
                     </div>
                 </div>
