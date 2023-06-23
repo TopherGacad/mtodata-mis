@@ -28,8 +28,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <link rel='icon' href='../../public/assets/browse_logo.png'>
     <!-- FONT AWESOME/ICONS -->
     <script src='https://kit.fontawesome.com/aa37050208.js' crossorigin='anonymous'></script>
-    <!-- SCRIPT VALIDATION -->
-    <script src='../../services/addunit.js'></script>
+    
 </head>
 
 <body>
@@ -40,7 +39,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <i class="toast-icon fa-solid fa-triangle-exclamation"></i>
         </div>
         <div class="toast-right">
-            <p>ERROR: Wrong Password!</p>
+            <p id = 'error-con'></p>
         </div>
     </div>
 
@@ -49,7 +48,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     </div>
 
     <div class='content-container'>
-        <form name='addunit_form' method='post' action='insertunit.php' onsubmit='return validate_isNum()'>
+        <form name='addunit_form' method='post' action='insertunit.php' onsubmit='return validate_form()'>
             <div class='ot-header'>
                 <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>Add Unit
                     Information</h3>
@@ -117,9 +116,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class='left-side-profile section'>
                         <!-- BODY NO. -->
                         <div class='fields'>
-                            <label for='unit-bodyno'>Body No. <span> *</span></label>
-                            <input type='text' id='unit-bodyno' name='unitbody_no' onkeypress="validate_isNum()"
-                                required>
+                            <label for='unit-bodyno'>Body No. <span id='error_1'> *</span></label>
+                            <input type='text' id='unit-bodyno' name='unitbody_no' oninput="validate_isNum()" required>
                         </div>
 
                         <!-- BODY COLOR -->
@@ -130,9 +128,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 
                         <!-- FRANCHISE NO. -->
                         <div class='fields'>
-                            <label for='unit_franno'>Franchise No. <span> *</span></label>
-                            <input type='text' id='unit-franno' name='unitfran_no' onkeypress="validate_isNum()"
-                                required>
+                            <label for='unit_franno'>Franchise No. <span id='error_2'> *</span></label>
+                            <input type='text' id='unit-franno' name='unitfran_no' oninput="validate_isNum()" required>
                         </div>
                     </div>
 
@@ -164,9 +161,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <div class='main'>
                     <div class='section'>
                         <div class='fields'>
-                            <label for='unit_motorno'>Motor No. <span> *</span></label>
-                            <input type='text' id='unit-motorno' name='unit_motorno' onkeypress="validate_isNum()"
-                                required>
+                            <label for='unit_motorno'>Motor No. <span id='error_3'> *</span></label>
+                            <input type='text' id='unit-motorno' name='unit_motorno' oninput="validate_isNum()" required>
                         </div>
 
                         <div class='fields'>
@@ -212,6 +208,9 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             </div>
         </form>
     </div>
+
+    <!-- SCRIPT VALIDATION -->
+    <script src='../../services/addunit.js'></script>
 </body>
 
 </html>
