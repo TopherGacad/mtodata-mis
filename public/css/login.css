@@ -158,6 +158,7 @@ input::placeholder{
     margin: auto;
     background-color: var(--base-color);
     color: var(--toast-font-color);
+    visibility: hidden;
 }
 .toast-icon{
     font-size: 25px;
