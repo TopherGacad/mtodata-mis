@@ -7,17 +7,17 @@ const slide3 = document.getElementById("carousel-3")
 const logForm = document.getElementById("login-form")
 
 //MANUAL OF CAROUSEL
-firstDot.addEventListener("click", function() {
+firstDot.addEventListener("click", function () {
     slide1.style.display = "block"
     slide2.style.display = "none"
     slide3.style.display = "none"
 })
-secondDot.addEventListener("click", function() {
+secondDot.addEventListener("click", function () {
     slide1.style.display = "none"
     slide2.style.display = "block"
     slide3.style.display = "none"
 })
-thirdDot.addEventListener("click", function() {
+thirdDot.addEventListener("click", function () {
     slide1.style.display = "none"
     slide2.style.display = "none"
     slide3.style.display = "block"
@@ -42,31 +42,38 @@ function showSlides() {
     slides[slideIndex - 1].style.display = "block";
     setTimeout(showSlides, 3500);
 
-document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const error = urlParams.get('error');
-    const toastContainers = document.getElementsByClassName('toast-container');
-    
-    if (error === '1') {
-        Array.from(toastContainers).forEach((container) => {
-            container.style.visibility = 'visible';
-            document.getElementById("error-cont").innerText = "Error code 1: Account does not exist.";
-            
-        });
-        setTimeout(() => {
+    document.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+        const toastContainers = document.getElementsByClassName('toast-container');
+
+        if (error === '1') {
             Array.from(toastContainers).forEach((container) => {
-                container.style.visibility = 'hidden';
+                container.style.visibility = 'visible';
+                document.getElementById("error-cont").innerText = "Error code 1: Account does not exist.";
+
             });
-        }, 3000);
-    } else if (error === '2') {
-        Array.from(toastContainers).forEach((container) => {
-            container.style.visibility = 'visible';
-            document.getElementById("error-cont").innerText = "Error code 2: The username or password you entered is incorrect.";
-        });
-        setTimeout(() => {
+            setTimeout(() => {
+                Array.from(toastContainers).forEach((container) => {
+                    container.style.visibility = 'hidden';
+                });
+            }, 3000);
+        } else if (error === '2') {
             Array.from(toastContainers).forEach((container) => {
-                container.style.visibility = 'hidden';
+                container.style.visibility = 'visible';
+                document.getElementById("error-cont").innerText = "Error code 2: The username or password you entered is incorrect.";
             });
-        }, 3000);
+            setTimeout(() => {
+                Array.from(toastContainers).forEach((container) => {
+                    container.style.visibility = 'hidden';
+                });
+            }, 3000);
+        }
+    })
+}
+
+window.onload = function () {
+    if (window.location.search.includes("error")) {
+        history.replaceState({}, document.title, window.location.pathname);
     }
-})}
+}
