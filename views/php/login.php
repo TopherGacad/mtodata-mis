@@ -30,7 +30,10 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 				header("Location: ../php/dashboard.php");
 				exit();
 			} else if ($row['roles'] === 'Vice President') {
-				echo "Hello " . $row['roles'];
+				$_SESSION['email'] = $row['email'];
+				$_SESSION['id'] = $row['id'];
+				header("Location: ../php/viceview.php");
+				exit();
 			} else if ($row['roles'] === 'Secretary') {
 				echo "Hello " . $row['roles'];
 			} else if ($row['roles'] === 'Treasurer' || 'Auditor') {

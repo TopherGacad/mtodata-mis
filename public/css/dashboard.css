@@ -103,7 +103,6 @@ li:hover{
     color:var(--content-font-color);
     transition:.5s;
 }
-
 /* MAIN CONTENT */
 .dashboard-container{
     display: none;
