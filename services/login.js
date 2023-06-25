@@ -41,4 +41,32 @@ function showSlides() {
     dots[slideIndex - 1].className += " active";
     slides[slideIndex - 1].style.display = "block";
     setTimeout(showSlides, 3500);
-}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    const toastContainers = document.getElementsByClassName('toast-container');
+    
+    if (error === '1') {
+        Array.from(toastContainers).forEach((container) => {
+            container.style.visibility = 'visible';
+            document.getElementById("error-cont").innerText = "Error code 1: Account does not exist.";
+            
+        });
+        setTimeout(() => {
+            Array.from(toastContainers).forEach((container) => {
+                container.style.visibility = 'hidden';
+            });
+        }, 3000);
+    } else if (error === '2') {
+        Array.from(toastContainers).forEach((container) => {
+            container.style.visibility = 'visible';
+            document.getElementById("error-cont").innerText = "Error code 2: The username or password you entered is incorrect.";
+        });
+        setTimeout(() => {
+            Array.from(toastContainers).forEach((container) => {
+                container.style.visibility = 'hidden';
+            });
+        }, 3000);
+    }
+});
