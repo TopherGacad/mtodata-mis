@@ -7,17 +7,17 @@ const slide3 = document.getElementById("carousel-3")
 const logForm = document.getElementById("login-form")
 
 //MANUAL OF CAROUSEL
-firstDot.addEventListener("click", function () {
+firstDot.addEventListener("click", function() {
     slide1.style.display = "block"
     slide2.style.display = "none"
     slide3.style.display = "none"
 })
-secondDot.addEventListener("click", function () {
+secondDot.addEventListener("click", function() {
     slide1.style.display = "none"
     slide2.style.display = "block"
     slide3.style.display = "none"
 })
-thirdDot.addEventListener("click", function () {
+thirdDot.addEventListener("click", function() {
     slide1.style.display = "none"
     slide2.style.display = "none"
     slide3.style.display = "block"
@@ -41,7 +41,6 @@ function showSlides() {
     dots[slideIndex - 1].className += " active";
     slides[slideIndex - 1].style.display = "block";
     setTimeout(showSlides, 3500);
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -71,5 +70,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 });
-
-

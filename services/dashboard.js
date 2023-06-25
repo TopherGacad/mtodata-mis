@@ -28,9 +28,6 @@ const financeModal = document.getElementById("finance-modal-container")
 const complainModal = document.getElementById("complaint-modal-container")
 const eventModal = document.getElementById("event-modal-container")
 
-const editUser = document.getElementById("editUser-modal")
-const editMem = document.getElementById("editMem-modal")
-
 const modalBg = document.getElementById('bg')
 const seePass = document.getElementById("see-pass")
 
@@ -40,10 +37,6 @@ const memberCancel = document.getElementById("member-cancel")
 const financeCancel = document.getElementById("finance-cancel")
 const complaintCancel = document.getElementById("complaint-cancel")
 const eventCancel = document.getElementById("event-cancel")
-
-// EDIT-CLOSE BUTTONS
-const editUserClose = document.getElementById("editUser-close")
-const editMemClose = document.getElementById("editMem-close")
 
 // FORM MODALS 
 adduserBtn.addEventListener("click", function() {
@@ -68,12 +61,11 @@ addEventBtn.addEventListener("click", function() {
 })
 
 // USER TYPE DISABLE INPUTS
-function disableInputs() {
-    const selectType = document.getElementById("select-type");
+const selectType = document.getElementById("select-type");
     const midnameInput = document.getElementById("midname");
     const contactInput = document.getElementById("contact");
     const accType = document.getElementById("acc-type");
-
+function disableInputs() {
     if (selectType.value === "butaw") {
         midnameInput.disabled = true;
         contactInput.disabled = true;
@@ -84,7 +76,6 @@ function disableInputs() {
         accType.disabled = false;
     }
 }
-
 
 // CANCEL BUTTONS
 userCancel.addEventListener("click", function() {
@@ -101,6 +92,9 @@ financeCancel.addEventListener("click", function() {
     document.getElementById("finance-form").reset()
     financeModal.style.display = "none"
     modalBg.style.display = "none"
+    midnameInput.disabled = false;
+    contactInput.disabled = false;
+    accType.disabled = false;
 })
 complaintCancel.addEventListener("click", function() {
     document.getElementById("complaint-form").reset()
@@ -112,19 +106,6 @@ eventCancel.addEventListener("click", function() {
     eventModal.style.display = "none"
     modalBg.style.display = "none"
 })
-
-// EDIT-CLOSE BUTTONS
-editUserClose.addEventListener("click", function() {
-    editUser.style.display = "none"
-    modalBg.style.display = "none"
-    userDetailsContain.style.display = "flex"
-})
-editMemClose.addEventListener("click", function() {
-    editMem.style.display = "none"
-    modalBg.style.display = "none"
-})
-
-
 
 //FI: CREATE A FUNCTION FOR SHOW PASSWORD INSTEAD OF THIS 
 seePass.addEventListener("change", function() {
@@ -154,26 +135,6 @@ delUser.addEventListener("click", function() {
     toast.classList.remove("toast-container-hide")
     // TO DO: if confirm then delete selected user else stay
 }) */
-
-const editIcon = document.querySelector(".fa-eye")
-editIcon.addEventListener("click", function() {
-    // code to edit the user with this ID
-    editUser.style.display = "flex"
-    modalBg.style.display = "block"
-})
-
-const editMemIcon = document.getElementById("edit-member-icon")
-editMemIcon.addEventListener("click", function() {
-    editMem.style.display = "flex"
-    modalBg.style.display = "block"
-})
-
-const editDetails = document.getElementById("edit-details")
-const userDetailsContain = document.getElementById("user-details-contain")
-editDetails.addEventListener("click", function() {
-    userDetailsContain.style.display = "none"
-
-})
 
 //EXPORT FUNCTION 
 function exportToExcel() {
@@ -253,11 +214,13 @@ UsersearchBar.addEventListener('input', () => {
         const userId = row.cells[0].textContent.toLowerCase();
         const userName = row.cells[1].textContent.toLowerCase();
         const userRole = row.cells[2].textContent.toLowerCase();
+        const userEmail = row.cells[3].textContent.toLowerCase();
 
         if (
             userId.includes(searchText) ||
             userName.includes(searchText) ||
-            userRole.includes(searchText)
+            userRole.includes(searchText) ||
+            userEmail.includes(searchText)
         ) {
             row.style.display = '';
         } else {
@@ -296,6 +259,134 @@ MemsearchBar.addEventListener('input', () => {
 });
 
 //WARNING & SUCCESS TOAST FOR ADD USER
+// document.getElementById("user-form").addEventListener("submit", function(event) {
+//     event.preventDefault();
+
+//     // Check if user role is selected
+//     var role = document.getElementById("select-role").value;
+//     if (role === "") {
+//         // Display warning toast
+//         var warningToast = document.getElementById("warningToast");
+//         warningToast.style.display = "block";
+
+//         // Hide toast after 3 seconds
+//         setTimeout(function() {
+//             warningToast.style.display = "none";
+//         }, 3000);
+//         return;
+//     }
+
+//     // Send an AJAX request to add the user to the database
+//     var formData = new FormData(this);
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("POST", "../php/adduser.php", true);
+//     xhr.onreadystatechange = function() {
+//         if (xhr.readyState === 4) {
+//             if (xhr.status === 200) {
+//                 // Display success toast
+//                 var successToast = document.getElementById("user-successToast");
+//                 successToast.style.display = "flex";
+//                 modalBg.style.display="none"
+
+//                 // Hide toast after 2 seconds
+//                 setTimeout(function() {
+//                     successToast.style.display = "none";
+//                     // Refresh the page
+//                     location.reload();
+//                 }, 2000);
+
+//                 // Reset the form
+//                 document.getElementById("user-form").reset();
+
+//                 // Hide the modal
+//                 var userModalContainer = document.getElementById("user-modal-container");
+//                 userModalContainer.style.display = "none";
+//             } else {
+//                 // Handle the error case
+//                 console.error("Error: " + xhr.status);
+//             }
+//         }
+//     };
+//     xhr.send(formData);
+// });
+ // Function to check if the email address exists in the database
+ function checkEmailExists(email) {
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../php/checkemail.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                resolve(response === 'exists');
+            }
+        };
+        xhr.send('street=' + email); // Use "street" parameter instead of "email"
+    });
+}
+
+// Function to check if the contact number exists in the database
+function checkContactExists(contact) {
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../php/checkcontact.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                resolve(response === 'exists');
+            }
+        };
+        xhr.send('contact=' + contact);
+    });
+}
+
+// Event listener for input changes
+document.getElementById('user-email').addEventListener('input', function() {
+    var emailInput = this.value;
+    var emailValidation = document.getElementById('email-validation');
+
+    checkEmailExists(emailInput)
+        .then(function(exists) {
+            if (exists) {
+                emailValidation.textContent = 'Email address already exist';
+            } else {
+                emailValidation.textContent = '';
+            }
+
+            // Disable the save button if either email or contact validation fails
+            var saveBtn = document.getElementById('save-btn');
+            var contactValidation = document.getElementById('contact-validation');
+            saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '';
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+});
+
+// Event listener for input changes
+document.getElementById('user-contact').addEventListener('input', function() {
+    var contactInput = this.value;
+    var contactValidation = document.getElementById('contact-validation');
+
+    checkContactExists(contactInput)
+        .then(function(exists) {
+            if (exists) {
+                contactValidation.textContent = 'Contact number already exist';
+            } else {
+                contactValidation.textContent = '';
+            }
+
+            // Disable the save button if either email or contact validation fails
+            var saveBtn = document.getElementById('save-btn');
+            var emailValidation = document.getElementById('email-validation');
+            saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '';
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+});
+
 document.getElementById("user-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -348,56 +439,206 @@ document.getElementById("user-form").addEventListener("submit", function(event) 
 });
 
 //WARNING & SUCCESS TOAST FOR ADD MEMBER
-document.getElementById("member-form").addEventListener("submit", function(event) {
-    event.preventDefault();
+// document.getElementById("member-form").addEventListener("submit", function(event) {
+//     event.preventDefault();
 
-    // Check if user role is selected
-    var role = document.getElementById("select-mem").value;
-    if (role === "") {
-        // Display warning toast
-        var warningToast = document.getElementById("mem-warningToast");
-        warningToast.style.display = "block";
+//     // Check if user role is selected
+//     var role = document.getElementById("select-mem").value;
+//     if (role === "") {
+//         // Display warning toast
+//         var warningToast = document.getElementById("mem-warningToast");
+//         warningToast.style.display = "block";
 
-        // Hide toast after 3 seconds
-        setTimeout(function() {
-            warningToast.style.display = "none";
-        }, 3000);
-        return;
-    }
+//         // Hide toast after 3 seconds
+//         setTimeout(function() {
+//             warningToast.style.display = "none";
+//         }, 3000);
+//         return;
+//     }
 
-    // Send an AJAX request to add the member to the database
-    var formData = new FormData(this);
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "../php/addmember.php", true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                // Display success toast
-                var successToast = document.getElementById("mem-successToast");
-                successToast.style.display = "flex";
-                modalBg.style.display="none"
+//     // Send an AJAX request to add the member to the database
+//     var formData = new FormData(this);
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("POST", "../php/addmember.php", true);
+//     xhr.onreadystatechange = function() {
+//         if (xhr.readyState === 4) {
+//             if (xhr.status === 200) {
+//                 // Display success toast
+//                 var successToast = document.getElementById("mem-successToast");
+//                 successToast.style.display = "flex";
+//                 modalBg.style.display="none"
 
-                // Hide toast after 2 seconds
-                setTimeout(function() {
-                    successToast.style.display = "none";
-                    // Refresh the page
-                    location.reload();
-                }, 2000);
+//                 // Hide toast after 2 seconds
+//                 setTimeout(function() {
+//                     successToast.style.display = "none";
+//                     // Refresh the page
+//                     location.reload();
+//                 }, 2000);
 
-                // Reset the form
-                document.getElementById("member-form").reset();
+//                 // Reset the form
+//                 document.getElementById("member-form").reset();
 
-                // Hide the modal
-                var memberModalContainer = document.getElementById("member-modal-container");
-                memberModalContainer.style.display = "none";
-            } else {
-                // Handle the error case
-                console.error("Error: " + xhr.status);
+//                 // Hide the modal
+//                 var memberModalContainer = document.getElementById("member-modal-container");
+//                 memberModalContainer.style.display = "none";
+//             } else {
+//                 // Handle the error case
+//                 console.error("Error: " + xhr.status);
+//             }
+//         }
+//     };
+//     xhr.send(formData);
+// });
+ // Function to check if the contact number exists in the database for mem-contact
+ function checkMemContactExists(phone) {
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../php/checkmemcontact.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                resolve(response === 'exists');
             }
-        }
-    };
-    xhr.send(formData);
+        };
+        xhr.send('contact=' + phone);
+    });
+}
+
+// Event listener for input changes in mem-contact
+document.getElementById('mem-contact').addEventListener('input', function() {
+    var contactInput = this.value;
+    var contactValidation = document.getElementById('mem-contact-validation');
+    var saveButton = document.getElementById('member-form').querySelector('#save-btn');
+
+    checkMemContactExists(contactInput)
+        .then(function(exists) {
+            if (exists) {
+                contactValidation.textContent = 'Contact number already exist';
+            } else {
+                contactValidation.textContent = '';
+            }
+
+            checkLicenseExists(document.getElementById('mem-license').value)
+                .then(function(exists) {
+                    var licenseValidation = document.getElementById('license-validation');
+                    if (exists) {
+                        licenseValidation.textContent = 'License number already exist';
+                    } else {
+                        licenseValidation.textContent = '';
+                    }
+
+                    saveButton.disabled = exists || contactValidation.textContent !== '' || licenseValidation.textContent !== '';
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
 });
+
+// Function to check if the license number exists in the database
+function checkLicenseExists(license_no) {
+    return new Promise(function(resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../php/checklicense.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = xhr.responseText;
+                resolve(response === 'exists');
+            }
+        };
+        xhr.send('license=' + license_no);
+    });
+}
+
+// Event listener for input changes in mem-license
+document.getElementById('mem-license').addEventListener('input', function() {
+    var licenseInput = this.value;
+    var licenseValidation = document.getElementById('license-validation');
+    var saveButton = document.getElementById('member-form').querySelector('#save-btn');
+
+    checkLicenseExists(licenseInput)
+        .then(function(exists) {
+            if (exists) {
+                licenseValidation.textContent = 'License number already exist';
+            } else {
+                licenseValidation.textContent = '';
+            }
+
+            checkMemContactExists(document.getElementById('mem-contact').value)
+                .then(function(exists) {
+                    var contactValidation = document.getElementById('mem-contact-validation');
+                    if (exists) {
+                        contactValidation.textContent = 'Contact number already exist';
+                    } else {
+                        contactValidation.textContent = '';
+                    }
+
+                    saveButton.disabled = exists || licenseValidation.textContent !== '' || contactValidation.textContent !== '';
+                })
+                .catch(function(error) {
+                    console.error(error);
+                });
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+});
+
+        document.getElementById("member-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Check if user role is selected
+            var role = document.getElementById("select-mem").value;
+            if (role === "") {
+                // Display warning toast
+                var warningToast = document.getElementById("mem-warningToast");
+                warningToast.style.display = "block";
+
+                // Hide toast after 3 seconds
+                setTimeout(function() {
+                    warningToast.style.display = "none";
+                }, 3000);
+                return;
+            }
+
+            // Send an AJAX request to add the member to the database
+            var formData = new FormData(this);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "../php/addmember.php", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // Display success toast
+                        var successToast = document.getElementById("mem-successToast");
+                        successToast.style.display = "flex";
+                        modalBg.style.display="none"
+
+                        // Hide toast after 2 seconds
+                        setTimeout(function() {
+                            successToast.style.display = "none";
+                            // Refresh the page
+                            location.reload();
+                        }, 2000);
+
+                        // Reset the form
+                        document.getElementById("member-form").reset();
+
+                        // Hide the modal
+                        var memberModalContainer = document.getElementById("member-modal-container");
+                        memberModalContainer.style.display = "none";
+                    } else {
+                        // Handle the error case
+                        console.error("Error: " + xhr.status);
+                    }
+                }
+            };
+            xhr.send(formData);
+        });
 
 
 

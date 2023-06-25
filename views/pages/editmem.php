@@ -39,6 +39,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <div class="ot-header">
                 <h3><a href="../../views/php/dashboard.php"><i class="fa-solid fa-arrow-left"></i></a>Edit Member Information</h3>
                 <div class="btn-container">
+                    <a href="../../views/pages/editunit.php"><input type="button" value="View Unit" class="view modal-btn" formnovalidate></a>
                     <a href="../../views/php/dashboard.php"><input type="button" value="Discard" class="cancelBtn modal-btn" id="cancel-btn"></a>
                     <button class="update-btn modal-btn" id="member-update" type="submit" name="member-update">Update</button>
                 </div>

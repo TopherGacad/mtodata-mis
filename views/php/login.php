@@ -1,20 +1,18 @@
-<?php
-session_start();
+<?php 
+session_start(); 
 include "db_conn.php";
 
 if (isset($_POST['uname']) && isset($_POST['password'])) {
 
-	function validate($data)
-	{
-		$data = trim($data);
-		$data = stripslashes($data);
-		$data = htmlspecialchars($data);
-		return $data;
+	function validate($data){
+       $data = trim($data);
+	   $data = stripslashes($data);
+	   $data = htmlspecialchars($data);
+	   return $data;
 	}
 
 	$email = validate($_POST['uname']);
 	$pass = validate($_POST['password']);
-
 	$sql = "SELECT * FROM user WHERE (email='$email' OR username='$email')";
 
 	$result = mysqli_query($conn, $sql);
@@ -45,5 +43,4 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 			exit();
 		}
 
-	}
-}
+
