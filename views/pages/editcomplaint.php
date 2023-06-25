@@ -52,33 +52,33 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                        <!-- FIRSTNAME -->
                         <div class="fields">
                             <label for="complainant-firstname">Firstname<span> *</span></label>
-                            <input type="text" id="complainant-firstname" name="complaintFirstname" placeholder="Firstname" required>
+                            <input type="text" id="complaintFirstname" name="complaintFirstname" placeholder="Firstname">
                         </div>
 
                         <!-- MIDNAME -->
                         <div class="fields">
-                            <label for="complainant-midname">Middlename</label>
-                            <input type="text" id="complainant-midname" name="complaintMiddlename" placeholder="Middlename">
+                            <label for="complaintMiddlename">Middlename</label>
+                            <input type="text" id="complaintMiddlename" name="complaintMiddlename" placeholder="Middlename">
                         </div>
 
                        <!-- LASTNAME -->
                         <div class="fields">
-                            <label for="complainant-lastname">Lastname<span> *</span></label>
-                            <input type="text" id="complainant-lastname" name="complaintLastname" placeholder="Lastname" required>
+                            <label for="complaintLastname">Lastname<span> *</span></label>
+                            <input type="text" id="complaintLastname" name="complaintLastname" placeholder="Lastname">
                         </div>
                     </div>
 
                     <div class="right-side-emp section">
                         <!-- EXTENSION NAME -->
                         <div class="fields">
-                            <label for="complainant-extension">Extension Name</label>
-                            <input type="text" pattern="[A-Za-z.]{2,5}" id="complainant-extension" name="extension" placeholder="eg. Jr, Sr">
+                            <label for="EditCompExtension">Extension Name</label>
+                            <input type="text" pattern="[A-Za-z.]{2,5}" id="EditCompExtension" name="extension" placeholder="eg. Jr, Sr">
                         </div>
 
                         <!-- GENDER -->
                         <div class="fields">
-                            <label for="complainant-gender">Sex<span> *</span></label>
-                            <select name="gender" id="complainant-gender">
+                            <label for="EditCompGender">Sex<span> *</span></label>
+                            <select name="gender" id="EditCompGender">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="none">Prefer not to say</option>
@@ -87,8 +87,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 
                         <!-- CONTACT NUMBER -->
                         <div class="fields">
-                            <label for="complainant-contact">Contact no.<span> *</span></label>
-                            <input type="text" pattern="[0-9]{11}" id="complainant-contact" name="contact" placeholder="eg. 09592220954" required>
+                            <label for="EditCompContact">Contact no.<span> *</span></label>
+                            <input type="text" pattern="[0-9]{11}" id="EditCompContact" name="contact" placeholder="eg. 09123456789">
                         </div>
                     </div>
                 </div>
@@ -104,14 +104,14 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class="right-side-profile section">
                        <!-- SUBJECT -->
                         <div class="fields">
-                            <label for="subject">Person to Complain<span> *</span></label>
-                            <input type="text" id="subject" name="subject">
+                            <label for="EditCompSub">Person to Complain<span> *</span></label>
+                            <input type="text" id="EditCompSub" name="EditCompSub">
                         </div>
 
                         <!-- BODY NUMBER -->
                         <div class="fields">
-                            <label for="subject-bodyNum">Body no.<span> *</span></label>
-                            <input type="text" id="subject-bodyNum" name="subject-bodyNum">
+                            <label for="EditCompSubBody">Body no.<span> *</span></label>
+                            <input type="text" id="EditCompSubBody" name="EditCompSubBody">
                         </div>
                     </div>
                 </div>
@@ -124,20 +124,20 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- TIME -->
                         <div class="fields">
                             <label for="time-incident">Time of Incident<span> *</span></label>
-                            <input type="time" id="time-incident" name="time-incident">
+                            <input type="time" id="edit-time-incident" name="edit-time-incident">
                         </div>
 
                         <!-- DATE -->
                         <div class="fields">
                             <label for="date-incident">Date of Incident<span> *</span></label>
-                            <input type="date" id="date-incident" name="date-incident">
+                            <input type="date" id="edit-date-incident" name="edit-date-incident">
                         </div>
                     </div>
                     <div class="section">
                         <!-- DESCRIPTION -->
                         <div class="fields">
-                            <label for="desc">Description<span> *</span></label>
-                            <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350"></textarea>
+                            <label for="editComplaintDescription">Description<span> *</span></label>
+                            <textarea name="editComplaintDescription" id="editComplaintDescription" cols="30" rows="9" maxlength="350"></textarea>
                         </div>
                     </div>
                 </div>

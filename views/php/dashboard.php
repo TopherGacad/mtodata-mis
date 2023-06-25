@@ -401,7 +401,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <input type="text" class="user-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
-                <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New Complaint</button>
+                <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i>New Complaint</button>
             </div>
         </header>
 
@@ -868,17 +868,17 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- LASTNAME -->
                     <div class="fields">
                         <label for="complainant-lastname">Complainant Lastname<span> *</span></label>
-                        <input type="text" id="complainant-lastname" name="complaintLastname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
+                        <input type="text" id="complaintLastname" name="complaintLastname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
                     </div>
                     <!-- FIRSTNAME -->
                     <div class="fields">
                         <label for="complainant-firstname">Complainant Firstname<span> *</span></label>
-                        <input type="text" id="complainant-firstname" name="complaintFirstname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
+                        <input type="text" id="complaintFirstname" name="complaintFirstname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
                     </div>
                     <!-- MIDNAME -->
                     <div class="fields">
                         <label for="complainant-midname">Complainant Middlename</label>
-                        <input type="text" id="complainant-midname" name="complaintMiddlename" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
+                        <input type="text" id="complainantidname" name="complaintMiddlename" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
                     </div>
                     <!-- EXTENSION NAME -->
                     <div class="fields">
@@ -904,20 +904,20 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <div class="complaintForm-right addForm">
                     <!-- SUBJECT -->
                     <div class="fields">
-                        <label for="subject">Person to Complain<span> *</span></label>
-                        <input type="text" id="subject" name="subject" maxlength="30" pattern="[A-Za-z ]{2,30}" placeholder="Name of person to complain">
+                        <label for="ComplaintSubject">Person to Complain<span> *</span></label>
+                        <input type="text" id="ComplaintSubject" name="ComplaintSubject" maxlength="30" pattern="[A-Za-z ]{2,30}" placeholder="Name of person to complain">
                     </div>
 
                     <!-- BODY NUMBER -->
                     <div class="fields">
-                        <label for="subject-bodyNum">Body no.<span> *</span></label>
-                        <input type="text" id="subject-bodyNum" name="subject-bodyNum" required>
+                        <label for="complaintSubjectBody">Body no.<span> *</span></label>
+                        <input type="text" id="complaintSubjectBody" name="complaintSubjectBody" required>
                     </div>
 
                     <!-- DESCRIPTION -->
                     <div class="fields">
-                        <label for="desc">Description<span> *</span></label>
-                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" required></textarea>
+                        <label for="complaintDescription">Description<span> *</span></label>
+                        <textarea name="complaintDescription" id="complaintDescription" cols="30" rows="9" maxlength="350" required></textarea>
                     </div>
 
                     <div class="timeDate-container">
@@ -942,7 +942,15 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             </div>
         </form>
     </div>
-
+    <!-- TOAST -->
+    <div class="successToast-container" id="mem-successToast">
+        <div class="successToast-left">
+            <i class="successToast-icon fa-solid fa-circle-check"></i>
+        </div>
+        <div class="successToast-right">
+            <p><strong>Success!</strong> Complaint successfully added.</p>
+        </div>
+    </div>
     <!-- ADD EVENTS & PROGRAMS -->
     <div class="bg" id="bg"></div>
     <div class="addEvent-modal-container" id="event-modal-container">
