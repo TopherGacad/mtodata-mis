@@ -1,6 +1,5 @@
 <?php
-
-
+session_start();
 
 // connect to the MySQL database
 include "../php/db_conn.php";
@@ -18,7 +17,7 @@ $body = $_POST['unitbody_no'];
 $color = $_POST['unitbody_color'];
 $fran_no = $_POST['unitfran_no'];
 $franissue = $_POST['unitfran_issue'];
-$franvalid = $_POST['unitfran_valid'];
+$franvalid = isset($_POST['unitfran_valid']) && $_POST['unitfran_valid'] !== '' ? $_POST['unitfran_valid'] : null;
 $areacode = $_POST['unit_area'];
 $motor_no = $_POST['unit_motorno'];
 $chasis = $_POST['unit_chasis'];
@@ -36,7 +35,9 @@ VALUES ('$body', '$mem_name', '$fran_no', '$franissue', '$franvalid', '$areacode
 '$chasis', '$OR', '$CR', '$plateno', '$color', '$District', '$Control')";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Data inserted successfully.";
+    $_SESSION['insert_success'] = true;
+    header('location: ../pages/addunit.php?success=0');
+	exit();   
 } else {
     echo "Error inserting data: " . $conn->error;
 }

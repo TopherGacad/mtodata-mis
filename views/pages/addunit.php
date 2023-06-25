@@ -12,6 +12,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     header("location: login.php");
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -28,7 +29,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <link rel='icon' href='../../public/assets/browse_logo.png'>
     <!-- FONT AWESOME/ICONS -->
     <script src='https://kit.fontawesome.com/aa37050208.js' crossorigin='anonymous'></script>
-    
+
 </head>
 
 <body>
@@ -39,16 +40,26 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <i class="toast-icon fa-solid fa-triangle-exclamation"></i>
         </div>
         <div class="toast-right">
-            <p id = 'error-con'></p>
+            <p id='error-con'></p>
         </div>
     </div>
 
+    <!-- SUCCESS TOAST -->
+    <div class="toast-container" id="toast-success">
+        <div class="toast-left-success">
+            <i class="toast-icon fa-solid fa-circle-check"></i>
+        </div>
+        <div class="toast-right">
+            <p id='success-con'></p>
+        </div>
+    </div>
+    
     <div class='head-container'>
         <img class='main-logo' src='../../public/assets/mtodata_logo.png' alt='mtodata logo'>
     </div>
 
     <div class='content-container'>
-        <form name='addunit_form' method='post' action='insertunit.php' onsubmit='return validate_form()'>
+        <form name='addunit_form' method='POST' action='insertunit.php' onsubmit='return validate_form()'>
             <div class='ot-header'>
                 <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>Add Unit
                     Information</h3>
@@ -111,9 +122,10 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             </div>
 
             <div class='profile-container'>
-                <h3>Sidecar Information</h3>
+                <h3>Unit Information</h3>
                 <div class='main'>
                     <div class='left-side-profile section'>
+
                         <!-- BODY NO. -->
                         <div class='fields'>
                             <label for='unit-bodyno'>Body No. <span id='error_1'> *</span></label>
@@ -123,7 +135,24 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- BODY COLOR -->
                         <div class='fields'>
                             <label for='unit-bodycolor'>Body Color <span> *</span></label>
-                            <input type='text' id='unit-bodycolor' name='unitbody_color' required>
+                            <select name='unitbody_color' id='unit-bodycolor' required>
+                                <option value='Blue'>Blue</option>
+                                <option value='Red'>Red</option>
+                                <option value='Orange'>Orange</option>
+                                <option value='Yellow'>Yellow</option>
+                                <option value='Green'>Green</option>
+                                <option value='Indigo'>Indigo</option>
+                                <option value='Violet'>Violet</option>
+                                <option value='Purple'>Purple</option>
+                                <option value='Pink'>Pink</option>
+                                <option value='Silver'>Silver</option>
+                                <option value='Gold'>Gold</option>
+                                <option value='Beige'>Beige</option>
+                                <option value='Brown'>Brown</option>
+                                <option value='Grey/Gray'>Grey/Gray</option>
+                                <option value='Black'>Black</option>
+                                <option value='White'>White</option>
+                            </select>
                         </div>
 
                         <!-- FRANCHISE NO. -->
@@ -138,19 +167,21 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- FRANCHISE DATE ISSUED -->
                         <div class='fields'>
                             <label for='unit-franissue'>Franchise Date issued <span> *</span></label>
-                            <input type='date' id='unit-franissue' name='unitfran_issue' required>
+                            <input type='date' id='unit-franissue' name='unitfran_issue' max="<?= date('Y-m-d') ?>"
+                                onchange="updateUnitFranvalid()" required>
                         </div>
 
                         <!-- FRANCHISE DATE VALID -->
                         <div class='fields'>
-                            <label for='unit-franvalid'>Franchise Date Valid <span> *</span></label>
-                            <input type='date' id='unit-franvalid' name='unitfran_valid' required>
+                            <label for='unit-franvalid'>Franchise Date Valid</label>
+                            <input type='date' id='unit-franvalid' name='unitfran_valid' READONLY>
                         </div>
+
 
                         <!-- AREA CODE -->
                         <div class='fields'>
-                            <label for='unit-area'>Area Code <span> *</span></label>
-                            <input type='text' id='unit-area' name='unit_area' required>
+                            <label for='unit-area'>Area Code <span id='error_4'> *</span></label>
+                            <input type='text' id='unit-area' name='unit_area' oninput="validate_isNum()" required>
                         </div>
                     </div>
                 </div>
@@ -162,7 +193,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class='section'>
                         <div class='fields'>
                             <label for='unit_motorno'>Motor No. <span id='error_3'> *</span></label>
-                            <input type='text' id='unit-motorno' name='unit_motorno' oninput="validate_isNum()" required>
+                            <input type='text' id='unit-motorno' name='unit_motorno' oninput="validate_isNum()"
+                                required>
                         </div>
 
                         <div class='fields'>

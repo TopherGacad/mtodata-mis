@@ -1,10 +1,12 @@
 var a = document.getElementById('unit-bodyno');
 var b = document.getElementById('unit-franno');
 var c = document.getElementById('unit-motorno');
+var e = document.getElementById('unit-area');
 
 var a_error = document.getElementById('error_1');
 var b_error = document.getElementById('error_2');
 var c_error = document.getElementById('error_3');
+var e_error = document.getElementById('error_4');
 
 var d = document.getElementById('error-con');
 
@@ -15,6 +17,8 @@ function validate_isNum() {
     var isValidA = !isNaN(a.value);
     var isValidB = !isNaN(b.value);
     var isValidC = !isNaN(c.value);
+    var isValidE = !isNaN(e.value);
+
 
     if (!isValidA) {
         a.style.border = '2px solid red';
@@ -46,8 +50,18 @@ function validate_isNum() {
         c_error.style.fontSize = '14px';
     }
 
-    return isValidA && isValidB && isValidC;
+    if (!isValidE) {
+        e.style.border = '2px solid red';
+        e_error.innerHTML = 'Invalid Input';
+        e_error.style.fontSize = '8pt';
+    } else {
+        e.style.border = '';
+        e_error.innerHTML = '*';
+        e_error.style.fontSize = '14px';
+    }
 
+
+    return isValidA && isValidB && isValidC && isValidE;
 }
 
 function validate_form() {
@@ -66,3 +80,37 @@ function validate_form() {
         return false;
     }
 }
+
+function updateUnitFranvalid() {
+    var issue_Date = document.getElementById('unit-franissue');
+    var valid_Date = document.getElementById('unit-franvalid');
+
+    var issueDate = new Date(issue_Date.value);
+    var validDate = new Date(issueDate.getFullYear() + 5, issueDate.getMonth(), issueDate.getDate());
+    valid_Date.value = validDate.toISOString().slice(0, 10);
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    var issue_Date = document.getElementById('unit-franissue');
+    var valid_Date = document.getElementById('unit-franvalid');
+
+    issue_Date.addEventListener('change', updateUnitFranvalid);
+    updateUnitFranvalid();
+
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const suc = urlParams.get('success');
+    const toastContainers = document.getElementById('toast-success');
+
+    if (suc === '0') {
+        toastContainers.style.visibility = 'visible';
+        document.getElementById('success-con').innerText = 'Data inserted successfully.';
+        setTimeout(() => {
+            toastContainers.style.visibility = 'hidden';
+        }, 3000);
+    }
+
+});

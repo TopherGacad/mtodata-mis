@@ -221,6 +221,15 @@ textarea {
     color: var(--base-color);
 }
 
+.toast-left-success {
+    background-color: var(--update-hover);
+    border-radius: 5px 0px 0px 5px;
+    height: 100%;
+    width: 15%;
+    color: var(--base-color);
+}
+
+.toast-left-success,
 .toast-left,
 .toast-right {
     display: flex;
