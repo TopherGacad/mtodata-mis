@@ -50,7 +50,7 @@ function showSlides() {
         if (error === '1') {
             Array.from(toastContainers).forEach((container) => {
                 container.style.visibility = 'visible';
-                document.getElementById("error-cont").innerText = "Error code 1: Account does not exist.";
+                document.getElementById("error-cont").innerHTML = `<strong>Error</strong> Account does not exist.`;
 
             });
             setTimeout(() => {
@@ -61,7 +61,7 @@ function showSlides() {
         } else if (error === '2') {
             Array.from(toastContainers).forEach((container) => {
                 container.style.visibility = 'visible';
-                document.getElementById("error-cont").innerText = "Error code 2: The username or password you entered is incorrect.";
+                document.getElementById("error-cont").innerHTML = `<strong>Try again</strong> Incorrect Username or Pass.`;
             });
             setTimeout(() => {
                 Array.from(toastContainers).forEach((container) => {
