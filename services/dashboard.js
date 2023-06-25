@@ -214,11 +214,13 @@ UsersearchBar.addEventListener('input', () => {
         const userId = row.cells[0].textContent.toLowerCase();
         const userName = row.cells[1].textContent.toLowerCase();
         const userRole = row.cells[2].textContent.toLowerCase();
+        const userEmail = row.cells[3].textContent.toLowerCase();
 
         if (
             userId.includes(searchText) ||
             userName.includes(searchText) ||
-            userRole.includes(searchText)
+            userRole.includes(searchText) ||
+            userEmail.includes(searchText)
         ) {
             row.style.display = '';
         } else {
