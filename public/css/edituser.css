@@ -1,16 +1,25 @@
-:root{
+:root {
     --backdrop-color: #f3f3f3;
     --border-color: #DAE4F2;
     --primary-font-color: #404c57;
-    --btn-hover:#677c8f;
+    --btn-hover: #677c8f;
     --def-white: #FFFFFF;
     --box-shadow: rgba(25, 39, 52, 0.08);
     --btn-color: #2490ef;
     --btn-save: #28a745;
     --update-hover: #1f7e35;
     --dark-blue: #1842BD;
+    --link-color: #6764EE;
+    --border-color: #BABABA;
+    --base-color: #FEFEFE;
+    --default-font-color: #282828;
+    --active-dot:  #717171;
+    --login-left: #ECF4FF;
+    --error-color:#E53B34;
+    --toast-font-color: color: rgba(0, 0, 0, 0.7);
 }
-body{
+
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -20,7 +29,8 @@ body{
     font-size: 14px;
     color: var(--primary-font-color);
 }
-.head-container{
+
+.head-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -33,36 +43,42 @@ body{
     z-index: 999;
     top: 0;
 }
-.main-logo{
+
+.main-logo {
     width: 100px;
 }
-.ot-header{
+
+.ot-header {
     width: 100vw;
     padding: 10px 0px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(to right, var(--dark-blue),var(--def-white));
+    background: linear-gradient(to right, var(--dark-blue), var(--def-white));
     box-shadow: var(--box-shadow);
     position: fixed;
     top: 40px;
     right: 0;
 }
-.ot-header h3{
+
+.ot-header h3 {
     padding-left: 100px;
     color: var(--def-white);
 }
-.ot-header h3 a{
+
+.ot-header h3 a {
     padding-right: 10px;
     color: var(--def-white);
 }
+
 .content-container {
     margin-top: 120px;
     padding: 20px;
     z-index: 998;
     align-content: center;
 }
-.modal-btn{
+
+.modal-btn {
     padding: 10px;
     border-radius: 5px;
     width: 60px;
@@ -73,55 +89,67 @@ body{
     font-size: 12px;
     box-shadow: var(--box-shadow);
 }
-.view{
+
+.view {
     color: var(--def-white);
     background-color: var(--primary-font-color);
     width: 70px;
 }
-.btn-container{
+
+.btn-container {
     margin-right: 60px;
 }
-.cancelBtn{
+
+.cancelBtn {
     background-color: var(--btn-color);
     color: var(--def-white);
 }
-.cancelBtn:hover{
+
+.cancelBtn:hover {
     background-color: var(--btn-hover);
 }
-.update-btn{
+
+.update-btn {
     background-color: var(--btn-save);
 }
-.update-btn:hover{
+
+.update-btn:hover {
     background-color: var(--update-hover);
 }
-.section img{
+
+.section img {
     width: 200px;
     height: 200px;
     margin-left: 15px;
     border: 1px solid var(--backdrop-color);
 
 }
-.fields{
+
+.fields {
     display: flex;
-    flex-direction:column ;
+    flex-direction: column;
     padding: 10px 15px;
 }
-.fields label{
+
+.fields label {
     padding-bottom: 5px;
 }
-.fields span{
+
+.fields span {
     color: red;
 }
-form{
+
+form {
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
     align-items: end;
 }
+
 .user-container,
 .profile-container,
 .password-container,
 .pic-container,
-.container{
+.container {
     width: 75%;
     height: fit-content;
     margin-right: 5%;
@@ -134,25 +162,82 @@ form{
     flex-direction: column;
     justify-content: space-between;
 }
-.main{
+
+.main {
     display: flex;
 }
-textarea{
+
+textarea {
     resize: none;
     height: 110px;
 }
+
 .fields input,
 .fields select,
-textarea{
+textarea {
     padding: 10px 15px;
     border-radius: 7px;
     border: 1px solid var(--border-color);
     background-color: var(--backdrop-color);
     font-weight: 100;
 }
-.section{
+
+.section {
     width: 50%;
 }
-.see-password-container{
+
+.see-password-container {
     margin-left: 13px;
+}
+
+/* TOAST */
+.toast-container {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    top: 2%;
+    left: 0;
+    right: 0;
+    height: 10%;
+    width: 25%;
+    margin: auto;
+    background-color: var(--base-color);
+    color: var(--toast-font-color);
+    z-index: 1000; 
+    visibility: hidden;
+}
+
+.toast-icon {
+    font-size: 25px;
+}
+
+.toast-left {
+    background-color: var(--error-color);
+    border-radius: 5px 0px 0px 5px;
+    height: 100%;
+    width: 15%;
+    color: var(--base-color);
+}
+
+.toast-left-success {
+    background-color: var(--update-hover);
+    border-radius: 5px 0px 0px 5px;
+    height: 100%;
+    width: 15%;
+    color: var(--base-color);
+}
+
+.toast-left-success,
+.toast-left,
+.toast-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.toast-right p {
+    padding-left: 15px;
 }
