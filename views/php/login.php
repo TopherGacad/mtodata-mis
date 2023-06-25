@@ -34,10 +34,16 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 				$_SESSION['id'] = $row['id'];
 				header("Location: ../php/viceview.php");
 				exit();
-			} else if ($row['roles'] === 'Secretary') {
-				echo "Hello " . $row['roles'];
+			} else if ($row['roles'] === 'secretary') {
+				$_SESSION['email'] = $row['email'];
+				$_SESSION['id'] = $row['id'];
+				header("Location: ../php/secview.php");
+				exit();
 			} else if ($row['roles'] === 'Treasurer' || 'Auditor') {
-				echo "Hello " . $row['roles'];
+				$_SESSION['email'] = $row['email'];
+				$_SESSION['id'] = $row['id'];
+				header("Location: ../php/secview.php");
+				exit();
 			}
 
 
