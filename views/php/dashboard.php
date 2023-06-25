@@ -35,7 +35,9 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 <body>
     <div class="bg-container"></div>
     <div class="top-design">
-        <p><strong>Welcome! </strong><?php echo $_SESSION['email']?></p>
+        <p><strong>Welcome! </strong>
+            <?php echo $_SESSION['email'] ?>
+        </p>
     </div>
 
     <!-- SIDE-NAV-BAR -->
@@ -61,94 +63,148 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 
     <!-- MAIN CONTENT -->
     <!-- DASHBOARD PANE -->
-    <div class="dashboard-container" id="dash-container">
-        <section class="top-dash">
-            <div class="card border">
-                <div class="card-header">
-                    <i class="card-icon fa-solid fa-user-group"></i>
-                    <h4 class="">Total Member Count</h4>
-                </div>
-                <div class="count-container">
-                    <p>31</p>
-                </div>
-                <div class="link-container memCount">
-                    <a href="#">View Report</a>
-                </div>
-            </div>
+    <div class='dashboard-container' id='dash-container'>
+        <section class='top-dash'>
 
-            <div class="card border">
-                <div class="card-header">
-                    <i class="card-icon fa-solid fa-hand-holding-dollar"></i>
-                    <h4 class="">Donations Received</h4>
-                </div>
-                <div class="count-container">
-                    <p><span>&#8369;</span> 1000000</p>
-                </div>
-                <div class="link-container">
-                    <a href="#">View Report</a>
-                </div>
-            </div>
+            <?php
 
-            <div class="card border">
-                <div class="card-header">
-                    <i class="card-icon fa-solid fa-circle-dollar-to-slot"></i>
-                    <h4 class="">Contribution Collected</h4>
-                </div>
-                <div class="count-container">
-                    <p><span>&#8369;</span>31</p>
-                </div>
-                <div class="link-container">
-                    <a href="#">View Report</a>
-                </div>
-            </div>
+            // connect to the MySQL database
+            include "db_conn.php";
 
-            <div class="card border">
-                <div class="card-header">
-                    <i class="card-icon fa-solid fa-file-circle-exclamation"></i>
-                    <h4 class="">Complaints Recieved</h4>
-                </div>
-                <div class="count-container">
-                    <p>31</p>
-                </div>
-                <div class="link-container">
-                    <a href="#">View Report</a>
-                </div>
-            </div>
-        </section>
-        <div class="botleft-dash border">
-            <div class="card-header">
-                <h4>Recent Financial Entry</h4>
-            </div>
-        </div>
-        <div class="botright-dash border">
-            <div class="card-header events">
-                <h4>Events</h4>
-            </div>
-            <div class="dash-content">
-                <div class="agenda-box">
-                    <h3>◉ WHO:</h3>
-                    <p>MTODA Officers</p>
-                </div>
+            // check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
 
-                <div class="agenda-box">
-                    <h3>◉ WHAT:</h3>
-                    <p>Meeting agenda for annual election 2023-2024</p>
-                </div>
+            // member count
+            $mem = "SELECT COUNT(id) AS mem_count FROM mem_info";
+            $mem_result = $conn->query($mem);
 
-                <div class="agenda-box">
-                    <h3>◉ WHEN:</h3>
-                    <p>May 05, 2023 10:00PM</p>
-                </div>
+            $don = "SELECT SUM(amount) AS don_count FROM transaction_donation";
+            $don_result = $conn->query($don);
 
-                <div class="agenda-box">
-                    <h3>◉ WHERE:</h3>
-                    <p>MTODA line Terminal </p>
+            $con = "SELECT SUM(amount) AS con_count FROM transaction_contribution";
+            $con_result = $conn->query($con);
+
+            $com = "SELECT COUNT(id) AS com_count FROM complaint_details";
+            $com_result = $conn->query($com);
+
+            if ($mem_result) {
+                $row = mysqli_fetch_assoc($mem_result);
+                echo "
+            <!-- MEMBER COUNT -->
+            <div class='card border'>
+                <div class='card-header'>
+                    <i class='card-icon fa-solid fa-user-group'></i>
+                    <h4 class=''>Total Member Count</h4>
+                </div>
+                <div class='count-container'>
+                    <p>" . $row['mem_count'] . "</p>
+                </div>
+                <div class='link-container memCount'>
+                    <a href='#'>View Report</a>
+                </div>
+            </div>";
+            }
+
+            if ($don_result) {
+                $row = mysqli_fetch_assoc($don_result);
+                echo "
+            <!-- DONATION COUNT -->
+            <div class='card border'>
+                <div class='card-header'>
+                    <i class='card-icon fa-solid fa-hand-holding-dollar'></i>
+                    <h4 class=''>Donations Received</h4>
+                </div>
+                <div class='count-container'>
+                    <p><span>&#8369;</span>" . $row['don_count'] . "</p>
+                </div>
+                <div class='link-container'>
+                    <a href='#'>View Report</a>
+                </div>
+            </div>";
+            }
+
+            if ($con_result) {
+                $row = mysqli_fetch_assoc($con_result);
+                echo "
+            <!-- CONTRIBUTION COUNT -->
+            <div class='card border'>
+                <div class='card-header'>
+                    <i class='card-icon fa-solid fa-circle-dollar-to-slot'></i>
+                    <h4 class=''>Contribution Collected</h4>
+                </div>
+                <div class='count-container'>
+                    <p><span>&#8369;</span>" . $row['con_count'] . "</p>
+                </div>
+                <div class='link-container'>
+                    <a href='#'>View Report</a>
+                </div>
+            </div>";
+            }
+
+
+            if ($com_result) {
+                $row = mysqli_fetch_assoc($com_result);
+                echo "
+                <!-- COMPLAINTS COUNT -->
+            <div class='card border'>
+                <div class='card-header'>
+                    <i class='card-icon fa-solid fa-file-circle-exclamation'></i>
+                    <h4 class=''>Complaints Recieved</h4>
+                </div>
+                <div class='count-container'>
+                    <p>" . $row['com_count'] . "</p>
+                </div>
+                <div class='link-container'>
+                    <a href='#'>View Report</a>
                 </div>
             </div>
-            <div class="link-container events-link">
-                <a href="#">View Report</a>
+        </section>";
+            }
+
+            // close MySQL connection
+            $conn->close();
+            ?>
+
+            <div class='botleft-dash border'>
+
+                <!-- FINANCE ENTRY -->
+                <div class='card-header'>
+                    <h4>Recent Financial Entry</h4>
+                </div>
             </div>
-        </div>
+            <div class='botright-dash border'>
+
+                <!-- EVENTS AND PROGRAMS ENTRY -->
+                <div class='card-header events'>
+                    <h4>Events</h4>
+                </div>
+                <div class='dash-content'>
+                    <div class='agenda-box'>
+                        <h3>◉ WHO:</h3>
+                        <p>MTODA Officers</p>
+                    </div>
+
+                    <div class='agenda-box'>
+                        <h3>◉ WHAT:</h3>
+                        <p>Meeting agenda for annual election 2023-2024</p>
+                    </div>
+
+                    <div class='agenda-box'>
+                        <h3>◉ WHEN:</h3>
+                        <p>May 05, 2023 10:00PM</p>
+                    </div>
+
+                    <div class='agenda-box'>
+                        <h3>◉ WHERE:</h3>
+                        <p>MTODA line Terminal </p>
+                    </div>
+                </div>
+                <div class='link-container events-link'>
+                    <a href='#'>View Report</a>
+                </div>
+            </div>
     </div>
 
     <!-- USER PANE -->
@@ -161,7 +217,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <div class="head-right">
                 <div class="search-container">
                     <input type="text" class="user-search" id="user-search" placeholder="Search">
-                    <button class="user-searchBtn" id="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="user-searchBtn" id="user-searchBtn"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
                 <button class="adduserBtn" id="addUser-btn"><i class="fa-solid fa-plus"></i> Add User</button>
             </div>
@@ -224,7 +281,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", "delete_user.php", true);
                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                xhr.onreadystatechange = function() {
+                xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         // remove the row from the table
                         var row = document.getElementById("user-" + id);
@@ -240,7 +297,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         // Attach event listeners to delete buttons
         var deleteButtons = document.getElementsByClassName("tools fa-trash-can");
         for (var i = 0; i < deleteButtons.length; i++) {
-            deleteButtons[i].addEventListener("click", function() {
+            deleteButtons[i].addEventListener("click", function () {
                 var userId = this.closest("tr").querySelector(".userid").textContent;
                 deleteUser(userId);
             });
@@ -255,10 +312,12 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <p>ADMIN VIEW</p>
             </div>
             <div class="head-right">
-                <abbr title="Export Report"><button class="memExportBtn exportBtn" id="mem-export"><i class="fa-solid fa-download"></i></button></abbr>
+                <abbr title="Export Report"><button class="memExportBtn exportBtn" id="mem-export"><i
+                            class="fa-solid fa-download"></i></button></abbr>
                 <div class="search-container">
                     <input type="text" class="mem-search" id="mem-search" placeholder="Search">
-                    <a href="../../views/pages/addunit.php"><button class="mem-searchBtn" id="add-unit"><i class="fa-solid fa-id-card-clip"></i></button></a>
+                    <a href="../../views/pages/addunit.php"><button class="mem-searchBtn" id="add-unit"><i
+                                class="fa-solid fa-id-card-clip"></i></button></a>
                 </div>
                 <button class="addmemBtn" id="addmem-btn"><i class="fa-solid fa-plus"></i> Add Member</button>
             </div>
@@ -326,7 +385,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                 var xhr = new XMLHttpRequest();
                                 xhr.open("POST", "delete_member.php", true);
                                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                                xhr.onreadystatechange = function() {
+                                xhr.onreadystatechange = function () {
                                     if (xhr.readyState === 4 && xhr.status === 200) {
                                         // remove the row from the table
                                         var row = document.getElementById("row-" + id);
@@ -352,7 +411,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <p>FINANCE STAFF VIEW</p>
             </div>
             <div class="head-right">
-                <button class="financeExportBtn exportBtn" id="finance-export"><i class="fa-solid fa-download"></i></button>
+                <button class="financeExportBtn exportBtn" id="finance-export"><i
+                        class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -396,12 +456,14 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <p>USER VIEW</p>
             </div>
             <div class="head-right">
-                <button class="complaintExportBtn exportBtn" id="complaint-export"><i class="fa-solid fa-download"></i></button>
+                <button class="complaintExportBtn exportBtn" id="complaint-export"><i
+                        class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
-                <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New Complaint</button>
+                <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New
+                    Complaint</button>
             </div>
         </header>
 
@@ -455,7 +517,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                 var xhr = new XMLHttpRequest();
                                 xhr.open("POST", "deleteComplaint.php", true);
                                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                                xhr.onreadystatechange = function() {
+                                xhr.onreadystatechange = function () {
                                     if (xhr.readyState === 4 && xhr.status === 200) {
                                         console.log("Response received:", xhr.responseText);
                                         // remove the row from the table
@@ -540,7 +602,9 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="bg" id="bg"></div>
     <div class="addUser-modal-container" id="user-modal-container">
         <h2 class="modal-title">ADD USER</h2>
-        <form action="../php/adduser.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")' id="user-form">
+        <form action="../php/adduser.php" method="post"
+            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
+            id="user-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="userForm-left addForm">
@@ -560,22 +624,26 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- LASTNAME -->
                     <div class="fields">
                         <label for="user-lastname">Lastname<span> *</span></label>
-                        <input type="text" id="user-lastname" name="lastname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
+                        <input type="text" id="user-lastname" name="lastname" maxlength="25" pattern="[A-Za-z ]{2,25}"
+                            placeholder="Dela Cruz" required>
                     </div>
                     <!-- FIRSTNAME -->
                     <div class="fields">
                         <label for="user-firstname">Firstname<span> *</span></label>
-                        <input type="text" id="user-firstname" name="firstname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
+                        <input type="text" id="user-firstname" name="firstname" maxlength="25" pattern="[A-Za-z ]{2,25}"
+                            placeholder="Juan" required>
                     </div>
                     <!-- MIDNAME -->
                     <div class="fields">
                         <label for="user-midname">Middlename</label>
-                        <input type="text" id="user-midname" name="middlename" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
+                        <input type="text" id="user-midname" name="middlename" maxlength="25" pattern="[A-Za-z ]{2,25}"
+                            placeholder="Reyes">
                     </div>
                     <!-- EXTENSION NAME -->
                     <div class="fields">
                         <label for="user-extension">Extension Name</label>
-                        <input type="text" maxlength="5" pattern="[A-Za-z]{2,5}" id="user-extension" name="extension" placeholder="eg. Jr, Sr">
+                        <input type="text" maxlength="5" pattern="[A-Za-z]{2,5}" id="user-extension" name="extension"
+                            placeholder="eg. Jr, Sr">
                     </div>
                 </div>
                 <!-- FORM-RIGHT -->
@@ -584,26 +652,30 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- USERNAME -->
                     <div class="fields">
                         <label for="user-uname">Username<span> *</span></label>
-                        <input type="text" id="user-uname" name="user-uname" maxlength="25" placeholder="juandelacruz123" required>
+                        <input type="text" id="user-uname" name="user-uname" maxlength="25"
+                            placeholder="juandelacruz123" required>
                     </div>
                     <!-- EMAIL -->
                     <div class="fields">
                         <label for="user-email">Email Address<span> *</span></label>
-                        <input type="email" id="user-email" name="street" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="juan@example.com" required>
+                        <input type="email" id="user-email" name="street"
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="juan@example.com" required>
                         <span id="email-validation"></span> <!-- Display validation message here -->
                     </div>
 
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="mem-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="user-contact" name="contact" placeholder="eg. 09592220954" required>
+                        <input type="text" pattern="[0-9]{11}" id="user-contact" name="contact"
+                            placeholder="eg. 09592220954" required>
                         <span id="contact-validation"></span> <!-- Display validation message here -->
                     </div>
 
                     <!-- PASSWORD -->
                     <div class="fields">
                         <label for="user-pass">Password<span> *</span></label>
-                        <input type="password" id="user-pass" name="password" minlength="8" maxlength="16" placeholder="8-16 characters only" required>
+                        <input type="password" id="user-pass" name="password" minlength="8" maxlength="16"
+                            placeholder="8-16 characters only" required>
                     </div>
                     <!-- CONFIRM PASSWORD -->
                     <div class="fields">
@@ -668,22 +740,26 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- LASTNAME -->
                     <div class="fields">
                         <label for="mem-lastname">Lastname<span> *</span></label>
-                        <input type="text" id="mem-lastname" name="lastname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
+                        <input type="text" id="mem-lastname" name="lastname" maxlength="25" pattern="[A-Za-z ]{2,25}"
+                            placeholder="Dela Cruz" required>
                     </div>
                     <!-- FIRSTNAME -->
                     <div class="fields">
                         <label for="mem-firstname">Firstname<span> *</span></label>
-                        <input type="text" id="mem-firstname" name="firstname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
+                        <input type="text" id="mem-firstname" name="firstname" maxlength="25" pattern="[A-Za-z ]{2,25}"
+                            placeholder="Juan" required>
                     </div>
                     <!-- MIDNAME -->
                     <div class="fields">
                         <label for="mem-midname">Middlename</label>
-                        <input type="text" id="mem-midname" name="middlename" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
+                        <input type="text" id="mem-midname" name="middlename" maxlength="25" pattern="[A-Za-z ]{2,25}"
+                            placeholder="Reyes">
                     </div>
                     <!-- EXTENSION NAME -->
                     <div class="fields">
                         <label for="mem-extension">Extension Name</label>
-                        <input type="text" id="mem-extension" name="extension" maxlength="5" pattern="[A-Za-z1-9]{2,5}" placeholder="eg. Jr, Sr">
+                        <input type="text" id="mem-extension" name="extension" maxlength="5" pattern="[A-Za-z1-9]{2,5}"
+                            placeholder="eg. Jr, Sr">
                     </div>
 
                     <!-- GENDER -->
@@ -719,13 +795,15 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="mem-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" required>
+                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact"
+                            placeholder="eg. 09592220954" required>
                         <span id="mem-contact-validation"></span> <!-- Display validation message here -->
                     </div>
-                                        <!-- LICENSE NUMBER -->
+                    <!-- LICENSE NUMBER -->
                     <div class="fields">
                         <label for="mem-license">License no.<span> *</span></label>
-                        <input type="text" id="mem-license" pattern="[A-Z]{1}[0-9]{2}-[0-9]{2}-[0-9]{6}" name="license" placeholder="eg. A34-34-345645" required>
+                        <input type="text" id="mem-license" pattern="[A-Z]{1}[0-9]{2}-[0-9]{2}-[0-9]{6}" name="license"
+                            placeholder="eg. A34-34-345645" required>
                         <span id="license-validation"></span> <!-- Display validation message here -->
                     </div>
                     <!-- USER PROFILE PICTURE -->
@@ -799,7 +877,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- EXTENSION NAME -->
                     <div class="fields">
                         <label for="extension">Extension Name</label>
-                        <input type="text" pattern="[A-Za-z.]{2,5}" id="extension" name="extension" placeholder="eg. Jr, Sr">
+                        <input type="text" pattern="[A-Za-z.]{2,5}" id="extension" name="extension"
+                            placeholder="eg. Jr, Sr">
                     </div>
 
                     <!-- GENDER -->
@@ -819,7 +898,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="contact" name="contact" placeholder="eg. 09592220954" required>
+                        <input type="text" pattern="[0-9]{11}" id="contact" name="contact" placeholder="eg. 09592220954"
+                            required>
 
                     </div>
                     <!-- ACCOUNT TYPE -->
@@ -861,29 +941,35 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="bg" id="bg"></div>
     <div class="addComplaint-modal-container" id="complaint-modal-container">
         <h2 class="modal-title">ADD COMPLAINT</h2>
-        <form action="../php/complaints.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")' id="complaint-form">
+        <form action="../php/complaints.php" method="post"
+            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
+            id="complaint-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="complaintForm-left addForm">
                     <!-- LASTNAME -->
                     <div class="fields">
                         <label for="complainant-lastname">Complainant Lastname<span> *</span></label>
-                        <input type="text" id="complainant-lastname" name="complaintLastname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
+                        <input type="text" id="complainant-lastname" name="complaintLastname" maxlength="25"
+                            pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
                     </div>
                     <!-- FIRSTNAME -->
                     <div class="fields">
                         <label for="complainant-firstname">Complainant Firstname<span> *</span></label>
-                        <input type="text" id="complainant-firstname" name="complaintFirstname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
+                        <input type="text" id="complainant-firstname" name="complaintFirstname" maxlength="25"
+                            pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
                     </div>
                     <!-- MIDNAME -->
                     <div class="fields">
                         <label for="complainant-midname">Complainant Middlename</label>
-                        <input type="text" id="complainant-midname" name="complaintMiddlename" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
+                        <input type="text" id="complainant-midname" name="complaintMiddlename" maxlength="25"
+                            pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
                     </div>
                     <!-- EXTENSION NAME -->
                     <div class="fields">
                         <label for="complainant-extension">Extension Name</label>
-                        <input type="text" id="complainant-extension" name="extension" maxlength="5" pattern="[A-Za-z1-9]{2,5}" placeholder="eg. Jr, Sr">
+                        <input type="text" id="complainant-extension" name="extension" maxlength="5"
+                            pattern="[A-Za-z1-9]{2,5}" placeholder="eg. Jr, Sr">
                     </div>
                     <!-- GENDER -->
                     <div class="fields">
@@ -897,7 +983,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="complainant-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="complainant-contact" name="contact" placeholder="eg. 09592220954" required>
+                        <input type="text" pattern="[0-9]{11}" id="complainant-contact" name="contact"
+                            placeholder="eg. 09592220954" required>
                     </div>
                 </div>
                 <!-- FORM-RIGHT -->
@@ -905,7 +992,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- SUBJECT -->
                     <div class="fields">
                         <label for="subject">Person to Complain<span> *</span></label>
-                        <input type="text" id="subject" name="subject" maxlength="30" pattern="[A-Za-z ]{2,30}" placeholder="Name of person to complain">
+                        <input type="text" id="subject" name="subject" maxlength="30" pattern="[A-Za-z ]{2,30}"
+                            placeholder="Name of person to complain">
                     </div>
 
                     <!-- BODY NUMBER -->
@@ -947,14 +1035,17 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="bg" id="bg"></div>
     <div class="addEvent-modal-container" id="event-modal-container">
         <h2 class="modal-title">SCHEDULE AN EVENT OR PROGRAM</h2>
-        <form action="../php/adduser.php" method="post" oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")' id="event-form">
+        <form action="../php/adduser.php" method="post"
+            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
+            id="event-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="complaintForm-left addForm">
                     <!-- EVENT TITLE -->
                     <div class="fields">
                         <label for="event-title">Event Title (What)<span> *</span></label>
-                        <input type="text" id="event-title" name="event-title" maxlength="25" placeholder="Event title" required>
+                        <input type="text" id="event-title" name="event-title" maxlength="25" placeholder="Event title"
+                            required>
                     </div>
 
                     <!-- DESCRIPTION -->
