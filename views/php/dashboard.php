@@ -326,7 +326,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <main>
             <table id="mem-table">
                 <tr>
-                    <th class="id">ID</th>
+                    <th class="id">MEM ID</th>
                     <th class="memname">NAME</th>
                     <th class="area">AREA OF OPERATION</th>
                     <th class="role">ROLE</th>
@@ -346,7 +346,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     }
 
                     // retrieve data from the MySQL table with concatenated fname and lname
-                    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, mem_role, license_no, mem_stat FROM mem_info";
+                    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, mem_role, license_no, mem_stat FROM mem_info ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
                     // output data of each row
