@@ -44,4 +44,7 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 			exit();
 		}
 	}
+} else {
+	header("Location: ../html/login.html");
+	exit();
 }
