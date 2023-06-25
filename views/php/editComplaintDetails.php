@@ -26,26 +26,22 @@ $EditSubject = $_POST["EditCompSub"];
 $EditBodyNumber = $_POST["EditCompSubBody"];
 $EditDateCreated = $_POST["edit-date-incident"] . " " . $_POST["edit-time-incident"];
 $EditComplaintDescrtiption = $_POST["editComplaintDescription"];
-
-// Insert Complainant Details
-$sql = "INSERT INTO complaint_info (fname, mname, lname, exname, gender, phone) VALUES ('$EditComplainantFirstname', '$EditComplainantMiddlename', '$EditComplainantLastname', '$EditComplainantExtension', '$EditComplainantGender', '$EditComplainantContact')";
-
+// Update Complainant Details
+$sql = "UPDATE complaint_info SET fname = '$EditComplainantFirstname', mname = '$EditComplainantMiddlename', lname = '$EditComplainantLastname', exname = '$EditComplainantExtension', gender = '$EditComplainantGender', phone = '$EditComplainantContact' WHERE id=$id";
 if (mysqli_query($conn, $sql)) {
-    $complainantId = mysqli_insert_id($conn);
-    echo "Complainant details inserted successfully with ID: $complainantId<br>";
+    echo "Complainant details updated successfully";
 } else {
-    echo "Error inserting complainant details: " . mysqli_error($conn) . "<br>";
+    echo "Error updating complainant details: " . mysqli_error($conn) . "<br>";
 }
 
-// Insert Complaint Information
-$sql = "INSERT INTO complaint_details (complaint_person, body_no, date_created, description) VALUES ('$EditSubject', '$EditBodyNumber', '$EditDateCreated', '$EditComplaintDescrtiption')";
-
+// Update Complainant Information
+$sql = "UPDATE complaint_details SET complaint_person = '$EditSubject', body_no = '$EditBodyNumber', date_created = '$EditDateCreated' WHERE id=$id";
 if (mysqli_query($conn, $sql)) {
-    $complaintId = mysqli_insert_id($conn);
-    echo "Complaint information inserted successfully with ID: $complaintId<br>";
+    echo "Complaint information updated successfully";
 } else {
-    echo "Error inserting complaint information: " . mysqli_error($conn) . "<br>";
+    echo "Error updating complaint information: " . mysqli_error($conn) . "<br>";
 }
+
 // close MySQL connection
 mysqli_close($conn);
 ?>
