@@ -60,20 +60,47 @@ addEventBtn.addEventListener("click", function() {
     modalBg.style.display = "block"
 })
 
+
 // USER TYPE DISABLE INPUTS
-const selectType = document.getElementById("select-type");
-    const midnameInput = document.getElementById("midname");
-    const contactInput = document.getElementById("contact");
-    const accType = document.getElementById("acc-type");
+const selectType = document.getElementById("select-type")
+    const bodyNo = document.getElementById("body-no")
+    const memName = document.getElementById("fin-memname")
+    const donorName = document.getElementById("donor-select")
+    const expenseType = document.getElementById("expense-type")
+    const paymentType = document.getElementById("payment-type")
+    const addDonor = document.getElementById("donorbtn")
+    // const midnameInput = document.getElementById("midname");
+    // const contactInput = document.getElementById("contact");
+    // const accType = document.getElementById("acc-type");
 function disableInputs() {
-    if (selectType.value === "butaw") {
-        midnameInput.disabled = true;
-        contactInput.disabled = true;
-        accType.disabled = true;
-    } else {
-        midnameInput.disabled = false;
-        contactInput.disabled = false;
-        accType.disabled = false;
+    if (selectType.value === "Butaw") {
+        bodyNo.disabled = false;
+        memName.disabled = true;
+        donorName.disabled = true;
+        expenseType.disabled = true;
+        paymentType.disabled = true;
+        addDonor.disabled = true;
+    } else if(selectType.value === "Donation"){
+        bodyNo.disabled = true;
+        memName.disabled = true;
+        donorName.disabled = false;
+        expenseType.disabled = true;
+        paymentType.disabled = true;
+        addDonor.disabled = false;
+    } else if(selectType.value === "Expenses"){
+        bodyNo.disabled = true;
+        memName.disabled = true;
+        donorName.disabled = true;
+        expenseType.disabled = false;
+        paymentType.disabled = true;
+        addDonor.disabled = true;
+    } else if(selectType.value === "Payment"){
+        bodyNo.disabled = true;
+        memName.disabled = false;
+        donorName.disabled = true;
+        expenseType.disabled = true;
+        paymentType.disabled = false;
+        addDonor.disabled = true;
     }
 }
 
@@ -92,9 +119,12 @@ financeCancel.addEventListener("click", function() {
     document.getElementById("finance-form").reset()
     financeModal.style.display = "none"
     modalBg.style.display = "none"
-    midnameInput.disabled = false;
-    contactInput.disabled = false;
-    accType.disabled = false;
+    bodyNo.disabled = false;
+    memName.disabled = false;
+    donorName.disabled = false;
+    expenseType.disabled = false;
+    paymentType.disabled = false;
+    addDonor.disabled = false;
 })
 complaintCancel.addEventListener("click", function() {
     document.getElementById("complaint-form").reset()
