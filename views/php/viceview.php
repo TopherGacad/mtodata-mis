@@ -453,7 +453,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <header>
             <div class="head-left">
                 <h3>COMPLAINTS</h3>
-                <p>USER VIEW</p>
+                <p>VICE PRESIDENT VIEW</p>
             </div>
             <div class="head-right">
                 <button class="complaintExportBtn exportBtn" id="complaint-export"><i
@@ -549,7 +549,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <header>
             <div class="head-left">
                 <h3>EVENTS & PROGRAMS</h3>
-                <p>ADMIN VIEW</p>
+                <p>VICE PRESIDENT VIEW</p>
             </div>
             <div class="head-right">
                 <div class="search-container">

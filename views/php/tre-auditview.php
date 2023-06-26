@@ -44,14 +44,14 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="side-nav">
         <header class="header-nav">
             <img class="logo" src="../../public/assets/mtodata_logo.png" alt="logo of mtodata system">
-            <p>SECRETARY PANEL</p>
+            <p>TREASURER & AUDITOR PANEL</p>
         </header>
         <div class="item-container">
             <ul id="nav-list">
                 <li id="dash-btn"><i class="fa-solid fa-house"></i> DASHBOARD</li>
                 <abbr title="You don't have permission to access this."><li id="users-btn" class="locked"><i class="fa-solid fa-lock"></i> USERS</li></abbr>
-                <li id="member-btn"><i class="fa-solid fa-circle-info"></i> MEMBER INFORMATION</li>
-                <abbr title="You don't have permission to access this."><li id="finance-btn" class="locked"><i class="fa-solid fa-lock"></i> FINANCE</li></abbr>
+                <abbr title="You don't have permission to access this."><li id="member-btn" class="locked"><i class="fa-solid fa-lock"></i> MEMBER INFORMATION</li></abbr>
+                <li id="finance-btn"><i class="fa-solid fa-coins"></i> FINANCE</li>
                 <abbr title="You don't have permission to access this."><li id="complain-btn" class="locked"><i class="fa-solid fa-lock"></i> COMPLAINTS</li></abbr>
                 <abbr title="You don't have permission to access this."><li id="programs-btn" class="locked"><i class="fa-solid fa-lock"></i> EVENTS & PROGRAMS</li></abbr>
                 <a href="logout.php">
@@ -309,7 +309,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <header>
             <div class="head-left">
                 <h3>TODA MEMBERS INFORMATION</h3>
-                <p>SECRETARY VIEW</p>
+                <p>ADMIN VIEW</p>
             </div>
             <div class="head-right">
                 <abbr title="Export Report"><button class="memExportBtn exportBtn" id="mem-export"><i
@@ -408,7 +408,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <header>
             <div class="head-left">
                 <h3>FINANCE</h3>
-                <p>FINANCE STAFF VIEW</p>
+                <p>TREASURER & AUDITOR VIEW</p>
             </div>
             <div class="head-right">
                 <button class="financeExportBtn exportBtn" id="finance-export"><i
