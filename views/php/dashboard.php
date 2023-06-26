@@ -102,7 +102,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <p>" . $row['mem_count'] . "</p>
                 </div>
                 <div class='link-container memCount'>
-                    <a href='#'>View Report</a>
+                    
                 </div>
             </div>";
             }
@@ -120,7 +120,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <p><span>&#8369;</span>" . $row['don_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    <a href='#'>View Report</a>
+                    
                 </div>
             </div>";
             }
@@ -138,7 +138,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <p><span>&#8369;</span>" . $row['con_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    <a href='#'>View Report</a>
+                    
                 </div>
             </div>";
             }
@@ -157,7 +157,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <p>" . $row['com_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    <a href='#'>View Report</a>
+                    
                 </div>
             </div>
         </section>";
@@ -178,31 +178,26 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 
                 <!-- EVENTS AND PROGRAMS ENTRY -->
                 <div class='card-header events'>
-                    <h4>Events</h4>
+                    <h4>Events for today (06-23-23)</h4>
                 </div>
                 <div class='dash-content'>
                     <div class='agenda-box'>
-                        <h3>◉ WHO:</h3>
-                        <p>MTODA Officers</p>
+                        <h3>Toda Christmas Party</h3>
+                        <p>2023-06-12 06:00 AM</p>
                     </div>
 
                     <div class='agenda-box'>
-                        <h3>◉ WHAT:</h3>
-                        <p>Meeting agenda for annual election 2023-2024</p>
+                        <h3>Toda Annual Election</h3>
+                        <p>2023-06-12 06:00 AM</p>
                     </div>
 
                     <div class='agenda-box'>
-                        <h3>◉ WHEN:</h3>
-                        <p>May 05, 2023 10:00PM</p>
-                    </div>
-
-                    <div class='agenda-box'>
-                        <h3>◉ WHERE:</h3>
-                        <p>MTODA line Terminal </p>
+                        <h3>Toda Meeting for OUTING</h3>
+                        <p>2023-06-12 06:00 AM</p>
                     </div>
                 </div>
                 <div class='link-container events-link'>
-                    <a href='#'>View Report</a>
+                    
                 </div>
             </div>
     </div>
