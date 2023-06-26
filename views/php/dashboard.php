@@ -587,7 +587,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <p>&copy;mtodata 2023</p>
         <div class="link-footer flex">
             <p class="border-right">PUP Institute of Technology</p>
-            <a href="#" class="border-right">Terms of Use</a>
+            <a href="../../views/pages/termsofuse.php" class="border-right">Terms of Use</a>
             <p>Version 1.0</p>
         </div>
     </footer>
