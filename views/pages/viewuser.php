@@ -43,48 +43,54 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>View Member
                     Information</h3>
                 <div class='btn-container'>
-                    <a href='../../views/pages/editunit.php'><input type='button' value='View Unit'
-                            class='view modal-btn' formnovalidate></a>
+
+                    <?php
+
+                    // connect to the MySQL database
+                    include "../php/db_conn.php";
+
+                    // Check if the ID query parameter is set
+                    if (isset($_GET['id'])) {
+                        $memberID = $_GET['id'];
+
+                        // Retrieve member information from the database using the $memberID
+                        $sql = "SELECT * FROM mem_info WHERE id = '$memberID'";
+                        $result = mysqli_query($conn, $sql);
+                        if (mysqli_num_rows($result) === 0) {
+                            echo 'user does not exist';
+                            exit();
+                        } else {
+
+                            $row = mysqli_fetch_assoc($result);
+
+                            if ($row['mem_role'] === 'Driver' || empty($row['mem_role'])) {
+                                echo "<a href='../../views/pages/editunit.php'><input type='button' value='View Unit'
+                                class='view modal-btn' id='hide-button' formnovalidate hidden></a>";
+                            } else {
+                                echo "<a href='../../views/pages/editunit.php?id=" . $row['id'] . "'><input type='button' value='View Unit'
+                                class='view modal-btn' id='hide-button' formnovalidate></a>";
+                            }
+
+                            echo "
                     <a href='../../views/pages/editmem.php'><input type='button' value='Edit'
                             class='cancelBtn modal-btn' formnovalidate></a>
                 </div>
             </div>
 
-            <?php
-
-            // connect to the MySQL database
-            include "../php/db_conn.php";
-
-            // Check if the ID query parameter is set
-            if (isset($_GET['id'])) {
-                $memberID = $_GET['id'];
-
-                // Retrieve member information from the database using the $memberID
-                $sql = "SELECT * FROM mem_info WHERE id = '$memberID'";
-                $result = mysqli_query($conn, $sql);
-                if (mysqli_num_rows($result) === 0) {
-                    echo 'user does not exist';
-                    exit();
-                } else {
-                    $row = mysqli_fetch_assoc($result);
-
-                    echo "
-
-            <!-- <input type='hidden' name='id' value=''> -->
             <div class='pic-container'>
                 <h3>
                     Profile Picture
                 </h3>
                 <div class='main'>
                     <div class='section left-pic'>
-                        <img src='". $row['profilepic'] ."' alt='' id='profileImage'>
+                        <img src='" . $row['profilepic'] . "' alt='' id='profileImage'>
                     </div>
                     <div class='section right-pic'>
 
                          <!-- MEMBER STATUS -->
                                 <div class='fields'>
                                     <label for='mem-status'>Member Status</label>
-                                    <input type='text' name='mem-status' id='mem-status' readonly value='" . $row['mem_stat'] ."'>
+                                    <input type='text' name='mem-status' id='mem-status' readonly value='" . $row['mem_stat'] . "'>
                                 </div>
                             </div>
                         </div>
@@ -96,19 +102,19 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                 <!-- FIRSTNAME -->
                                 <div class='fields'>
                                     <label for='mem-firstname'>Firstname<span> *</span></label>
-                                    <input type='text' id='mem-firstname' name='firstname' value='" . $row['fname'] ."' readonly>
+                                    <input type='text' id='mem-firstname' name='firstname' value='" . $row['fname'] . "' readonly>
                                 </div>
         
                                 <!-- MIDNAME -->
                                 <div class='fields'>
                                     <label for='mem-midname'>Middlename</label>
-                                    <input type='text' id='mem-midname' name='middlename' value='" . $row['mname'] ."' readonly>
+                                    <input type='text' id='mem-midname' name='middlename' value='" . $row['mname'] . "' readonly>
                                 </div>
         
                                 <!-- LASTNAME -->
                                 <div class='fields'>
                                     <label for='mem-lastname'>Lastname<span> *</span></label>
-                                    <input type='text' id='mem-lastname' name='lastname' value='" . $row['lname'] ."' readonly>
+                                    <input type='text' id='mem-lastname' name='lastname' value='" . $row['lname'] . "' readonly>
                                 </div>
                             </div>
         
@@ -116,19 +122,19 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                 <!-- EXTENSION NAME -->
                                 <div class='fields'>
                                     <label for='mem-extension'>Extension Name</label>
-                                    <input type='text' id='mem-extension' name='extension' value='" . $row['exname'] ."' readonly>
+                                    <input type='text' id='mem-extension' name='extension' value='" . $row['exname'] . "' readonly>
                                 </div>
         
                                 <!-- MEMBERS ROLE -->
                                 <div class='fields'>
                                     <label for='select-mem'>Member's role<span> *</span></label>
-                                    <input type='text'name='role' id='select-mem' readonly value='" . $row['mem_role'] ."'>
+                                    <input type='text'name='role' id='select-mem' readonly value='" . $row['mem_role'] . "'>
                                 </div>
         
                                 <!-- GENDER -->
                                 <div class='fields'>
                                     <label for='select-gender'>Sex<span> *</span></label>
-                                    <input type='text'name='gender' id='select-gender' value='" . $row['gender'] ."'>
+                                    <input type='text'name='gender' id='select-gender' readonly value='" . $row['gender'] . "'>
                                 </div>
                             </div>
                         </div>
@@ -142,18 +148,18 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                 <!-- STREET -->
                                 <div class='fields'>
                                     <label for='mem-street'>Street<span> *</span></label>
-                                    <input type='text' id='mem-street' name='street' readonly value='" . $row['street'] ."'>
+                                    <input type='text' id='mem-street' name='street' readonly value='" . $row['street'] . "'>
                                 </div>
         
                                 <!-- BARANGAY -->
                                 <div class='fields'>
                                     <label for='mem-brgy'>Barangay<span> *</span></label>
-                                    <input type='text' id='mem-brgy' name='barangay' readonly value='" . $row['barangay'] ."'>
+                                    <input type='text' id='mem-brgy' name='barangay' readonly value='" . $row['barangay'] . "'>
                                 </div>
                                 <!-- CITY -->
                                 <div class='fields'>
                                     <label for='mem-city'>City<span> *</span></label>
-                                    <input type='text' id='mem-city' name='city' readonly value='" . $row['city'] ."'>
+                                    <input type='text' id='mem-city' name='city' readonly value='" . $row['city'] . "'>
                                 </div>
                             </div>
         
@@ -162,30 +168,22 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                 <!-- CONTACT NUMBER -->
                                 <div class='fields'>
                                     <label for='mem-contact'>Contact no.<span> *</span></label>
-                                    <input type='text' id='mem-contact' name='contact' readonly value='" . $row['phone'] ."'> 
+                                    <input type='text' id='mem-contact' name='contact' readonly value='" . $row['phone'] . "'> 
         
                                 </div>
                                 <!-- LICENSE NUMBER -->
                                 <div class='fields'>
                                     <label for='mem-license'>License no.<span> *</span></label>
-                                    <input type='text' id='mem-license' name='license' readonly value='" . $row['license_no'] ."'>
+                                    <input type='text' id='mem-license' name='license' readonly value='" . $row['license_no'] . "'>
                                 </div>
                             </div>
                         </div>
                     </div>";
-
-                }
-
-                // Pre-fill the form fields with the retrieved member information
-            }
-            ?>
-
-
-
-
+                        }
+                    }
+                    ?>
         </form>
     </div>
-
     <script src='../../services/editMember.js'></script>
 </body>
 
