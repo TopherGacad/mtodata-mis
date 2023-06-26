@@ -839,8 +839,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         </div>
     </div>
 
-    <!-- ADD FINANCE MODAL -->
-    <div class="bg" id="bg"></div>
+     <!-- ADD FINANCE MODAL -->
+     <div class="bg" id="bg"></div>
     <div class="addFinance-modal-container" id="finance-modal-container">
         <h2 class="modal-title">ADD FINANCIAL RECORD</h2>
         <form action="" id="finance-form">
@@ -851,77 +851,76 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class="fields">
                         <label for="select-type">Finance Type<span> *</span>
                         </label>
-                        <select name="type" id="select-type" onchange="disableInputs()">
+                        <select name="type" id="select-type" onchange="disableInputs()" required>
                             <option value="" selected disabled>Select Account type</option>
-                            <option value="donation">Butaw/Contribution</option>
-                            <option value="butaw">Donation</option>
-                            <option value="butaw">Expenses</option>
-                            <option value="butaw">Payment</option>
+                            <option value="Butaw">Butaw/Contribution</option>
+                            <option value="Donation">Donation</option>
+                            <option value="Expenses">Expenses</option>
+                            <option value="Payment">Payment</option>
                         </select>
-                    </div>
-                    <!-- LASTNAME -->
-                    <div class="fields">
-                        <label for="lastname">Lastname<span> *</span></label>
-                        <input type="text" id="lastname" name="lastname" placeholder="Lastname" required>
-                    </div>
-                    <!-- FIRSTNAME -->
-                    <div class="fields">
-                        <label for="firstname">Firstname<span> *</span></label>
-                        <input type="text" id="firstname" name="firstname" placeholder="Firstname" required>
-                    </div>
-                    <!-- MIDNAME -->
-                    <div class="fields">
-                        <label for="midname">Middlename</label>
-                        <input type="text" id="midname" name="middlename" placeholder="Middlename">
-                    </div>
-                    <!-- EXTENSION NAME -->
-                    <div class="fields">
-                        <label for="extension">Extension Name</label>
-                        <input type="text" pattern="[A-Za-z.]{2,5}" id="extension" name="extension"
-                            placeholder="eg. Jr, Sr">
-                    </div>
-
-                    <!-- GENDER -->
-                    <div class="fields">
-                        <label for="select-gender">Sex<span> *</span></label>
-                        <select name="gender" id="select-gender">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="none">Prefer not to say</option>
-                        </select>
-                    </div>
-
-                </div>
-
-                <!-- FORM-RIGHT -->
-                <div class="financeForm-right addForm">
-                    <!-- CONTACT NUMBER -->
-                    <div class="fields">
-                        <label for="contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="contact" name="contact" placeholder="eg. 09592220954"
-                            required>
-
-                    </div>
-                    <!-- ACCOUNT TYPE -->
-                    <div class="fields">
-                        <label for="acc-type">Account Type<span> *</span></label>
-                        <select name="acc-type" id="acc-type">
-                            <option value="acc-1">Account 1</option>
-                            <option value="acc-2">Account 2</option>
-                            <option value="acc-3">Account 3</option>
-                        </select>
-                    </div>
-
-                    <!-- ACCOUNT ID -->
-                    <div class="fields">
-                        <label for="acc-id">Account ID<span> *</span></label>
-                        <input type="text" id="acc-id" name="acc-id" required>
                     </div>
                     <!-- BODY NO. -->
                     <div class="fields">
                         <label for="body-no">Body No.<span> *</span></label>
                         <input type="text" id="body-no" name="bodynum" required>
                     </div>
+                    
+                    <!-- MEMBER NAME -->
+                    <div class="fields">
+                        <label for="fin-memname">Member Name</label>
+                        <select name="fin_memname" id="fin-memname" required>
+                            <option selected disabled value="">Select Member</option>
+                            <option value="Member sample 1">Member sample 1</option>
+                            <option value="Member sample 2">Member sample 2</option>
+                        </select>
+                    </div>
+                    
+                    <!-- DONOR NAME -->
+                    <div class="field-container">
+                        <div class="fields donor">
+                            <label for="donor-select">Donor Name</label>
+                            <select name="donor_select" id="donor-select" onchange="handleDonorSelection()" required>
+                                <option selected disabled value="">Select Donor</option>
+                                <option value="Member sample 1">Member sample 1</option>
+                                <option value="Member sample 2">Member sample 2</option>
+                            </select>
+                        </div>
+
+                        <div class="fields">
+                           <a href="../../views/pages/adddonor.php"><input type="button" id="donorbtn" value="Add donor" ></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORM-RIGHT -->
+                <div class="financeForm-right addForm">
+                    <div class="fields">
+                        <label for="expense-type">Expense Type</label>
+                        <select name="expense_type" id="expense-type" required>
+                            <option selected disabled value="">Select Expense type</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Electrity">Electricity</option>
+                            <option value="Water">Water</option>
+                            <option value="Programs">Programs</option>
+                        </select>
+                    </div>
+
+                    <!-- PAYMENT TYPE -->
+                    <div class="fields">
+                        <label for="payment-type">Payment Type<span> *</span></label>
+                        <select name="payment_type" id="payment-type" required>
+                            <option selected disabled value="">Select Payment type</option>
+                            <option value="New member">New member</option>
+                            <option value="Renewal">Renewal</option>
+                        </select>
+                    </div>
+
+                    <!-- ACCOUNT ID -->
+                    <div class="fields">
+                        <label for="trans-date">Transaction date<span> *</span></label>
+                        <input type="date" id="trans-date" name="trans_date" required>
+                    </div>
+                   
                     <!--  AMOUNT  -->
                     <div class="fields">
                         <label for="amount">Amount<span> *</span></label>
