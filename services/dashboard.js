@@ -718,6 +718,13 @@ function handleLogout() {
     // Perform any additional logout actions here
 }
 
-// Add event listener to the logout button
+//DISABLING OF SIDENAV OPTIONS
 const logoutBtn = document.getElementById("logout-btn");
 logoutBtn.addEventListener("click", handleLogout);
+
+const listItems = document.querySelectorAll("#nav-list .locked");
+
+    listItems.forEach(function(item) {
+      item.style.pointerEvents = "none";  
+      item.style.opacity = "0.5";
+    });
