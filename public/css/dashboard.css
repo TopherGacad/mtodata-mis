@@ -297,6 +297,24 @@ header h3{
 .fields span{
     color: var(--span-red);
 }
+.field-container{
+    display: flex;
+    align-items: end;
+    gap: 5px;
+}
+.donor{
+    width: 66%;
+}
+.fields input[type="button"]{
+    padding: 12px;
+    width: 110px;
+    border: none;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--base-color);
+    background-color: var(--dark-blue);
+}
 .usermoreBtn,
 .exportBtn,
 .user-searchBtn,

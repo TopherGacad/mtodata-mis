@@ -42,7 +42,7 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 			} else if ($row['roles'] === 'Treasurer' || 'Auditor') {
 				$_SESSION['email'] = $row['email'];
 				$_SESSION['id'] = $row['id'];
-				header("Location: ../php/secview.php");
+				header("Location: ../php/tre-auditview.php");
 				exit();
 			}
 
