@@ -9,6 +9,11 @@
     --btn-save: #28a745;
     --update-hover: #1f7e35;
     --dark-blue: #1842BD;
+
+    --base-color: #FEFEFE;
+    --toast-font-color: color: rgba(0, 0, 0, 0.7);
+    --green-color:  #28a745;
+
     --link-color: #6764EE;
     --border-color: #BABABA;
     --base-color: #FEFEFE;
@@ -17,6 +22,7 @@
     --login-left: #ECF4FF;
     --error-color:#E53B34;
     --toast-font-color: color: rgba(0, 0, 0, 0.7);
+
 }
 
 body {
@@ -190,12 +196,19 @@ textarea {
     margin-left: 13px;
 }
 
+/* SUCCESSFUL TOAST NOTIF */
+.successToast-container {
+    display: none;
+    position: fixed;
+    align-items: center;
+
 /* TOAST */
 .toast-container {
     display: flex;
     align-items: center;
     position: fixed;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
     border-radius: 5px;
     top: 2%;
     left: 0;
@@ -203,6 +216,18 @@ textarea {
     height: 10%;
     width: 25%;
     margin: auto;
+
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: var(--base-color);
+    color: var(--toast-font-color);
+    z-index: 999;
+}
+.successToast-icon {
+    font-size: 25px;
+}
+.successToast-left {
+    background-color: var(--green-color);
+
     background-color: var(--base-color);
     color: var(--toast-font-color);
     z-index: 1000; 
@@ -215,11 +240,15 @@ textarea {
 
 .toast-left {
     background-color: var(--error-color);
+
     border-radius: 5px 0px 0px 5px;
     height: 100%;
     width: 15%;
     color: var(--base-color);
 }
+
+.successToast-left,
+.successToast-right{
 
 .toast-left-success {
     background-color: var(--update-hover);
@@ -227,17 +256,20 @@ textarea {
     height: 100%;
     width: 15%;
     color: var(--base-color);
-}
 
 .toast-left-success,
 .toast-left,
 .toast-right {
+
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
 }
+.successToast-right p{
+    padding-left:25px;
 
 .toast-right p {
     padding-left: 15px;
+
 }
