@@ -11,6 +11,7 @@ var e_error = document.getElementById('error_4');
 var d = document.getElementById('error-con');
 
 const toastContainer = document.querySelector('.toast-container');
+const errorToast = document.querySelector('.errortoast-container')
 
 function validate_isNum() {
 
@@ -69,13 +70,13 @@ function validate_form() {
     const is_Valid = validate_isNum();
 
     if (is_Valid) {
-        toastContainer.style.visibility = 'hidden';
+        errorToast.style.visibility = 'hidden';
         return true;
     } else {
-        toastContainer.style.visibility = 'visible';
-        d.innerHTML = 'Error: Input fields contains value that did not match the expected value';
+        errorToast.style.visibility = 'visible';
+        d.innerHTML = `<strong>Error</strong> Input fields contains value that did not match the expected value`;
         setTimeout(function () {
-            toastContainer.style.visibility = 'hidden';
+            errorToast.style.visibility = 'hidden';
         }, 5000);
         return false;
     }
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (suc === '0') {
         toastContainers.style.visibility = 'visible';
-        document.getElementById('success-con').innerText = 'Data inserted successfully.';
+        document.getElementById('success-con').innerHTML = `<strong>Successful!</strong>Data inserted successfully.`;
         setTimeout(() => {
             toastContainers.style.visibility = 'hidden';
         }, 3000);

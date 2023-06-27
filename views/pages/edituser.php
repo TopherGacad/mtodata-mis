@@ -200,7 +200,7 @@ if (!isset($_GET['user_id'])) {
 
     // Function to display the success toast notification
 function displayToast() {
-  const successToast = document.getElementById("updateuser-successToast");
+  const successToast = document.getElementById("toast-success");
   successToast.style.display = "flex";
 }
 
@@ -264,11 +264,21 @@ document.addEventListener("DOMContentLoaded", function() {
         </form>
 
         <!-- TOAST -->
-    <div class="successToast-container" id="updateuser-successToast">
+    <!-- <div class="successToast-container" id="updateuser-successToast">
         <div class="successToast-left">
             <i class="successToast-icon fa-solid fa-circle-check"></i>
         </div>
         <div class="successToast-right">
+            <p><strong>Success!</strong> User successfully updated.</p>
+        </div>
+    </div> -->
+
+    <!-- SUCCESS TOAST -->
+    <div class="toast-container" id="toast-success">
+        <div class="toast-left-success">
+            <i class="toast-icon fa-solid fa-circle-check"></i>
+        </div>
+        <div class="toast-right">
             <p><strong>Success!</strong> User successfully updated.</p>
         </div>
     </div>
