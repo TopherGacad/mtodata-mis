@@ -44,16 +44,16 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="side-nav">
         <header class="header-nav">
             <img class="logo" src="../../public/assets/mtodata_logo.png" alt="logo of mtodata system">
-            <p>ADMIN PANEL</p>
+            <p>TREASURER & AUDITOR PANEL</p>
         </header>
         <div class="item-container">
-            <ul>
+            <ul id="nav-list">
                 <li id="dash-btn"><i class="fa-solid fa-house"></i> DASHBOARD</li>
-                <li id="users-btn"><i class="fa-solid fa-users"></i> USERS</li>
-                <li id="member-btn"><i class="fa-solid fa-circle-info"></i> MEMBER INFORMATION</li>
+                <abbr title="You don't have permission to access this."><li id="users-btn" class="locked"><i class="fa-solid fa-lock"></i> USERS</li></abbr>
+                <abbr title="You don't have permission to access this."><li id="member-btn" class="locked"><i class="fa-solid fa-lock"></i> MEMBER INFORMATION</li></abbr>
                 <li id="finance-btn"><i class="fa-solid fa-coins"></i> FINANCE</li>
-                <li id="complain-btn"><i class="fa-solid fa-flag"></i> COMPLAINTS</li>
-                <li id="programs-btn"><i class="fa-solid fa-calendar-days"></i> EVENTS & PROGRAMS</li>
+                <abbr title="You don't have permission to access this."><li id="complain-btn" class="locked"><i class="fa-solid fa-lock"></i> COMPLAINTS</li></abbr>
+                <abbr title="You don't have permission to access this."><li id="programs-btn" class="locked"><i class="fa-solid fa-lock"></i> EVENTS & PROGRAMS</li></abbr>
                 <a href="logout.php">
                     <li id="logout-btn">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></li>
                 </a>
@@ -256,7 +256,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <td class='datecreated'>" . $row["date_created"] . "</td>
                         <td class='action'>
                             <abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr>
-                            <a href='../../views/pages/edituser.php?user_id=" . $row["user_id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                            <a href='../../views/pages/edituser.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
                         </td>
                     </tr>";
                     }
@@ -403,14 +403,14 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <header>
             <div class="head-left">
                 <h3>FINANCE</h3>
-                <p>FINANCE STAFF VIEW</p>
+                <p>TREASURER & AUDITOR VIEW</p>
             </div>
             <div class="head-right">
                 <button class="financeExportBtn exportBtn" id="finance-export"><i
                         class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" placeholder="Search">
-                    <a href="../../views/pages/adddonor.php"><button class="user-searchBtn" id="add-donor"><i class="fa-solid fa-user-plus"></i></button></a>
+                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
                 <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
             </div>
@@ -587,7 +587,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <p>&copy;mtodata 2023</p>
         <div class="link-footer flex">
             <p class="border-right">PUP Institute of Technology</p>
-            <a href="../../views/pages/termsofuse.php" class="border-right">Terms of Use</a>
+            <a href="#" class="border-right">Terms of Use</a>
             <p>Version 1.0</p>
         </div>
     </footer>
@@ -610,7 +610,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             <option value="" selected disabled>Select Role</option>
                             <option value="President">President</option>
                             <option value="Vice President">Vice President</option>
-                            <option value="Secretary">Secretary</option>
+                            <option value="secretary">Secretary</option>
                             <option value="Treasurer">Treasurer</option>
                             <option value="Auditor">Auditor</option>
                         </select>
@@ -834,8 +834,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         </div>
     </div>
 
-    <!-- ADD FINANCE MODAL -->
-    <div class="bg" id="bg"></div>
+     <!-- ADD FINANCE MODAL -->
+     <div class="bg" id="bg"></div>
     <div class="addFinance-modal-container" id="finance-modal-container">
         <h2 class="modal-title">ADD FINANCIAL RECORD</h2>
         <form action="" id="finance-form">

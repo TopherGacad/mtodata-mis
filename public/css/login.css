@@ -133,16 +133,6 @@ input::placeholder{
     background-color: var(--link-color);
 }
 
-
-/*        
-.forgot-pass{
-    font-size: 15px;
-    color: var(--link-color);
-}
-.forgot-pass:hover{
-    color: var(--dark-blue);
-} */
-
 /* TOAST */
 .toast-container{
     display: flex;
@@ -158,6 +148,7 @@ input::placeholder{
     margin: auto;
     background-color: var(--base-color);
     color: var(--toast-font-color);
+    visibility: hidden;
 }
 .toast-icon{
     font-size: 25px;
@@ -177,4 +168,5 @@ input::placeholder{
 }
 .toast-right p{
     padding-left: 15px;
+    font-size: 15px;
 }

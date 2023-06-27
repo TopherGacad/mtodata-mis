@@ -44,16 +44,16 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="side-nav">
         <header class="header-nav">
             <img class="logo" src="../../public/assets/mtodata_logo.png" alt="logo of mtodata system">
-            <p>ADMIN PANEL</p>
+            <p>SECRETARY PANEL</p>
         </header>
         <div class="item-container">
-            <ul>
+            <ul id="nav-list">
                 <li id="dash-btn"><i class="fa-solid fa-house"></i> DASHBOARD</li>
-                <li id="users-btn"><i class="fa-solid fa-users"></i> USERS</li>
+                <abbr title="You don't have permission to access this."><li id="users-btn" class="locked"><i class="fa-solid fa-lock"></i> USERS</li></abbr>
                 <li id="member-btn"><i class="fa-solid fa-circle-info"></i> MEMBER INFORMATION</li>
-                <li id="finance-btn"><i class="fa-solid fa-coins"></i> FINANCE</li>
-                <li id="complain-btn"><i class="fa-solid fa-flag"></i> COMPLAINTS</li>
-                <li id="programs-btn"><i class="fa-solid fa-calendar-days"></i> EVENTS & PROGRAMS</li>
+                <abbr title="You don't have permission to access this."><li id="finance-btn" class="locked"><i class="fa-solid fa-lock"></i> FINANCE</li></abbr>
+                <abbr title="You don't have permission to access this."><li id="complain-btn" class="locked"><i class="fa-solid fa-lock"></i> COMPLAINTS</li></abbr>
+                <abbr title="You don't have permission to access this."><li id="programs-btn" class="locked"><i class="fa-solid fa-lock"></i> EVENTS & PROGRAMS</li></abbr>
                 <a href="logout.php">
                     <li id="logout-btn">LOGOUT <i class="fa-solid fa-right-from-bracket"></i></li>
                 </a>
@@ -256,7 +256,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <td class='datecreated'>" . $row["date_created"] . "</td>
                         <td class='action'>
                             <abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr>
-                            <a href='../../views/pages/edituser.php?user_id=" . $row["user_id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                            <a href='../../views/pages/edituser.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
                         </td>
                     </tr>";
                     }
@@ -304,7 +304,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <header>
             <div class="head-left">
                 <h3>TODA MEMBERS INFORMATION</h3>
-                <p>ADMIN VIEW</p>
+                <p>SECRETARY VIEW</p>
             </div>
             <div class="head-right">
                 <abbr title="Export Report"><button class="memExportBtn exportBtn" id="mem-export"><i
@@ -410,7 +410,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" placeholder="Search">
-                    <a href="../../views/pages/adddonor.php"><button class="user-searchBtn" id="add-donor"><i class="fa-solid fa-user-plus"></i></button></a>
+                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
                 <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
             </div>
@@ -587,7 +587,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <p>&copy;mtodata 2023</p>
         <div class="link-footer flex">
             <p class="border-right">PUP Institute of Technology</p>
-            <a href="../../views/pages/termsofuse.php" class="border-right">Terms of Use</a>
+            <a href="#" class="border-right">Terms of Use</a>
             <p>Version 1.0</p>
         </div>
     </footer>
@@ -610,7 +610,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             <option value="" selected disabled>Select Role</option>
                             <option value="President">President</option>
                             <option value="Vice President">Vice President</option>
-                            <option value="Secretary">Secretary</option>
+                            <option value="secretary">Secretary</option>
                             <option value="Treasurer">Treasurer</option>
                             <option value="Auditor">Auditor</option>
                         </select>
@@ -846,76 +846,77 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class="fields">
                         <label for="select-type">Finance Type<span> *</span>
                         </label>
-                        <select name="type" id="select-type" onchange="disableInputs()" required>
+                        <select name="type" id="select-type" onchange="disableInputs()">
                             <option value="" selected disabled>Select Account type</option>
-                            <option value="Butaw">Butaw/Contribution</option>
-                            <option value="Donation">Donation</option>
-                            <option value="Expenses">Expenses</option>
-                            <option value="Payment">Payment</option>
+                            <option value="donation">Butaw/Contribution</option>
+                            <option value="butaw">Donation</option>
+                            <option value="butaw">Expenses</option>
+                            <option value="butaw">Payment</option>
                         </select>
+                    </div>
+                    <!-- LASTNAME -->
+                    <div class="fields">
+                        <label for="lastname">Lastname<span> *</span></label>
+                        <input type="text" id="lastname" name="lastname" placeholder="Lastname" required>
+                    </div>
+                    <!-- FIRSTNAME -->
+                    <div class="fields">
+                        <label for="firstname">Firstname<span> *</span></label>
+                        <input type="text" id="firstname" name="firstname" placeholder="Firstname" required>
+                    </div>
+                    <!-- MIDNAME -->
+                    <div class="fields">
+                        <label for="midname">Middlename</label>
+                        <input type="text" id="midname" name="middlename" placeholder="Middlename">
+                    </div>
+                    <!-- EXTENSION NAME -->
+                    <div class="fields">
+                        <label for="extension">Extension Name</label>
+                        <input type="text" pattern="[A-Za-z.]{2,5}" id="extension" name="extension"
+                            placeholder="eg. Jr, Sr">
+                    </div>
+
+                    <!-- GENDER -->
+                    <div class="fields">
+                        <label for="select-gender">Sex<span> *</span></label>
+                        <select name="gender" id="select-gender">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="none">Prefer not to say</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- FORM-RIGHT -->
+                <div class="financeForm-right addForm">
+                    <!-- CONTACT NUMBER -->
+                    <div class="fields">
+                        <label for="contact">Contact no.<span> *</span></label>
+                        <input type="text" pattern="[0-9]{11}" id="contact" name="contact" placeholder="eg. 09592220954"
+                            required>
+
+                    </div>
+                    <!-- ACCOUNT TYPE -->
+                    <div class="fields">
+                        <label for="acc-type">Account Type<span> *</span></label>
+                        <select name="acc-type" id="acc-type">
+                            <option value="acc-1">Account 1</option>
+                            <option value="acc-2">Account 2</option>
+                            <option value="acc-3">Account 3</option>
+                        </select>
+                    </div>
+
+                    <!-- ACCOUNT ID -->
+                    <div class="fields">
+                        <label for="acc-id">Account ID<span> *</span></label>
+                        <input type="text" id="acc-id" name="acc-id" required>
                     </div>
                     <!-- BODY NO. -->
                     <div class="fields">
                         <label for="body-no">Body No.<span> *</span></label>
                         <input type="text" id="body-no" name="bodynum" required>
                     </div>
-                    
-                    <!-- MEMBER NAME -->
-                    <div class="fields">
-                        <label for="fin-memname">Member Name</label>
-                        <select name="fin_memname" id="fin-memname" required>
-                            <option selected disabled value="">Select Member</option>
-                            <option value="Member sample 1">Member sample 1</option>
-                            <option value="Member sample 2">Member sample 2</option>
-                        </select>
-                    </div>
-                    
-                    <!-- DONOR NAME -->
-                    <div class="field-container">
-                        <div class="fields donor">
-                            <label for="donor-select">Donor Name</label>
-                            <select name="donor_select" id="donor-select" onchange="handleDonorSelection()" required>
-                                <option selected disabled value="">Select Donor</option>
-                                <option value="Member sample 1">Member sample 1</option>
-                                <option value="Member sample 2">Member sample 2</option>
-                            </select>
-                        </div>
-
-                        <div class="fields">
-                           <a href="../../views/pages/adddonor.php"><input type="button" id="donorbtn" value="Add donor" ></a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FORM-RIGHT -->
-                <div class="financeForm-right addForm">
-                    <div class="fields">
-                        <label for="expense-type">Expense Type</label>
-                        <select name="expense_type" id="expense-type" required>
-                            <option selected disabled value="">Select Expense type</option>
-                            <option value="Rent">Rent</option>
-                            <option value="Electrity">Electricity</option>
-                            <option value="Water">Water</option>
-                            <option value="Programs">Programs</option>
-                        </select>
-                    </div>
-
-                    <!-- PAYMENT TYPE -->
-                    <div class="fields">
-                        <label for="payment-type">Payment Type<span> *</span></label>
-                        <select name="payment_type" id="payment-type" required>
-                            <option selected disabled value="">Select Payment type</option>
-                            <option value="New member">New member</option>
-                            <option value="Renewal">Renewal</option>
-                        </select>
-                    </div>
-
-                    <!-- ACCOUNT ID -->
-                    <div class="fields">
-                        <label for="trans-date">Transaction date<span> *</span></label>
-                        <input type="date" id="trans-date" name="trans_date" required>
-                    </div>
-                   
                     <!--  AMOUNT  -->
                     <div class="fields">
                         <label for="amount">Amount<span> *</span></label>

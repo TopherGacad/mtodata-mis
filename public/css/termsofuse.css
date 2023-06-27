@@ -1,0 +1,100 @@
+:root {
+    --backdrop-color: #f3f3f3;
+    --border-color: #DAE4F2;
+    --primary-font-color: #404c57;
+    --btn-hover: #677c8f;
+    --def-white: #FFFFFF;
+    --box-shadow: rgba(25, 39, 52, 0.08);
+    --btn-color: #2490ef;
+    --btn-save: #28a745;
+    --update-hover: #1f7e35;
+    --dark-blue: #1842BD;
+    --link-color: #6764EE;
+    --border-color: #BABABA;
+    --base-color: #FEFEFE;
+    --default-font-color: #282828;
+    --active-dot:  #717171;
+    --login-left: #ECF4FF;
+    --error-color:#E53B34;
+    --toast-font-color: color: rgba(0, 0, 0, 0.7);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: var(--backdrop-color);
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--primary-font-color);
+}
+
+.head-container {
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    padding: 5px 15px;
+    background-color: var(--def-white);
+    border-bottom: 1px solid var(--border-color);
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    top: 0;
+}
+ul{
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+li{
+    margin-left: 12px;
+    color: var(--default-font-color);
+}
+ul a{
+    text-decoration: none;
+}
+.main-logo {
+    width: 100px;
+}
+
+.ot-header {
+    width: 100vw;
+    padding: 10px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to right, var(--dark-blue), var(--def-white));
+    box-shadow: var(--box-shadow);
+    position: fixed;
+    top: 40px;
+    right: 0;
+}
+
+.ot-header h3 {
+    padding-left: 100px;
+    color: var(--def-white);
+}
+
+.ot-header h3 a {
+    padding-right: 10px;
+    color: var(--def-white);
+}
+
+.content-container {
+    padding: 20px;
+    z-index: 998;
+    align-content: center;
+}
+.main-paper {
+    width: 70%;
+    height: fit-content;
+    margin:5% auto ;
+    background-color: var(--def-white);
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    padding: 15px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
