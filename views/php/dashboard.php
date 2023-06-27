@@ -256,7 +256,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <td class='datecreated'>" . $row["date_created"] . "</td>
                         <td class='action'>
                             <abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr>
-                            <a href='../../views/pages/edituser.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                            <a href='../../views/pages/edituser.php?user_id=" . $row["user_id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
                         </td>
                     </tr>";
                     }
@@ -411,7 +411,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <button class="financeExportBtn exportBtn" id="finance-export"><i
                         class="fa-solid fa-download"></i></button>
                 <div class="search-container">
-                    <input type="text" class="user-search" placeholder="Search">
+                    <input type="text" class="user-search" id="fin-search" placeholder="Search">
                     <a href="../../views/pages/adddonor.php"><button class="user-searchBtn" id="add-donor"><i class="fa-solid fa-user-plus"></i></button></a>
                 </div>
                 <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
@@ -419,7 +419,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         </header>
 
         <main>
-            <table>
+            <table id="fin-table">
                 <tr>
                     <th><abbr title="Transaction Id">ID</abbr></th>
                     <th>TYPE</th>
@@ -428,19 +428,32 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <th>DATE</th>
                     <th>ACTION</th>
                 </tr>
+                
+                <tbody id="fin-table-body">
+                    <tr>
+                        <td>01</td>
+                        <td>Contribution</td>
+                        <td>CON-130423</td>
+                        <td>&#8369; 100.00</td>
+                        <td>03-23-23</td>
+                        <td>
+                            <i class="tools fa-solid fa-trash-can"></i>
+                            <i class="tools fa-solid fa-pen-to-square"></i>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td>01</td>
-                    <td>Contribution</td>
-                    <td>CON-130423</td>
-                    <td>&#8369; 100.00</td>
-                    <td>03-23-23</td>
-                    <td>
-                        <i class="tools fa-solid fa-trash-can"></i>
-                        <i class="tools fa-solid fa-pen-to-square"></i>
-                    </td>
-                </tr>
-
+                    <tr>
+                        <td>02</td>
+                        <td>Donation</td>
+                        <td>DON-130423</td>
+                        <td>&#8369; 100.00</td>
+                        <td>03-23-23</td>
+                        <td>
+                            <i class="tools fa-solid fa-trash-can"></i>
+                            <i class="tools fa-solid fa-pen-to-square"></i>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </main>
     </div>
@@ -612,7 +625,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             <option value="" selected disabled>Select Role</option>
                             <option value="President">President</option>
                             <option value="Vice President">Vice President</option>
-                            <option value="secretary">Secretary</option>
+                            <option value="Secretary">Secretary</option>
                             <option value="Treasurer">Treasurer</option>
                             <option value="Auditor">Auditor</option>
                         </select>
@@ -826,6 +839,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             </div>
         </div>
     </div>
+
     <!-- TOAST -->
     <div class="successToast-container" id="mem-successToast">
         <div class="successToast-left">

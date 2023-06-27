@@ -24,7 +24,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <title>Add Unit</title>
 
     <!-- STYLESHEET -->
-    <link rel='stylesheet' href='../../public/css/edituser.css'>
+    <link rel='stylesheet' href='../../public/css/addunit.css'>
     <!-- WEB ICON -->
     <link rel='icon' href='../../public/assets/browse_logo.png'>
     <!-- FONT AWESOME/ICONS -->
@@ -35,7 +35,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 <body>
 
     <!-- ERROR TOAST -->
-    <div class="toast-container">
+    <div class="errortoast-container">
         <div class="toast-left">
             <i class="toast-icon fa-solid fa-triangle-exclamation"></i>
         </div>
@@ -136,6 +136,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <div class='fields'>
                             <label for='unit-bodycolor'>Body Color <span> *</span></label>
                             <select name='unitbody_color' id='unit-bodycolor' required>
+                                <option selected disabled value="">Select Color</option>
                                 <option value='Blue'>Blue</option>
                                 <option value='Red'>Red</option>
                                 <option value='Orange'>Orange</option>
