@@ -196,46 +196,6 @@ textarea {
     margin-left: 13px;
 }
 
-/* SUCCESSFUL TOAST NOTIF */
-/* .sucessToast-container {
-    border: 1px solid;
-    display: flex;
-    align-items: center;
-    position: fixed;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-    top: 2%;
-    left: 0;
-    right: 0;
-    height: 10%;
-    width: 25%;
-    margin: auto;
-     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    background-color: var(--base-color);
-    color: var(--toast-font-color);
-}
-.successToast-icon {
-    font-size: 25px;
-}
-.successToast-left {
-    background-color: var(--green-color);
-    background-color: var(--base-color);
-
-    width: 15%;
-    color: var(--toast-font-color);
-}
-
-.successToast-left,
-.successToast-right{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-.successToast-right p{
-    padding-left:25px;
-} */
-
 /* TOAST */
 .toast-container {
     display: none;
