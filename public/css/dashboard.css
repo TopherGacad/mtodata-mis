@@ -430,7 +430,7 @@ footer{
     bottom: 0;
     background-color: var(--font-color);
     font-size:9px ;
-    color: var(--content-font-color);
+    color: var(--dark-blue);
 }
 .flex{
     display: flex;
@@ -441,6 +441,9 @@ footer{
     padding-right: 10px;
     padding-left: 5px;
     margin-right: 5px;
+}
+.link-footer a:hover{
+    color: var(--base-color);
 }
 
 /* STYLES TO TOGGLE */

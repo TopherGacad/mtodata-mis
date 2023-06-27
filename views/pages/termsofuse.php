@@ -34,7 +34,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <img class="main-logo" src="../../public/assets/mtodata_logo.png" alt="mtodata logo">
         <ul>
             <a href="../../views/php/dashboard.php"><li>Dashboard</li></a>
-            <a href="../../views"><li>About us</li></a>
+            <a href="#"><li>About us</li></a>
         </ul>
     </div>
 
@@ -48,10 +48,12 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             </div>
             <div class="paper-header">
                 <h3>Conditions of Use</h3>
-
-                <p>These Terms of Use ("Terms") govern your use of the Management Information System for Marulas TODA in Valenzuela City ("MTODATA") provided by Diploma in Information Communication Technology students from Polytechnic University of the Philippines. By accessing or using the MTODATA, you agree to comply with its Terms. If you do not agree with any part of these Terms, you should not use the MTODATA. The Marulas TODA and the Students of DICT only grant use and access to this application, products, and services to those who have accepted its terms.</p>
             </div>
             <div class="content">
+                <p>These Terms of Use ("Terms") govern your use of the Management Information System for Marulas TODA in Valenzuela City ("MTODATA") provided by Diploma in Information Communication Technology students from Polytechnic University of the Philippines. By accessing or using the MTODATA, you agree to comply with its Terms. If you do not agree with any part of these Terms, you should not use the MTODATA. The Marulas TODA and the Students of DICT only grant use and access to this application, products, and services to those who have accepted its terms.</p>
+            </div>
+            <div class="content padding">
+
             <details open>
                 <summary>1. User Accounts</summary>
                 <ol type="a">
@@ -80,8 +82,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 
             <details open>
                 <summary>4. Prohibited Conduct </summary>
-                <details>
-                    <summary>a. You agree not to engage in any of the following activities while using the MTODATA:</summary>
+                    <p class="isolate">a. You agree not to engage in any of the following activities while using the MTODATA:</p>
                     <ol type="i">
                         <li>Violating any applicable laws, regulations, or third-party rights.</li>
                         <li>Interfering with the functionality or security of MTODATA or its servers.</li>
@@ -89,7 +90,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <li>Attempting to gain unauthorized access to the MTODATA or other users' accounts.</li>
                         <li>Engaging in any activity that could disrupt or impair the MTODATA or its users' experience.</li>
                     </ol>
-                </details>
+                
             </details>
 
             <details open>
@@ -116,12 +117,21 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <li>These Terms shall be governed by and construed under the laws of the Philippines. Any dispute arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of the Philippines.</li>
             </details>
             
-            <div class="content">
+            <div class="content padding">
                 <p>By using the Management Information System for Marulas TODA in Valenzuela City, you acknowledge that you have read, understood, and agreed to these Terms of Use. If you disagree with these Terms, you should refrain from accessing or using the MTODATA.</p>
             </div>
 
         </div>
     </div>
+
+     <!-- FOOTER -->
+     <footer class="flex">
+        <p>&copy;mtodata 2023</p>
+        <div class="link-footer flex">
+            <p class="border-right">PUP Institute of Technology</p>
+            <p>Version 1.0</p>
+        </div>
+    </footer>
     
 </body>
 </html>
