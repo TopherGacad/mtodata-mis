@@ -288,58 +288,33 @@ MemsearchBar.addEventListener('input', () => {
     }
 });
 
+//FINANCE SEARCH
+const finsearchBar = document.getElementById('fin-search')
+const fintablebody = document.getElementById('fin-table-body')
+
+finsearchBar.addEventListener('input', () => {
+    const finsearchText = finsearchBar.value.toLowerCase();
+
+    for (let i = 0; i < fintablebody.rows.length; i++) {
+        const row = fintablebody.rows[i];
+        const finId = row.cells[0].textContent.toLowerCase();
+        const finType = row.cells[1].textContent.toLowerCase();
+        const finCode = row.cells[2].textContent.toLowerCase();
+
+        if (
+            finId.includes(finsearchText) ||
+            finType.includes(finsearchText) ||
+            finCode.includes(finsearchText)
+        ) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    }
+});
+
+
 //WARNING & SUCCESS TOAST FOR ADD USER
-// document.getElementById("user-form").addEventListener("submit", function(event) {
-//     event.preventDefault();
-
-//     // Check if user role is selected
-//     var role = document.getElementById("select-role").value;
-//     if (role === "") {
-//         // Display warning toast
-//         var warningToast = document.getElementById("warningToast");
-//         warningToast.style.display = "block";
-
-//         // Hide toast after 3 seconds
-//         setTimeout(function() {
-//             warningToast.style.display = "none";
-//         }, 3000);
-//         return;
-//     }
-
-//     // Send an AJAX request to add the user to the database
-//     var formData = new FormData(this);
-//     var xhr = new XMLHttpRequest();
-//     xhr.open("POST", "../php/adduser.php", true);
-//     xhr.onreadystatechange = function() {
-//         if (xhr.readyState === 4) {
-//             if (xhr.status === 200) {
-//                 // Display success toast
-//                 var successToast = document.getElementById("user-successToast");
-//                 successToast.style.display = "flex";
-//                 modalBg.style.display="none"
-
-//                 // Hide toast after 2 seconds
-//                 setTimeout(function() {
-//                     successToast.style.display = "none";
-//                     // Refresh the page
-//                     location.reload();
-//                 }, 2000);
-
-//                 // Reset the form
-//                 document.getElementById("user-form").reset();
-
-//                 // Hide the modal
-//                 var userModalContainer = document.getElementById("user-modal-container");
-//                 userModalContainer.style.display = "none";
-//             } else {
-//                 // Handle the error case
-//                 console.error("Error: " + xhr.status);
-//             }
-//         }
-//     };
-//     xhr.send(formData);
-// });
- // Function to check if the email address exists in the database
  function checkEmailExists(email) {
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
@@ -469,57 +444,6 @@ document.getElementById("user-form").addEventListener("submit", function(event) 
 });
 
 //WARNING & SUCCESS TOAST FOR ADD MEMBER
-// document.getElementById("member-form").addEventListener("submit", function(event) {
-//     event.preventDefault();
-
-//     // Check if user role is selected
-//     var role = document.getElementById("select-mem").value;
-//     if (role === "") {
-//         // Display warning toast
-//         var warningToast = document.getElementById("mem-warningToast");
-//         warningToast.style.display = "block";
-
-//         // Hide toast after 3 seconds
-//         setTimeout(function() {
-//             warningToast.style.display = "none";
-//         }, 3000);
-//         return;
-//     }
-
-//     // Send an AJAX request to add the member to the database
-//     var formData = new FormData(this);
-//     var xhr = new XMLHttpRequest();
-//     xhr.open("POST", "../php/addmember.php", true);
-//     xhr.onreadystatechange = function() {
-//         if (xhr.readyState === 4) {
-//             if (xhr.status === 200) {
-//                 // Display success toast
-//                 var successToast = document.getElementById("mem-successToast");
-//                 successToast.style.display = "flex";
-//                 modalBg.style.display="none"
-
-//                 // Hide toast after 2 seconds
-//                 setTimeout(function() {
-//                     successToast.style.display = "none";
-//                     // Refresh the page
-//                     location.reload();
-//                 }, 2000);
-
-//                 // Reset the form
-//                 document.getElementById("member-form").reset();
-
-//                 // Hide the modal
-//                 var memberModalContainer = document.getElementById("member-modal-container");
-//                 memberModalContainer.style.display = "none";
-//             } else {
-//                 // Handle the error case
-//                 console.error("Error: " + xhr.status);
-//             }
-//         }
-//     };
-//     xhr.send(formData);
-// });
- // Function to check if the contact number exists in the database for mem-contact
  function checkMemContactExists(phone) {
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
