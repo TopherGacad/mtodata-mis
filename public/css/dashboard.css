@@ -361,7 +361,7 @@ th{
 td{
     padding: 10px 5px;
 }
-.id,.action{
+.id,.action, .date{
     min-width: 60px;
     max-width: 60px;
 }
@@ -373,9 +373,13 @@ td{
     min-width: 120px;
     max-width: 120px;
 }
-.role{
+.role,.amount,.code{
     min-width: 90px;
     max-width: 90px;
+}
+.type{
+    min-width: 50px;
+    max-width: 50px;
 }
 tr{
     border-bottom: 1px solid var(--border-color);
