@@ -355,7 +355,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
               <td class='memrole'>" . $row["mem_role"] . "</td>
               <td class='license'>" . $row["license_no"] . "</td>
               <td class='status'> 
-                <div class='status-contain'>
+                <div class=". $row["mem_stat"] . ">
                   <p>" . $row["mem_stat"] . "</p>
                 </div>
               </td>
@@ -626,7 +626,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- USERS ROLE -->
                     <div class="fields">
                         <label for="select-role">User's role<span> *</span></label>
-                        <select name="userrole" id="select-role" required>
+                        <select name="userrole" id="select-role">
                             <option value="" selected disabled>Select Role</option>
                             <option value="President">President</option>
                             <option value="Vice President">Vice President</option>
@@ -715,10 +715,10 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <!-- WARNING TOAST -->
         <div class="warningToast-container" id="warningToast">
             <div class="warningToast-left">
-                <i class="warningToast-icon fa-solid fa-circle-exclamation"></i>
+                <i class="warningToast-icon fa-solid fa-circle-info"></i>
             </div>
             <div class="warningToast-right">
-                <p><strong>Try Again</strong> Please Select User Role!</p>
+                <p><strong>Try Again</strong> Please select user role!</p>
             </div>
         </div>
     </div>
@@ -744,7 +744,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- MEMBERS ROLE -->
                     <div class="fields">
                         <label for="select-mem">Member's role<span> *</span></label>
-                        <select name="role" id="select-mem" required>
+                        <select name="role" id="select-mem">
                             <option value="" selected disabled>Select Role</option>
                             <option value="Officer">Officer</option>
                             <option value="Driver">Driver only</option>
@@ -837,10 +837,10 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <!-- WARNING TOAST -->
         <div class="warningToast-container" id="mem-warningToast">
             <div class="warningToast-left">
-                <i class="warningToast-icon fa-solid fa-circle-exclamation"></i>
+                <i class="warningToast-icon fa-solid fa-circle-info"></i>
             </div>
             <div class="warningToast-right">
-                <p><strong>Try Again</strong> Please Select User Role!</p>
+                <p><strong>Try Again</strong> Please select member role!</p>
             </div>
         </div>
     </div>
@@ -935,7 +935,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class="fields">
                         <label for="trans-date">Transaction date<span> *</span></label>
                         <input type="date" id="trans-date" name="trans_date" required>
-                    </div>
+S                    </div>
                    
                     <!--  AMOUNT  -->
                     <div class="fields">

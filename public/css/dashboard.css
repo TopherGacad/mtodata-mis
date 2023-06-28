@@ -16,7 +16,7 @@
     --dash-cyan: #0A97A9;
     --span-red: red;
     --dash-viewreport-bg:  rgba(236, 236, 236, 0.842);
-    --expired-bg:rgb(187, 187, 187);
+    --expired-bg:rgb(156, 156, 156);
     --error-color:#E53B34;
     --toast-font-color: color: rgba(0, 0, 0, 0.7);
 }
@@ -384,31 +384,23 @@ td{
 tr{
     border-bottom: 1px solid var(--border-color);
 }
-/* ACTIVE STATUS STYLING */
-.status-contain{
+/* ACTIVE ^ EXPIRED STATUS STYLING */
+.Active,.Expired{
     height: fit-content;
     width: 60%;
     border-radius: 10px;
-    background-color:var(--dash-green);
-    font-size: 14px;
+    font-size: 13px;
+    margin: 0px auto;
     color: var(--base-color);
-    margin: 0px auto;
 }
-.status-contain p{
+.Active p,.Expired p{
     margin: 0px;
 }
-/* EXPIRED STATUS STYLING */
-.expired-contain{
-    height: fit-content;
-    width: 60%;
-    border-radius: 10px;
+.Active{
+    background-color:var(--dash-green);
+}
+.Expired{
     background-color:var(--expired-bg);
-    font-size: 14px;
-    color: var(--content-font-color);
-    margin: 0px auto;
-}
-.expired-contain p{
-    margin: 0px;
 }
 tr:hover{
     background-color: var(--hover-background);

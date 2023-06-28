@@ -402,7 +402,7 @@ document.getElementById("user-form").addEventListener("submit", function(event) 
     if (role === "") {
         // Display warning toast
         var warningToast = document.getElementById("warningToast");
-        warningToast.style.display = "block";
+        warningToast.style.display = "flex";
 
         // Hide toast after 3 seconds
         setTimeout(function() {
@@ -553,7 +553,7 @@ document.getElementById('mem-license').addEventListener('input', function() {
             if (role === "") {
                 // Display warning toast
                 var warningToast = document.getElementById("mem-warningToast");
-                warningToast.style.display = "block";
+                warningToast.style.display = "flex";
 
                 // Hide toast after 3 seconds
                 setTimeout(function() {
