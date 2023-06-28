@@ -21,7 +21,7 @@ $phone = $_POST["contact"];
 $license_no = $_POST["license"];
 $profilepic = $_FILES["profile"]["name"];
 $profilepic_tmp = $_FILES["profile"]["tmp_name"];
-$profilepic_path = "../path/to/profilepic/"; // Update this with the appropriate path to store the profile pictures
+$profilepic_path = "../../public/images/"; // Update this with the appropriate path to store the profile pictures
 $mem_stat = 'Active';
 
 // Move the uploaded file to the desired location

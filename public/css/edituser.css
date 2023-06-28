@@ -198,7 +198,6 @@ textarea {
 
 /* TOAST */
 .toast-container {
-    display: none;
     align-items: center;
     position: fixed;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -211,7 +210,9 @@ textarea {
     margin: auto;
     background-color: var(--base-color);
     color: var(--toast-font-color);
-    z-index: 1000; 
+    z-index: 1200; 
+    display: flex;
+    visibility: hidden;
 }
 
 .toast-icon {
@@ -246,3 +247,4 @@ textarea {
 .toast-right p {
     padding-left: 15px;
 }
+

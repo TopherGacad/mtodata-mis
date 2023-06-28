@@ -361,7 +361,9 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
               </td>
               <td class='action'>
                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastMember(" . $row["id"] . ")'></i></abbr>
-                <a href='../../views/pages/editmem.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                <a href='../../views/pages/viewuser.php?id=" . $row['id'] . "'><i class='fa-sharp fa-solid fa-eye'></i></a>
+
+
               </td>
             </tr>";
                         }
@@ -735,7 +737,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="bg" id="bg"></div>
     <div class="addMem-modal-container" id="member-modal-container">
         <h2 class="modal-title">MEMBER REGISTRATION</h2>
-        <form action="../php/addmember.php" method="post" id="member-form">
+        <form action="../php/addmember.php" method="post" id="member-form" enctype="multipart/form-data">
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="memForm-left addForm">
