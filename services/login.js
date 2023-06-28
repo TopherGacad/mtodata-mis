@@ -41,36 +41,36 @@ function showSlides() {
     dots[slideIndex - 1].className += " active";
     slides[slideIndex - 1].style.display = "block";
     setTimeout(showSlides, 3500);
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const error = urlParams.get('error');
-        const toastContainers = document.getElementsByClassName('toast-container');
-
-        if (error === '1') {
-            Array.from(toastContainers).forEach((container) => {
-                container.style.visibility = 'visible';
-                document.getElementById("error-cont").innerHTML = `<strong>Error</strong> Account does not exist.`;
-
-            });
-            setTimeout(() => {
-                Array.from(toastContainers).forEach((container) => {
-                    container.style.visibility = 'hidden';
-                });
-            }, 3000);
-        } else if (error === '2') {
-            Array.from(toastContainers).forEach((container) => {
-                container.style.visibility = 'visible';
-                document.getElementById("error-cont").innerHTML = `<strong>Try again</strong> Incorrect Username or Pass.`;
-            });
-            setTimeout(() => {
-                Array.from(toastContainers).forEach((container) => {
-                    container.style.visibility = 'hidden';
-                });
-            }, 3000);
-        }
-    })
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    const toastContainers = document.getElementsByClassName('toast-container');
+
+    if (error === '1') {
+        Array.from(toastContainers).forEach((container) => {
+            container.style.visibility = 'visible';
+            document.getElementById("error-cont").innerHTML = `<strong>Error</strong> Account does not exist.`;
+
+        });
+        setTimeout(() => {
+            Array.from(toastContainers).forEach((container) => {
+                container.style.visibility = 'hidden';
+            });
+        }, 3000);
+    } else if (error === '2') {
+        Array.from(toastContainers).forEach((container) => {
+            container.style.visibility = 'visible';
+            document.getElementById("error-cont").innerHTML = `<strong>Try again</strong> Incorrect Username or Pass.`;
+        });
+        setTimeout(() => {
+            Array.from(toastContainers).forEach((container) => {
+                container.style.visibility = 'hidden';
+            });
+        }, 3000);
+    }
+})
 
 window.onload = function () {
     if (window.location.search.includes("error")) {

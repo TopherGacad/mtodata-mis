@@ -72,7 +72,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             }
 
                             echo "
-                    <a href='../../views/pages/editmem.php'><input type='button' value='Edit'
+                    <a href='../../views/pages/editmem.php?id=" . $row['id'] . "'><input type='button' value='Edit'
                             class='cancelBtn modal-btn' formnovalidate></a>
                 </div>
             </div>
@@ -82,8 +82,18 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     Profile Picture
                 </h3>
                 <div class='main'>
-                    <div class='section left-pic'>
-                        <img src='" . $row['profilepic'] . "' alt='' id='profileImage'>
+                <div class='section left-pic'>";
+
+                            if (empty($row['profilepic'])) {
+                                echo "<img src='../../public/assets/defuser_icon.png' alt='' id='profileImage'>";
+                            } else {
+
+                                echo "
+                    <img src='../../public/images/" . $row['profilepic'] . "' alt='' id='profileImage'>
+                    ";
+                            }
+
+                            echo "
                     </div>
                     <div class='section right-pic'>
 
@@ -184,7 +194,18 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     ?>
         </form>
     </div>
-    <script src='../../services/editMember.js'></script>
+
+    <!-- SUCCESS TOAST -->
+    <div class='toast-container' id='toast-success'>
+        <div class='toast-left-success'>
+            <i class='toast-icon fa-solid fa-circle-check'></i>
+        </div>
+        <div class='toast-right'>
+            <p id='success-con'></p>
+        </div>
+    </div>
+
+    <script src='../../services/viewmem.js'></script>
 </body>
 
 </html>
