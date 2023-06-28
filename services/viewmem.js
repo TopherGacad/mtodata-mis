@@ -15,3 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 });
+
+window.onload = function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const memberID = urlParams.get('id');
+
+    if (memberID) {
+        urlParams.delete("success");
+        const newUrl = window.location.pathname + "?" + urlParams.toString();
+        history.replaceState({}, document.title, newUrl);
+
+        console.log('$memberID');
+    }
+};

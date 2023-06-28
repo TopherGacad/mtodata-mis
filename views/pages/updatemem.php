@@ -1,8 +1,6 @@
 <?php
-// Retrieve member information from the database using the $memberID
 include "../php/db_conn.php";
 
-// Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $memberID = $_GET['id'];
@@ -19,6 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contact = $_POST['contact'];
     $license = $_POST['license'];
 
+    $query = "UPDATE mem_info SET mem_stat = '$mem_stat', fname = '$fname', mname = '$mname', 
+        lname = '$lname', exname = '$exname', mem_role = '$mem_role', gender = '$mem_sex', street = '$street', barangay = '$brgy', 
+        city = '$city', phone = '$contact', license_no = '$license'";
+
+    if ($mem_stat === 'active') {
+        $query .= ", date_created = NOW()";
+    }
 
     if ($_FILES['profile']['name'] !== "") {
         $profilepic = $_FILES["profile"]["name"];
@@ -27,26 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $profilepic_path = "../../public/images/";
 
         if (move_uploaded_file($profilepic_tmp, $profilepic_path . $profilepic)) {
-            $query = "UPDATE mem_info SET profilepic = '$profilepic', mem_stat = '$mem_stat', fname = '$fname', mname = '$mname', 
-            lname = '$lname', exname = '$exname', mem_role = '$mem_role', gender = '$mem_sex', street = '$street', barangay = '$brgy', 
-            city = '$city', phone = '$contact', license_no = '$license' WHERE id = '$memberID'";
-
-            mysqli_query($conn, $query);
-
-            // Redirect back to the page with the updated information
-            header("Location: viewuser.php?id=$memberID&success=true");
-            exit;
+            $query .= ", profilepic = '$profilepic'";
         }
-    } else {
-        $query = "UPDATE mem_info SET mem_stat = '$mem_stat', fname = '$fname', mname = '$mname', 
-            lname = '$lname', exname = '$exname', mem_role = '$mem_role', gender = '$mem_sex', street = '$street', barangay = '$brgy', 
-            city = '$city', phone = '$contact', license_no = '$license' WHERE id = '$memberID'";
-
-        mysqli_query($conn, $query);
-
-        // Redirect back to the page with the updated information
-        header("Location: viewuser.php?id=$memberID&success=true");
-        exit;
     }
+
+    $query .= " WHERE id = '$memberID'";
+
+    mysqli_query($conn, $query);
+
+    header("Location: viewuser.php?id=$memberID&success=true");
+    exit;
 }
 ?>
