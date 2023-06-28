@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const toastMessage = document.getElementById('success-con');
 
         toastContainer.style.visibility = 'visible';
-        toastMessage.textContent = 'Update Successful';
+        toastMessage.innerHTML = `<strong>Success</strong> check the updated member info.`;
 
         setTimeout(() => {
             toastContainer.style.visibility = 'hidden';

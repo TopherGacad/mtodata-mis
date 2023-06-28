@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (error === '2') {
         Array.from(toastContainers).forEach((container) => {
             container.style.visibility = 'visible';
-            document.getElementById("error-cont").innerHTML = `<strong>Try again</strong> Incorrect Username or Pass.`;
+            document.getElementById("error-cont").innerHTML = `<strong>Try again</strong> Incorrect username or pass.`;
         });
         setTimeout(() => {
             Array.from(toastContainers).forEach((container) => {

@@ -210,8 +210,9 @@ textarea {
     margin: auto;
     background-color: var(--base-color);
     color: var(--toast-font-color);
-    z-index: 1000; 
-    display: none;
+    z-index: 1200; 
+    display: flex;
+    visibility: hidden;
 }
 
 .toast-icon {

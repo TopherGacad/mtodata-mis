@@ -47,7 +47,7 @@ if (isset($_GET['id'])) {
     <title>Edit Member Info</title>
 
     <!-- STYLESHEET -->
-    <link rel='stylesheet' href='../../public/css/edituser.css'>
+    <link rel='stylesheet' href='../../public/css/editpages.css'>
     <!-- WEB ICON -->
     <link rel='icon' href='../../public/assets/browse_logo.png'>
     <!-- FONT AWESOME/ICONS -->
