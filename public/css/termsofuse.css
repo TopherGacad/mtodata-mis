@@ -133,7 +133,6 @@ details{
 /* FOOTER */
 footer{
     justify-content: space-around;
-    position: fixed;
     height: 5%;
     width: 100vw;
     bottom: 0;

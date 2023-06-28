@@ -1,18 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['email'])) {
-    header("location: ../html/login.html");
-    exit();
-}
-//FOR SESSION TIMEOUT AFTER 1 HOUR NO MOUNSE MOVEMENT
-$sessionTimeoutSeconds = 3600;
-if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $sessionTimeoutSeconds) {
-    session_unset();
-    session_destroy();
-    header("location: login.php");
-    exit();
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +14,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
+    <div class="contain-all">
     <div class="head-container">
         <img class="main-logo" src="../../public/assets/mtodata_logo.png" alt="mtodata logo">
         <ul>
@@ -54,7 +39,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             </div>
             <div class="content padding">
 
-            <details open>
+            <details>
                 <summary>1. User Accounts</summary>
                 <ol type="a">
                     <li>To access MTODATA, you may need to create an account. You agree to provide accurate and complete information during registration and keep your account credentials confidential. You are responsible for all activities that occur under your account. </li>
@@ -63,7 +48,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </ol>
             </details>
 
-            <details open>
+            <details>
                 <summary>2. Intellectual Property Rights </summary>
                 <ol type="a">
                     <li>The MTODATA and its contents, including but not limited to software, text, graphics, images, videos, and logos, are the property of Diploma in Information Communication Technology students from the Polytechnic University of the Philippines and its licensors and are protected by intellectual property laws. Without prior written permission, you may not modify, reproduce, distribute, or create derivative works based on MTODATA or any part thereof. </li>
@@ -72,7 +57,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </ol>
             </details>
 
-            <details open>
+            <details>
                 <summary>3. Data Privacy</summary>
                 <ol type="a">
                     <li>The MTODATA may involve collecting, storing, and processing personal or sensitive information. The Diploma in Information Communication Technology students from the Polytechnic University of the Philippines will handle any such data under its Privacy Policy. </li>
@@ -80,7 +65,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </ol>
             </details>
 
-            <details open>
+            <details>
                 <summary>4. Prohibited Conduct </summary>
                     <p class="isolate">a. You agree not to engage in any of the following activities while using the MTODATA:</p>
                     <ol type="i">
@@ -93,25 +78,25 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 
             </details>
 
-            <details open>
+            <details>
                 <summary>5. Disclaimer of Warranties </summary>
                 <ol type="a">
                     <li>The MTODATA is provided "as is" without express or implied warranties. The Diploma in Information Communication Technology students from the Polytechnic University of the Philippines disclaims all warranties, including but not limited to fitness for a particular purpose, non-infringement, and accuracy or completeness of the MTODATA's content.</li>
             </details>
 
-            <details open>
+            <details>
                 <summary>6. Limitation of Liability  </summary>
                 <ol type="a">
                     <li>TThe Diploma in Information Communication Technology students from Polytechnic University of the Philippines shall not be liable for any direct, indirect, incidental, consequential, or special damages arising out of or in connection with the use of the MTODATA, even if advised of the possibility of such damages.</li>
             </details>
 
-            <details open>
+            <details>
                 <summary>7. Disclaimer of Warranties </summary>
                 <ol type="a">
                     <li>The Diploma in Information Communication Technology students from the Polytechnic University of the Philippines may modify, suspend, or terminate the MTODATA or any part thereof at its sole discretion and without prior notice. Diploma in Information Communication Technology students from the Polytechnic University of the Philippines may modify these Terms anytime. Continued use of the MTODATA after modifications constitutes acceptance of the modified Terms.</li>
             </details>
 
-            <details open>
+            <details>
                 <summary>8. Applicable Law </summary>
                 <ol type="a">
                     <li>These Terms shall be governed by and construed under the laws of the Philippines. Any dispute arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of the Philippines.</li>
@@ -132,6 +117,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <p>Version 1.0</p>
         </div>
     </footer>
+    </div>
+    
     
 </body>
 </html>

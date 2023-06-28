@@ -16,6 +16,8 @@ body{
     font-family: 'Inter',sans-serif;
     color: var(--default-font-color);
     box-sizing: border-box;
+    max-height: 100vh;
+    overflow: hidden;
 }
 .bg-container{
     height: 100vh;
@@ -169,4 +171,29 @@ input::placeholder{
 .toast-right p{
     padding-left: 15px;
     font-size: 15px;
+}
+
+.terms-container{
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    background-color: var(--dark-blue);
+    position: absolute;
+    bottom: 4%;
+    right: 4%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 4px rgba(0.2, 0.2, 0.2, 0.4);
+    cursor: pointer;
+}
+.term-icon{
+    position: relative;
+    font-size: 27px;
+    text-decoration: none;
+    color: var(--base-color);
+}
+.terms-container:hover{
+    background-color: #6764EE;
+    transition: .4s;
 }
