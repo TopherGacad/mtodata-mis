@@ -148,12 +148,6 @@ if (!isset($_GET['user_id'])) {
                             <label for="user-email">Email Adress<span> *</span></label>
                             <input type="text" id="user-email" name="email" value="<?php echo $email; ?>" required>
                         </div>
-
-                         <!-- USERNAME -->
-                         <div class="fields">
-                            <label for="mem-username">Username<span> *</span></label>
-                            <input type="text" id="mem-username" name="username" placeholder="Username" value="" required>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -161,6 +155,13 @@ if (!isset($_GET['user_id'])) {
             <div class="password-container">
                 <h3>Password</h3>
                 <div class="main">
+                    <div class="section">
+                        <!-- USERNAME -->
+                        <div class="fields">
+                            <label for="mem-username">Username<span> *</span></label>
+                            <input type="text" id="mem-username" name="username" placeholder="Username" value="">
+                        </div>
+                    </div>
                     <div class="section">
                         <!-- PASSWORD -->
                         <div class="fields">
@@ -172,13 +173,6 @@ if (!isset($_GET['user_id'])) {
                          <div class="see-password-container">
                             <input class="see-pass" type="checkbox" id="see-pass">
                             <label class="see-pass-label" for="see-pass">See password</label>
-                        </div>
-                    </div>
-                    <div class="section">
-                        <!-- CONFIRM PASSWORD -->
-                        <div class="fields">
-                            <label for="user-confirmPass">Confirm Password<span> *</span></label>
-                            <input type="password" id="user-confirmPass" name="city" required>
                         </div>
                     </div>
                 </div>

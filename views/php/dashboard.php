@@ -195,6 +195,11 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <h3>Toda Meeting for OUTING</h3>
                         <p>2023-06-12 06:00 AM</p>
                     </div>
+
+                    <div class='agenda-box'>
+                        <h3>Toda Meeting for OUTING</h3>
+                        <p>2023-06-12 06:00 AM</p>
+                    </div>
                 </div>
                 <div class='link-container events-link'>
                     

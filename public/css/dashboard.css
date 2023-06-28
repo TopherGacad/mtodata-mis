@@ -224,13 +224,14 @@ section{
 .agenda-box{
     display: flex;
     flex-direction: column;
-    padding: 10px 15px;
+    padding: 5px 15px;
     border-bottom: 1px solid var(--border-color);
     color: var(--content-font-color);
     font-size: 13px;
 }
 .agenda-box h3{
     color: var(--dark-blue);
+    margin: 0;
 }
     /* USER PANE */
 .users-container, 
