@@ -421,38 +421,43 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <main>
             <table id="fin-table">
                 <tr>
-                    <th><abbr title="Transaction Id">ID</abbr></th>
-                    <th>TYPE</th>
-                    <th>CODE</th>
-                    <th>AMOUNT</th>
-                    <th>DATE</th>
-                    <th>ACTION</th>
+                    <th class="id"><abbr title="Transaction Id">ID</abbr></th>
+                    <th class="type">TYPE</th>
+                    <th class="code">CODE</th>
+                    <th class="amount">AMOUNT</th>
+                    <th class="name">NAME</th>
+                    <th class="date">DATE</th>
+                    <th class="action">ACTION</th>
                 </tr>
                 
                 <tbody id="fin-table-body">
                     <tr>
-                        <td>01</td>
-                        <td>Contribution</td>
-                        <td>CON-130423</td>
-                        <td>&#8369; 100.00</td>
-                        <td>03-23-23</td>
-                        <td>
+                        <td id="id">01</td>
+                        <td class="type">Contribution</td>
+                        <td class="code">CON-130423</td>
+                        <td class="amount">&#8369; 100.00</td>
+                        <td class="name">Christopher Gacad</td>
+                        <td class="date">03-23-23</td>
+                        <td class="action">
                             <i class="tools fa-solid fa-trash-can"></i>
                             <i class="tools fa-solid fa-pen-to-square"></i>
                         </td>
                     </tr>
 
                     <tr>
-                        <td>02</td>
-                        <td>Donation</td>
+                        <td id="id">01</td>
+                        <td class="type">Donation</td>
                         <td>DON-130423</td>
                         <td>&#8369; 100.00</td>
+                        <td class="name">Jeno Pangilinan</td>
                         <td>03-23-23</td>
-                        <td>
+                        <td class="action">
                             <i class="tools fa-solid fa-trash-can"></i>
                             <i class="tools fa-solid fa-pen-to-square"></i>
                         </td>
                     </tr>
+
+                    
                 </tbody>
             </table>
         </main>

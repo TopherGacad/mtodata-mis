@@ -1,5 +1,5 @@
 :root {
-    --backdrop-color: #f3f3f3;
+    --backdrop-color: #f0f0f0;
     --border-color: #DAE4F2;
     --primary-font-color: #404c57;
     --btn-hover: #677c8f;
@@ -9,6 +9,7 @@
     --btn-save: #28a745;
     --update-hover: #1f7e35;
     --dark-blue: #1842BD;
+    --font-color: #7EAFF6;
     --link-color: #6764EE;
     --border-color: #BABABA;
     --base-color: #FEFEFE;
@@ -22,14 +23,18 @@
 body {
     margin: 0;
     padding: 0;
+    min-height: 100vh;
     box-sizing: border-box;
     background-color: var(--backdrop-color);
     font-size: 16px;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: var(--primary-font-color);
+    line-height: 18px;
+    text-align: justify;
 }
 
+/* HEADER */
 .head-container {
     display: flex;
     align-items: center;
@@ -48,8 +53,11 @@ ul{
     align-items: center;
 }
 li{
-    margin-left: 12px;
+    margin-left: 25px;
     color: var(--default-font-color);
+}
+.head-container li:hover{
+    color: var(--dark-blue);
 }
 ul a{
     text-decoration: none;
@@ -82,10 +90,12 @@ ul a{
 }
 
 .content-container {
-    padding: 20px;
+    min-height: 100vh;
     z-index: 998;
     align-content: center;
 }
+
+/* MAIN CONTENT */
 .main-paper {
     width: 70%;
     height: fit-content;
@@ -93,8 +103,51 @@ ul a{
     background-color: var(--def-white);
     border-radius: 10px;
     box-shadow: var(--box-shadow);
-    padding: 15px 30px;
+    padding: 15px 50px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    color: var(--primary-font-color);
+}
+summary{
+    font-size: 15px;
+    font-weight: 600;
+}
+details li{
+    padding-right: 10px;
+}
+details{
+    padding:15px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    color: var(--primary-font-color);
+    background-color: var(--backdrop-color);
+}
+.isolate{
+    padding-left:40px;
+}
+.padding{
+    padding-top: 20px;
+}
+
+/* FOOTER */
+footer{
+    justify-content: space-around;
+    position: fixed;
+    height: 5%;
+    width: 100vw;
+    bottom: 0;
+    background-color: var(--font-color);
+    font-size:9px ;
+    color: var(--dark-blue);
+}
+.flex{
+    display: flex;
+    align-items: center;
+}
+.border-right{
+    border-right: 1px solid var(--dark-blue);
+    padding-right: 10px;
+    padding-left: 5px;
+    margin-right: 5px;
 }

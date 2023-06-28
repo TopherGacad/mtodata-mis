@@ -300,11 +300,13 @@ finsearchBar.addEventListener('input', () => {
         const finId = row.cells[0].textContent.toLowerCase();
         const finType = row.cells[1].textContent.toLowerCase();
         const finCode = row.cells[2].textContent.toLowerCase();
+        const finName = row.cells[4].textContent.toLowerCase();
 
         if (
             finId.includes(finsearchText) ||
             finType.includes(finsearchText) ||
-            finCode.includes(finsearchText)
+            finCode.includes(finsearchText) ||
+            finName.includes(finsearchText)
         ) {
             row.style.display = '';
         } else {
