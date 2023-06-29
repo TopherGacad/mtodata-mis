@@ -939,8 +939,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- ACCOUNT ID -->
                     <div class="fields">
                         <label for="trans-date">Transaction date<span> *</span></label>
-                        <input type="date" id="trans-date" name="trans_date" required>
-S                    </div>
+                        <input type="date" id="trans-date" name="trans_date" required>                
+                    </div>
                    
                     <!--  AMOUNT  -->
                     <div class="fields">
