@@ -37,7 +37,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <!-- ERROR TOAST -->
     <div class="errortoast-container">
         <div class="toast-left">
-            <i class="toast-icon fa-solid fa-triangle-exclamation"></i>
+            <i class="toast-icon fa-solid fa-circle-exclamation"></i>
         </div>
         <div class="toast-right">
             <p id='error-con'></p>
