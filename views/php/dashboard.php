@@ -428,7 +428,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <table id="fin-table">
                 <tr>
                     <th class="id"><abbr title="Transaction Id">ID</abbr></th>
-                    <th class="type">TYPE</th>
+                    <th class="name">TYPE</th>
                     <th class="code">CODE</th>
                     <th class="amount">AMOUNT</th>
                     <th class="name">DEBIT</th>
@@ -492,7 +492,7 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
 
                 // Fetch inserted data
                 $selectSql = "SELECT *, DATE_FORMAT(date_created, '%Y-%m-%d') AS formatted_date FROM transaction_finance
-                ORDER BY formatted_date DESC";
+                ORDER BY ID DESC";
                 $selectResult = $conn->query($selectSql);
 
                 if ($selectResult->num_rows === 0) {
@@ -523,12 +523,12 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                         echo "<tbody id='fin-table-body'>
                     <tr>
                         <td id='id'>" . $row["ID"] . "</td>
-                        <td class='type'>" . $row["account_type"] . "</td>
-                        <td class='code'>" . $row["transaction_date"] . "</td>
+                        <td class='name'>" . $row["account_type"] . "</td>
+                        <td class='code'>" . $row["transaction_code"] . "</td>
                         <td class='amount'>&#8369;" . $row["amount"] . "</td>
                         <td class='name'>" . $row["debit"] . "</td>
                         <td class='name'>" . $row["credit"] . "</td>
-                        <td class='date'>" . $row["formatted_date"] . "</td>
+                        <td class='date'>" . $row["transaction_date"] . "</td>
                         <td class='action'>
                             <i class='tools fa-sharp fa-solid fa-eye'></i>
                         </td>
