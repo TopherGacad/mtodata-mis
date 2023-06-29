@@ -81,10 +81,16 @@ body {
 .btn-container {
     margin-right: 60px;
 }
-
+.unit-search{
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    width: 170px;
+}
 .cancelBtn {
     background-color: var(--btn-color);
     color: var(--def-white);
+    margin-left: 20px;
 }
 
 .cancelBtn:hover {
