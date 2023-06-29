@@ -1016,9 +1016,15 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                     <!-- ACCOUNT ID -->
                     <div class="fields">
                         <label for="trans-date">Transaction date<span> *</span></label>
+<<<<<<< HEAD
                         <input type="date" id="trans-date" name="trans_date" required>
                     </div>
 
+=======
+                        <input type="date" id="trans-date" name="trans_date" required>                
+                    </div>
+                   
+>>>>>>> main
                     <!--  AMOUNT  -->
                     <div class="fields">
                         <label for="amount">Amount<span> *</span></label>

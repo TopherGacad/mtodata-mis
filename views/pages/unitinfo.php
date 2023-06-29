@@ -42,6 +42,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>Unit
             Information</h3>
         <div class='btn-container'>
+            <input type="text" class="unit-search" id="unit-search" placeholder="Search">
             <a href='../../views/php/dashboard.php'><input type='button' value='Cancel'
                     class='cancelBtn modal-btn' id='cancel-btn'></a>
             <a href="../../views/pages/addunit.php"><button class='addunit-btn modal-btn' id='add-unit' type='submit' name='add-unit'><i class="fa-solid fa-plus"></i> Add Unit</button></a>
@@ -49,7 +50,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     </div>
 
     <div class="content-container">
-        <table>
+        <table id="unit-table">
             <tr>
                 <th class="id">ID</th>
                 <th class="name">Name</th>
@@ -70,7 +71,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <th class="action">Action</th>
             </tr>
 
-            <tbody>
+            <tbody id="unit-table-body">
                 <tr>
                     <td class="id">1</td>
                     <td>Christopher Gacad</td>
@@ -93,9 +94,34 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <a href="../../views/pages/editunit.php"><i class='fa-sharp fa-solid fa-pen-to-square'></i></a>
                     </td>
                 </tr>
+
+                <tr>
+                    <td class="id">2</td>
+                    <td>Sean Gomez</td>
+                    <td>3493</td>
+                    <td>2323</td>
+                    <td>06-23-23</td>
+                    <td>06-23-26</td>
+                    <td>3443</td>
+                    <td>2323</td>
+                    <td>2323</td>
+                    <td>3434</td>
+                    <td>2323</td>
+                    <td>Klp343</td>
+                    <td>Green</td>
+                    <td>Makati</td>
+                    <td>sdsad234</td>
+                    <td>08-30-34</td>
+                    <td class="action">
+                        <i class='tools fa-solid fa-trash-can'></i>
+                        <a href="../../views/pages/editunit.php"><i class='fa-sharp fa-solid fa-pen-to-square'></i></a>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
+    
+    <script src="../../services/unitinfo.js"></script>
 </body>
 
 </html>
