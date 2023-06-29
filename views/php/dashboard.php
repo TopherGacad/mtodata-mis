@@ -316,8 +316,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             class="fa-solid fa-download"></i></button></abbr>
                 <div class="search-container">
                     <input type="text" class="mem-search" id="mem-search" placeholder="Search">
-                    <a href="../../views/pages/addunit.php"><button class="mem-searchBtn" id="add-unit"><i
-                                class="fa-solid fa-id-card-clip"></i></button></a>
+                    <abbr title="Unit info"><a href="../../views/pages/unitinfo.php"><button class="mem-searchBtn" id="add-unit"><i
+                                class="fa-solid fa-id-card-clip"></i></button></a></abbr>
                 </div>
                 <button class="addmemBtn" id="addmem-btn"><i class="fa-solid fa-plus"></i> Add Member</button>
             </div>
