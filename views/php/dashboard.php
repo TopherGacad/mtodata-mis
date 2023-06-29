@@ -202,7 +202,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     </div>
                 </div>
                 <div class='link-container events-link'>
-                    
+
                 </div>
             </div>
     </div>
@@ -316,8 +316,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             class="fa-solid fa-download"></i></button></abbr>
                 <div class="search-container">
                     <input type="text" class="mem-search" id="mem-search" placeholder="Search">
-                    <abbr title="Unit info"><a href="../../views/pages/unitinfo.php"><button class="mem-searchBtn" id="add-unit"><i
-                                class="fa-solid fa-id-card-clip"></i></button></a></abbr>
+                    <abbr title="Unit info"><a href="../../views/pages/unitinfo.php"><button class="mem-searchBtn"
+                                id="add-unit"><i class="fa-solid fa-id-card-clip"></i></button></a></abbr>
                 </div>
                 <button class="addmemBtn" id="addmem-btn"><i class="fa-solid fa-plus"></i> Add Member</button>
             </div>
@@ -360,7 +360,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
               <td class='memrole'>" . $row["mem_role"] . "</td>
               <td class='license'>" . $row["license_no"] . "</td>
               <td class='status'> 
-                <div class=". $row["mem_stat"] . ">
+                <div class=" . $row["mem_stat"] . ">
                   <p>" . $row["mem_stat"] . "</p>
                 </div>
               </td>
@@ -417,7 +417,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" id="fin-search" placeholder="Search">
-                    <a href="../../views/pages/adddonor.php"><button class="user-searchBtn" id="add-donor"><i class="fa-solid fa-user-plus"></i></button></a>
+                    <a href="../../views/pages/adddonor.php"><button class="user-searchBtn" id="add-donor"><i
+                                class="fa-solid fa-user-plus"></i></button></a>
                 </div>
                 <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
             </div>
@@ -430,40 +431,115 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <th class="type">TYPE</th>
                     <th class="code">CODE</th>
                     <th class="amount">AMOUNT</th>
-                    <th class="name">NAME</th>
+                    <th class="name">DEBIT</th>
+                    <th class="name">CREDIT</th>
                     <th class="date">DATE</th>
                     <th class="action">ACTION</th>
                 </tr>
-                
-                <tbody id="fin-table-body">
+
+                <?php
+                include 'db_conn.php';
+
+                // Check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+
+                // Remove deleted data from transaction_finance
+                $deleteSql = "DELETE tf FROM transaction_finance tf
+LEFT JOIN transaction_donation td ON tf.transaction_code = td.transaction_code
+LEFT JOIN transaction_contribution tc ON tf.transaction_code = tc.transaction_code
+LEFT JOIN transaction_expenses te ON tf.transaction_code = te.transaction_code
+LEFT JOIN transaction_payment tp ON tf.transaction_code = tp.transaction_code
+WHERE td.transaction_code IS NULL
+  AND tc.transaction_code IS NULL
+  AND te.transaction_code IS NULL
+  AND tp.transaction_code IS NULL";
+
+                $deleteResult = $conn->query($deleteSql);
+
+                if ($deleteResult === false) {
+                    die("Error executing the query: " . $conn->error);
+                }
+
+                $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date, date_created) 
+SELECT amount, transaction_code, transaction_type, date_created, date_created FROM transaction_donation
+WHERE NOT EXISTS (
+SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_donation.transaction_code
+)
+UNION ALL
+SELECT amount, transaction_code, transaction_type, date_created, date_created FROM transaction_contribution
+WHERE NOT EXISTS (
+SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_contribution.transaction_code
+)
+UNION ALL
+SELECT amount, transaction_code, transaction_type, date_created, date_created FROM transaction_expenses
+WHERE NOT EXISTS (
+SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_expenses.transaction_code
+)
+UNION ALL
+SELECT amount, transaction_code, transaction_type, date_created, date_created FROM transaction_payment
+WHERE NOT EXISTS (
+SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.transaction_code
+)";
+
+                $result = $conn->query($sql);
+
+                if ($result === false) {
+                    die("Error executing the query: " . $conn->error);
+                }
+
+
+                // Fetch inserted data
+                $selectSql = "SELECT *, DATE_FORMAT(date_created, '%Y-%m-%d') AS formatted_date FROM transaction_finance
+                ORDER BY formatted_date DESC";
+                $selectResult = $conn->query($selectSql);
+
+                if ($selectResult->num_rows === 0) {
+                    echo "No rows found.";
+                } else {
+
+                    while ($row = $selectResult->fetch_assoc()) {
+
+
+                        if ($selectResult === false) {
+                            die("Error executing the query: " . $conn->error);
+                        }
+
+                        if ($row['account_type'] === 'Donation' || $row['account_type'] === 'Contribution' || $row['account_type'] === 'Renewal' || $row['account_type'] === 'New Member') {
+                            $add2debit = "UPDATE transaction_finance SET debit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                            $addResult = $conn->query($add2debit);
+                            if ($addResult === false) {
+                                die("Error executing the query: " . $conn->error);
+                            }
+                        } else {
+                            $add2credit = "UPDATE transaction_finance SET credit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                            $addResult = $conn->query($add2credit);
+                            if ($addResult === false) {
+                                die("Error executing the query: " . $conn->error);
+                            }
+                        }
+
+                        echo "<tbody id='fin-table-body'>
                     <tr>
-                        <td id="id">01</td>
-                        <td class="type">Contribution</td>
-                        <td class="code">CON-130423</td>
-                        <td class="amount">&#8369; 100.00</td>
-                        <td class="name">Christopher Gacad</td>
-                        <td class="date">03-23-23</td>
-                        <td class="action">
-                            <i class="tools fa-solid fa-trash-can"></i>
-                            <i class="tools fa-solid fa-pen-to-square"></i>
+                        <td id='id'>" . $row["ID"] . "</td>
+                        <td class='type'>" . $row["account_type"] . "</td>
+                        <td class='code'>" . $row["transaction_date"] . "</td>
+                        <td class='amount'>&#8369;" . $row["amount"] . "</td>
+                        <td class='name'>" . $row["debit"] . "</td>
+                        <td class='name'>" . $row["credit"] . "</td>
+                        <td class='date'>" . $row["formatted_date"] . "</td>
+                        <td class='action'>
+                            <i class='tools fa-sharp fa-solid fa-eye'></i>
                         </td>
                     </tr>
+                </tbody>";
+                    }
+                }
 
-                    <tr>
-                        <td id="id">01</td>
-                        <td class="type">Donation</td>
-                        <td>DON-130423</td>
-                        <td>&#8369; 100.00</td>
-                        <td class="name">Jeno Pangilinan</td>
-                        <td>03-23-23</td>
-                        <td class="action">
-                            <i class="tools fa-solid fa-trash-can"></i>
-                            <i class="tools fa-solid fa-pen-to-square"></i>
-                        </td>
-                    </tr>
+                $conn->close();
+                ?>
 
-                    
-                </tbody>
             </table>
         </main>
     </div>
@@ -885,7 +961,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <label for="body-no">Body No.<span> *</span></label>
                         <input type="text" id="body-no" name="bodynum" required>
                     </div>
-                    
+
                     <!-- MEMBER NAME -->
                     <div class="fields">
                         <label for="fin-memname">Member Name</label>
@@ -895,7 +971,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             <option value="Member sample 2">Member sample 2</option>
                         </select>
                     </div>
-                    
+
                     <!-- DONOR NAME -->
                     <div class="field-container">
                         <div class="fields donor">
@@ -908,7 +984,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         </div>
 
                         <div class="fields">
-                           <a href="../../views/pages/adddonor.php"><input type="button" id="donorbtn" value="Add donor" ></a>
+                            <a href="../../views/pages/adddonor.php"><input type="button" id="donorbtn"
+                                    value="Add donor"></a>
                         </div>
                     </div>
                 </div>
@@ -940,8 +1017,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class="fields">
                         <label for="trans-date">Transaction date<span> *</span></label>
                         <input type="date" id="trans-date" name="trans_date" required>
-S                    </div>
-                   
+                    </div>
+
                     <!--  AMOUNT  -->
                     <div class="fields">
                         <label for="amount">Amount<span> *</span></label>
