@@ -437,16 +437,17 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <th class="action">ACTION</th>
                 </tr>
 
-                <?php
-                include 'db_conn.php';
+                <tbody id='fin-table-body'>
+                    <?php
+                    include 'db_conn.php';
 
-                // Check connection
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
 
-                // Remove deleted data from transaction_finance
-                $deleteSql = "DELETE tf FROM transaction_finance tf
+                    // Remove deleted data from transaction_finance
+                    $deleteSql = "DELETE tf FROM transaction_finance tf
 LEFT JOIN transaction_donation td ON tf.transaction_code = td.transaction_code
 LEFT JOIN transaction_contribution tc ON tf.transaction_code = tc.transaction_code
 LEFT JOIN transaction_expenses te ON tf.transaction_code = te.transaction_code
@@ -456,13 +457,13 @@ WHERE td.transaction_code IS NULL
   AND te.transaction_code IS NULL
   AND tp.transaction_code IS NULL";
 
-                $deleteResult = $conn->query($deleteSql);
+                    $deleteResult = $conn->query($deleteSql);
 
-                if ($deleteResult === false) {
-                    die("Error executing the query: " . $conn->error);
-                }
+                    if ($deleteResult === false) {
+                        die("Error executing the query: " . $conn->error);
+                    }
 
-                $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date, date_created) 
+                    $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date, date_created) 
 SELECT amount, transaction_code, transaction_type, date_created, date_created FROM transaction_donation
 WHERE NOT EXISTS (
 SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_donation.transaction_code
@@ -483,44 +484,44 @@ WHERE NOT EXISTS (
 SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.transaction_code
 )";
 
-                $result = $conn->query($sql);
+                    $result = $conn->query($sql);
 
-                if ($result === false) {
-                    die("Error executing the query: " . $conn->error);
-                }
+                    if ($result === false) {
+                        die("Error executing the query: " . $conn->error);
+                    }
 
 
-                // Fetch inserted data
-                $selectSql = "SELECT *, DATE_FORMAT(date_created, '%Y-%m-%d') AS formatted_date FROM transaction_finance
+                    // Fetch inserted data
+                    $selectSql = "SELECT *, DATE_FORMAT(date_created, '%Y-%m-%d') AS formatted_date FROM transaction_finance
                 ORDER BY ID DESC";
-                $selectResult = $conn->query($selectSql);
+                    $selectResult = $conn->query($selectSql);
 
-                if ($selectResult->num_rows === 0) {
-                    echo "No rows found.";
-                } else {
+                    if ($selectResult->num_rows === 0) {
+                        echo "No rows found.";
+                    } else {
 
-                    while ($row = $selectResult->fetch_assoc()) {
+                        while ($row = $selectResult->fetch_assoc()) {
 
 
-                        if ($selectResult === false) {
-                            die("Error executing the query: " . $conn->error);
-                        }
-
-                        if ($row['account_type'] === 'Donation' || $row['account_type'] === 'Contribution' || $row['account_type'] === 'Renewal' || $row['account_type'] === 'New Member') {
-                            $add2debit = "UPDATE transaction_finance SET debit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
-                            $addResult = $conn->query($add2debit);
-                            if ($addResult === false) {
+                            if ($selectResult === false) {
                                 die("Error executing the query: " . $conn->error);
                             }
-                        } else {
-                            $add2credit = "UPDATE transaction_finance SET credit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
-                            $addResult = $conn->query($add2credit);
-                            if ($addResult === false) {
-                                die("Error executing the query: " . $conn->error);
-                            }
-                        }
 
-                        echo "<tbody id='fin-table-body'>
+                            if ($row['account_type'] === 'Donation' || $row['account_type'] === 'Contribution' || $row['account_type'] === 'Renewal' || $row['account_type'] === 'New Member') {
+                                $add2debit = "UPDATE transaction_finance SET debit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                                $addResult = $conn->query($add2debit);
+                                if ($addResult === false) {
+                                    die("Error executing the query: " . $conn->error);
+                                }
+                            } else {
+                                $add2credit = "UPDATE transaction_finance SET credit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                                $addResult = $conn->query($add2credit);
+                                if ($addResult === false) {
+                                    die("Error executing the query: " . $conn->error);
+                                }
+                            }
+
+                            echo "
                     <tr>
                         <td id='id'>" . $row["ID"] . "</td>
                         <td class='name'>" . $row["account_type"] . "</td>
@@ -533,13 +534,14 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                             <i class='tools fa-sharp fa-solid fa-eye'></i>
                         </td>
                     </tr>
-                </tbody>";
+                ";
+                        }
                     }
-                }
 
-                $conn->close();
-                ?>
+                    $conn->close();
+                    ?>
 
+                </tbody>
             </table>
         </main>
     </div>
@@ -1016,9 +1018,9 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                     <!-- ACCOUNT ID -->
                     <div class="fields">
                         <label for="trans-date">Transaction date<span> *</span></label>
-                        <input type="date" id="trans-date" name="trans_date" required>                
+                        <input type="date" id="trans-date" name="trans_date" required>
                     </div>
-                   
+
                     <!--  AMOUNT  -->
                     <div class="fields">
                         <label for="amount">Amount<span> *</span></label>
