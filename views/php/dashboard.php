@@ -12,6 +12,12 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     header("location: login.php");
     exit();
 }
+
+ // connect to the MySQL database
+ include "db_conn.php";
+
+$updateQuery = "UPDATE mem_info SET mem_stat = 'Expired' WHERE mem_stat = 'Active' AND date_created < DATE_SUB(NOW(), INTERVAL 2 YEAR)";
+mysqli_query($conn, $updateQuery);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -304,6 +310,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         }
     </script>
 
+
     <!-- MEMBER INFO PANE -->
     <div class="member-container" id="member-container">
         <header>
@@ -349,28 +356,29 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, mem_role, license_no, mem_stat FROM mem_info ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
-                    // output data of each row
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
+                    // Check if there are any members
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                           
+
+                            // Display the member information, including the updated mem_stat
                             echo "
-            <tr id='row-" . $row["id"] . "'>
-              <td class='memid'>" . $row["id"] . "</td>
-              <td class='memname'>" . $row["name"] . "</td>
-              <td class='area'>" . $row["barangay"] . "</td>
-              <td class='memrole'>" . $row["mem_role"] . "</td>
-              <td class='license'>" . $row["license_no"] . "</td>
-              <td class='status'> 
-                <div class=" . $row["mem_stat"] . ">
-                  <p>" . $row["mem_stat"] . "</p>
+        <tr id='row-" . $row["id"] . "'>
+            <td class='memid'>" . $row["id"] . "</td>
+            <td class='memname'>" . $row["name"] . "</td>
+            <td class='area'>" . $row["barangay"] . "</td>
+            <td class='memrole'>" . $row["mem_role"] . "</td>
+            <td class='license'>" . $row["license_no"] . "</td>
+            <td class='status'>
+                <div class='" . $row["mem_stat"] . "'>
+                    <p>" . $row["mem_stat"] . "</p>
                 </div>
-              </td>
-              <td class='action'>
+            </td>
+            <td class='action'>
                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastMember(" . $row["id"] . ")'></i></abbr>
                 <a href='../../views/pages/viewuser.php?id=" . $row['id'] . "'><i class='fa-sharp fa-solid fa-eye'></i></a>
-
-
-              </td>
-            </tr>";
+            </td>
+        </tr>";
                         }
                     } else {
                         echo "0 results";
