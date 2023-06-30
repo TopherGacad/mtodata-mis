@@ -32,33 +32,9 @@ $sql = "INSERT INTO mem_info (mem_role, lname, fname, mname, exname, gender, str
 
 // Execute query
 if (mysqli_query($conn, $sql)) {
-    // Get the auto-incrementing ID of the inserted row
-    $lastInsertedId = mysqli_insert_id($conn);
-
-    // Calculate the incrementing number with leading zeros
-    $incrementingNumber = str_pad($lastInsertedId, 3, '0', STR_PAD_LEFT);
-
-    date_default_timezone_set('Asia/Manila');
-
-    // Get the current date
-    $dateToday = date("Ymd");
-
-    // Generate the transaction code
-    $transactionCode = "NEW{$dateToday}{$incrementingNumber}";
-
-    // Insert the transaction payment record
-    $trantype = 'New Member';
-    $paymentSql = "INSERT INTO transaction_payment (member_id, amount, transaction_code, transaction_type, date_created) VALUES ('$lastInsertedId', '2000', '$transactionCode', '$trantype', '$dateToday')";
-
-    if (mysqli_query($conn, $paymentSql)) {
-        header('Content-Type: application/json');
-        http_response_code(200);
-        echo json_encode(array('message' => 'Member added successfully'));
-    } else {
-        header('Content-Type: application/json');
-        http_response_code(500);
-        echo json_encode(array('message' => 'Error inserting payment data: ' . mysqli_error($conn)));
-    }
+    header('Content-Type: application/json');
+    http_response_code(200);
+    echo json_encode(array('message' => 'Member added successfully'));
 } else {
     header('Content-Type: application/json');
     http_response_code(500);
