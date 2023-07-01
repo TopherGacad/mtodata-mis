@@ -9,7 +9,6 @@ $timestamp = date('Y-m-d H:i:s');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the form inputs
 
-    $proID = $_GET['id'];
     $title = $_POST['event-title'];
     $description = $_POST['desc'];
     $budget = $_POST['events-budget'];
@@ -25,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = $conn->query($sql);
 
     if ($result) {
+
+        $proID = $conn->insert_id;
 
         if (isset($_POST['events-isbudget'])) {
 

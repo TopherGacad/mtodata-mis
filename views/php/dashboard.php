@@ -676,7 +676,7 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                     die("Connection failed: " . $conn->connect_error);
                 }
                 // retrieve data from the MySQL table
-                $sql = "SELECT * FROM `events_programs` ORDER BY date_created DESC";
+                $sql = "SELECT *, TIME_FORMAT(ep_start, '%h:%i %p') AS ep_time FROM `events_programs` ORDER BY date_created DESC";
                 $result = $conn->query($sql);
 
                 // output data of each row
@@ -687,11 +687,11 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                     <td>" . $row["id"] . "</td>
                     <td>" . $row["ep_title"] . "</td>
                     <td>" . $row["ep_date"] . "</td>
-                    <td>" . $row["ep_start"] . "</td>
+                    <td>" . $row["ep_time"] . "</td>
                     <td>" . $row["ep_location"] . "</td>
                     <td>
                         <i class='tools fa-solid fa-trash-can'></i>
-                        <a href='../../views/pages/editprograms.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                        <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
                         <i class='tools fa-solid fa-print'></i>
                     </td>
                 </tr> ";
