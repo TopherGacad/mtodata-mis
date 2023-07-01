@@ -3,6 +3,9 @@ include "../php/db_conn.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    date_default_timezone_set('Asia/Manila');
+    $timestamp = date('Y-m-d H:i:s');
+
     $memberID = $_GET['id'];
     $mem_stat = $_POST['mem-status'];
     $fname = $_POST['firstname'];
@@ -21,8 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         lname = '$lname', exname = '$exname', mem_role = '$mem_role', gender = '$mem_sex', street = '$street', barangay = '$brgy', 
         city = '$city', phone = '$contact', license_no = '$license'";
 
-    if ($mem_stat === 'active') {
-        $query .= ", date_created = NOW()";
+    if ($mem_stat === 'Active') {
+        $query .= ", date_created = '$timestamp'";
     }
 
     if ($_FILES['profile']['name'] !== "") {
@@ -38,7 +41,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $query .= " WHERE id = '$memberID'";
 
-    mysqli_query($conn, $query);
+    if ($conn->query($query) === TRUE) {
+        $sql = "INSERT INTO transaction_payment (member_id, amount, transaction_code, transaction_type) VALUES ('$memberID', '1000', '', 'Renewal')";
+
+        if ($conn->query($sql) === TRUE) {
+            // Get the auto-incrementing ID of the inserted row
+            $lastInsertedId = $conn->insert_id;
+
+            // Calculate the incrementing number with leading zeros
+            $incrementingNumber = str_pad($lastInsertedId, 4, '0', STR_PAD_LEFT);
+
+            $transactionCode = "RNW" . date('mdy') . $incrementingNumber;
+
+            // Update the transaction code in the database
+            $updateSql = "UPDATE transaction_payment SET transaction_code = '$transactionCode' WHERE id = $lastInsertedId";
+
+            mysqli_query($conn, $updateSql);
+
+        }
+    }
 
     header("Location: viewuser.php?id=$memberID&success=true");
     exit;
