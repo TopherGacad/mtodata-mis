@@ -684,3 +684,40 @@ const listItems = document.querySelectorAll("#nav-list .locked");
       item.style.pointerEvents = "none";  
       item.style.opacity = "0.5";
     });
+
+//Budget Checkbox
+
+function handleBudgetCheckboxChange() {
+    var budgetCheckbox = document.getElementById('events-isbudget');
+    var budgetInput = document.getElementById('events-budget');
+  
+    if (budgetCheckbox.checked) {
+      budgetInput.disabled = false;
+      budgetInput.required = true;
+    } else {
+      budgetInput.disabled = true;
+      budgetInput.required = false;
+    }
+  }
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const suc = urlParams.get('success');
+    const toastContainers = document.getElementById('toast-success');
+
+    if (suc === 'true') {
+        toastContainers.style.visibility = 'visible';
+        document.getElementById('success-con').innerHTML = `<strong>Successful!</strong> Events/Programs created successfully.`;
+        setTimeout(() => {
+            toastContainers.style.visibility = 'hidden';
+        }, 3000);
+    }
+
+});
+
+window.onload = function () {
+    if (window.location.search.includes("success")) {
+        history.replaceState({}, document.title, window.location.pathname);
+    }
+}
