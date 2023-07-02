@@ -72,24 +72,43 @@ var transDate = document.getElementById("trans-date");
 var today = new Date().toISOString().split('T')[0];
 
 function disableInputs() {
+
     if (selectType.value === "Butaw") {
         bodyNo.disabled = false;
         donorName.disabled = true;
         expenseType.disabled = true;
         addDonor.disabled = true;
         amountInput.value = "10";
+
+        amountInput.disabled =  false;
+        transDate.disabled = false;
     } else if (selectType.value === "Donation") {
         bodyNo.disabled = true;
         donorName.disabled = false;
         expenseType.disabled = true;
         addDonor.disabled = false;
         amountInput.value = "";
+
+        amountInput.disabled =  false;
+        transDate.disabled = true;
     } else if (selectType.value === "Expenses") {
         bodyNo.disabled = true;
         donorName.disabled = true;
         expenseType.disabled = false;
         addDonor.disabled = true;
         amountInput.value = "";
+
+        amountInput.disabled =  false;
+        transDate.disabled = false;
+    } else {
+        bodyNo.disabled = true;
+        donorName.disabled = true;
+        expenseType.disabled = true;
+        addDonor.disabled = true;
+        amountInput.value = "";
+
+        amountInput.disabled =  true;
+        transDate.disabled = true;
     }
 
     if (selectType.value === "Butaw" || selectType.value === "Donation") {

@@ -427,7 +427,7 @@ date_default_timezone_set('Asia/Manila');
                         class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" id="fin-search" placeholder="Search">
-                    <a href="../../views/pages/adddonor.php"><button class="user-searchBtn" id="add-donor"><i
+                    <a href="../../views/pages/viewdonors.php"><button class="user-searchBtn" id="add-donor"><i
                                 class="fa-solid fa-user-plus"></i></button></a>
                 </div>
                 <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
@@ -964,17 +964,45 @@ date_default_timezone_set('Asia/Manila');
                     <!-- BODY NO. -->
                     <div class='fields'>
                         <label for='bodynum'>Body No.<span> *</span></label>
-                        <input type='text' id='body-no' name='bodynum' required>
+                        <input type='text' id='body-no' name='bodynum' required disabled>
                     </div>
 
                     <!-- DONOR NAME -->
                     <div class='field-container'>
                         <div class='fields donor'>
                             <label for='donor-select'>Donor Name</label>
-                            <select name='donor_select' id='donor-select' onchange='handleDonorSelection()' required>
+                            <select name='donor_select' id='donor-select' onchange='handleDonorSelection()' required
+                                disabled>
                                 <option selected disabled value=''>Select Donor</option>
-                                <option value='Member sample 1'>Member sample 1</option>
-                                <option value='Member sample 2'>Member sample 2</option>
+                                <?php
+
+                                // connect to the MySQL database
+                                include "db_conn.php";
+
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+
+                                $sql = "SELECT * FROM donor_info";
+
+                                $result = $conn->query($sql);
+
+
+                                while ($row = $result->fetch_assoc()) {
+
+                                    $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                                    $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                                    $lastName = $row["lname"];
+
+                                    if (empty($row["exname"])) {
+                                        $lastName .= ', ';
+                                    }
+
+                                    echo "<option value='" . $row["id"] . "'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
+                                }
+                                // close MySQL connection
+                                $conn->close();
+                                ?>
                             </select>
                         </div>
 
@@ -989,7 +1017,7 @@ date_default_timezone_set('Asia/Manila');
                 <div class='financeForm-right addForm'>
                     <div class='fields'>
                         <label for='expense-type'>Expense Type</label>
-                        <select name='expense_type' id='expense-type' required>
+                        <select name='expense_type' id='expense-type' required disabled>
                             <option selected disabled value=''>Select Expense type</option>
                             <option value='Expenses - Rent'>Rent</option>
                             <option value='Expenses - Electricity'>Electricity</option>
@@ -1001,13 +1029,13 @@ date_default_timezone_set('Asia/Manila');
                     <!-- ACCOUNT ID -->
                     <div class='fields'>
                         <label for='trans-date'>Transaction date<span> *</span></label>
-                        <input type='date' id='trans-date' name='trans_date' required>
+                        <input type='date' id='trans-date' name='trans_date' required disabled>
                     </div>
 
                     <!--  AMOUNT  -->
                     <div class='fields'>
                         <label for='amount'>Amount<span> *</span></label>
-                        <input type='text' id='amount' name='amount' placeholder='₱' required>
+                        <input type='text' id='amount' name='amount' placeholder='₱' required disabled>
                     </div>
 
                     <div class='btn-container'>

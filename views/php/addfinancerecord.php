@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $expenseType = $_POST['expense_type'];
     $transactionDate = $_POST['trans_date'];
     $amount = $_POST['amount'];
+    $donorID = $_POST['donor_select'];
 
     switch ($financeType) {
         case 'Butaw':
@@ -44,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $financeCode = 'DON';
             $tranType = 'Donation';
             // Insert into transaction_donation table
-            $insertSql = "INSERT INTO transaction_donation (donor_name, transaction_date, amount, transaction_code, date_created, transaction_type) 
-            VALUES ('', '$transactionDate', '$amount', '','$timestamp','$tranType')";
+            $insertSql = "INSERT INTO transaction_donation (id, amount, transaction_code, date_created, transaction_type) 
+            VALUES ('$donorID', '$amount', '','$timestamp','$tranType')";
 
             // Execute the insertion query
             if ($conn->query($insertSql) === TRUE) {
