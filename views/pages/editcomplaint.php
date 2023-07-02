@@ -4,7 +4,8 @@ if (!isset($_SESSION['email'])) {
     header("location: ../html/login.html");
     exit();
 }
-//FOR SESSION TIMEOUT AFTER 1 HOUR NO MOUNSE MOVEMENT
+
+// FOR SESSION TIMEOUT AFTER 1 HOUR OF NO MOUSE MOVEMENT
 $sessionTimeoutSeconds = 3600;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $sessionTimeoutSeconds) {
     session_unset();
@@ -12,7 +13,97 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     header("location: login.php");
     exit();
 }
+
+// Check if the ID query parameter is set
+if (isset($_GET['complaint_id'])) {
+    $complaint_id = $_GET['complaint_id'];
+
+    // Retrieve complaint information from the database using the complaint ID
+    include "../php/db_conn.php";
+
+    $sql = "SELECT * FROM complaint_info ci 
+            INNER JOIN complaint_details cd ON ci.id = cd.id
+            WHERE ci.id = '$complaint_id'";
+
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) === 0) {
+        echo 'Complaint does not exist';
+        exit();
+    } else {
+        $row = mysqli_fetch_assoc($result);
+    }
+} else {
+    echo 'Invalid Complaint ID';
+    exit();
+}
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // connect to the MySQL database
+    include "db_conn.php";
+
+    // check connection
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // Update Database
+    // Edit Complaint Module
+
+    // Left Panel
+    $EditComplainantFirstname = $_POST["complaintFirstname"];
+    $EditComplainantMiddlename = $_POST["complaintMiddlename"];
+    $EditComplainantLastname = $_POST["complaintLastname"];
+    $EditComplainantExtension = $_POST["extension"];
+    $EditComplainantGender = $_POST["gender"];
+    $EditComplainantContact = $_POST["contact"];
+
+    // Right Panel
+    $EditSubject = $_POST["subject"];
+    $EditBodyNumber = $_POST["subject-bodyNum"];
+    $EditDateCreated = $_POST["date-incident"] . " " . $_POST["time-incident"];
+    $EditComplaintDescription = $_POST["desc"];
+
+    $query .= " WHERE id = '$complaint_id'";
+
+    // Update complaint_info table
+    $sql = "UPDATE complaint_info SET 
+                fname = '$EditComplainantFirstname', 
+                mname = '$EditComplainantMiddlename', 
+                lname = '$EditComplainantLastname', 
+                exname = '$EditComplainantExtension', 
+                gender = '$EditComplainantGender', 
+                phone = '$EditComplainantContact' 
+            WHERE id = '$complaint_id'";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "Complainant details updated successfully";
+    } else {
+        echo "Error updating complainant details: " . mysqli_error($conn);
+        exit();
+    }
+
+    // Update complaint_details table
+    $sql = "UPDATE complaint_details SET 
+                complaint_person = '$EditSubject', 
+                body_no = '$EditBodyNumber', 
+                details = '$EditComplaintDescription', 
+                date_created = '$EditDateCreated' 
+            WHERE id = '$complaint_id'";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "Complaint information updated successfully";
+    } else {
+        echo "Error updating complaint information: " . mysqli_error($conn);
+        exit();
+    }
+
+    header("Location: ../php/dashboard.php?id=$complaint_id&success=true");
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

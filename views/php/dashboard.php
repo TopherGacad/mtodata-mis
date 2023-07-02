@@ -12,6 +12,12 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     header("location: login.php");
     exit();
 }
+
+ // connect to the MySQL database
+ include "db_conn.php";
+
+$updateQuery = "UPDATE mem_info SET mem_stat = 'Expired' WHERE mem_stat = 'Active' AND date_created < DATE_SUB(NOW(), INTERVAL 2 YEAR)";
+mysqli_query($conn, $updateQuery);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -304,6 +310,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         }
     </script>
 
+
     <!-- MEMBER INFO PANE -->
     <div class="member-container" id="member-container">
         <header>
@@ -349,28 +356,29 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, mem_role, license_no, mem_stat FROM mem_info ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
-                    // output data of each row
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
+                    // Check if there are any members
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                           
+
+                            // Display the member information, including the updated mem_stat
                             echo "
-            <tr id='row-" . $row["id"] . "'>
-              <td class='memid'>" . $row["id"] . "</td>
-              <td class='memname'>" . $row["name"] . "</td>
-              <td class='area'>" . $row["barangay"] . "</td>
-              <td class='memrole'>" . $row["mem_role"] . "</td>
-              <td class='license'>" . $row["license_no"] . "</td>
-              <td class='status'> 
-                <div class=" . $row["mem_stat"] . ">
-                  <p>" . $row["mem_stat"] . "</p>
+        <tr id='row-" . $row["id"] . "'>
+            <td class='memid'>" . $row["id"] . "</td>
+            <td class='memname'>" . $row["name"] . "</td>
+            <td class='area'>" . $row["barangay"] . "</td>
+            <td class='memrole'>" . $row["mem_role"] . "</td>
+            <td class='license'>" . $row["license_no"] . "</td>
+            <td class='status'>
+                <div class='" . $row["mem_stat"] . "'>
+                    <p>" . $row["mem_stat"] . "</p>
                 </div>
-              </td>
-              <td class='action'>
+            </td>
+            <td class='action'>
                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastMember(" . $row["id"] . ")'></i></abbr>
                 <a href='../../views/pages/viewuser.php?id=" . $row['id'] . "'><i class='fa-sharp fa-solid fa-eye'></i></a>
-
-
-              </td>
-            </tr>";
+            </td>
+        </tr>";
                         }
                     } else {
                         echo "0 results";
@@ -437,90 +445,82 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <th class="action">ACTION</th>
                 </tr>
 
-                <?php
-                include 'db_conn.php';
+                <tbody id='fin-table-body'>
+                    <?php
+                    include 'db_conn.php';
 
-                // Check connection
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
 
-                // Remove deleted data from transaction_finance
-                $deleteSql = "DELETE tf FROM transaction_finance tf
-LEFT JOIN transaction_donation td ON tf.transaction_code = td.transaction_code
-LEFT JOIN transaction_contribution tc ON tf.transaction_code = tc.transaction_code
-LEFT JOIN transaction_expenses te ON tf.transaction_code = te.transaction_code
-LEFT JOIN transaction_payment tp ON tf.transaction_code = tp.transaction_code
-WHERE td.transaction_code IS NULL
-  AND tc.transaction_code IS NULL
-  AND te.transaction_code IS NULL
-  AND tp.transaction_code IS NULL";
+                    // Remove deleted data from transaction_finance
+                    $deleteSql = "DELETE tf FROM transaction_finance tf
+                    LEFT JOIN transaction_donation td ON tf.transaction_code = td.transaction_code
+                    LEFT JOIN transaction_contribution tc ON tf.transaction_code = tc.transaction_code
+                    LEFT JOIN transaction_expenses te ON tf.transaction_code = te.transaction_code
+                    LEFT JOIN transaction_payment tp ON tf.transaction_code = tp.transaction_code
+                    WHERE td.transaction_code IS NULL
+                    AND tc.transaction_code IS NULL
+                    AND te.transaction_code IS NULL
+                    AND tp.transaction_code IS NULL";
 
-                $deleteResult = $conn->query($deleteSql);
+                    $deleteResult = $conn->query($deleteSql);
 
-                if ($deleteResult === false) {
-                    die("Error executing the query: " . $conn->error);
-                }
+                    if ($deleteResult === false) {
+                        die("Error executing the query: " . $conn->error);
+                    }
 
-                $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date, date_created) 
-SELECT amount, transaction_code, transaction_type, date_created, date_created FROM transaction_donation
-WHERE NOT EXISTS (
-SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_donation.transaction_code
-)
-UNION ALL
-SELECT amount, transaction_code, transaction_type, date_created, date_created FROM transaction_contribution
-WHERE NOT EXISTS (
-SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_contribution.transaction_code
-)
-UNION ALL
-SELECT amount, transaction_code, transaction_type, date_created, date_created FROM transaction_expenses
-WHERE NOT EXISTS (
-SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_expenses.transaction_code
-)
-UNION ALL
-SELECT amount, transaction_code, transaction_type, date_created, date_created FROM transaction_payment
-WHERE NOT EXISTS (
-SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.transaction_code
-)";
+                    $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date) 
+                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_donation
+                    WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_donation.transaction_code)
+                    UNION ALL
+                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_contribution
+                    WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_contribution.transaction_code)
+                    UNION ALL
+                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_expenses
+                    WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_expenses.transaction_code)
+                    UNION ALL
+                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_payment
+                    WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.transaction_code)";
 
-                $result = $conn->query($sql);
+                    $result = $conn->query($sql);
 
-                if ($result === false) {
-                    die("Error executing the query: " . $conn->error);
-                }
+                    if ($result === false) {
+                        die("Error executing the query: " . $conn->error);
+                    }
 
 
-                // Fetch inserted data
-                $selectSql = "SELECT *, DATE_FORMAT(date_created, '%Y-%m-%d') AS formatted_date FROM transaction_finance
-                ORDER BY ID DESC";
-                $selectResult = $conn->query($selectSql);
+                    // Fetch inserted data
+                    $selectSql = "SELECT * FROM transaction_finance ORDER BY date_created DESC";
+                    $selectResult = $conn->query($selectSql);
 
-                if ($selectResult->num_rows === 0) {
-                    echo "No rows found.";
-                } else {
+                    if ($selectResult->num_rows === 0) {
+                        echo "No rows found.";
+                    } else {
 
-                    while ($row = $selectResult->fetch_assoc()) {
+                        while ($row = $selectResult->fetch_assoc()) {
 
 
-                        if ($selectResult === false) {
-                            die("Error executing the query: " . $conn->error);
-                        }
-
-                        if ($row['account_type'] === 'Donation' || $row['account_type'] === 'Contribution' || $row['account_type'] === 'Renewal' || $row['account_type'] === 'New Member') {
-                            $add2debit = "UPDATE transaction_finance SET debit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
-                            $addResult = $conn->query($add2debit);
-                            if ($addResult === false) {
+                            if ($selectResult === false) {
                                 die("Error executing the query: " . $conn->error);
                             }
-                        } else {
-                            $add2credit = "UPDATE transaction_finance SET credit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
-                            $addResult = $conn->query($add2credit);
-                            if ($addResult === false) {
-                                die("Error executing the query: " . $conn->error);
-                            }
-                        }
 
-                        echo "<tbody id='fin-table-body'>
+                            if ($row['account_type'] === 'Donation' || $row['account_type'] === 'Contribution' || $row['account_type'] === 'Renewal' || $row['account_type'] === 'New Member') {
+                                $add2debit = "UPDATE transaction_finance SET debit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                                $addResult = $conn->query($add2debit);
+                                if ($addResult === false) {
+                                    die("Error executing the query: " . $conn->error);
+                                }
+                            } else {
+                                $add2credit = "UPDATE transaction_finance SET credit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                                $addResult = $conn->query($add2credit);
+                                if ($addResult === false) {
+                                    die("Error executing the query: " . $conn->error);
+                                }
+                            }
+
+                            echo "
                     <tr>
                         <td id='id'>" . $row["ID"] . "</td>
                         <td class='name'>" . $row["account_type"] . "</td>
@@ -533,13 +533,14 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                             <i class='tools fa-sharp fa-solid fa-eye'></i>
                         </td>
                     </tr>
-                </tbody>";
+                ";
+                        }
                     }
-                }
 
-                $conn->close();
-                ?>
+                    $conn->close();
+                    ?>
 
+                </tbody>
             </table>
         </main>
     </div>
@@ -589,16 +590,16 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
                         echo "
-                        <tr>
-                            <td class = 'uid'>" . $row["id"] . "</td>
-                            <td class = 'username'>" . $row["complainant"] . "</td>
-                            <td class = 'contacts'>" . $row["phone"] . "</td>
-                            <td class = 'complaintPerson'>" . $row["complaint_person"] . "</td>
-                            <td class = 'actionDate'>" . $row["date_created"] . "</td>
+                        <tr id='complaint-" . $row["id"] . "'>
+                            <td class='uid'>" . $row["id"] . "</td>
+                            <td class='username'>" . $row["complainant"] . "</td>
+                            <td class='contacts'>" . $row["phone"] . "</td>
+                            <td class='complaintPerson'>" . $row["complaint_person"] . "</td>
+                            <td class='actionDate'>" . $row["date_created"] . "</td>
 
                             <td class='action'>
-                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastComplaint(" . $row["id"] . ")'></i></abbr>
-                                <a href='../../views/pages/editcomplaint.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
+                                <a href='../../views/pages/editcomplaint.php?complaint_id=" . $row["id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
                             </td>
                         </tr>";
                     }
@@ -607,27 +608,19 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                     ?>
                     <!-- Deleting User -->
                     <script>
-                        function showToastComplaint(id) {
-                            if (confirm("Are you sure you want to delete this complaint?")) {
-                                // send AJAX request to delete the complaint from the database and remove the row from the table
+                        function deleteComplaint(id) {
+                            if (confirm("Are you sure you want to delete this Complaint?")) {
+                                // send AJAX request to delete the user from the database and remove the row from the table
                                 var xhr = new XMLHttpRequest();
                                 xhr.open("POST", "deleteComplaint.php", true);
                                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                                 xhr.onreadystatechange = function () {
                                     if (xhr.readyState === 4 && xhr.status === 200) {
-                                        console.log("Response received:", xhr.responseText);
                                         // remove the row from the table
-                                        var rowId = "row-" + id;
-                                        console.log("Row ID:", rowId);
-                                        var row = document.getElementById(rowId);
-                                        console.log("Row element:", row);
-                                        if (row) {
-                                            row.parentNode.removeChild(row);
-                                            // display success message
-                                            alert(xhr.responseText);
-                                        } else {
-                                            console.log("Row not found");
-                                        }
+                                        var row = document.getElementById("complaint-" + id);
+                                        row.parentNode.removeChild(row);
+                                        // display success message
+                                        alert(xhr.responseText);
                                     }
                                 };
                                 xhr.send("id=" + id);
@@ -635,6 +628,7 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                         }
                     </script>
                 </tbody>
+
             </table>
         </main>
 
@@ -1016,9 +1010,9 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                     <!-- ACCOUNT ID -->
                     <div class="fields">
                         <label for="trans-date">Transaction date<span> *</span></label>
-                        <input type="date" id="trans-date" name="trans_date" required>                
+                        <input type="date" id="trans-date" name="trans_date" required>
                     </div>
-                   
+
                     <!--  AMOUNT  -->
                     <div class="fields">
                         <label for="amount">Amount<span> *</span></label>
@@ -1088,8 +1082,8 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                 <div class="complaintForm-right addForm">
                     <!-- SUBJECT -->
                     <div class="fields">
-                        <label for="subject">Person to Complain<span> *</span></label>
-                        <input type="text" id="subject" name="subject" maxlength="30" pattern="[A-Za-z ]{2,30}"
+                        <label for="ComplaintSubject">Person to Complain<span> *</span></label>
+                        <input type="text" id="ComplaintSubject" name="ComplaintSubject" maxlength="30" pattern="[A-Za-z ]{2,30}"
                             placeholder="Name of person to complain">
                     </div>
 
@@ -1126,6 +1120,25 @@ SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.t
                 </div>
             </div>
         </form>
+        <!-- WARNING TOAST -->
+        <div class="warningToast-container" id="cmplnt-warningToast">
+            <div class="warningToast-left">
+                <i class="warningToast-icon fa-solid fa-circle-info"></i>
+            </div>
+            <div class="warningToast-right">
+                <p><strong>Try Again</strong> Placeholder warning!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="successToast-container" id="cmplnt-successToast">
+        <div class="successToast-left">
+            <i class="successToast-icon fa-solid fa-circle-check"></i>
+        </div>
+        <div class="successToast-right">
+            <p><strong>Success!</strong> Complaint successfully submitted.</p>
+        </div>
     </div>
 
     <!-- ADD EVENTS & PROGRAMS -->

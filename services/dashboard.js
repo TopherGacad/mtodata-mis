@@ -63,12 +63,12 @@ addEventBtn.addEventListener("click", function() {
 
 // USER TYPE DISABLE INPUTS
 const selectType = document.getElementById("select-type")
-    const bodyNo = document.getElementById("body-no")
-    const memName = document.getElementById("fin-memname")
-    const donorName = document.getElementById("donor-select")
-    const expenseType = document.getElementById("expense-type")
-    const paymentType = document.getElementById("payment-type")
-    const addDonor = document.getElementById("donorbtn")
+const bodyNo = document.getElementById("body-no")
+const memName = document.getElementById("fin-memname")
+const donorName = document.getElementById("donor-select")
+const expenseType = document.getElementById("expense-type")
+const paymentType = document.getElementById("payment-type")
+const addDonor = document.getElementById("donorbtn")
     // const midnameInput = document.getElementById("midname");
     // const contactInput = document.getElementById("contact");
     // const accType = document.getElementById("acc-type");
@@ -80,21 +80,21 @@ function disableInputs() {
         expenseType.disabled = true;
         paymentType.disabled = true;
         addDonor.disabled = true;
-    } else if(selectType.value === "Donation"){
+    } else if (selectType.value === "Donation") {
         bodyNo.disabled = true;
         memName.disabled = true;
         donorName.disabled = false;
         expenseType.disabled = true;
         paymentType.disabled = true;
         addDonor.disabled = false;
-    } else if(selectType.value === "Expenses"){
+    } else if (selectType.value === "Expenses") {
         bodyNo.disabled = true;
         memName.disabled = true;
         donorName.disabled = true;
         expenseType.disabled = false;
         paymentType.disabled = true;
         addDonor.disabled = true;
-    } else if(selectType.value === "Payment"){
+    } else if (selectType.value === "Payment") {
         bodyNo.disabled = true;
         memName.disabled = false;
         donorName.disabled = true;
@@ -317,7 +317,7 @@ finsearchBar.addEventListener('input', () => {
 
 
 //WARNING & SUCCESS TOAST FOR ADD USER
- function checkEmailExists(email) {
+function checkEmailExists(email) {
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkemail.php', true);
@@ -421,7 +421,7 @@ document.getElementById("user-form").addEventListener("submit", function(event) 
                 // Display success toast
                 var successToast = document.getElementById("user-successToast");
                 successToast.style.display = "flex";
-                modalBg.style.display="none"
+                modalBg.style.display = "none"
 
                 // Hide toast after 2 seconds
                 setTimeout(function() {
@@ -445,8 +445,48 @@ document.getElementById("user-form").addEventListener("submit", function(event) 
     xhr.send(formData);
 });
 
+
+//Add Complaint Confirmation Toast
+document.getElementById("complaint-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Send an AJAX request to add the user to the database
+    var formData = new FormData(this);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "../php/complaints.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Display success toast
+                var successToast = document.getElementById("cmplnt-successToast");
+                successToast.style.display = "flex";
+                modalBg.style.display = "none"
+
+                // Hide toast after 2 seconds
+                setTimeout(function() {
+                    successToast.style.display = "none";
+                    // Refresh the page
+                    location.reload();
+                }, 2000);
+
+                // Reset the form
+                document.getElementById("complaint-form").reset();
+
+                // Hide the modal
+                var complaintModalContainer = document.getElementById("complaint-modal-container");
+                complaintModalContainer.style.display = "none";
+            } else {
+                // Handle the error case
+                console.error("Error: " + xhr.status);
+            }
+        }
+    };
+    xhr.send(formData);
+});
+
+
 //WARNING & SUCCESS TOAST FOR ADD MEMBER
- function checkMemContactExists(phone) {
+function checkMemContactExists(phone) {
     return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkmemcontact.php', true);
@@ -545,56 +585,56 @@ document.getElementById('mem-license').addEventListener('input', function() {
         });
 });
 
-        document.getElementById("member-form").addEventListener("submit", function(event) {
-            event.preventDefault();
+document.getElementById("member-form").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-            // Check if user role is selected
-            var role = document.getElementById("select-mem").value;
-            if (role === "") {
-                // Display warning toast
-                var warningToast = document.getElementById("mem-warningToast");
-                warningToast.style.display = "flex";
+    // Check if user role is selected
+    var role = document.getElementById("select-mem").value;
+    if (role === "") {
+        // Display warning toast
+        var warningToast = document.getElementById("mem-warningToast");
+        warningToast.style.display = "flex";
 
-                // Hide toast after 3 seconds
+        // Hide toast after 3 seconds
+        setTimeout(function() {
+            warningToast.style.display = "none";
+        }, 3000);
+        return;
+    }
+
+    // Send an AJAX request to add the member to the database
+    var formData = new FormData(this);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "../php/addmember.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Display success toast
+                var successToast = document.getElementById("mem-successToast");
+                successToast.style.display = "flex";
+                modalBg.style.display = "none"
+
+                // Hide toast after 2 seconds
                 setTimeout(function() {
-                    warningToast.style.display = "none";
-                }, 3000);
-                return;
+                    successToast.style.display = "none";
+                    // Refresh the page
+                    location.reload();
+                }, 2000);
+
+                // Reset the form
+                document.getElementById("member-form").reset();
+
+                // Hide the modal
+                var memberModalContainer = document.getElementById("member-modal-container");
+                memberModalContainer.style.display = "none";
+            } else {
+                // Handle the error case
+                console.error("Error: " + xhr.status);
             }
-
-            // Send an AJAX request to add the member to the database
-            var formData = new FormData(this);
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "../php/addmember.php", true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        // Display success toast
-                        var successToast = document.getElementById("mem-successToast");
-                        successToast.style.display = "flex";
-                        modalBg.style.display="none"
-
-                        // Hide toast after 2 seconds
-                        setTimeout(function() {
-                            successToast.style.display = "none";
-                            // Refresh the page
-                            location.reload();
-                        }, 2000);
-
-                        // Reset the form
-                        document.getElementById("member-form").reset();
-
-                        // Hide the modal
-                        var memberModalContainer = document.getElementById("member-modal-container");
-                        memberModalContainer.style.display = "none";
-                    } else {
-                        // Handle the error case
-                        console.error("Error: " + xhr.status);
-                    }
-                }
-            };
-            xhr.send(formData);
-        });
+        }
+    };
+    xhr.send(formData);
+});
 
 
 
@@ -680,7 +720,7 @@ logoutBtn.addEventListener("click", handleLogout);
 
 const listItems = document.querySelectorAll("#nav-list .locked");
 
-    listItems.forEach(function(item) {
-      item.style.pointerEvents = "none";  
-      item.style.opacity = "0.5";
-    });
+listItems.forEach(function(item) {
+    item.style.pointerEvents = "none";
+    item.style.opacity = "0.5";
+});
