@@ -13,11 +13,13 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     exit();
 }
 
- // connect to the MySQL database
- include "db_conn.php";
+// connect to the MySQL database
+include "db_conn.php";
 
 $updateQuery = "UPDATE mem_info SET mem_stat = 'Expired' WHERE mem_stat = 'Active' AND date_created < DATE_SUB(NOW(), INTERVAL 2 YEAR)";
 mysqli_query($conn, $updateQuery);
+
+date_default_timezone_set('Asia/Manila');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -359,7 +361,7 @@ mysqli_query($conn, $updateQuery);
                     // Check if there are any members
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                           
+
 
                             // Display the member information, including the updated mem_stat
                             echo "
@@ -441,13 +443,16 @@ mysqli_query($conn, $updateQuery);
                     <th class="amount">AMOUNT</th>
                     <th class="name">DEBIT</th>
                     <th class="name">CREDIT</th>
-                    <th class="date">DATE</th>
+                    <th class="name">DATE</th>
                     <th class="action">ACTION</th>
                 </tr>
 
                 <tbody id='fin-table-body'>
                     <?php
+
                     include 'db_conn.php';
+
+                    $timestamp = date('Y-m-d H:i:s');
 
                     // Check connection
                     if ($conn->connect_error) {
@@ -471,17 +476,17 @@ mysqli_query($conn, $updateQuery);
                         die("Error executing the query: " . $conn->error);
                     }
 
-                    $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date) 
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_donation
+                    $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date, date_created) 
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_donation
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_donation.transaction_code)
                     UNION ALL
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_contribution
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_contribution
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_contribution.transaction_code)
                     UNION ALL
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_expenses
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_expenses
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_expenses.transaction_code)
                     UNION ALL
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_payment
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_payment
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.transaction_code)";
 
                     $result = $conn->query($sql);
@@ -492,7 +497,7 @@ mysqli_query($conn, $updateQuery);
 
 
                     // Fetch inserted data
-                    $selectSql = "SELECT * FROM transaction_finance ORDER BY date_created DESC";
+                    $selectSql = "SELECT *,  DATE_FORMAT(date_created, '%Y-%m-%d %h:%i %p') AS new_formatted_date FROM transaction_finance ORDER BY date_created DESC";
                     $selectResult = $conn->query($selectSql);
 
                     if ($selectResult->num_rows === 0) {
@@ -528,7 +533,7 @@ mysqli_query($conn, $updateQuery);
                         <td class='amount'>&#8369;" . $row["amount"] . "</td>
                         <td class='name'>" . $row["debit"] . "</td>
                         <td class='name'>" . $row["credit"] . "</td>
-                        <td class='date'>" . $row["transaction_date"] . "</td>
+                        <td class='name'>" . $row["new_formatted_date"] . "</td>
                         <td class='action'>
                             <i class='tools fa-sharp fa-solid fa-eye'></i>
                         </td>
