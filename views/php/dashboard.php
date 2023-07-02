@@ -943,97 +943,76 @@ date_default_timezone_set('Asia/Manila');
     </div>
 
     <!-- ADD FINANCE MODAL -->
-    <div class="bg" id="bg"></div>
-    <div class="addFinance-modal-container" id="finance-modal-container">
-        <h2 class="modal-title">ADD FINANCIAL RECORD</h2>
-        <form action="" id="finance-form">
-            <div class="form-container">
+    <div class='bg' id='bg'></div>
+    <div class='addFinance-modal-container' id='finance-modal-container'>
+        <h2 class='modal-title'>ADD FINANCIAL RECORD</h2>
+        <form action='addfinancerecord.php' method="POST" id='finance-form'>
+            <div class='form-container'>
                 <!-- FORM LEFT -->
-                <div class="financeForm-left addForm">
+                <div class='financeForm-left addForm'>
                     <!-- FINANCE TYPE -->
-                    <div class="fields">
-                        <label for="select-type">Finance Type<span> *</span>
+                    <div class='fields'>
+                        <label for='select-type'>Finance Type<span> *</span>
                         </label>
-                        <select name="type" id="select-type" onchange="disableInputs()" required>
-                            <option value="" selected disabled>Select Account type</option>
-                            <option value="Butaw">Butaw/Contribution</option>
-                            <option value="Donation">Donation</option>
-                            <option value="Expenses">Expenses</option>
-                            <option value="Payment">Payment</option>
+                        <select name='type' id='select-type' onchange='disableInputs()' required>
+                            <option value='' selected disabled>Select Account type</option>
+                            <option value='Butaw'>Butaw/Contribution</option>
+                            <option value='Donation'>Donation</option>
+                            <option value='Expenses'>Expenses</option>
                         </select>
                     </div>
                     <!-- BODY NO. -->
-                    <div class="fields">
-                        <label for="body-no">Body No.<span> *</span></label>
-                        <input type="text" id="body-no" name="bodynum" required>
-                    </div>
-
-                    <!-- MEMBER NAME -->
-                    <div class="fields">
-                        <label for="fin-memname">Member Name</label>
-                        <select name="fin_memname" id="fin-memname" required>
-                            <option selected disabled value="">Select Member</option>
-                            <option value="Member sample 1">Member sample 1</option>
-                            <option value="Member sample 2">Member sample 2</option>
-                        </select>
+                    <div class='fields'>
+                        <label for='bodynum'>Body No.<span> *</span></label>
+                        <input type='text' id='body-no' name='bodynum' required>
                     </div>
 
                     <!-- DONOR NAME -->
-                    <div class="field-container">
-                        <div class="fields donor">
-                            <label for="donor-select">Donor Name</label>
-                            <select name="donor_select" id="donor-select" onchange="handleDonorSelection()" required>
-                                <option selected disabled value="">Select Donor</option>
-                                <option value="Member sample 1">Member sample 1</option>
-                                <option value="Member sample 2">Member sample 2</option>
+                    <div class='field-container'>
+                        <div class='fields donor'>
+                            <label for='donor-select'>Donor Name</label>
+                            <select name='donor_select' id='donor-select' onchange='handleDonorSelection()' required>
+                                <option selected disabled value=''>Select Donor</option>
+                                <option value='Member sample 1'>Member sample 1</option>
+                                <option value='Member sample 2'>Member sample 2</option>
                             </select>
                         </div>
 
-                        <div class="fields">
-                            <a href="../../views/pages/adddonor.php"><input type="button" id="donorbtn"
-                                    value="Add donor"></a>
+                        <div class='fields'>
+                            <a href='../../views/pages/adddonor.php'><input type='button' id='donorbtn'
+                                    value='Add donor'></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- FORM-RIGHT -->
-                <div class="financeForm-right addForm">
-                    <div class="fields">
-                        <label for="expense-type">Expense Type</label>
-                        <select name="expense_type" id="expense-type" required>
-                            <option selected disabled value="">Select Expense type</option>
-                            <option value="Rent">Rent</option>
-                            <option value="Electrity">Electricity</option>
-                            <option value="Water">Water</option>
-                            <option value="Programs">Programs</option>
+                <div class='financeForm-right addForm'>
+                    <div class='fields'>
+                        <label for='expense-type'>Expense Type</label>
+                        <select name='expense_type' id='expense-type' required>
+                            <option selected disabled value=''>Select Expense type</option>
+                            <option value='Expenses - Rent'>Rent</option>
+                            <option value='Expenses - Electricity'>Electricity</option>
+                            <option value='Expenses - Water'>Water</option>
                         </select>
                     </div>
 
-                    <!-- PAYMENT TYPE -->
-                    <div class="fields">
-                        <label for="payment-type">Payment Type<span> *</span></label>
-                        <select name="payment_type" id="payment-type" required>
-                            <option selected disabled value="">Select Payment type</option>
-                            <option value="New member">New member</option>
-                            <option value="Renewal">Renewal</option>
-                        </select>
-                    </div>
 
                     <!-- ACCOUNT ID -->
-                    <div class="fields">
-                        <label for="trans-date">Transaction date<span> *</span></label>
-                        <input type="date" id="trans-date" name="trans_date" required>
+                    <div class='fields'>
+                        <label for='trans-date'>Transaction date<span> *</span></label>
+                        <input type='date' id='trans-date' name='trans_date' required>
                     </div>
 
                     <!--  AMOUNT  -->
-                    <div class="fields">
-                        <label for="amount">Amount<span> *</span></label>
-                        <input type="text" id="amount" name="amount" placeholder="₱" required>
+                    <div class='fields'>
+                        <label for='amount'>Amount<span> *</span></label>
+                        <input type='text' id='amount' name='amount' placeholder='₱' required>
                     </div>
 
-                    <div class="btn-container">
-                        <input type="button" value="Cancel" class="cancel-btn" id="finance-cancel" formnovalidate>
-                        <button class="save-btn" id="save-btn" type="submit">Save</button>
+                    <div class='btn-container'>
+                        <input type='button' value='Cancel' class='cancel-btn' id='finance-cancel' formnovalidate>
+                        <button class='save-btn' id='save-btn' type='submit'>Save</button>
                     </div>
                 </div>
             </div>
