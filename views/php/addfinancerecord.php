@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $financeCode = 'DON';
             $tranType = 'Donation';
             // Insert into transaction_donation table
-            $insertSql = "INSERT INTO transaction_donation (id, amount, transaction_code, date_created, transaction_type) 
+            $insertSql = "INSERT INTO transaction_donation (donor_id, amount, transaction_code, date_created, transaction_type) 
             VALUES ('$donorID', '$amount', '','$timestamp','$tranType')";
 
             // Execute the insertion query
