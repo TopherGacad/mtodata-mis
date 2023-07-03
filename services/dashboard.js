@@ -348,6 +348,22 @@ function checkContactExists(contact) {
     });
 }
 
+// Function to check if the username exists in the database
+function checkUsernameExists(username) {
+    return new Promise(function(resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '../php/checkusername.php', true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var response = xhr.responseText;
+          resolve(response === 'exists');
+        }
+      };
+      xhr.send('user-uname=' + username);
+    });
+  }
+
 // Event listener for input changes
 document.getElementById('user-email').addEventListener('input', function() {
     var emailInput = this.value;
@@ -364,7 +380,8 @@ document.getElementById('user-email').addEventListener('input', function() {
             // Disable the save button if either email or contact validation fails
             var saveBtn = document.getElementById('save-btn');
             var contactValidation = document.getElementById('contact-validation');
-            saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '';
+            var usernameValidation = document.getElementById('username-validation');
+            saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '' || usernameValidation.textContent !== '';
         })
         .catch(function(error) {
             console.error(error);
@@ -387,7 +404,32 @@ document.getElementById('user-contact').addEventListener('input', function() {
             // Disable the save button if either email or contact validation fails
             var saveBtn = document.getElementById('save-btn');
             var emailValidation = document.getElementById('email-validation');
-            saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '';
+            var usernameValidation = document.getElementById('username-validation');
+            saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '' || usernameValidation.textContent !== '';
+        })
+        .catch(function(error) {
+            console.error(error);
+        });
+});
+
+// Event listener for input changes
+document.getElementById('user-uname').addEventListener('input', function() {
+    var usernameInput = this.value;
+    var usernameValidation = document.getElementById('username-validation');
+
+    checkUsernameExists(usernameInput)
+        .then(function(exists) {
+            if (exists) {
+                usernameValidation.textContent = 'Username already exist';
+            } else {
+                usernameValidation.textContent = '';
+            }
+
+            // Disable the save button if either email or contact validation fails
+            var saveBtn = document.getElementById('save-btn');
+            var emailValidation = document.getElementById('email-validation');
+            var contactValidation = document.getElementById('contact-validation');
+            saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '' || usernameValidation.textContent !== '';
         })
         .catch(function(error) {
             console.error(error);

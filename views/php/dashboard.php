@@ -747,11 +747,11 @@ mysqli_query($conn, $updateQuery);
                 <div class="userForm-right addForm">
 
                     <!-- USERNAME -->
-                    <div class="fields">
-                        <label for="user-uname">Username<span> *</span></label>
-                        <input type="text" id="user-uname" name="user-uname" maxlength="25"
-                            placeholder="juandelacruz123" required>
-                    </div>
+<div class="fields">
+    <label for="user-uname">Username<span> *</span></label>
+    <input type="text" id="user-uname" name="user-uname" maxlength="25" placeholder="juandelacruz123" required>
+    <span id="username-validation"></span> <!-- Display validation message here -->
+</div>
                     <!-- EMAIL -->
                     <div class="fields">
                         <label for="user-email">Email Address<span> *</span></label>
