@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contact = $_POST['contact'];
     $roles = $_POST['userrole'];
     $email = $_POST['email'];
+    $username = $_POST['username'];
     $psword = $_POST['barangay'];
 
     // connect to the MySQL database
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Update the user data in the database
-    $sql = "UPDATE user SET F_name = '$F_name', L_name = '$L_name', M_name = '$M_name', ex_name = '$ex_name', contact = '$contact', roles = '$roles', email = '$email', psword = '$psword' WHERE user_id = '$user_id'";
+    $sql = "UPDATE user SET F_name = '$F_name', L_name = '$L_name', M_name = '$M_name', ex_name = '$ex_name', contact = '$contact', roles = '$roles', email = '$email', username = '$username', psword = '$psword' WHERE user_id = '$user_id'";
 
     if ($conn->query($sql) === TRUE) {
         // The user data has been successfully updated

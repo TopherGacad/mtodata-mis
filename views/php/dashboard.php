@@ -13,11 +13,13 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     exit();
 }
 
- // connect to the MySQL database
- include "db_conn.php";
+// connect to the MySQL database
+include "db_conn.php";
 
 $updateQuery = "UPDATE mem_info SET mem_stat = 'Expired' WHERE mem_stat = 'Active' AND date_created < DATE_SUB(NOW(), INTERVAL 2 YEAR)";
 mysqli_query($conn, $updateQuery);
+
+date_default_timezone_set('Asia/Manila');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -359,7 +361,7 @@ mysqli_query($conn, $updateQuery);
                     // Check if there are any members
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                           
+
 
                             // Display the member information, including the updated mem_stat
                             echo "
@@ -425,7 +427,7 @@ mysqli_query($conn, $updateQuery);
                         class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" id="fin-search" placeholder="Search">
-                    <a href="../../views/pages/adddonor.php"><button class="user-searchBtn" id="add-donor"><i
+                    <a href="../../views/pages/viewdonors.php"><button class="user-searchBtn" id="add-donor"><i
                                 class="fa-solid fa-user-plus"></i></button></a>
                 </div>
                 <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
@@ -441,13 +443,16 @@ mysqli_query($conn, $updateQuery);
                     <th class="amount">AMOUNT</th>
                     <th class="name">DEBIT</th>
                     <th class="name">CREDIT</th>
-                    <th class="date">DATE</th>
+                    <th class="name">DATE</th>
                     <th class="action">ACTION</th>
                 </tr>
 
                 <tbody id='fin-table-body'>
                     <?php
+
                     include 'db_conn.php';
+
+                    $timestamp = date('Y-m-d H:i:s');
 
                     // Check connection
                     if ($conn->connect_error) {
@@ -471,17 +476,17 @@ mysqli_query($conn, $updateQuery);
                         die("Error executing the query: " . $conn->error);
                     }
 
-                    $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date) 
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_donation
+                    $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date, date_created) 
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_donation
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_donation.transaction_code)
                     UNION ALL
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_contribution
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_contribution
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_contribution.transaction_code)
                     UNION ALL
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_expenses
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_expenses
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_expenses.transaction_code)
                     UNION ALL
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_payment
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_payment
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.transaction_code)";
 
                     $result = $conn->query($sql);
@@ -492,7 +497,7 @@ mysqli_query($conn, $updateQuery);
 
 
                     // Fetch inserted data
-                    $selectSql = "SELECT * FROM transaction_finance ORDER BY date_created DESC";
+                    $selectSql = "SELECT *,  DATE_FORMAT(date_created, '%Y-%m-%d %h:%i %p') AS new_formatted_date FROM transaction_finance ORDER BY date_created DESC";
                     $selectResult = $conn->query($selectSql);
 
                     if ($selectResult->num_rows === 0) {
@@ -528,7 +533,7 @@ mysqli_query($conn, $updateQuery);
                         <td class='amount'>&#8369;" . $row["amount"] . "</td>
                         <td class='name'>" . $row["debit"] . "</td>
                         <td class='name'>" . $row["credit"] . "</td>
-                        <td class='date'>" . $row["transaction_date"] . "</td>
+                        <td class='name'>" . $row["new_formatted_date"] . "</td>
                         <td class='action'>
                             <i class='tools fa-sharp fa-solid fa-eye'></i>
                         </td>
@@ -635,43 +640,66 @@ mysqli_query($conn, $updateQuery);
     </div>
 
     <!-- EVENTS & PROGRAMS PANE -->
-    <div class="event-container" id="event-container">
+    <div class='event-container' id='event-container'>
         <header>
-            <div class="head-left">
+            <div class='head-left'>
                 <h3>EVENTS & PROGRAMS</h3>
                 <p>ADMIN VIEW</p>
             </div>
-            <div class="head-right">
-                <div class="search-container">
-                    <input type="text" class="user-search" placeholder="Search">
-                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <div class='head-right'>
+                <div class='search-container'>
+                    <input type='text' class='user-search' placeholder='Search'>
+                    <button class='user-searchBtn'><i class='fa-solid fa-magnifying-glass'></i></button>
                 </div>
-                <button class="addEventBtn" id="addEvent-btn"><i class="fa-solid fa-plus"></i> Add Events</button>
+                <button class='addEventBtn' id='addEvent-btn'><i class='fa-solid fa-plus'></i> Add Events</button>
             </div>
         </header>
 
         <main>
             <table>
                 <tr>
-                    <th><abbr title="complain-btn Id">ID</abbr></th>
-                    <th>EVENT</th>
+                    <th><abbr title='complain-btn Id'>ID</abbr></th>
+                    <th>EVENT/PROGRAM NAME</th>
                     <th>EVENT DATE</th>
                     <th>TIME</th>
                     <th>LOCATION</th>
                     <th>ACTION</th>
                 </tr>
 
+                <?php
+                // connect to the MySQL database
+                include "db_conn.php";
+
+                // check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+                // retrieve data from the MySQL table
+                $sql = "SELECT *, TIME_FORMAT(ep_start, '%h:%i %p') AS ep_time FROM `events_programs` ORDER BY date_created DESC";
+                $result = $conn->query($sql);
+
+                // output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    echo "
+
                 <tr>
-                    <td>01</td>
-                    <td>Christmas Party</td>
-                    <td>December 23, 2023</td>
-                    <td>1:00 PM</td>
-                    <td>Grand Villa</td>
+                    <td>" . $row["id"] . "</td>
+                    <td>" . $row["ep_title"] . "</td>
+                    <td>" . $row["ep_date"] . "</td>
+                    <td>" . $row["ep_time"] . "</td>
+                    <td>" . $row["ep_location"] . "</td>
                     <td>
-                        <i class="tools fa-solid fa-trash-can"></i>
-                        <a href="../../views/pages/editprograms.php"><i class="tools fa-solid fa-pen-to-square"></i></a>
+                        <i class='tools fa-solid fa-trash-can'></i>
+                        <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                        <i class='tools fa-solid fa-print'></i>
                     </td>
-                </tr>
+                </tr> ";
+
+                }
+
+                // close MySQL connection
+                $conn->close();
+                ?>
 
             </table>
         </main>
@@ -740,11 +768,11 @@ mysqli_query($conn, $updateQuery);
                 <div class="userForm-right addForm">
 
                     <!-- USERNAME -->
-                    <div class="fields">
-                        <label for="user-uname">Username<span> *</span></label>
-                        <input type="text" id="user-uname" name="user-uname" maxlength="25"
-                            placeholder="juandelacruz123" required>
-                    </div>
+<div class="fields">
+    <label for="user-uname">Username<span> *</span></label>
+    <input type="text" id="user-uname" name="user-uname" maxlength="25" placeholder="juandelacruz123" required>
+    <span id="username-validation"></span> <!-- Display validation message here -->
+</div>
                     <!-- EMAIL -->
                     <div class="fields">
                         <label for="user-email">Email Address<span> *</span></label>
@@ -804,7 +832,17 @@ mysqli_query($conn, $updateQuery);
             <i class="successToast-icon fa-solid fa-circle-check"></i>
         </div>
         <div class="successToast-right">
-            <p><strong>Success!</strong> User successfully added.</p>
+            <p id="event-success"><strong>Success!</strong> User successfully added.</p>
+        </div>
+    </div>
+
+    <!-- SUCCESS TOAST -->
+    <div class='success-toast-container' id='toast-success'>
+        <div class='toast-left-success'>
+            <i class='toast-icon fa-solid fa-circle-check'></i>
+        </div>
+        <div class='toast-right'>
+            <p id='success-con'></p>
         </div>
     </div>
 
@@ -931,97 +969,104 @@ mysqli_query($conn, $updateQuery);
     </div>
 
     <!-- ADD FINANCE MODAL -->
-    <div class="bg" id="bg"></div>
-    <div class="addFinance-modal-container" id="finance-modal-container">
-        <h2 class="modal-title">ADD FINANCIAL RECORD</h2>
-        <form action="" id="finance-form">
-            <div class="form-container">
+    <div class='bg' id='bg'></div>
+    <div class='addFinance-modal-container' id='finance-modal-container'>
+        <h2 class='modal-title'>ADD FINANCIAL RECORD</h2>
+        <form action='addfinancerecord.php' method="POST" id='finance-form'>
+            <div class='form-container'>
                 <!-- FORM LEFT -->
-                <div class="financeForm-left addForm">
+                <div class='financeForm-left addForm'>
                     <!-- FINANCE TYPE -->
-                    <div class="fields">
-                        <label for="select-type">Finance Type<span> *</span>
+                    <div class='fields'>
+                        <label for='select-type'>Finance Type<span> *</span>
                         </label>
-                        <select name="type" id="select-type" onchange="disableInputs()" required>
-                            <option value="" selected disabled>Select Account type</option>
-                            <option value="Butaw">Butaw/Contribution</option>
-                            <option value="Donation">Donation</option>
-                            <option value="Expenses">Expenses</option>
-                            <option value="Payment">Payment</option>
+                        <select name='type' id='select-type' onchange='disableInputs()' required>
+                            <option value='' selected disabled>Select Account type</option>
+                            <option value='Butaw'>Butaw/Contribution</option>
+                            <option value='Donation'>Donation</option>
+                            <option value='Expenses'>Expenses</option>
                         </select>
                     </div>
                     <!-- BODY NO. -->
-                    <div class="fields">
-                        <label for="body-no">Body No.<span> *</span></label>
-                        <input type="text" id="body-no" name="bodynum" required>
-                    </div>
-
-                    <!-- MEMBER NAME -->
-                    <div class="fields">
-                        <label for="fin-memname">Member Name</label>
-                        <select name="fin_memname" id="fin-memname" required>
-                            <option selected disabled value="">Select Member</option>
-                            <option value="Member sample 1">Member sample 1</option>
-                            <option value="Member sample 2">Member sample 2</option>
-                        </select>
+                    <div class='fields'>
+                        <label for='bodynum'>Body No.<span> *</span></label>
+                        <input type='text' id='body-no' name='bodynum' required disabled>
                     </div>
 
                     <!-- DONOR NAME -->
-                    <div class="field-container">
-                        <div class="fields donor">
-                            <label for="donor-select">Donor Name</label>
-                            <select name="donor_select" id="donor-select" onchange="handleDonorSelection()" required>
-                                <option selected disabled value="">Select Donor</option>
-                                <option value="Member sample 1">Member sample 1</option>
-                                <option value="Member sample 2">Member sample 2</option>
+                    <div class='field-container'>
+                        <div class='fields donor'>
+                            <label for='donor-select'>Donor Name</label>
+                            <select name='donor_select' id='donor-select' onchange='handleDonorSelection()' required
+                                disabled>
+                                <option selected disabled value=''>Select Donor</option>
+                                <?php
+
+                                // connect to the MySQL database
+                                include "db_conn.php";
+
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+
+                                $sql = "SELECT * FROM donor_info";
+
+                                $result = $conn->query($sql);
+
+
+                                while ($row = $result->fetch_assoc()) {
+
+                                    $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                                    $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                                    $lastName = $row["lname"];
+
+                                    if (empty($row["exname"])) {
+                                        $lastName .= ', ';
+                                    }
+
+                                    echo "<option value='" . $row["id"] . "'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
+                                }
+                                // close MySQL connection
+                                $conn->close();
+                                ?>
                             </select>
                         </div>
 
-                        <div class="fields">
-                            <a href="../../views/pages/adddonor.php"><input type="button" id="donorbtn"
-                                    value="Add donor"></a>
+                        <div class='fields'>
+                            <a href='../../views/pages/adddonor.php'><input type='button' id='donorbtn'
+                                    value='Add donor'></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- FORM-RIGHT -->
-                <div class="financeForm-right addForm">
-                    <div class="fields">
-                        <label for="expense-type">Expense Type</label>
-                        <select name="expense_type" id="expense-type" required>
-                            <option selected disabled value="">Select Expense type</option>
-                            <option value="Rent">Rent</option>
-                            <option value="Electrity">Electricity</option>
-                            <option value="Water">Water</option>
-                            <option value="Programs">Programs</option>
+                <div class='financeForm-right addForm'>
+                    <div class='fields'>
+                        <label for='expense-type'>Expense Type</label>
+                        <select name='expense_type' id='expense-type' required disabled>
+                            <option selected disabled value=''>Select Expense type</option>
+                            <option value='Expenses - Rent'>Rent</option>
+                            <option value='Expenses - Electricity'>Electricity</option>
+                            <option value='Expenses - Water'>Water</option>
                         </select>
                     </div>
 
-                    <!-- PAYMENT TYPE -->
-                    <div class="fields">
-                        <label for="payment-type">Payment Type<span> *</span></label>
-                        <select name="payment_type" id="payment-type" required>
-                            <option selected disabled value="">Select Payment type</option>
-                            <option value="New member">New member</option>
-                            <option value="Renewal">Renewal</option>
-                        </select>
-                    </div>
 
                     <!-- ACCOUNT ID -->
-                    <div class="fields">
-                        <label for="trans-date">Transaction date<span> *</span></label>
-                        <input type="date" id="trans-date" name="trans_date" required>
+                    <div class='fields'>
+                        <label for='trans-date'>Transaction date<span> *</span></label>
+                        <input type='date' id='trans-date' name='trans_date' required disabled>
                     </div>
 
                     <!--  AMOUNT  -->
-                    <div class="fields">
-                        <label for="amount">Amount<span> *</span></label>
-                        <input type="text" id="amount" name="amount" placeholder="₱" required>
+                    <div class='fields'>
+                        <label for='amount'>Amount<span> *</span></label>
+                        <input type='text' id='amount' name='amount' placeholder='₱' required disabled>
                     </div>
 
-                    <div class="btn-container">
-                        <input type="button" value="Cancel" class="cancel-btn" id="finance-cancel" formnovalidate>
-                        <button class="save-btn" id="save-btn" type="submit">Save</button>
+                    <div class='btn-container'>
+                        <input type='button' value='Cancel' class='cancel-btn' id='finance-cancel' formnovalidate>
+                        <button class='save-btn' id='save-btn' type='submit'>Save</button>
                     </div>
                 </div>
             </div>
@@ -1142,59 +1187,67 @@ mysqli_query($conn, $updateQuery);
     </div>
 
     <!-- ADD EVENTS & PROGRAMS -->
-    <div class="bg" id="bg"></div>
-    <div class="addEvent-modal-container" id="event-modal-container">
-        <h2 class="modal-title">SCHEDULE AN EVENT OR PROGRAM</h2>
-        <form action="../php/adduser.php" method="post"
-            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
-            id="event-form">
-            <div class="form-container">
+    <div class='bg' id='bg'></div>
+    <div class='addEvent-modal-container' id='event-modal-container'>
+        <h2 class='modal-title'>SCHEDULE AN EVENT OR PROGRAM</h2>
+        <form action='addevents.php' method='POST' id='event-form'>
+            <div class='form-container'>
                 <!-- FORM LEFT -->
-                <div class="complaintForm-left addForm">
+                <div class='complaintForm-left addForm'>
                     <!-- EVENT TITLE -->
-                    <div class="fields">
-                        <label for="event-title">Event Title (What)<span> *</span></label>
-                        <input type="text" id="event-title" name="event-title" maxlength="25" placeholder="Event title"
-                            required>
+                    <div class='fields'>
+                        <label for='event-title'>Title<span> *</span></label>
+                        <input type='text' id='event-title' name='event-title' placeholder='Event title' required>
                     </div>
 
                     <!-- DESCRIPTION -->
-                    <div class="fields">
-                        <label for="event-desc">Description<span> *</span></label>
-                        <textarea name="desc" id="event-desc" cols="30" rows="9" maxlength="350"></textarea>
+                    <div class='fields'>
+                        <label for='event-desc'>Description<span> *</span></label>
+                        <textarea name='desc' id='event-desc' cols='30' rows='14'></textarea>
                     </div>
                 </div>
                 <!-- FORM-RIGHT -->
-                <div class="complaintForm-right addForm">
+                <div class='complaintForm-right addForm'>
+
+                    <!--EVENT OR PROGRAM BUDGET-->
+                    <div class='is-bud'>
+                        <input type='checkbox' id='events-isbudget' name='events-isbudget' onchange='handleBudgetCheckboxChange()'>
+                        <label for='events-isbudget'>With Budget</label>
+                    </div>
+                    <div class='fields'>
+                        <label for='events-budget'>Budget</label>
+                        <input type='text' id='events-budget' name='events-budget' disabled>
+                    </div>
+
                     <!-- EVENT ORGANIZER -->
-                    <div class="fields">
-                        <label for="events-organizer">Event Organizer<span> *</span></label>
-                        <input type="text" id="events-organizer" name="events-organizer" maxlength="30" required>
+                    <div class='fields'>
+                        <label for='events-organizer'>Organizer</label>
+                        <input type='text' id='events-organizer' name='events-organizer'>
                     </div>
 
                     <!-- EVENT LOCATION -->
-                    <div class="fields">
-                        <label for="events-location">Event Location (Where)<span> *</span></label>
-                        <input type="text" id="events-location" name="events-location" maxlength="50" required>
+                    <div class='fields'>
+                        <label for='events-location'>Location</label>
+                        <input type='text' id='events-location' name='events-location' required>
                     </div>
 
-                    <div class="timeDate-container">
+                    <div class='timeDate-container'>
                         <!-- TIME -->
-                        <div class="fields">
-                            <label for="events-time">Time of Event (When)<span> *</span></label>
-                            <input type="time" id="events-time" name="events-time" required>
+                        <div class='fields'>
+                            <label for='events-time'>Time<span> *</span></label>
+                            <input type='time' id='events-time' name='events-time' required>
                         </div>
 
                         <!-- DATE -->
-                        <div class="fields">
-                            <label for="events-date">Date of Event (When)<span> *</span></label>
-                            <input type="date" id="events-date" name="events-date" required>
+                        <div class='fields'>
+                            <label for='events-date'>Date<span> *</span></label>
+                            <input type='date' id='events-date' name='events-date' required>
                         </div>
                     </div>
 
-                    <div class="btn-container">
-                        <input type="button" value="Cancel" class="cancel-btn" id="event-cancel" formnovalidate>
-                        <button class="save-btn" id="save-btn" type="submit">Save</button>
+                    <div class='btn-container'>
+                        <input type='button' value='Cancel' class='cancel-btn' id='event-cancel' formnovalidate>
+                        <button class='save-btn' id='save-btn' type='submit'>Save</button>
                     </div>
                 </div>
             </div>
