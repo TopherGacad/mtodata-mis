@@ -13,11 +13,13 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     exit();
 }
 
- // connect to the MySQL database
- include "db_conn.php";
+// connect to the MySQL database
+include "db_conn.php";
 
 $updateQuery = "UPDATE mem_info SET mem_stat = 'Expired' WHERE mem_stat = 'Active' AND date_created < DATE_SUB(NOW(), INTERVAL 2 YEAR)";
 mysqli_query($conn, $updateQuery);
+
+date_default_timezone_set('Asia/Manila');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -359,7 +361,7 @@ mysqli_query($conn, $updateQuery);
                     // Check if there are any members
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
-                           
+
 
                             // Display the member information, including the updated mem_stat
                             echo "
@@ -425,7 +427,7 @@ mysqli_query($conn, $updateQuery);
                         class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" id="fin-search" placeholder="Search">
-                    <a href="../../views/pages/adddonor.php"><button class="user-searchBtn" id="add-donor"><i
+                    <a href="../../views/pages/viewdonors.php"><button class="user-searchBtn" id="add-donor"><i
                                 class="fa-solid fa-user-plus"></i></button></a>
                 </div>
                 <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
@@ -441,13 +443,16 @@ mysqli_query($conn, $updateQuery);
                     <th class="amount">AMOUNT</th>
                     <th class="name">DEBIT</th>
                     <th class="name">CREDIT</th>
-                    <th class="date">DATE</th>
+                    <th class="name">DATE</th>
                     <th class="action">ACTION</th>
                 </tr>
 
                 <tbody id='fin-table-body'>
                     <?php
+
                     include 'db_conn.php';
+
+                    $timestamp = date('Y-m-d H:i:s');
 
                     // Check connection
                     if ($conn->connect_error) {
@@ -471,17 +476,17 @@ mysqli_query($conn, $updateQuery);
                         die("Error executing the query: " . $conn->error);
                     }
 
-                    $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date) 
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_donation
+                    $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date, date_created) 
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_donation
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_donation.transaction_code)
                     UNION ALL
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_contribution
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_contribution
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_contribution.transaction_code)
                     UNION ALL
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_expenses
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_expenses
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_expenses.transaction_code)
                     UNION ALL
-                    SELECT amount, transaction_code, transaction_type, date_created FROM transaction_payment
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_payment
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.transaction_code)";
 
                     $result = $conn->query($sql);
@@ -492,7 +497,7 @@ mysqli_query($conn, $updateQuery);
 
 
                     // Fetch inserted data
-                    $selectSql = "SELECT * FROM transaction_finance ORDER BY date_created DESC";
+                    $selectSql = "SELECT *,  DATE_FORMAT(date_created, '%Y-%m-%d %h:%i %p') AS new_formatted_date FROM transaction_finance ORDER BY date_created DESC";
                     $selectResult = $conn->query($selectSql);
 
                     if ($selectResult->num_rows === 0) {
@@ -528,7 +533,7 @@ mysqli_query($conn, $updateQuery);
                         <td class='amount'>&#8369;" . $row["amount"] . "</td>
                         <td class='name'>" . $row["debit"] . "</td>
                         <td class='name'>" . $row["credit"] . "</td>
-                        <td class='date'>" . $row["transaction_date"] . "</td>
+                        <td class='name'>" . $row["new_formatted_date"] . "</td>
                         <td class='action'>
                             <i class='tools fa-sharp fa-solid fa-eye'></i>
                         </td>
@@ -938,97 +943,104 @@ mysqli_query($conn, $updateQuery);
     </div>
 
     <!-- ADD FINANCE MODAL -->
-    <div class="bg" id="bg"></div>
-    <div class="addFinance-modal-container" id="finance-modal-container">
-        <h2 class="modal-title">ADD FINANCIAL RECORD</h2>
-        <form action="" id="finance-form">
-            <div class="form-container">
+    <div class='bg' id='bg'></div>
+    <div class='addFinance-modal-container' id='finance-modal-container'>
+        <h2 class='modal-title'>ADD FINANCIAL RECORD</h2>
+        <form action='addfinancerecord.php' method="POST" id='finance-form'>
+            <div class='form-container'>
                 <!-- FORM LEFT -->
-                <div class="financeForm-left addForm">
+                <div class='financeForm-left addForm'>
                     <!-- FINANCE TYPE -->
-                    <div class="fields">
-                        <label for="select-type">Finance Type<span> *</span>
+                    <div class='fields'>
+                        <label for='select-type'>Finance Type<span> *</span>
                         </label>
-                        <select name="type" id="select-type" onchange="disableInputs()" required>
-                            <option value="" selected disabled>Select Account type</option>
-                            <option value="Butaw">Butaw/Contribution</option>
-                            <option value="Donation">Donation</option>
-                            <option value="Expenses">Expenses</option>
-                            <option value="Payment">Payment</option>
+                        <select name='type' id='select-type' onchange='disableInputs()' required>
+                            <option value='' selected disabled>Select Account type</option>
+                            <option value='Butaw'>Butaw/Contribution</option>
+                            <option value='Donation'>Donation</option>
+                            <option value='Expenses'>Expenses</option>
                         </select>
                     </div>
                     <!-- BODY NO. -->
-                    <div class="fields">
-                        <label for="body-no">Body No.<span> *</span></label>
-                        <input type="text" id="body-no" name="bodynum" required>
-                    </div>
-
-                    <!-- MEMBER NAME -->
-                    <div class="fields">
-                        <label for="fin-memname">Member Name</label>
-                        <select name="fin_memname" id="fin-memname" required>
-                            <option selected disabled value="">Select Member</option>
-                            <option value="Member sample 1">Member sample 1</option>
-                            <option value="Member sample 2">Member sample 2</option>
-                        </select>
+                    <div class='fields'>
+                        <label for='bodynum'>Body No.<span> *</span></label>
+                        <input type='text' id='body-no' name='bodynum' required disabled>
                     </div>
 
                     <!-- DONOR NAME -->
-                    <div class="field-container">
-                        <div class="fields donor">
-                            <label for="donor-select">Donor Name</label>
-                            <select name="donor_select" id="donor-select" onchange="handleDonorSelection()" required>
-                                <option selected disabled value="">Select Donor</option>
-                                <option value="Member sample 1">Member sample 1</option>
-                                <option value="Member sample 2">Member sample 2</option>
+                    <div class='field-container'>
+                        <div class='fields donor'>
+                            <label for='donor-select'>Donor Name</label>
+                            <select name='donor_select' id='donor-select' onchange='handleDonorSelection()' required
+                                disabled>
+                                <option selected disabled value=''>Select Donor</option>
+                                <?php
+
+                                // connect to the MySQL database
+                                include "db_conn.php";
+
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+
+                                $sql = "SELECT * FROM donor_info";
+
+                                $result = $conn->query($sql);
+
+
+                                while ($row = $result->fetch_assoc()) {
+
+                                    $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                                    $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                                    $lastName = $row["lname"];
+
+                                    if (empty($row["exname"])) {
+                                        $lastName .= ', ';
+                                    }
+
+                                    echo "<option value='" . $row["id"] . "'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
+                                }
+                                // close MySQL connection
+                                $conn->close();
+                                ?>
                             </select>
                         </div>
 
-                        <div class="fields">
-                            <a href="../../views/pages/adddonor.php"><input type="button" id="donorbtn"
-                                    value="Add donor"></a>
+                        <div class='fields'>
+                            <a href='../../views/pages/adddonor.php'><input type='button' id='donorbtn'
+                                    value='Add donor'></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- FORM-RIGHT -->
-                <div class="financeForm-right addForm">
-                    <div class="fields">
-                        <label for="expense-type">Expense Type</label>
-                        <select name="expense_type" id="expense-type" required>
-                            <option selected disabled value="">Select Expense type</option>
-                            <option value="Rent">Rent</option>
-                            <option value="Electrity">Electricity</option>
-                            <option value="Water">Water</option>
-                            <option value="Programs">Programs</option>
+                <div class='financeForm-right addForm'>
+                    <div class='fields'>
+                        <label for='expense-type'>Expense Type</label>
+                        <select name='expense_type' id='expense-type' required disabled>
+                            <option selected disabled value=''>Select Expense type</option>
+                            <option value='Expenses - Rent'>Rent</option>
+                            <option value='Expenses - Electricity'>Electricity</option>
+                            <option value='Expenses - Water'>Water</option>
                         </select>
                     </div>
 
-                    <!-- PAYMENT TYPE -->
-                    <div class="fields">
-                        <label for="payment-type">Payment Type<span> *</span></label>
-                        <select name="payment_type" id="payment-type" required>
-                            <option selected disabled value="">Select Payment type</option>
-                            <option value="New member">New member</option>
-                            <option value="Renewal">Renewal</option>
-                        </select>
-                    </div>
 
                     <!-- ACCOUNT ID -->
-                    <div class="fields">
-                        <label for="trans-date">Transaction date<span> *</span></label>
-                        <input type="date" id="trans-date" name="trans_date" required>
+                    <div class='fields'>
+                        <label for='trans-date'>Transaction date<span> *</span></label>
+                        <input type='date' id='trans-date' name='trans_date' required disabled>
                     </div>
 
                     <!--  AMOUNT  -->
-                    <div class="fields">
-                        <label for="amount">Amount<span> *</span></label>
-                        <input type="text" id="amount" name="amount" placeholder="₱" required>
+                    <div class='fields'>
+                        <label for='amount'>Amount<span> *</span></label>
+                        <input type='text' id='amount' name='amount' placeholder='₱' required disabled>
                     </div>
 
-                    <div class="btn-container">
-                        <input type="button" value="Cancel" class="cancel-btn" id="finance-cancel" formnovalidate>
-                        <button class="save-btn" id="save-btn" type="submit">Save</button>
+                    <div class='btn-container'>
+                        <input type='button' value='Cancel' class='cancel-btn' id='finance-cancel' formnovalidate>
+                        <button class='save-btn' id='save-btn' type='submit'>Save</button>
                     </div>
                 </div>
             </div>
