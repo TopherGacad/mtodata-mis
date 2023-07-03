@@ -18,7 +18,7 @@ $contactNumber = $_POST["contact"];
 
 $personToComplain = $_POST["ComplaintSubject"];
 $bodyNumber = $_POST["complaintSubjectBody"];
-$description = $_POST["complaintDescription"];
+$description = $_POST["desc"];
 $dateCreated = $_POST["date-incident"] . " " . $_POST["time-incident"];
 
 // Complainant Details
