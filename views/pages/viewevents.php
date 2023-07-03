@@ -12,50 +12,52 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     header("location: login.php");
     exit();
 }
+?>
 
 
-// connect to the MySQL database
-include "../php/db_conn.php";
+<!DOCTYPE html>
+<html lang='en'>
 
-// Check if the ID query parameter is set
-if (isset($_GET['id'])) {
-    $programID = $_GET['id'];
-    ?>
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>View Events & Programs</title>
 
+    <!-- STYLESHEET -->
+    <link rel='stylesheet' href='../../public/css/editpages.css'>
+    <!-- WEB ICON -->
+    <link rel='icon' href='../../public/assets/browse_logo.png'>
+    <!-- FONT AWESOME/ICONS -->
+    <script src='https://kit.fontawesome.com/aa37050208.js' crossorigin='anonymous'></script>
+</head>
 
-    <!DOCTYPE html>
-    <html lang='en'>
+<body>
 
-    <head>
-        <meta charset='UTF-8'>
-        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <title>Edit Events & Programs</title>
+    <div class='head-container'>
+        <img class='main-logo' src='../../public/assets/mtodata_logo.png' alt='mtodata logo'>
+    </div>
 
-        <!-- STYLESHEET -->
-        <link rel='stylesheet' href='../../public/css/editpages.css'>
-        <!-- WEB ICON -->
-        <link rel='icon' href='../../public/assets/browse_logo.png'>
-        <!-- FONT AWESOME/ICONS -->
-        <script src='https://kit.fontawesome.com/aa37050208.js' crossorigin='anonymous'></script>
-    </head>
+    <div class='content-container'>
+        <form>
+            <div class='ot-header'>
+                <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>View Events &
+                    Programs</h3>
+                <div class='btn-container'>
+                    <?php
 
-    <body>
+                    // connect to the MySQL database
+                    include "../php/db_conn.php";
 
-        <div class='head-container'>
-            <img class='main-logo' src='../../public/assets/mtodata_logo.png' alt='mtodata logo'>
-        </div>
+                    // Check if the ID query parameter is set
+                    if (isset($_GET['id'])) {
+                        $programID = $_GET['id'];
 
-        <div class='content-container'>
-            <form action='updateprograms.php?id=<?php echo $programID; ?>' method='post'>
-                <div class='ot-header'>
-                    <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>Edit Events &
-                        Programs</h3>
-                    <div class='btn-container'>
-                        <a href='../../views/php/dashboard.php'><input type='button' value='Discard'
-                                class='cancelBtn modal-btn' id='cancel-btn'></a>
-                        <button class='update-btn modal-btn' id='events-update' type='submit'
-                            name='events-update'>Update</button>
+                        echo "
+                        <a href='../../views/pages/editprograms.php?id=$programID'><input type='button' value='Edit' name='events-update'
+                            class='update-btn modal-btn' id='events-update'></a> 
+                        ";
+                        ?>
                     </div>
                 </div>
 
@@ -75,7 +77,7 @@ if (isset($_GET['id'])) {
                         <!-- EVENT TITLE -->
                         <div class='fields'>
                         <label for='event-title'>Title<span> *</span></label>
-                        <input type='text' id='event-title' name='event-title'  value='" . $row['ep_title'] . "'>
+                        <input type='text' id='event-title' name='event-title' readonly value='" . $row['ep_title'] . "'>
                         </div>";
 
                         $sql1 = "SELECT * FROM `transaction_expenses` WHERE program_ID = $programID";
@@ -90,14 +92,14 @@ if (isset($_GET['id'])) {
                                 <!-- EVENT CODE -->
                                 <div class='fields'>
                                     <label for='event-code'>Transaction Code</label>
-                                    <input type='text' id='event-code' name='event-code'  value='" . $row1['transaction_code'] . "' disabled>
+                                    <input type='text' id='event-code' name='event-code' readonly value='" . $row1['transaction_code'] . "'>
                                 </div>
                             </div>
                             <div class='right-side-emp section'>
                                 <!-- EVENT BUDGET -->
                                 <div class='fields'>
                                     <label for='event-budget'>Budget</label>
-                                    <input type='text' id='event-budget'  name='event-budget' value='" . $row1['amount'] . "' disabled>
+                                    <input type='text' id='event-budget' readonly name='event-budget' value='" . $row1['amount'] . "'>
                                 </div>
                             </div>
                         </div>
@@ -115,40 +117,50 @@ if (isset($_GET['id'])) {
                             <!-- EVENT ORGANIZER -->
                             <div class='fields'>
                                 <label for='event-organizer'>Organizer<span> *</span></label>
-                                <input type='text' id='event-organizer' name='event-organizer'  value='" . $row['ep_organizer'] . "'>
+                                <input type='text' id='event-organizer' name='event-organizer' readonly value='" . $row['ep_organizer'] . "'>
                             </div>
                             <!-- EVENT LOCATION -->
                             <div class='fields'>
                                 <label for='event-location'>Location<span> *</span></label>
-                                <input type='text' id='event-location' name='event-location'  value='" . $row['ep_location'] . "'>
+                                <input type='text' id='event-location' name='event-location' readonly value='" . $row['ep_location'] . "'>
                             </div>
                         </div>
                         <div class='right-side-profile section'>
                             <!-- EVENT TIME -->
                             <div class='fields'>
                                 <label for='event-time'>Time<span> *</span></label>
-                                <input type='time' id='event-time' name='event-time'  value='" . $row['ep_start'] . "'>
+                                <input type='time' id='event-time' name='event-time' readonly value='" . $row['ep_start'] . "'>
                             </div>
                             <!-- EVENT DATE -->
                             <div class='fields'>
                                 <label for='event-date'>Date<span> *</span></label>
-                                <input type='date' id='event-date' name='event-date'  value='" . $row['ep_date'] . "'>
+                                <input type='date' id='event-date' name='event-date' readonly value='" . $row['ep_date'] . "'>
                             </div>
                         </div>
                     </div>
                     <!-- EVENT DESCRIPTION -->
                     <div class='fields'>
                         <label for='event-description'>Description<span> *</span></label>
-                        <textarea name='event-description' id='event-description' >" . $row['ep_description'] . "</textarea>
+                        <textarea name='event-description' id='event-description' readonly>" . $row['ep_description'] . "</textarea>
                     </div>
                 </div>
                         ";
 
                     }
-}
+                    }
 
-?>
+                    ?>
         </form>
+    </div>
+
+    <!-- SUCCESS TOAST -->
+    <div class='toast-container' id='toast-success'>
+        <div class='toast-left-success'>
+            <i class='toast-icon fa-solid fa-circle-check'></i>
+        </div>
+        <div class='toast-right'>
+            <p id='success-con'></p>
+        </div>
     </div>
 
     <script src='../../services/editMember.js'></script>

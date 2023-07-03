@@ -647,43 +647,66 @@ date_default_timezone_set('Asia/Manila');
     </div>
 
     <!-- EVENTS & PROGRAMS PANE -->
-    <div class="event-container" id="event-container">
+    <div class='event-container' id='event-container'>
         <header>
-            <div class="head-left">
+            <div class='head-left'>
                 <h3>EVENTS & PROGRAMS</h3>
                 <p>ADMIN VIEW</p>
             </div>
-            <div class="head-right">
-                <div class="search-container">
-                    <input type="text" class="user-search" placeholder="Search">
-                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <div class='head-right'>
+                <div class='search-container'>
+                    <input type='text' class='user-search' placeholder='Search'>
+                    <button class='user-searchBtn'><i class='fa-solid fa-magnifying-glass'></i></button>
                 </div>
-                <button class="addEventBtn" id="addEvent-btn"><i class="fa-solid fa-plus"></i> Add Events</button>
+                <button class='addEventBtn' id='addEvent-btn'><i class='fa-solid fa-plus'></i> Add Events</button>
             </div>
         </header>
 
         <main>
             <table>
                 <tr>
-                    <th><abbr title="complain-btn Id">ID</abbr></th>
-                    <th>EVENT</th>
+                    <th><abbr title='complain-btn Id'>ID</abbr></th>
+                    <th>EVENT/PROGRAM NAME</th>
                     <th>EVENT DATE</th>
                     <th>TIME</th>
                     <th>LOCATION</th>
                     <th>ACTION</th>
                 </tr>
 
+                <?php
+                // connect to the MySQL database
+                include "db_conn.php";
+
+                // check connection
+                if ($conn->connect_error) {
+                    die("Connection failed: " . $conn->connect_error);
+                }
+                // retrieve data from the MySQL table
+                $sql = "SELECT *, TIME_FORMAT(ep_start, '%h:%i %p') AS ep_time FROM `events_programs` ORDER BY date_created DESC";
+                $result = $conn->query($sql);
+
+                // output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    echo "
+
                 <tr>
-                    <td>01</td>
-                    <td>Christmas Party</td>
-                    <td>December 23, 2023</td>
-                    <td>1:00 PM</td>
-                    <td>Grand Villa</td>
+                    <td>" . $row["id"] . "</td>
+                    <td>" . $row["ep_title"] . "</td>
+                    <td>" . $row["ep_date"] . "</td>
+                    <td>" . $row["ep_time"] . "</td>
+                    <td>" . $row["ep_location"] . "</td>
                     <td>
-                        <i class="tools fa-solid fa-trash-can"></i>
-                        <a href="../../views/pages/editprograms.php"><i class="tools fa-solid fa-pen-to-square"></i></a>
+                        <i class='tools fa-solid fa-trash-can'></i>
+                        <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                        <i class='tools fa-solid fa-print'></i>
                     </td>
-                </tr>
+                </tr> ";
+
+                }
+
+                // close MySQL connection
+                $conn->close();
+                ?>
 
             </table>
         </main>
@@ -816,7 +839,17 @@ date_default_timezone_set('Asia/Manila');
             <i class="successToast-icon fa-solid fa-circle-check"></i>
         </div>
         <div class="successToast-right">
-            <p><strong>Success!</strong> User successfully added.</p>
+            <p id="event-success"><strong>Success!</strong> User successfully added.</p>
+        </div>
+    </div>
+
+    <!-- SUCCESS TOAST -->
+    <div class='success-toast-container' id='toast-success'>
+        <div class='toast-left-success'>
+            <i class='toast-icon fa-solid fa-circle-check'></i>
+        </div>
+        <div class='toast-right'>
+            <p id='success-con'></p>
         </div>
     </div>
 
@@ -1142,59 +1175,67 @@ date_default_timezone_set('Asia/Manila');
     </div>
 
     <!-- ADD EVENTS & PROGRAMS -->
-    <div class="bg" id="bg"></div>
-    <div class="addEvent-modal-container" id="event-modal-container">
-        <h2 class="modal-title">SCHEDULE AN EVENT OR PROGRAM</h2>
-        <form action="../php/adduser.php" method="post"
-            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
-            id="event-form">
-            <div class="form-container">
+    <div class='bg' id='bg'></div>
+    <div class='addEvent-modal-container' id='event-modal-container'>
+        <h2 class='modal-title'>SCHEDULE AN EVENT OR PROGRAM</h2>
+        <form action='addevents.php' method='POST' id='event-form'>
+            <div class='form-container'>
                 <!-- FORM LEFT -->
-                <div class="complaintForm-left addForm">
+                <div class='complaintForm-left addForm'>
                     <!-- EVENT TITLE -->
-                    <div class="fields">
-                        <label for="event-title">Event Title (What)<span> *</span></label>
-                        <input type="text" id="event-title" name="event-title" maxlength="25" placeholder="Event title"
-                            required>
+                    <div class='fields'>
+                        <label for='event-title'>Title<span> *</span></label>
+                        <input type='text' id='event-title' name='event-title' placeholder='Event title' required>
                     </div>
 
                     <!-- DESCRIPTION -->
-                    <div class="fields">
-                        <label for="event-desc">Description<span> *</span></label>
-                        <textarea name="desc" id="event-desc" cols="30" rows="9" maxlength="350"></textarea>
+                    <div class='fields'>
+                        <label for='event-desc'>Description<span> *</span></label>
+                        <textarea name='desc' id='event-desc' cols='30' rows='14'></textarea>
                     </div>
                 </div>
                 <!-- FORM-RIGHT -->
-                <div class="complaintForm-right addForm">
+                <div class='complaintForm-right addForm'>
+
+                    <!--EVENT OR PROGRAM BUDGET-->
+                    <div class='is-bud'>
+                        <input type='checkbox' id='events-isbudget' name='events-isbudget' onchange='handleBudgetCheckboxChange()'>
+                        <label for='events-isbudget'>With Budget</label>
+                    </div>
+                    <div class='fields'>
+                        <label for='events-budget'>Budget</label>
+                        <input type='text' id='events-budget' name='events-budget' disabled>
+                    </div>
+
                     <!-- EVENT ORGANIZER -->
-                    <div class="fields">
-                        <label for="events-organizer">Event Organizer<span> *</span></label>
-                        <input type="text" id="events-organizer" name="events-organizer" maxlength="30" required>
+                    <div class='fields'>
+                        <label for='events-organizer'>Organizer</label>
+                        <input type='text' id='events-organizer' name='events-organizer'>
                     </div>
 
                     <!-- EVENT LOCATION -->
-                    <div class="fields">
-                        <label for="events-location">Event Location (Where)<span> *</span></label>
-                        <input type="text" id="events-location" name="events-location" maxlength="50" required>
+                    <div class='fields'>
+                        <label for='events-location'>Location</label>
+                        <input type='text' id='events-location' name='events-location' required>
                     </div>
 
-                    <div class="timeDate-container">
+                    <div class='timeDate-container'>
                         <!-- TIME -->
-                        <div class="fields">
-                            <label for="events-time">Time of Event (When)<span> *</span></label>
-                            <input type="time" id="events-time" name="events-time" required>
+                        <div class='fields'>
+                            <label for='events-time'>Time<span> *</span></label>
+                            <input type='time' id='events-time' name='events-time' required>
                         </div>
 
                         <!-- DATE -->
-                        <div class="fields">
-                            <label for="events-date">Date of Event (When)<span> *</span></label>
-                            <input type="date" id="events-date" name="events-date" required>
+                        <div class='fields'>
+                            <label for='events-date'>Date<span> *</span></label>
+                            <input type='date' id='events-date' name='events-date' required>
                         </div>
                     </div>
 
-                    <div class="btn-container">
-                        <input type="button" value="Cancel" class="cancel-btn" id="event-cancel" formnovalidate>
-                        <button class="save-btn" id="save-btn" type="submit">Save</button>
+                    <div class='btn-container'>
+                        <input type='button' value='Cancel' class='cancel-btn' id='event-cancel' formnovalidate>
+                        <button class='save-btn' id='save-btn' type='submit'>Save</button>
                     </div>
                 </div>
             </div>
