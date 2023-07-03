@@ -1077,9 +1077,7 @@ date_default_timezone_set('Asia/Manila');
     <div class="bg" id="bg"></div>
     <div class="addComplaint-modal-container" id="complaint-modal-container">
         <h2 class="modal-title">ADD COMPLAINT</h2>
-        <form action="../php/complaints.php" method="post"
-            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
-            id="complaint-form">
+        <form action="../php/complaints.php" method="post">
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="complaintForm-left addForm">
