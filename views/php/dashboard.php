@@ -595,16 +595,16 @@ date_default_timezone_set('Asia/Manila');
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
                         echo "
-                        <tr>
-                            <td class = 'uid'>" . $row["id"] . "</td>
-                            <td class = 'username'>" . $row["complainant"] . "</td>
-                            <td class = 'contacts'>" . $row["phone"] . "</td>
-                            <td class = 'complaintPerson'>" . $row["complaint_person"] . "</td>
-                            <td class = 'actionDate'>" . $row["date_created"] . "</td>
+                        <tr id='complaint-" . $row["id"] . "'>
+                            <td class='uid'>" . $row["id"] . "</td>
+                            <td class='username'>" . $row["complainant"] . "</td>
+                            <td class='contacts'>" . $row["phone"] . "</td>
+                            <td class='complaintPerson'>" . $row["complaint_person"] . "</td>
+                            <td class='actionDate'>" . $row["date_created"] . "</td>
 
                             <td class='action'>
-                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastComplaint(" . $row["id"] . ")'></i></abbr>
-                                <a href='../../views/pages/editcomplaint.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
+                                <a href='../../views/pages/editcomplaint.php?complaint_id=" . $row["id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
                             </td>
                         </tr>";
                     }
@@ -613,27 +613,19 @@ date_default_timezone_set('Asia/Manila');
                     ?>
                     <!-- Deleting User -->
                     <script>
-                        function showToastComplaint(id) {
-                            if (confirm("Are you sure you want to delete this complaint?")) {
-                                // send AJAX request to delete the complaint from the database and remove the row from the table
+                        function deleteComplaint(id) {
+                            if (confirm("Are you sure you want to delete this Complaint?")) {
+                                // send AJAX request to delete the user from the database and remove the row from the table
                                 var xhr = new XMLHttpRequest();
                                 xhr.open("POST", "deleteComplaint.php", true);
                                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                                 xhr.onreadystatechange = function () {
                                     if (xhr.readyState === 4 && xhr.status === 200) {
-                                        console.log("Response received:", xhr.responseText);
                                         // remove the row from the table
-                                        var rowId = "row-" + id;
-                                        console.log("Row ID:", rowId);
-                                        var row = document.getElementById(rowId);
-                                        console.log("Row element:", row);
-                                        if (row) {
-                                            row.parentNode.removeChild(row);
-                                            // display success message
-                                            alert(xhr.responseText);
-                                        } else {
-                                            console.log("Row not found");
-                                        }
+                                        var row = document.getElementById("complaint-" + id);
+                                        row.parentNode.removeChild(row);
+                                        // display success message
+                                        alert(xhr.responseText);
                                     }
                                 };
                                 xhr.send("id=" + id);
@@ -641,6 +633,7 @@ date_default_timezone_set('Asia/Manila');
                         }
                     </script>
                 </tbody>
+
             </table>
         </main>
 
@@ -1134,8 +1127,8 @@ date_default_timezone_set('Asia/Manila');
                 <div class="complaintForm-right addForm">
                     <!-- SUBJECT -->
                     <div class="fields">
-                        <label for="subject">Person to Complain<span> *</span></label>
-                        <input type="text" id="subject" name="subject" maxlength="30" pattern="[A-Za-z ]{2,30}"
+                        <label for="ComplaintSubject">Person to Complain<span> *</span></label>
+                        <input type="text" id="ComplaintSubject" name="ComplaintSubject" maxlength="30" pattern="[A-Za-z ]{2,30}"
                             placeholder="Name of person to complain">
                     </div>
 
@@ -1172,6 +1165,25 @@ date_default_timezone_set('Asia/Manila');
                 </div>
             </div>
         </form>
+        <!-- WARNING TOAST -->
+        <div class="warningToast-container" id="cmplnt-warningToast">
+            <div class="warningToast-left">
+                <i class="warningToast-icon fa-solid fa-circle-info"></i>
+            </div>
+            <div class="warningToast-right">
+                <p><strong>Try Again</strong> Placeholder warning!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="successToast-container" id="cmplnt-successToast">
+        <div class="successToast-left">
+            <i class="successToast-icon fa-solid fa-circle-check"></i>
+        </div>
+        <div class="successToast-right">
+            <p><strong>Success!</strong> Complaint successfully submitted.</p>
+        </div>
     </div>
 
     <!-- ADD EVENTS & PROGRAMS -->

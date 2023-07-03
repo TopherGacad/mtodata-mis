@@ -62,14 +62,16 @@ addEventBtn.addEventListener("click", function () {
 
 
 // USER TYPE DISABLE INPUTS
-const selectType = document.getElementById("select-type");
-const bodyNo = document.getElementById("body-no");
-const donorName = document.getElementById("donor-select");
-const expenseType = document.getElementById("expense-type");
-const addDonor = document.getElementById("donorbtn");
-var amountInput = document.getElementById("amount");
-var transDate = document.getElementById("trans-date");
-var today = new Date().toISOString().split('T')[0];
+const selectType = document.getElementById("select-type")
+const bodyNo = document.getElementById("body-no")
+const memName = document.getElementById("fin-memname")
+const donorName = document.getElementById("donor-select")
+const expenseType = document.getElementById("expense-type")
+const paymentType = document.getElementById("payment-type")
+const addDonor = document.getElementById("donorbtn")
+    // const midnameInput = document.getElementById("midname");
+    // const contactInput = document.getElementById("contact");
+    // const accType = document.getElementById("acc-type");
 
 function disableInputs() {
 
@@ -78,29 +80,36 @@ function disableInputs() {
         donorName.disabled = true;
         expenseType.disabled = true;
         addDonor.disabled = true;
+
         amountInput.value = "10";
 
         amountInput.disabled =  false;
         transDate.disabled = false;
+
     } else if (selectType.value === "Donation") {
         bodyNo.disabled = true;
         donorName.disabled = false;
         expenseType.disabled = true;
         addDonor.disabled = false;
+
         amountInput.value = "";
 
         amountInput.disabled =  false;
         transDate.disabled = true;
+
     } else if (selectType.value === "Expenses") {
         bodyNo.disabled = true;
         donorName.disabled = true;
         expenseType.disabled = false;
         addDonor.disabled = true;
+    } else if (selectType.value === "Payment") {
+
         amountInput.value = "";
 
         amountInput.disabled =  false;
         transDate.disabled = false;
     } else {
+
         bodyNo.disabled = true;
         donorName.disabled = true;
         expenseType.disabled = true;
@@ -333,6 +342,7 @@ finsearchBar.addEventListener('input', () => {
 
 //WARNING & SUCCESS TOAST FOR ADD USER
 function checkEmailExists(email) {
+
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkemail.php', true);
@@ -502,8 +512,49 @@ document.getElementById("user-form").addEventListener("submit", function (event)
     xhr.send(formData);
 });
 
+
+//Add Complaint Confirmation Toast
+document.getElementById("complaint-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Send an AJAX request to add the user to the database
+    var formData = new FormData(this);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "../php/complaints.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Display success toast
+                var successToast = document.getElementById("cmplnt-successToast");
+                successToast.style.display = "flex";
+                modalBg.style.display = "none"
+
+                // Hide toast after 2 seconds
+                setTimeout(function() {
+                    successToast.style.display = "none";
+                    // Refresh the page
+                    location.reload();
+                }, 2000);
+
+                // Reset the form
+                document.getElementById("complaint-form").reset();
+
+                // Hide the modal
+                var complaintModalContainer = document.getElementById("complaint-modal-container");
+                complaintModalContainer.style.display = "none";
+            } else {
+                // Handle the error case
+                console.error("Error: " + xhr.status);
+            }
+        }
+    };
+    xhr.send(formData);
+});
+
+
 //WARNING & SUCCESS TOAST FOR ADD MEMBER
 function checkMemContactExists(phone) {
+
     return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkmemcontact.php', true);
@@ -602,6 +653,7 @@ document.getElementById('mem-license').addEventListener('input', function () {
         });
 });
 
+
 document.getElementById("member-form").addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -637,6 +689,7 @@ document.getElementById("member-form").addEventListener("submit", function (even
                     // Refresh the page
                     location.reload();
                 }, 2000);
+
 
                 // Reset the form
                 document.getElementById("member-form").reset();
@@ -737,6 +790,7 @@ logoutBtn.addEventListener("click", handleLogout);
 
 const listItems = document.querySelectorAll("#nav-list .locked");
 
+
     listItems.forEach(function(item) {
       item.style.pointerEvents = "none";  
       item.style.opacity = "0.5";
@@ -778,3 +832,4 @@ window.onload = function () {
         history.replaceState({}, document.title, window.location.pathname);
     }
 }
+
