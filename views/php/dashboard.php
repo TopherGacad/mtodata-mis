@@ -605,6 +605,7 @@ date_default_timezone_set('Asia/Manila');
                             <td class='action'>
                                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
                                 <a href='../../views/pages/editcomplaint.php?complaint_id=" . $row["id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                                <i class='tools fa-sharp fa-solid fa-eye'></i>
                             </td>
                         </tr>";
                     }
@@ -1134,14 +1135,14 @@ date_default_timezone_set('Asia/Manila');
 
                     <!-- BODY NUMBER -->
                     <div class="fields">
-                        <label for="subject-bodyNum">Body no.<span> *</span></label>
-                        <input type="text" id="subject-bodyNum" name="subject-bodyNum" required>
+                        <label for="complaintSubjectBody">Body no.<span> *</span></label>
+                        <input type="text" id="complaintSubjectBody" name="complaintSubjectBody" required>
                     </div>
 
                     <!-- DESCRIPTION -->
                     <div class="fields">
                         <label for="desc">Description<span> *</span></label>
-                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" required></textarea>
+                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" onkeyup="countChar(this)" required></textarea>
                     </div>
 
                     <div class="timeDate-container">
