@@ -29,8 +29,11 @@ body {
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: var(--primary-font-color);
+    
 }
-
+main{
+    height: 100vh;
+}
 .head-container {
     display: flex;
     align-items: center;
@@ -106,7 +109,9 @@ body {
     background-color: var(--update-hover);
 }
 .content-container{
-    height: 550px;
+    height: fit-content;
+    max-height: 80%;
+    min-height: 40%;
     margin: 20px;
     overflow: auto;
     background-color: var(--base-color);

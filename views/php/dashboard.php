@@ -721,7 +721,7 @@ date_default_timezone_set('Asia/Manila');
     <div class="addUser-modal-container" id="user-modal-container">
         <h2 class="modal-title">ADD USER</h2>
         <form action="../php/adduser.php" method="post"
-            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
+            oninput='city.setCustomValidity(city.value != password.value ? "Passwords do not match." : "")'
             id="user-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
