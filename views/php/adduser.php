@@ -12,6 +12,7 @@ $L_name = $_POST["lastname"];
 $F_name = $_POST["firstname"]; 
 $M_name = $_POST["middlename"];
 $ex_name = $_POST["extension"];
+$username = $_POST["user-uname"];
 $email = $_POST["street"];
 $contact = $_POST["contact"];
 $psword = $_POST["password"];
@@ -24,7 +25,7 @@ $user = mysqli_fetch_assoc($result);
 if ($user) { // If email already exists, display error message
     echo "Error: Email already exists in the database.";
 } else { // If email does not exist, insert data into the database
-    $sql = "INSERT INTO user (roles, L_name, F_name, M_name, ex_name, email, contact, psword) VALUES ('$roles', '$L_name', '$F_name', '$M_name', '$ex_name', '$email', '$contact', '$psword')";
+    $sql = "INSERT INTO user (roles, L_name, F_name, M_name, ex_name, username, email, contact, psword) VALUES ('$roles', '$L_name', '$F_name', '$M_name', '$ex_name', '$username', '$email', '$contact', '$psword')";
     if (mysqli_query($conn, $sql)) {
         echo "Data inserted successfully";
     } else {

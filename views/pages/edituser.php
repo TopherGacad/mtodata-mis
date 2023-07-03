@@ -22,7 +22,7 @@ if (!isset($_GET['user_id'])) {
     }
 
     // Retrieve the user data based on the user ID
-    $sql = "SELECT user_id, F_name, L_name, M_name, ex_name, contact, roles, email, psword FROM user WHERE user_id = $user_id";
+    $sql = "SELECT user_id, F_name, L_name, M_name, ex_name, contact, roles, email, username, psword FROM user WHERE user_id = $user_id";
     $result = $conn->query($sql);
 
     // Check if a user with the provided user ID exists
@@ -39,6 +39,7 @@ if (!isset($_GET['user_id'])) {
         $contact = $row["contact"];
         $roles = $row["roles"];
         $email = $row["email"];
+        $username = $row["username"];
         $psword = $row["psword"];
     } else {
         // Handle the case when a user with the provided user ID doesn't exist
@@ -159,7 +160,7 @@ if (!isset($_GET['user_id'])) {
                         <!-- USERNAME -->
                         <div class="fields">
                             <label for="mem-username">Username<span> *</span></label>
-                            <input type="text" id="mem-username" name="username" placeholder="Username" value="">
+                            <input type="text" id="mem-username" name="username" placeholder="Username" value="<?php echo $username; ?>">
                         </div>
                     </div>
                     <div class="section">
