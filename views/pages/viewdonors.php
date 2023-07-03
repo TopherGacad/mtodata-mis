@@ -24,7 +24,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <title>Donor's Information</title>
 
     <!-- STYLESHEET -->
-    <link rel='stylesheet' href='../../public/css/unitinfo.css'>
+    <link rel='stylesheet' href='../../public/css/donorinfo.css'>
     <!-- WEB ICON -->
     <link rel='icon' href='../../public/assets/browse_logo.png'>
     <!-- FONT AWESOME/ICONS -->
@@ -33,7 +33,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 </head>
 
 <body>
-
+<main>
     <div class='head-container'>
         <img class='main-logo' src='../../public/assets/mtodata_logo.png' alt='mtodata logo'>
     </div>
@@ -54,13 +54,13 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <tr>
                 <th class='id'>ID</th>
                 <th class='name'>Name</th>
-                <th>Gender</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Street</th>
-                <th>Barangay</th>
-                <th>City</th>
-                <th>Date Created</th>
+                <th class="gender">Gender</th>
+                <th class="phone">Phone</th>
+                <th class="email">Email</th>
+                <th class="street">Street</th>
+                <th class="barangay">Barangay</th>
+                <th class="city">City</th>
+                <th class="date">Date Created</th>
                 <th class='action'>Action</th>
             </tr>
 
@@ -91,14 +91,14 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         echo "
                 <tr>
                     <td class='id'>" . $row['id'] . "</td>
-                    <td>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</td>
-                    <td>" . $row['gender'] . "</td>
-                    <td>" . $row['phone'] . "</td>
-                    <td>" . $row['email'] . "</td>
-                    <td>" . $row['street'] . "</td>
-                    <td>" . $row['barangay'] . "</td>
-                    <td>" . $row['city'] . "</td>
-                    <td>" . $row['new_formatted_date'] . "</td>
+                    <td class='name'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</td>
+                    <td class='gender'>" . $row['gender'] . "</td>
+                    <td class='phone'>" . $row['phone'] . "</td>
+                    <td class='email'>" . $row['email'] . "</td>
+                    <td class='street'>" . $row['street'] . "</td>
+                    <td class='barangay'>" . $row['barangay'] . "</td>
+                    <td class='city'>" . $row['city'] . "</td>
+                    <td class='date'>" . $row['new_formatted_date'] . "</td>
                     <td class='action'>
                         <i class='tools fa-solid fa-trash-can'></i>
                         <a href=''><i class='fa-sharp fa-solid fa-pen-to-square'></i></a>
@@ -113,7 +113,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             </tbody>
         </table>
     </div>
-
+</main>
     <script src='../../services/unitinfo.js'></script>
 </body>
 

@@ -61,10 +61,10 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class='content-container'>
         <form action='insertdonor.php' method='POST'>
             <div class='ot-header'>
-                <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>Add Donor
+                <h3><a href='../../views/pages/viewdonors.php'><i class='fa-solid fa-arrow-left'></i></a>Add Donor
                     Information</h3>
                 <div class='btn-container'>
-                    <a href='../../views/php/dashboard.php'><input type='button' value='Cancel'
+                    <a href='../../views/pages/viewdonors.php'><input type='button' value='Cancel'
                             class='cancelBtn modal-btn' id='cancel-btn'></a>
                     <button class='update-btn modal-btn' id='user-update' type='submit' name='user-update'>Save</button>
                 </div>
