@@ -768,11 +768,11 @@ date_default_timezone_set('Asia/Manila');
                 <div class="userForm-right addForm">
 
                     <!-- USERNAME -->
-<div class="fields">
-    <label for="user-uname">Username<span> *</span></label>
-    <input type="text" id="user-uname" name="user-uname" maxlength="25" placeholder="juandelacruz123" required>
-    <span id="username-validation"></span> <!-- Display validation message here -->
-</div>
+                    <div class="fields">
+                        <label for="user-uname">Username<span> *</span></label>
+                        <input type="text" id="user-uname" name="user-uname" maxlength="25" placeholder="juandelacruz123" required>
+                        <span id="username-validation"></span> <!-- Display validation message here -->
+                    </div>
                     <!-- EMAIL -->
                     <div class="fields">
                         <label for="user-email">Email Address<span> *</span></label>
@@ -980,7 +980,7 @@ date_default_timezone_set('Asia/Manila');
                     <div class='fields'>
                         <label for='select-type'>Finance Type<span> *</span>
                         </label>
-                        <select name='type' id='select-type' onchange='disableInputs()' required>
+                        <select name='type' id='select-type' onchange="disableInputs()" required>
                             <option value='' selected disabled>Select Account type</option>
                             <option value='Butaw'>Butaw/Contribution</option>
                             <option value='Donation'>Donation</option>
@@ -1208,13 +1208,14 @@ date_default_timezone_set('Asia/Manila');
                 <div class='complaintForm-right addForm'>
 
                     <!--EVENT OR PROGRAM BUDGET-->
-                    <div class='is-bud'>
-                        <input type='checkbox' id='events-isbudget' name='events-isbudget' onchange='handleBudgetCheckboxChange()'>
-                        <label for='events-isbudget'>With Budget</label>
-                    </div>
                     <div class='fields'>
                         <label for='events-budget'>Budget</label>
                         <input type='text' id='events-budget' name='events-budget' disabled>
+                    </div>
+
+                    <div class='is-bud'>
+                        <input type='checkbox' id='events-isbudget' name='events-isbudget' onchange='handleBudgetCheckboxChange()'>
+                        <label for='events-isbudget'>With Budget</label>
                     </div>
 
                     <!-- EVENT ORGANIZER -->

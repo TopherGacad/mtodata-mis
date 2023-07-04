@@ -367,12 +367,17 @@ header h3 {
 
 .is-bud {
     display: flex;
-    margin-bottom: 10px;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 5px;
 }
 
 .is-bud input {
     width: fit-content;
     margin-right: 10px;
+}
+.is-bud label{
+    padding: 0;
 }
 
 .usermoreBtn,
@@ -993,6 +998,9 @@ textarea {
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+.toast-right p {
+    padding-left: 25px;
 }
 
 

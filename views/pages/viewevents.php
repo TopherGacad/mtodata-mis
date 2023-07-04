@@ -163,7 +163,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         </div>
     </div>
 
-    <script src='../../services/editMember.js'></script>
+    <script src='../../services/editprogram.js'></script>
 </body>
 
 </html>

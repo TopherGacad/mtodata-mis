@@ -151,7 +151,7 @@ if (isset($_GET['id'])) {
         </form>
     </div>
 
-    <script src='../../services/editMember.js'></script>
+    <script src='../../services/editprogram.js'></script>
 </body>
 
 </html>

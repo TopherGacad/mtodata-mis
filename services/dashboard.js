@@ -819,7 +819,7 @@ function handleBudgetCheckboxChange() {
 
     if (suc === 'true') {
         toastContainers.style.visibility = 'visible';
-        document.getElementById('success-con').innerHTML = `<strong>Successful!</strong> Events/Programs created successfully.`;
+        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Events & Programs saved.`;
         setTimeout(() => {
             toastContainers.style.visibility = 'hidden';
         }, 3000);
