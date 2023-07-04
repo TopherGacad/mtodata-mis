@@ -438,19 +438,21 @@ td {
 
 .id,
 .action,
-.date {
+.date,
+.time{
     min-width: 60px;
     max-width: 60px;
 }
 
 .username,
 .memname,
-.name {
+.name,
+.location {
     min-width: 140px;
     max-width: 140px;
 }
 
-.email {
+.email,.title{
     min-width: 120px;
     max-width: 120px;
 }

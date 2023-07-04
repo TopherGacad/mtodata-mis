@@ -648,7 +648,7 @@ date_default_timezone_set('Asia/Manila');
             </div>
             <div class='head-right'>
                 <div class='search-container'>
-                    <input type='text' class='user-search' placeholder='Search'>
+                    <input type='text' class='user-search' id="programs-search" placeholder='Search'>
                     <button class='user-searchBtn'><i class='fa-solid fa-magnifying-glass'></i></button>
                 </div>
                 <button class='addEventBtn' id='addEvent-btn'><i class='fa-solid fa-plus'></i> Add Events</button>
@@ -658,14 +658,15 @@ date_default_timezone_set('Asia/Manila');
         <main>
             <table>
                 <tr>
-                    <th><abbr title='complain-btn Id'>ID</abbr></th>
-                    <th>EVENT/PROGRAM NAME</th>
-                    <th>EVENT DATE</th>
-                    <th>TIME</th>
-                    <th>LOCATION</th>
-                    <th>ACTION</th>
+                    <th class="id"><abbr title='complain-btn Id'>ID</abbr></th>
+                    <th class="title">EVENT& PROGRAM TITLE</th>
+                    <th class="date">EVENT DATE</th>
+                    <th class="time">TIME</th>
+                    <th class="location">LOCATION</th>
+                    <th class="action">ACTION</th>
                 </tr>
-
+                
+                <tbody id="programs-table-body">
                 <?php
                 // connect to the MySQL database
                 include "db_conn.php";
@@ -683,12 +684,12 @@ date_default_timezone_set('Asia/Manila');
                     echo "
 
                 <tr>
-                    <td>" . $row["id"] . "</td>
-                    <td>" . $row["ep_title"] . "</td>
-                    <td>" . $row["ep_date"] . "</td>
-                    <td>" . $row["ep_time"] . "</td>
-                    <td>" . $row["ep_location"] . "</td>
-                    <td>
+                    <td class='id'>" . $row["id"] . "</td>
+                    <td class='title'>" . $row["ep_title"] . "</td>
+                    <td class='date'>" . $row["ep_date"] . "</td>
+                    <td class='time'>" . $row["ep_time"] . "</td>
+                    <td class='location'>" . $row["ep_location"] . "</td>
+                    <td class='action'>
                         <i class='tools fa-solid fa-trash-can'></i>
                         <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
                         <i class='tools fa-solid fa-print'></i>
@@ -700,7 +701,7 @@ date_default_timezone_set('Asia/Manila');
                 // close MySQL connection
                 $conn->close();
                 ?>
-
+                </tbody>
             </table>
         </main>
     </div>

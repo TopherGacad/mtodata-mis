@@ -334,6 +334,33 @@ finsearchBar.addEventListener('input', () => {
     }
 });
 
+//EVENTS AND PROGRAMS SEARCH
+const programsSearch = document.getElementById('programs-search')
+const progTableBody = document.getElementById('programs-table-body')
+
+programsSearch.addEventListener('input', () => {
+    const progsearchText = programsSearch.value.toLowerCase();
+
+    for (let i = 0; i < progTableBody.rows.length; i++) {
+        const row = progTableBody.rows[i];
+        const progId = row.cells[0].textContent.toLowerCase();
+        const progTitle = row.cells[1].textContent.toLowerCase();
+        const progDate = row.cells[2].textContent.toLowerCase();
+        const progLoc = row.cells[4].textContent.toLowerCase();
+
+        if (
+            progId.includes(progsearchText) ||
+            progTitle.includes(progsearchText) ||
+            progDate.includes(progsearchText) ||
+            progLoc.includes(progsearchText)
+        ) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    }
+});
+
 
 //WARNING & SUCCESS TOAST FOR ADD USER
 function checkEmailExists(email) {
