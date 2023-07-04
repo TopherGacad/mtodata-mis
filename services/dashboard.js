@@ -64,7 +64,6 @@ addEventBtn.addEventListener("click", function () {
 // USER TYPE DISABLE INPUTS
 const selectType = document.getElementById("select-type")
 const bodyNo = document.getElementById("body-no")
-const memName = document.getElementById("fin-memname")
 const donorName = document.getElementById("donor-select")
 const expenseType = document.getElementById("expense-type")
 const paymentType = document.getElementById("payment-type")
@@ -144,7 +143,6 @@ financeCancel.addEventListener("click", function () {
     financeModal.style.display = "none"
     modalBg.style.display = "none"
     bodyNo.disabled = false;
-    memName.disabled = false;
     donorName.disabled = false;
     expenseType.disabled = false;
     paymentType.disabled = false;
