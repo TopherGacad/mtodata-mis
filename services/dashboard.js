@@ -98,6 +98,7 @@ function disableInputs() {
         donorName.disabled = true;
         expenseType.disabled = false;
         addDonor.disabled = true;
+        amountInput.disabled =  false;
     } else if (selectType.value === "Payment") {
 
         amountInput.value = "";
@@ -842,6 +843,14 @@ function handleBudgetCheckboxChange() {
     if (suc === 'true') {
         toastContainers.style.visibility = 'visible';
         document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Events & Programs saved.`;
+        setTimeout(() => {
+            toastContainers.style.visibility = 'hidden';
+        }, 3000);
+    }
+
+    if (suc === 'true%events') {
+        toastContainers.style.visibility = 'visible';
+        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Finance record added.`;
         setTimeout(() => {
             toastContainers.style.visibility = 'hidden';
         }, 3000);

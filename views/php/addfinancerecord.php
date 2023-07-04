@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn->query($updateSql);
 
                 echo "Record inserted successfully.";
-                header("Location: dashboard.php?success=true");
+                header("Location: dashboard.php?success=true%events");
             } else {
                 echo "Error inserting record: " . $conn->error;
             }
