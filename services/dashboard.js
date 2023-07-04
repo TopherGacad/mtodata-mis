@@ -66,11 +66,10 @@ const selectType = document.getElementById("select-type")
 const bodyNo = document.getElementById("body-no")
 const donorName = document.getElementById("donor-select")
 const expenseType = document.getElementById("expense-type")
-const paymentType = document.getElementById("payment-type")
 const addDonor = document.getElementById("donorbtn")
-    // const midnameInput = document.getElementById("midname");
-    // const contactInput = document.getElementById("contact");
-    // const accType = document.getElementById("acc-type");
+const amountInput = document.getElementById("amount");
+const transDate = document.getElementById("trans-date");
+const today = new Date().toISOString().split('T')[0];
 
 function disableInputs() {
 
@@ -79,9 +78,7 @@ function disableInputs() {
         donorName.disabled = true;
         expenseType.disabled = true;
         addDonor.disabled = true;
-
         amountInput.value = "10";
-
         amountInput.disabled =  false;
         transDate.disabled = false;
 
