@@ -1,3 +1,4 @@
+//Added Function fo Description limiting 350
 function countChar(val) {
     var len = val.value.length;
     if (len >= 350) {

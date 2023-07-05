@@ -30,6 +30,7 @@ if (mysqli_query($conn, $sql)) {
 }
 
 // Complainant Information
+//
 $sql = "INSERT INTO complaint_details (complaint_person, body_no, details, date_created) VALUES ('$personToComplain', '$bodyNumber', '$description', '$dateCreated')";
 if (mysqli_query($conn, $sql)) {
     $complaintId = mysqli_insert_id($conn);
