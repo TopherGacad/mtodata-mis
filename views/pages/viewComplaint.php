@@ -103,7 +103,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     </div>
 
                     <?php
-                        $sql1 = "SELECT id, complainant_id, complaint_person, body_no, details, DATE_FORMAT(date_created, '%Y/%m/%d') AS date_stamp, DATE_FORMAT(date_created, ' %h:%i %p') AS time_stamp FROM `complaint_details` WHERE id = $complaint_id";
+                        $sql1 = "SELECT id, complaint_person, body_no, details, DATE_FORMAT(date_created, '%Y/%m/%d') AS date_stamp, DATE_FORMAT(date_created, ' %h:%i %p') AS time_stamp FROM `complaint_details` WHERE id = $complaint_id";
                         $result = mysqli_query($conn, $sql1); // Execute the query and assign the result to $result
 
                         if (!$result) {

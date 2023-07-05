@@ -192,16 +192,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h3>Person to Complaint Details</h3>
                 <div class="main">
                     <div class="left-side-profile section">
-                       
-                    </div>
-
-                    <div class="right-side-profile section">
-                       <!-- SUBJECT -->
-                        <div class="fields">
+                    <div class="fields">
+                            <!-- SUBJECT -->
                             <label for="subject">Person to Complain<span> *</span></label>
                             <input type="text" id="subject" name="subject" value = "<?php echo $row['complaint_person']; ?>">
                         </div>
+                    </div>
 
+                    <div class="right-side-profile section">
                         <!-- BODY NUMBER -->
                         <div class="fields">
                             <label for="subject-bodyNum">Body no.<span> *</span></label>
