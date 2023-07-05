@@ -589,7 +589,7 @@ date_default_timezone_set('Asia/Manila');
                         die("Connection failed: " . $conn->connect_error);
                     }
                     // retrieve data from the MySQL table
-                    $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, complaint_details.date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.id ORDER BY date_created DESC";
+                    $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, DATE_FORMAT(complaint_details.date_created, '%Y/%m/%d %h:%i %p') AS date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.id ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
                     // output data of each row
@@ -605,6 +605,7 @@ date_default_timezone_set('Asia/Manila');
                             <td class='action'>
                                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
                                 <a href='../../views/pages/editcomplaint.php?complaint_id=" . $row["id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                                <i class='tools fa-sharp fa-solid fa-eye'></i>
                             </td>
                         </tr>";
                     }
@@ -676,7 +677,7 @@ date_default_timezone_set('Asia/Manila');
                     die("Connection failed: " . $conn->connect_error);
                 }
                 // retrieve data from the MySQL table
-                $sql = "SELECT *, TIME_FORMAT(ep_start, '%h:%i %p') AS ep_time FROM `events_programs` ORDER BY date_created DESC";
+                $sql = "SELECT *, TIME_FORMAT(ep_start, '%h:%i %p') AS ep_time, DATE_FORMAT(ep_start, '%Y/%m/%d') AS ep_date FROM `events_programs` ORDER BY date_created DESC";
                 $result = $conn->query($sql);
 
                 // output data of each row
@@ -1133,14 +1134,14 @@ date_default_timezone_set('Asia/Manila');
 
                     <!-- BODY NUMBER -->
                     <div class="fields">
-                        <label for="subject-bodyNum">Body no.<span> *</span></label>
-                        <input type="text" id="subject-bodyNum" name="subject-bodyNum" required>
+                        <label for="complaintSubjectBody">Body no.<span> *</span></label>
+                        <input type="text" id="complaintSubjectBody" name="complaintSubjectBody" required>
                     </div>
 
                     <!-- DESCRIPTION -->
                     <div class="fields">
                         <label for="desc">Description<span> *</span></label>
-                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" required></textarea>
+                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" onkeyup="countChar(this)" required></textarea>
                     </div>
 
                     <div class="timeDate-container">

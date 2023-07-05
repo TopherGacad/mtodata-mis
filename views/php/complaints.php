@@ -18,7 +18,7 @@ $contactNumber = $_POST["contact"];
 
 $personToComplain = $_POST["ComplaintSubject"];
 $bodyNumber = $_POST["complaintSubjectBody"];
-$description = $_POST["complaintDescription"];
+$description = $_POST["desc"];
 $dateCreated = $_POST["date-incident"] . " " . $_POST["time-incident"];
 
 // Complainant Details
@@ -30,6 +30,7 @@ if (mysqli_query($conn, $sql)) {
 }
 
 // Complainant Information
+//
 $sql = "INSERT INTO complaint_details (complaint_person, body_no, details, date_created) VALUES ('$personToComplain', '$bodyNumber', '$description', '$dateCreated')";
 if (mysqli_query($conn, $sql)) {
     $complaintId = mysqli_insert_id($conn);
