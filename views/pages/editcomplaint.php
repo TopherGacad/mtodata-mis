@@ -239,6 +239,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
     <!-- Linked JavaScript for the rescription On Key Up -->
-    <script src="../../services/editComplaint.js"></script>
 </body>
 </html>
