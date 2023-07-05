@@ -649,7 +649,7 @@ date_default_timezone_set('Asia/Manila');
             </div>
             <div class='head-right'>
                 <div class='search-container'>
-                    <input type='text' class='user-search' placeholder='Search'>
+                    <input type='text' class='user-search' id="programs-search" placeholder='Search'>
                     <button class='user-searchBtn'><i class='fa-solid fa-magnifying-glass'></i></button>
                 </div>
                 <button class='addEventBtn' id='addEvent-btn'><i class='fa-solid fa-plus'></i> Add Events</button>
@@ -659,14 +659,15 @@ date_default_timezone_set('Asia/Manila');
         <main>
             <table>
                 <tr>
-                    <th><abbr title='complain-btn Id'>ID</abbr></th>
-                    <th>EVENT/PROGRAM NAME</th>
-                    <th>EVENT DATE</th>
-                    <th>TIME</th>
-                    <th>LOCATION</th>
-                    <th>ACTION</th>
+                    <th class="id"><abbr title='complain-btn Id'>ID</abbr></th>
+                    <th class="title">EVENT& PROGRAM TITLE</th>
+                    <th class="date">EVENT DATE</th>
+                    <th class="time">TIME</th>
+                    <th class="location">LOCATION</th>
+                    <th class="action">ACTION</th>
                 </tr>
-
+                
+                <tbody id="programs-table-body">
                 <?php
                 // connect to the MySQL database
                 include "db_conn.php";
@@ -684,12 +685,12 @@ date_default_timezone_set('Asia/Manila');
                     echo "
 
                 <tr>
-                    <td>" . $row["id"] . "</td>
-                    <td>" . $row["ep_title"] . "</td>
-                    <td>" . $row["ep_date"] . "</td>
-                    <td>" . $row["ep_time"] . "</td>
-                    <td>" . $row["ep_location"] . "</td>
-                    <td>
+                    <td class='id'>" . $row["id"] . "</td>
+                    <td class='title'>" . $row["ep_title"] . "</td>
+                    <td class='date'>" . $row["ep_date"] . "</td>
+                    <td class='time'>" . $row["ep_time"] . "</td>
+                    <td class='location'>" . $row["ep_location"] . "</td>
+                    <td class='action'>
                         <i class='tools fa-solid fa-trash-can'></i>
                         <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
                         <i class='tools fa-solid fa-print'></i>
@@ -701,7 +702,7 @@ date_default_timezone_set('Asia/Manila');
                 // close MySQL connection
                 $conn->close();
                 ?>
-
+                </tbody>
             </table>
         </main>
     </div>
@@ -722,7 +723,7 @@ date_default_timezone_set('Asia/Manila');
     <div class="addUser-modal-container" id="user-modal-container">
         <h2 class="modal-title">ADD USER</h2>
         <form action="../php/adduser.php" method="post"
-            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
+            oninput='city.setCustomValidity(city.value != password.value ? "Passwords do not match." : "")'
             id="user-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
@@ -769,11 +770,11 @@ date_default_timezone_set('Asia/Manila');
                 <div class="userForm-right addForm">
 
                     <!-- USERNAME -->
-<div class="fields">
-    <label for="user-uname">Username<span> *</span></label>
-    <input type="text" id="user-uname" name="user-uname" maxlength="25" placeholder="juandelacruz123" required>
-    <span id="username-validation"></span> <!-- Display validation message here -->
-</div>
+                    <div class="fields">
+                        <label for="user-uname">Username<span> *</span></label>
+                        <input type="text" id="user-uname" name="user-uname" maxlength="25" placeholder="juandelacruz123" required>
+                        <span id="username-validation"></span> <!-- Display validation message here -->
+                    </div>
                     <!-- EMAIL -->
                     <div class="fields">
                         <label for="user-email">Email Address<span> *</span></label>
@@ -981,7 +982,7 @@ date_default_timezone_set('Asia/Manila');
                     <div class='fields'>
                         <label for='select-type'>Finance Type<span> *</span>
                         </label>
-                        <select name='type' id='select-type' onchange='disableInputs()' required>
+                        <select name='type' id='select-type' onchange="disableInputs()" required>
                             <option value='' selected disabled>Select Account type</option>
                             <option value='Butaw'>Butaw/Contribution</option>
                             <option value='Donation'>Donation</option>
@@ -1078,9 +1079,7 @@ date_default_timezone_set('Asia/Manila');
     <div class="bg" id="bg"></div>
     <div class="addComplaint-modal-container" id="complaint-modal-container">
         <h2 class="modal-title">ADD COMPLAINT</h2>
-        <form action="../php/complaints.php" method="post"
-            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
-            id="complaint-form">
+        <form action="../php/complaints.php" method="post" id="complaint-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="complaintForm-left addForm">
@@ -1211,13 +1210,14 @@ date_default_timezone_set('Asia/Manila');
                 <div class='complaintForm-right addForm'>
 
                     <!--EVENT OR PROGRAM BUDGET-->
-                    <div class='is-bud'>
-                        <input type='checkbox' id='events-isbudget' name='events-isbudget' onchange='handleBudgetCheckboxChange()'>
-                        <label for='events-isbudget'>With Budget</label>
-                    </div>
                     <div class='fields'>
                         <label for='events-budget'>Budget</label>
                         <input type='text' id='events-budget' name='events-budget' disabled>
+                    </div>
+
+                    <div class='is-bud'>
+                        <input type='checkbox' id='events-isbudget' name='events-isbudget' onchange='handleBudgetCheckboxChange()'>
+                        <label for='events-isbudget'>With Budget</label>
                     </div>
 
                     <!-- EVENT ORGANIZER -->

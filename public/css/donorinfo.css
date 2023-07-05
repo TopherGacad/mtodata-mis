@@ -121,9 +121,8 @@ table{
     text-align: center;
 }
 th{
-    padding: 10px;
-    min-width: 100px;
-    max-width: 100px;
+    width: 100%;
+    padding: 10px 20px;
     position: sticky;
     top: 0;
     background-color: var(--hover-background);
@@ -141,12 +140,16 @@ td{
     border-bottom: 1px solid var(--border-color);
 }
 .id{
-    min-width: 50px;
+    min-width: 50;
     max-width: 50px;
 }
 .name{
-    min-width: 140px;
-    max-width: 140px;
+    min-width: 150px;
+    max-width: 150px;
+}
+.gender,.city,.phone,.email,.street,.barangay,.date{
+    min-width: 120px;
+    max-width: 120px;
 }
 .action{
     max-width: 60px;

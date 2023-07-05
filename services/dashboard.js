@@ -64,14 +64,12 @@ addEventBtn.addEventListener("click", function() {
 // USER TYPE DISABLE INPUTS
 const selectType = document.getElementById("select-type")
 const bodyNo = document.getElementById("body-no")
-const memName = document.getElementById("fin-memname")
 const donorName = document.getElementById("donor-select")
 const expenseType = document.getElementById("expense-type")
-const paymentType = document.getElementById("payment-type")
 const addDonor = document.getElementById("donorbtn")
-    // const midnameInput = document.getElementById("midname");
-    // const contactInput = document.getElementById("contact");
-    // const accType = document.getElementById("acc-type");
+const amountInput = document.getElementById("amount");
+const transDate = document.getElementById("trans-date");
+const today = new Date().toISOString().split('T')[0];
 
 function disableInputs() {
 
@@ -80,10 +78,12 @@ function disableInputs() {
         donorName.disabled = true;
         expenseType.disabled = true;
         addDonor.disabled = true;
-
         amountInput.value = "10";
 
+
         amountInput.disabled = false;
+        amountInput.disabled =  false;
+
         transDate.disabled = false;
 
     } else if (selectType.value === "Donation") {
@@ -144,7 +144,6 @@ financeCancel.addEventListener("click", function() {
     financeModal.style.display = "none"
     modalBg.style.display = "none"
     bodyNo.disabled = false;
-    memName.disabled = false;
     donorName.disabled = false;
     expenseType.disabled = false;
     paymentType.disabled = false;
@@ -331,6 +330,33 @@ finsearchBar.addEventListener('input', () => {
             finType.includes(finsearchText) ||
             finCode.includes(finsearchText) ||
             finName.includes(finsearchText)
+        ) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    }
+});
+
+//EVENTS AND PROGRAMS SEARCH
+const programsSearch = document.getElementById('programs-search')
+const progTableBody = document.getElementById('programs-table-body')
+
+programsSearch.addEventListener('input', () => {
+    const progsearchText = programsSearch.value.toLowerCase();
+
+    for (let i = 0; i < progTableBody.rows.length; i++) {
+        const row = progTableBody.rows[i];
+        const progId = row.cells[0].textContent.toLowerCase();
+        const progTitle = row.cells[1].textContent.toLowerCase();
+        const progDate = row.cells[2].textContent.toLowerCase();
+        const progLoc = row.cells[4].textContent.toLowerCase();
+
+        if (
+            progId.includes(progsearchText) ||
+            progTitle.includes(progsearchText) ||
+            progDate.includes(progsearchText) ||
+            progLoc.includes(progsearchText)
         ) {
             row.style.display = '';
         } else {
@@ -819,7 +845,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (suc === 'true') {
         toastContainers.style.visibility = 'visible';
-        document.getElementById('success-con').innerHTML = `<strong>Successful!</strong> Events/Programs created successfully.`;
+        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Events & Programs saved.`;
         setTimeout(() => {
             toastContainers.style.visibility = 'hidden';
         }, 3000);
