@@ -115,6 +115,17 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             </table>
         </div>
     </main>
+
+    <!-- SUCCESS TOAST -->
+    <div class='toast-container' id='toast-success'>
+        <div class='toast-left-success'>
+            <i class='toast-icon fa-solid fa-circle-check'></i>
+        </div>
+        <div class='toast-right'>
+            <p id='success-con'></p>
+        </div>
+    </div>
+    
     <script src='../../services/unitinfo.js'></script>
 </body>
 

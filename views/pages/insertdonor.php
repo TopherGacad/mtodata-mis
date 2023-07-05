@@ -31,7 +31,7 @@ if (isset($_POST['user-update'])) {
 
     if ($conn->query($sql) === TRUE) {
 
-        header('location: ../../views/pages/viewdonors.php');
+        header('location: ../../views/pages/viewdonors.php?success=true');
         exit();
     } else {
 
