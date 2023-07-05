@@ -119,6 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- FONT AWESOME/ICONS -->
     <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -230,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="fields">
                             <label for="desc">Description<span> *</span></label>
                             <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" onkeyup="countChar(this)"><?php echo isset($row['details']) ? htmlspecialchars($row['details']) : ''; ?></textarea>
-                            <div id="charRem"></div>
+                            <div id="charNum"></div>
                         </div>
                     </div>
                 </div>
@@ -238,6 +239,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
     <!-- Linked JavaScript for the rescription On Key Up -->
-    <script src='../../services/editComplaint.js'></script>
+    <script src="../../services/editComplaint.js"></script>
 </body>
 </html>
