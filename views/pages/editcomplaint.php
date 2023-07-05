@@ -118,6 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="icon" href="../../public/assets/browse_logo.png">
     <!-- FONT AWESOME/ICONS -->
     <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -228,12 +230,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <!-- DESCRIPTION -->
                         <div class="fields">
                             <label for="desc">Description<span> *</span></label>
-                            <textarea name="desc" id="desc" cols="30" rows="9" maxlength="1500"><?php echo isset($row['details']) ? htmlspecialchars($row['details']) : ''; ?></textarea>
+                            <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" onkeyup="countChar(this)"><?php echo isset($row['details']) ? htmlspecialchars($row['details']) : ''; ?></textarea>
+                            <div id="charNum"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
     </div>
+    <!-- Linked JavaScript for the rescription On Key Up -->
 </body>
 </html>
