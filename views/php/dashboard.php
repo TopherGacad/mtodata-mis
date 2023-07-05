@@ -676,7 +676,7 @@ date_default_timezone_set('Asia/Manila');
                     die("Connection failed: " . $conn->connect_error);
                 }
                 // retrieve data from the MySQL table
-                $sql = "SELECT *, TIME_FORMAT(ep_start, '%h:%i %p') AS ep_time FROM `events_programs` ORDER BY date_created DESC";
+                $sql = "SELECT *, TIME_FORMAT(ep_start, '%h:%i %p') AS ep_time, DATE_FORMAT(ep_start, '%Y/%m/%d') AS ep_date FROM `events_programs` ORDER BY date_created DESC";
                 $result = $conn->query($sql);
 
                 // output data of each row
