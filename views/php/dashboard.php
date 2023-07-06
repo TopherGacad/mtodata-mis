@@ -637,7 +637,8 @@ date_default_timezone_set('Asia/Manila');
 
                             <td class='action'>
                                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
-                                <a href='../../views/pages/viewComplaint.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                                <a href='../../views/pages/editcomplaint.php?complaint_id=" . $row["id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                                <i class='tools fa-sharp fa-solid fa-eye'></i>
                             </td>
                         </tr>";
                     }
