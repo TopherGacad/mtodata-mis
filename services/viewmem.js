@@ -2,10 +2,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const success = urlParams.get('success');
+    const toastContainer = document.getElementById('toast-success');
+    const toastMessage = document.getElementById('success-con');
 
     if (success === 'true') {
-        const toastContainer = document.getElementById('toast-success');
-        const toastMessage = document.getElementById('success-con');
+
 
         toastContainer.style.visibility = 'visible';
         toastMessage.innerHTML = `<strong>Success</strong> check the updated member info.`;
@@ -16,8 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (success === 'true%member') {
-        const toastContainer = document.getElementById('toast-success');
-        const toastMessage = document.getElementById('success-con');
 
         toastContainer.style.visibility = 'visible';
         toastMessage.innerHTML = `<strong>Success</strong> check the updated donor info.`;

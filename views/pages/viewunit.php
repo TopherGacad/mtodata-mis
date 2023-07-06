@@ -57,16 +57,6 @@ if (isset($_GET['id'])) {
 
     <body>
 
-        <!-- SUCCESS TOAST -->
-        <div class='toast-container' id='toast-success'>
-            <div class='toast-left-success'>
-                <i class='toast-icon fa-solid fa-circle-check'></i>
-            </div>
-            <div class='toast-right'>
-                <p id='success-con'></p>
-            </div>
-        </div>
-
         <div class='head-container'>
             <img class='main-logo' src='../../public/assets/mtodata_logo.png' alt='mtodata logo'>
         </div>
@@ -226,9 +216,22 @@ if (isset($_GET['id'])) {
                         </div>";
 
 }
+
+// close MySQL connection
+$conn->close();
 ?>
         </form>
 
+    </div>
+
+    <!-- SUCCESS TOAST -->
+    <div class='toast-container' id='toast-success'>
+        <div class='toast-left-success'>
+            <i class='toast-icon fa-solid fa-circle-check'></i>
+        </div>
+        <div class='toast-right'>
+            <p id='success-con'></p>
+        </div>
     </div>
 
     <script src='../../services/unitinfo.js'></script>
