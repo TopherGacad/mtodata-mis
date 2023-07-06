@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $conn->query($updateSql);
 
-                header("Location: dashboard.php?success=true");
+                header("Location: dashboard.php?success=true%finance");
                 exit;
             } else {
                 echo "Error inserting record: " . $conn->error;
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn->query($updateSql);
 
                 echo "Record inserted successfully.";
-                header("Location: dashboard.php?success=true");
+                header("Location: dashboard.php?success=true%finance");
             } else {
                 echo "Error inserting record: " . $conn->error;
             }
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn->query($updateSql);
 
                 echo "Record inserted successfully.";
-                header("Location: dashboard.php?success=true");
+                header("Location: dashboard.php?success=true%finance");
             } else {
                 echo "Error inserting record: " . $conn->error;
             }

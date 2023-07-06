@@ -44,10 +44,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
+    if (success === 'true') {
+        const toastContainer = document.getElementById('toast-success');
+        const toastMessage = document.getElementById('success-con');
+
+        toastContainer.style.visibility = 'visible';
+        toastMessage.innerHTML = `<strong>Success</strong> donor information added.`;
+
+        setTimeout(() => {
+            toastContainer.style.visibility = 'hidden';
+        }, 3000);
+    }
+
 });
 
-window.onload = function() {
+window.onload = function () {
     if (window.location.search.includes("success")) {
         history.replaceState({}, document.title, window.location.pathname);
     }
 }
+
+window.onload = function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const memberID = urlParams.get('id');
+
+    if (memberID) {
+        urlParams.delete("success");
+        const newUrl = window.location.pathname + "?" + urlParams.toString();
+        history.replaceState({}, document.title, newUrl);
+
+        console.log('$memberID');
+    }
+}; 
