@@ -150,7 +150,7 @@ td {
 }
 
 .id {
-    min-width: 50;
+    min-width: 50px;
     max-width: 50px;
 }
 
