@@ -56,13 +56,13 @@ if (isset($_GET['id'])) {
         </head>
 
         <body>
-
+            
             <div class="head-container">
                 <img class="main-logo" src="../../public/assets/mtodata_logo.png" alt="mtodata logo">
             </div>
-
             <div class="content-container">
-                <form>
+
+                <form action="updateunit.php?id=<?php echo $unitID ?>" method="POST">
                     <div class="ot-header">
                         <h3><a href="../../views/pages/unitinfo.php"><i class="fa-solid fa-arrow-left"></i></a>Edit Unit
                             Information</h3>
@@ -82,7 +82,6 @@ if (isset($_GET['id'])) {
                                 <div class="fields">
                                     <label for="add-unit">Member Name <span> *</span></label>
                                     <select name="add_unit" id="add-unit" required>
-
                                         <?php
                                         while ($row1 = $result1->fetch_assoc()) {
                                             $middleInitial = !empty($row1["mname"]) ? trim($row1["mname"][0]) . '.' : '';
@@ -92,12 +91,15 @@ if (isset($_GET['id'])) {
                                             if (empty($row1["exname"])) {
                                                 $lastName .= ', ';
                                             }
-                                            echo "<option value='" . $row1['id'] . "'>" . $lastName . $extensionName . $row1["fname"] . " " . $middleInitial . "</option>";
+
+                                            $selected = ($row1['id'] == $row['mem_id']) ? 'selected' : '';
+
+                                            echo "<option value='" . $row1['id'] . "' " . $selected . ">" . $lastName . $extensionName . $row1["fname"] . " " . $middleInitial . "</option>";
                                         }
                                         ?>
-
                                     </select>
                                 </div>
+
                             </div>
 
                             <div class="right-side-emp section">
@@ -195,7 +197,7 @@ if (isset($_GET['id'])) {
                                 <div class=" fields">
                                     <label for="unit-franvalid">Franchise Date Valid <span> *</span></label>
                                     <input type="date" id="unit-franvalid" name="unitfran_valid"
-                                        value='<?php echo $row['date_valid']; ?>' disabled>
+                                        value='<?php echo $row['date_valid']; ?>' READONLY>
                                 </div>
 
                                 <!-- AREA CODE -->
@@ -213,29 +215,29 @@ if (isset($_GET['id'])) {
                         <div class="main">
                             <div class="section">
                                 <div class="fields">
-                                    <label for="">Motor No. <span> *</span></label>
-                                    <input type="text" required value='<?php echo $row['motor_no']; ?>'>
+                                    <label for="unit_motor_no">Motor No. <span> *</span></label>
+                                    <input type="text" required name="unit_motor_no" value='<?php echo $row['motor_no']; ?>'>
                                 </div>
 
                                 <div class="fields">
-                                    <label for="">Chasis No. <span> *</span></label>
-                                    <input type="text" required value='<?php echo $row['chasis_no']; ?>'>
+                                    <label for="unit_chasis_no">Chasis No. <span> *</span></label>
+                                    <input type="text" name="unit_chasis_no" required value='<?php echo $row['chasis_no']; ?>'>
                                 </div>
 
                                 <div class="fields">
-                                    <label for="">Plate No. <span> *</span></label>
-                                    <input type="text" required value='<?php echo $row['plate_no']; ?>'>
+                                    <label for="unit_plate_no">Plate No. <span> *</span></label>
+                                    <input type="text" name="unit_plate_no" required value='<?php echo $row['plate_no']; ?>'>
                                 </div>
                             </div>
                             <div class="section">
                                 <div class="fields">
-                                    <label for="">LTO OR <span> *</span></label>
-                                    <input type="text" required value='<?php echo $row['lto_or']; ?>'>
+                                    <label for="unit_or">LTO OR <span> *</span></label>
+                                    <input type="text" name="unit_or" required value='<?php echo $row['lto_or']; ?>'>
                                 </div>
 
                                 <div class="fields">
-                                    <label for="">LTO CR <span> *</span></label>
-                                    <input type="text" required value='<?php echo $row['lto_cr']; ?>'>
+                                    <label for="unit_cr">LTO CR <span> *</span></label>
+                                    <input type="text" name="unit_cr" required value='<?php echo $row['lto_cr']; ?>'>
                                 </div>
                             </div>
                         </div>

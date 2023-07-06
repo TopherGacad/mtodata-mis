@@ -87,6 +87,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
+    if (success === 'true%unit') {
+        const toastContainer = document.getElementById('toast-success');
+        const toastMessage = document.getElementById('success-con');
+
+        toastContainer.style.visibility = 'visible';
+        toastMessage.innerText = `<strong>Success</strong> check the updated unit info.`;
+
+        console.log('hehe');
+
+        setTimeout(() => {
+            toastContainer.style.visibility = 'hidden';
+        }, 3000);
+    }
+
 });
 
 window.onload = function () {
