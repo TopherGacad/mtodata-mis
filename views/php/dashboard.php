@@ -178,8 +178,72 @@ date_default_timezone_set('Asia/Manila');
             <div class='botleft-dash border'>
 
                 <!-- FINANCE ENTRY -->
-                <div class='card-header'>
+                <div class='card-header entry'>
                     <h4>Recent Financial Entry</h4>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                        </tr>
+
+                        <tbody>
+                            <tr>
+                                <td>DON0902</td>
+                                <td>10</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>DON0902</td>
+                                <td>10</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>DON0902</td>
+                                <td>10</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>DON0902</td>
+                                <td>10</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>DON0902</td>
+                                <td>10</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>DON0902</td>
+                                <td>10</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>DON0902</td>
+                                <td>10</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>DON0902</td>
+                                <td>10</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>DON0902</td>
+                                <td>10</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>DON0902</td>
+                                <td>10</td>
+                                <td>20</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class='botright-dash border'>

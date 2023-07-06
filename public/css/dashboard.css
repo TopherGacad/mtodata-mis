@@ -227,8 +227,18 @@ section {
     bottom: 0;
     height: 60%;
     width: 55%;
+    overflow: auto;
+    z-index: 1;
 }
-
+.botleft-dash th{
+    padding: 5px;
+    position: sticky;
+    top: 58px;
+}
+.entry{
+    position: sticky;
+    top: 0;
+}
 .botright-dash {
     position: absolute;
     right: 0;
@@ -238,8 +248,7 @@ section {
     overflow: auto;
     z-index: 1;
 }
-
-.events {
+.events{
     position: sticky;
     top: 0;
 }
@@ -411,6 +420,12 @@ main {
 main::-webkit-scrollbar {
     display: none;
 }
+.botright-dash::-webkit-scrollbar{
+    display: none;
+}
+.botleft-dash::-webkit-scrollbar{
+    display: none;
+}
 
 table {
     width: 100%;
@@ -418,7 +433,6 @@ table {
     border-collapse: collapse;
     background-color: var(--white-color);
 }
-
 abbr {
     text-decoration: none;
 }
