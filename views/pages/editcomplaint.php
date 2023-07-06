@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['email'])) {
-    header("Location: ../html/login.html");
+    header("location: ../html/login.html");
     exit();
 }
 
@@ -10,13 +10,13 @@ $sessionTimeoutSeconds = 3600;
 if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) > $sessionTimeoutSeconds) {
     session_unset();
     session_destroy();
-    header("Location: login.php");
+    header("location: login.php");
     exit();
 }
 
 // Check if the ID query parameter is set
-if (isset($_GET['id'])) {
-    $complaint_id = $_GET['id'];
+if (isset($_GET['complaint_id'])) {
+    $complaint_id = $_GET['complaint_id'];
 
     // Retrieve complaint information from the database using the complaint ID
     include "../php/db_conn.php";
@@ -41,7 +41,7 @@ if (isset($_GET['id'])) {
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // connect to the MySQL database
-    include "../php/db_conn.php";
+    include "db_conn.php";
 
     // check connection
     if (!$conn) {
@@ -64,6 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $EditBodyNumber = $_POST["subject-bodyNum"];
     $EditDateCreated = $_POST["date-incident"] . " " . $_POST["time-incident"];
     $EditComplaintDescription = $_POST["desc"];
+
+    $query .= " WHERE id = '$complaint_id'";
 
     // Update complaint_info table
     $sql = "UPDATE complaint_info SET 
@@ -97,13 +99,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    mysqli_close($conn);
-
     header("Location: ../php/dashboard.php?id=$complaint_id&success=true");
     exit();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -192,14 +191,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h3>Person to Complaint Details</h3>
                 <div class="main">
                     <div class="left-side-profile section">
-                    <div class="fields">
-                            <!-- SUBJECT -->
-                            <label for="subject">Person to Complain<span> *</span></label>
-                            <input type="text" id="subject" name="subject" value = "<?php echo $row['complaint_person']; ?>">
-                        </div>
+                       
                     </div>
 
                     <div class="right-side-profile section">
+                       <!-- SUBJECT -->
+                        <div class="fields">
+                            <label for="subject">Person to Complain<span> *</span></label>
+                            <input type="text" id="subject" name="subject" value = "<?php echo $row['complaint_person']; ?>">
+                        </div>
+
                         <!-- BODY NUMBER -->
                         <div class="fields">
                             <label for="subject-bodyNum">Body no.<span> *</span></label>
