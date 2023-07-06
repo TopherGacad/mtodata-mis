@@ -14,6 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
             toastContainer.style.visibility = 'hidden';
         }, 3000);
     }
+
+    if (success === 'true%member') {
+        const toastContainer = document.getElementById('toast-success');
+        const toastMessage = document.getElementById('success-con');
+
+        toastContainer.style.visibility = 'visible';
+        toastMessage.innerHTML = `<strong>Success</strong> check the updated donor info.`;
+
+        setTimeout(() => {
+            toastContainer.style.visibility = 'hidden';
+        }, 3000);
+    }
 });
 
 window.onload = function () {

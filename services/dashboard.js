@@ -851,6 +851,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
+    if (suc === 'true%finance') {
+        toastContainers.style.visibility = 'visible';
+        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Finance record added.`;
+        setTimeout(() => {
+            toastContainers.style.visibility = 'hidden';
+        }, 3000);
+    }
+
+    
+
 });
 
 window.onload = function() {

@@ -534,17 +534,50 @@ date_default_timezone_set('Asia/Manila');
                         <td class='name'>" . $row["debit"] . "</td>
                         <td class='name'>" . $row["credit"] . "</td>
                         <td class='name'>" . $row["new_formatted_date"] . "</td>
-                        <td class='action'>
-                            <i class='tools fa-sharp fa-solid fa-eye'></i>
-                        </td>
-                    </tr>
-                ";
+                        <td class='action'>" ?>
+
+                            <?php
+                            if ($row['account_type'] === 'Donation') {
+                                $ViewSelectSql = "SELECT donor_id FROM transaction_donation WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                                $ViewSelectResult = mysqli_query($conn, $ViewSelectSql);
+
+                                if (mysqli_num_rows($ViewSelectResult) > 0) {
+                                    // Matching row found, retrieve the donor_id
+                                    $donationRow = mysqli_fetch_assoc($ViewSelectResult);
+                                    $donorId = $donationRow['donor_id'];
+
+                                    echo "<a href='../pages/donorinfo.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                }
+                            } else if ($row['account_type'] === 'New Member' || $row['account_type'] === 'Renewal') {
+                                $ViewSelectSql = "SELECT member_id FROM transaction_payment WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                                $ViewSelectResult = mysqli_query($conn, $ViewSelectSql);
+
+                                if (mysqli_num_rows($ViewSelectResult) > 0) {
+                                    // Matching row found, retrieve the donor_id
+                                    $donationRow = mysqli_fetch_assoc($ViewSelectResult);
+                                    $donorId = $donationRow['member_id'];
+
+                                    echo "<a href='../pages/viewuser.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                }
+                            } else if ($row['account_type'] === 'Programs') {
+                                $ViewSelectSql = "SELECT program_ID FROM transaction_expenses WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                                $ViewSelectResult = mysqli_query($conn, $ViewSelectSql);
+
+                                if (mysqli_num_rows($ViewSelectResult) > 0) {
+                                    // Matching row found, retrieve the donor_id
+                                    $donationRow = mysqli_fetch_assoc($ViewSelectResult);
+                                    $donorId = $donationRow['program_ID'];
+
+                                    echo "<a href='../pages/viewevents.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                }
+                            }
                         }
                     }
-
                     $conn->close();
                     ?>
 
+                    </td>
+                    </tr>
                 </tbody>
             </table>
         </main>
@@ -665,23 +698,23 @@ date_default_timezone_set('Asia/Manila');
                     <th class="location">LOCATION</th>
                     <th class="action">ACTION</th>
                 </tr>
-                
+
                 <tbody id="programs-table-body">
-                <?php
-                // connect to the MySQL database
-                include "db_conn.php";
+                    <?php
+                    // connect to the MySQL database
+                    include "db_conn.php";
 
-                // check connection
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
-                // retrieve data from the MySQL table
-                $sql = "SELECT *, TIME_FORMAT(ep_start, '%h:%i %p') AS ep_time, DATE_FORMAT(ep_start, '%Y/%m/%d') AS ep_date FROM `events_programs` ORDER BY date_created DESC";
-                $result = $conn->query($sql);
+                    // check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+                    // retrieve data from the MySQL table
+                    $sql = "SELECT *, TIME_FORMAT(ep_start, '%h:%i %p') AS ep_time, DATE_FORMAT(ep_start, '%Y/%m/%d') AS ep_date FROM `events_programs` ORDER BY date_created DESC";
+                    $result = $conn->query($sql);
 
-                // output data of each row
-                while ($row = $result->fetch_assoc()) {
-                    echo "
+                    // output data of each row
+                    while ($row = $result->fetch_assoc()) {
+                        echo "
 
                 <tr>
                     <td class='id'>" . $row["id"] . "</td>
@@ -696,11 +729,11 @@ date_default_timezone_set('Asia/Manila');
                     </td>
                 </tr> ";
 
-                }
+                    }
 
-                // close MySQL connection
-                $conn->close();
-                ?>
+                    // close MySQL connection
+                    $conn->close();
+                    ?>
                 </tbody>
             </table>
         </main>
@@ -771,7 +804,8 @@ date_default_timezone_set('Asia/Manila');
                     <!-- USERNAME -->
                     <div class="fields">
                         <label for="user-uname">Username<span> *</span></label>
-                        <input type="text" id="user-uname" name="user-uname" maxlength="25" placeholder="juandelacruz123" required>
+                        <input type="text" id="user-uname" name="user-uname" maxlength="25"
+                            placeholder="juandelacruz123" required>
                         <span id="username-validation"></span> <!-- Display validation message here -->
                     </div>
                     <!-- EMAIL -->
@@ -1127,8 +1161,8 @@ date_default_timezone_set('Asia/Manila');
                     <!-- SUBJECT -->
                     <div class="fields">
                         <label for="ComplaintSubject">Person to Complain<span> *</span></label>
-                        <input type="text" id="ComplaintSubject" name="ComplaintSubject" maxlength="30" pattern="[A-Za-z ]{2,30}"
-                            placeholder="Name of person to complain">
+                        <input type="text" id="ComplaintSubject" name="ComplaintSubject" maxlength="30"
+                            pattern="[A-Za-z ]{2,30}" placeholder="Name of person to complain">
                     </div>
 
                     <!-- BODY NUMBER -->
@@ -1140,7 +1174,8 @@ date_default_timezone_set('Asia/Manila');
                     <!-- DESCRIPTION -->
                     <div class="fields">
                         <label for="desc">Description<span> *</span></label>
-                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" onkeyup="countChar(this)" required></textarea>
+                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" onkeyup="countChar(this)"
+                            required></textarea>
                     </div>
 
                     <div class="timeDate-container">
@@ -1215,7 +1250,8 @@ date_default_timezone_set('Asia/Manila');
                     </div>
 
                     <div class='is-bud'>
-                        <input type='checkbox' id='events-isbudget' name='events-isbudget' onchange='handleBudgetCheckboxChange()'>
+                        <input type='checkbox' id='events-isbudget' name='events-isbudget'
+                            onchange='handleBudgetCheckboxChange()'>
                         <label for='events-isbudget'>With Budget</label>
                     </div>
 
