@@ -45,9 +45,7 @@ date_default_timezone_set('Asia/Manila');
                 Information</h3>
             <div class='btn-container'>
                 <input type='text' class='unit-search' id='unit-search' placeholder='Search'>
-                <a href='../../views/php/dashboard.php'><input type='button' value='Cancel' class='cancelBtn modal-btn'
-                        id='cancel-btn'></a>
-                <a href='../../views/pages/addunit.php'><button class='addunit-btn modal-btn' id='add-unit'
+                <a href='../../views/pages/addunit.php'><button class='cancelBtn addunit-btn modal-btn' id='add-unit'
                         type='submit' name='add-unit'><i class='fa-solid fa-plus'></i> Add Unit</button></a>
             </div>
         </div>
