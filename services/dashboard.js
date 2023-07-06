@@ -79,11 +79,7 @@ function disableInputs() {
         expenseType.disabled = true;
         addDonor.disabled = true;
         amountInput.value = "10";
-
-
         amountInput.disabled = false;
-        amountInput.disabled =  false;
-
         transDate.disabled = false;
 
     } else if (selectType.value === "Donation") {
@@ -91,9 +87,7 @@ function disableInputs() {
         donorName.disabled = false;
         expenseType.disabled = true;
         addDonor.disabled = false;
-
         amountInput.value = "";
-
         amountInput.disabled = false;
         transDate.disabled = true;
 
@@ -102,20 +96,15 @@ function disableInputs() {
         donorName.disabled = true;
         expenseType.disabled = false;
         addDonor.disabled = true;
-    } else if (selectType.value === "Payment") {
-
         amountInput.value = "";
-
         amountInput.disabled = false;
         transDate.disabled = false;
     } else {
-
         bodyNo.disabled = true;
         donorName.disabled = true;
         expenseType.disabled = true;
         addDonor.disabled = true;
         amountInput.value = "";
-
         amountInput.disabled = true;
         transDate.disabled = true;
     }
@@ -143,11 +132,13 @@ financeCancel.addEventListener("click", function() {
     document.getElementById("finance-form").reset()
     financeModal.style.display = "none"
     modalBg.style.display = "none"
-    bodyNo.disabled = false;
-    donorName.disabled = false;
-    expenseType.disabled = false;
-    paymentType.disabled = false;
-    addDonor.disabled = false;
+    bodyNo.disabled = true;
+    donorName.disabled = true;
+    expenseType.disabled = true;
+    addDonor.disabled = true;
+    amountInput.value = "";
+    amountInput.disabled = true;
+    transDate.disabled = true;
 })
 complaintCancel.addEventListener("click", function() {
     document.getElementById("complaint-form").reset()
@@ -294,13 +285,15 @@ MemsearchBar.addEventListener('input', () => {
         const memId = row.cells[0].textContent.toLowerCase();
         const memName = row.cells[1].textContent.toLowerCase();
         const memOperation = row.cells[2].textContent.toLowerCase();
-        const memLicense = row.cells[3].textContent.toLowerCase();
-        const memStat = row.cells[4].textContent.toLowerCase();
+        const memRole = row.cells[3].textContent.toLowerCase();
+        const memLicense = row.cells[4].textContent.toLowerCase();
+        const memStat = row.cells[5].textContent.toLowerCase();
 
         if (
             memId.includes(MemsearchText) ||
             memName.includes(MemsearchText) ||
             memOperation.includes(MemsearchText) ||
+            memRole.includes(MemsearchText) ||
             memLicense.includes(MemsearchText) ||
             memStat.includes(MemsearchText)
         ) {
