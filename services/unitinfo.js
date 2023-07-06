@@ -30,6 +30,36 @@ unitSearch.addEventListener('input', () => {
     }
 });
 
+//DONOR INFO SEARCH
+const donorSearch = document.getElementById('donor-search');
+const donorTableBody = document.getElementById('donor-table-body');
+
+donorSearch.addEventListener('input', () => {
+    const donorSearchText = donorSearch.value.toLowerCase();
+
+    for (let i = 0; i < donorTableBody.rows.length; i++) {
+        const row = donorTableBody.rows[i];
+        const donorId = row.cells[0].textContent.toLowerCase();
+        const donorName = row.cells[1].textContent.toLowerCase();
+        const donorGender = row.cells[2].textContent.toLowerCase();
+        const donorNum = row.cells[11].textContent.toLowerCase();
+        const donorEmail = row.cells[12].textContent.toLowerCase();
+
+
+        if (
+            donorId.includes(donorSearchText) ||
+            donorName.includes(donorSearchText) ||
+            donorGender.includes(donorSearchText) ||
+            donorNum.includes(donorSearchText) ||
+            donorEmail.includes(donorSearchText)
+        ) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    }
+});
+
 // Wrap the code inside a function to ensure it executes after the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);

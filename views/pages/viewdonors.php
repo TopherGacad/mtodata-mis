@@ -42,7 +42,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>Donor's Information
             </h3>
             <div class='btn-container'>
-                <input type='text' class='unit-search' id='unit-search' placeholder='Search'>
+                <input type='text' class='unit-search' id='donor-search' placeholder='Search'>
                 <a href='../../views/php/dashboard.php'><input type='button' value='Cancel' class='cancelBtn modal-btn'
                         id='cancel-btn'></a>
                 <a href='../../views/pages/adddonor.php'><button class='addunit-btn modal-btn' id='add-unit'
@@ -65,7 +65,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <th class='action'>Action</th>
                 </tr>
 
-                <tbody id='unit-table-body'>
+                <tbody id='donor-table-body'>
                     <?php
 
                     // connect to the MySQL database
@@ -126,7 +126,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         </div>
     </div>
     
-    <script src='../../services/unitinfo.js'></script>
+    <script src='../../services/donorinfo.js'></script>
 </body>
 
 </html>
