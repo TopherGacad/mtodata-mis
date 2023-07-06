@@ -452,14 +452,17 @@ td {
     max-width: 140px;
 }
 
-.email,.title{
+.email,
+.title,
+.contact,
+.comp-date{
     min-width: 120px;
     max-width: 120px;
 }
 
 .role,
 .amount,
-.code {
+.code{
     min-width: 90px;
     max-width: 90px;
 }

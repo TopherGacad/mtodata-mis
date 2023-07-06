@@ -594,7 +594,7 @@ date_default_timezone_set('Asia/Manila');
                 <button class="complaintExportBtn exportBtn" id="complaint-export"><i
                         class="fa-solid fa-download"></i></button>
                 <div class="search-container">
-                    <input type="text" class="user-search" placeholder="Search">
+                    <input type="text" class="user-search" id="comp-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
                 <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New
@@ -609,10 +609,11 @@ date_default_timezone_set('Asia/Manila');
                     <th class="name">COMPLAINANT</th>
                     <th class="contact">CONTACT NO.</th>
                     <th class="name">SUBJECT TO COMPLAINT</th>
-                    <th class="date">DATE</th>
+                    <th class="comp-date">DATE</th>
                     <th class="action">ACTION</th>
                 </tr>
-                <tbody id="user-table-body">
+
+                <tbody id="complaint-table-body">
                     <?php
                     // connect to the MySQL database
                     include "db_conn.php";

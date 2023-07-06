@@ -331,6 +331,31 @@ finsearchBar.addEventListener('input', () => {
     }
 });
 
+//COMPLAINTS SEARCH
+const compSearchBar = document.getElementById('comp-search')
+const compTableBody = document.getElementById('complaint-table-body')
+
+compSearchBar.addEventListener('input', () => {
+    const compSearchText = compSearchBar.value.toLowerCase();
+
+    for (let i = 0; i < compTableBody.rows.length; i++) {
+        const row = compTableBody.rows[i];
+        const compId = row.cells[0].textContent.toLowerCase();
+        const compName = row.cells[1].textContent.toLowerCase();
+        const compCon = row.cells[2].textContent.toLowerCase();
+
+        if (
+            compId.includes(compSearchText) ||
+            compName.includes(compSearchText) ||
+            compCon.includes(compSearchText)
+        ) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    }
+});
+
 //EVENTS AND PROGRAMS SEARCH
 const programsSearch = document.getElementById('programs-search')
 const progTableBody = document.getElementById('programs-table-body')
