@@ -129,12 +129,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <div class="content-container">
-        <form action="" method="post">
+        <form id="form-complaint" method="post">
             <div class="ot-header">
                 <h3><a href="../../views/php/dashboard.php"><i class="fa-solid fa-arrow-left"></i></a>Edit Complaints Details</h3>
                 <div class="btn-container">
                     <a href="../../views/php/dashboard.php"><input type="button" value="Discard" class="cancelBtn modal-btn" id="cancel-btn"></a>
-                    <button class="update-btn modal-btn" id="complaint-update" type="submit" name="complaint-update">Update</button>
+                    <button class="update-btn modal-btn" id="complaint-update" type="submit" name="complaint-update" disabled>Update</button>
                 </div>
             </div>
 
@@ -237,6 +237,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </form>
     </div>
-    <!-- Linked JavaScript for the rescription On Key Up -->
+    <script src='../../services/editComplaint.js'></script>
 </body>
 </html>
