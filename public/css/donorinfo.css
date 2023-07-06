@@ -150,13 +150,13 @@ td {
 }
 
 .id {
-    min-width: 50;
+    min-width: 50px;
     max-width: 50px;
 }
 
 .name {
-    min-width: 150px;
-    max-width: 150px;
+    min-width: 160px;
+    max-width: 160px;
 }
 
 .gender,
@@ -181,7 +181,7 @@ td {
     color: var(--dark-blue);
 }
 
-.fa-pen-to-square {
+.fa-eye{
     padding-left: 5px;
 }
 
