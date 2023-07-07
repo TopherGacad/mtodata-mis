@@ -1372,10 +1372,12 @@ date_default_timezone_set('Asia/Manila');
     </div> -->
 
     <div id="loading-container">
-    <div class="logo-container">
-        <img src="../../public/assets/mtodata_logo.png" alt="Logo" class="logo">
-        <div class="loading-bar"></div>
-    </div>
+        <div class="background-wrapper">
+        </div>
+        <div class="logo-container">
+                <img src="../../public/assets/mtodata_logo.png" alt="Logo" class="logo">
+                <div class="loading-bar"></div>
+        </div>
     </div>
 
 
