@@ -1090,7 +1090,7 @@ date_default_timezone_set('Asia/Manila');
                     <!-- BODY NO. -->
                     <div class='fields'>
                         <label for='bodynum'>Body No.<span> *</span></label>
-                        <input type='text' id='body-no' name='bodynum' required disabled>
+                        <input type='text' id='body-no' name='bodynum' pattern="[0-9]*" required disabled>
                     </div>
 
                     <!-- DONOR NAME -->
@@ -1374,9 +1374,6 @@ date_default_timezone_set('Asia/Manila');
                 <div class="loading-bar"></div>
         </div>
     </div>
-
-
-    
 
 
     <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
