@@ -207,20 +207,6 @@ section {
     left: 10px;
 }
 
-.link-container {
-    position: absolute;
-    padding: 5px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-radius: 0px 10px 10px 10px;
-    background-color: var(--dash-viewreport-bg);
-}
-
-.link-container a {
-    text-decoration: none;
-}
-
 .botleft-dash {
     position: absolute;
     left: 0;
@@ -589,6 +575,11 @@ input:disabled,
 select:disabled {
     color: #999999;
     background-color: #dddddd;
+}
+input[type="button"]:disabled{
+    color:  #999999;
+    background-color:#123292;
+    cursor: not-allowed;
 }
 
 /* MODALS */

@@ -115,7 +115,7 @@ function disableInputs() {
         transDate.removeAttribute("max");
     }
 }
-
+disableInputs()
 
 // CANCEL BUTTONS
 userCancel.addEventListener("click", function() {
