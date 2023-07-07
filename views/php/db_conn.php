@@ -1,10 +1,11 @@
 <?php
 
-$sname = "mysql8001.site4now.net";
-$uname = "a9aa39_mtodata";
-$password = "2023mtodata";
+$sname= "localhost";
+$uname= "root";
+$password = "";
 
-$db_name = "db_a9aa39_mtodata";
+
+$db_name = "mtodata";
 
 $conn = mysqli_connect($sname, $uname, $password, $db_name);
 

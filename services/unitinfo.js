@@ -1,4 +1,4 @@
-// UNIT INFO SEARCH
+//UNIT INFO SEARCH
 const unitSearch = document.getElementById('unit-search');
 const unitTableBody = document.getElementById('unit-table-body');
 
@@ -13,6 +13,7 @@ unitSearch.addEventListener('input', () => {
         const plateNum = row.cells[11].textContent.toLowerCase();
         const bodyColor = row.cells[12].textContent.toLowerCase();
         const district = row.cells[13].textContent.toLowerCase();
+
 
         if (
             unitId.includes(searchText) ||
@@ -29,38 +30,78 @@ unitSearch.addEventListener('input', () => {
     }
 });
 
+
+//DONOR INFO SEARCH
+const donorSearch = document.getElementById('donor-search');
+const donorTableBody = document.getElementById('donor-table-body');
+
+donorSearch.addEventListener('input', () => {
+    const donorSearchText = donorSearch.value.toLowerCase();
+
+    for (let i = 0; i < donorTableBody.rows.length; i++) {
+        const row = donorTableBody.rows[i];
+        const donorId = row.cells[0].textContent.toLowerCase();
+        const donorName = row.cells[1].textContent.toLowerCase();
+        const donorGender = row.cells[2].textContent.toLowerCase();
+        const donorNum = row.cells[11].textContent.toLowerCase();
+        const donorEmail = row.cells[12].textContent.toLowerCase();
+
+
+        if (
+            donorId.includes(donorSearchText) ||
+            donorName.includes(donorSearchText) ||
+            donorGender.includes(donorSearchText) ||
+            donorNum.includes(donorSearchText) ||
+            donorEmail.includes(donorSearchText)
+        ) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    }
+});
+
 // Wrap the code inside a function to ensure it executes after the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const successParam = urlParams.get('success');
-    const toastContainer = document.getElementById('toast-success');
-    const toastMessage = document.getElementById('success-con');
+    const suc = urlParams.get('success');
+    const toastContainers = document.getElementById('toast-success');
 
-    if (successParam === '0') {
-        toastContainer.style.visibility = 'visible';
-        toastMessage.innerHTML = `<strong>Successful</strong> Unit information added.`;
+    if (suc === '0') {
+        toastContainers.style.visibility = 'visible';
+        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Unit information added.`;
         setTimeout(() => {
-            toastContainer.style.visibility = 'hidden';
+            toastContainers.style.visibility = 'hidden';
         }, 3000);
-    } 
-    
-    if (successParam === 'true') {
+    }
+
+    if (success === 'true') {
+        const toastContainer = document.getElementById('toast-success');
+        const toastMessage = document.getElementById('success-con');
+
         toastContainer.style.visibility = 'visible';
         toastMessage.innerHTML = `<strong>Success</strong> donor information added.`;
-        setTimeout(() => {
-            toastContainer.style.visibility = 'hidden';
-        }, 3000);
-    } 
-    
-    if (successParam === 'true-unit') {
-        toastContainer.style.visibility = 'visible';
-        toastMessage.innerHTML = `<strong>Success</strong> check the updated unit info.`;
+
         setTimeout(() => {
             toastContainer.style.visibility = 'hidden';
         }, 3000);
     }
-});
 
+    if (success === 'true%unit') {
+        const toastContainer = document.getElementById('toast-success');
+        const toastMessage = document.getElementById('success-con');
+
+        toastContainer.style.visibility = 'visible';
+        toastMessage.innerText = `<strong>Success</strong> check the updated unit info.`;
+
+        console.log('hehe');
+
+        setTimeout(() => {
+            toastContainer.style.visibility = 'hidden';
+        }, 3000);
+    }
+
+});
 
 window.onload = function () {
     if (window.location.search.includes("success")) {
@@ -77,6 +118,6 @@ window.onload = function () {
         const newUrl = window.location.pathname + "?" + urlParams.toString();
         history.replaceState({}, document.title, newUrl);
 
-        console.log(memberID);
+        console.log('$memberID');
     }
 }; 

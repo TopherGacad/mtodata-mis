@@ -40,7 +40,7 @@ VALUES ('$body', '$mem_name', '$fran_no', '$franissue', '$franvalid', '$areacode
 if ($conn->query($sql) === TRUE) {
     $_SESSION['insert_success'] = true;
     header('location: ../pages/unitinfo.php?success=0');
-    exit();
+	exit();   
 } else {
     echo "Error inserting data: " . $conn->error;
 }
