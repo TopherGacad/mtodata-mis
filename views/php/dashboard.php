@@ -86,16 +86,19 @@ date_default_timezone_set('Asia/Manila');
             }
 
             // member count
-            $mem = "SELECT COUNT(id) AS mem_count FROM mem_info";
+            $mem = "SELECT COUNT(id) AS mem_count FROM mem_info WHERE mem_stat = 'Active'";
             $mem_result = $conn->query($mem);
 
-            $don = "SELECT SUM(amount) AS don_count FROM transaction_donation";
+            $don = "SELECT SUM(amount) AS don_count FROM transaction_donation
+            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $don_result = $conn->query($don);
 
-            $con = "SELECT SUM(amount) AS con_count FROM transaction_contribution";
+            $con = "SELECT SUM(amount) AS con_count FROM transaction_contribution
+            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $con_result = $conn->query($con);
 
-            $com = "SELECT COUNT(id) AS com_count FROM complaint_details";
+            $com = "SELECT COUNT(id) AS com_count FROM complaint_details
+            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $com_result = $conn->query($com);
 
             if ($mem_result) {
