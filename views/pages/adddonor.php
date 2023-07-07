@@ -164,8 +164,6 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         </form>
     </div>
 
-    <script src='../../services/editMember.js'></script>
-
 </body>
 
 </html>

@@ -275,9 +275,7 @@ date_default_timezone_set('Asia/Manila');
                         <p>2023-06-12 06:00 AM</p>
                     </div>
                 </div>
-                <div class='link-container events-link'>
 
-                </div>
             </div>
     </div>
 

@@ -23,7 +23,7 @@ function showLoadingAnimation() {
     // Simulate a delay before hiding the loading animation (e.g., 3 seconds)
     setTimeout(function() {
       hideLoadingAnimation();
-    }, 2500);
+    }, 1000);
   });
   
   //PRE LOAD IMAGE AND CALL THE LOADING ANIMATION 
