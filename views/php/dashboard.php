@@ -1090,7 +1090,7 @@ date_default_timezone_set('Asia/Manila');
                     <!-- BODY NO. -->
                     <div class='fields'>
                         <label for='bodynum'>Body No.<span> *</span></label>
-                        <input type='text' id='body-no' name='bodynum' required disabled>
+                        <input type='text' id='body-no' name='bodynum' pattern="[0-9]*" required disabled>
                     </div>
 
                     <!-- DONOR NAME -->
@@ -1364,22 +1364,16 @@ date_default_timezone_set('Asia/Manila');
             <button>Cancel</button>
         </div>
     </div>
-    
-    <!-- <div id="loading-container">
-        <div class="loader-container">
-            <div class="loader"></div>
-        </div>
-    </div> -->
 
+    <!-- LOADING -->
     <div id="loading-container">
-    <div class="logo-container">
-        <img src="../../public/assets/mtodata_logo.png" alt="Logo" class="logo">
-        <div class="loading-bar"></div>
+        <div class="background-wrapper">
+        </div>
+        <div class="logo-container">
+                <img src="../../public/assets/mtodata_logo.png" alt="Logo" class="logo">
+                <div class="loading-bar"></div>
+        </div>
     </div>
-    </div>
-
-
-    
 
 
     <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
