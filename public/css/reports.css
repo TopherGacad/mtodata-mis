@@ -1,0 +1,167 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+p {
+    page-break-inside: avoid;
+}
+
+.container {
+    background-color: white;
+}
+
+.header {
+    margin-bottom: 20px;
+}
+
+.det {
+    font-size: 10pt;
+    margin: 15px 0;
+    font-weight: 600;
+}
+
+.det_wrap {
+    display: flex;
+    align-items: center;
+    height: 20px;
+}
+
+.detret {
+    font-size: 9pt;
+}
+
+.det_con_Desc {
+    font-size: 9pt;
+}
+
+.det_con {
+    margin-bottom: 20px;
+}
+
+.footer {
+    border-top: 1px solid;
+    padding-top: 10px;
+    font-size: 9pt;
+    font-style: italic;
+}
+
+#center_format {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.EPName {
+    font-size: 22pt;
+    margin: 50px 0 0;
+    text-align: center;
+}
+
+table {
+    width: 98%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.mem_info{
+    border-collapse: collapse;
+}
+
+.mem_info th {
+    margin: 10px 0;
+    font-size: 10pt;
+    border: thin solid rgb(158, 158, 158);
+}
+
+.mem_info td {
+    font-size: 9pt;
+    text-align: center;
+    border: thin solid rgb(158, 158, 158);
+}
+
+table tr {
+    page-break-inside: avoid;
+}
+
+#imgplaceholder {
+    height: .7in;
+    width: .7in;
+}
+
+.top p {
+    font-size: 10pt;
+    margin: 5px 0;
+    letter-spacing: 1px;
+}
+
+.top {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#top_title {
+    font-size: 12pt;
+    font-weight: 700;
+}
+
+.top .detret {
+    font-size: 12pt;
+    letter-spacing: 3px;
+    margin: 30px 0;
+}
+
+.cert_wrap {
+    line-height: 1.5;
+    font-size: 9.5pt;
+    text-align: justify;
+}
+
+#cert_wrap01 {
+    margin-left: 40px;
+}
+
+#signature {
+    text-align: right;
+}
+
+#cert_con {
+    padding: 0 10px;
+}
+
+#cert_wrapp {
+    page-break-inside: avoid;
+}
+
+#top_IS {
+    font-size: 12pt;
+}
+
+.header_IS {
+    margin-bottom: 20px;
+}
+
+.IS_amount {
+    text-align: right;
+}
+
+.IS_statements {
+    border-color: white;
+}
+
+.to_hide {
+    color: white;
+}
+
+.IS_amount.total_IS {
+    border-bottom: 1px solid black;
+}
+
+.tr_head {
+    font-weight: bold;
+}
