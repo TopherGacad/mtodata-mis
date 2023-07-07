@@ -1,0 +1,50 @@
+/* LOADING SCREEN STYLING */
+#loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    width: 180px;
+    height: auto;
+}
+
+.loading-bar {
+    width: 200px;
+    height: 10px;
+    background-color: #f3f3f3;
+    border-radius: 15px;
+    margin-top: 10px;
+    position: relative;
+}
+
+.loading-bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: var(--dark-blue);
+    animation: loadingAnimation 3s linear infinite;
+}
+
+@keyframes loadingAnimation {
+    0% { width: 0; }
+    50% {width: 50px}
+    100% { width: 100%; }
+}

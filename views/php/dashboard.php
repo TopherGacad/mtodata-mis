@@ -30,6 +30,7 @@ date_default_timezone_set('Asia/Manila');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="../../public/css/dashboard.css">
+    <link rel="stylesheet" href="../../public/css/loading.css">
     <link rel="icon" href="../../public/assets/browse_logo.png">
 
     <!-- GOOGLE FONTS -->
@@ -1363,9 +1364,27 @@ date_default_timezone_set('Asia/Manila');
             <button>Cancel</button>
         </div>
     </div>
+    
+    <!-- <div id="loading-container">
+        <div class="loader-container">
+            <div class="loader"></div>
+        </div>
+    </div> -->
+
+    <div id="loading-container">
+    <div class="logo-container">
+        <img src="../../public/assets/mtodata_logo.png" alt="Logo" class="logo">
+        <div class="loading-bar"></div>
+    </div>
+    </div>
+
+
+    
+
 
     <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
     <script src="../../services/dashboard.js"></script>
+    <script src="../../services/loading.js"></script>
 </body>
 
 </html>
