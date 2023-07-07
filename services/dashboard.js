@@ -881,6 +881,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
+    if (suc === 'true%events') {
+        toastContainers.style.visibility = 'visible';
+        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Program details added`;
+        setTimeout(() => {
+            toastContainers.style.visibility = 'hidden';
+        }, 3000);
+    }
+
+
 
 });
 

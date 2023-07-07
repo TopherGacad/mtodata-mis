@@ -114,4 +114,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
+    if (suc === 'true%unit') {
+        toastContainers.style.visibility = 'visible';
+        document.getElementById('success-con').innerHTML = `<strong>Successful!</strong>Unit information updated successfully.`;
+        setTimeout(() => {
+            toastContainers.style.visibility = 'hidden';
+        }, 3000);
+    }
+
 });
