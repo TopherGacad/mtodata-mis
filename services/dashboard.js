@@ -343,11 +343,14 @@ compSearchBar.addEventListener('input', () => {
         const compId = row.cells[0].textContent.toLowerCase();
         const compName = row.cells[1].textContent.toLowerCase();
         const compCon = row.cells[2].textContent.toLowerCase();
-
+        const compPerson = row.cells[3].textContent.toLowerCase();
+        const compDate = row.cells[4].textContent.toLowerCase();
         if (
             compId.includes(compSearchText) ||
             compName.includes(compSearchText) ||
-            compCon.includes(compSearchText)
+            compCon.includes(compSearchText) ||
+            compPerson.includes(compSearchText) ||
+            compDate.includes(compSearchText)
         ) {
             row.style.display = '';
         } else {
@@ -861,9 +864,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const suc = urlParams.get('success');
     const toastContainers = document.getElementById('toast-success');
 
+
     if (suc === 'true') {
         toastContainers.style.visibility = 'visible';
-        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Events & Programs saved.`;
+        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Complaint saved`;
         setTimeout(() => {
             toastContainers.style.visibility = 'hidden';
         }, 3000);
@@ -877,7 +881,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    
 
 });
 
