@@ -9,19 +9,14 @@
     --btn-save: #28a745;
     --update-hover: #1f7e35;
     --dark-blue: #1842BD;
-
     --base-color: #FEFEFE;
     --toast-font-color: color: rgba(0, 0, 0, 0.7);
     --green-color:  #28a745;
-
-    --link-color: #6764EE;
-    --border-color: #BABABA;
-    --base-color: #FEFEFE;
     --default-font-color: #282828;
     --active-dot:  #717171;
-    --login-left: #ECF4FF;
     --error-color:#E53B34;
-    --toast-font-color: color: rgba(0, 0, 0, 0.7);
+    --expired-bg: rgb(156, 156, 156);
+    --dash-green: #42A147;
 
 }
 
@@ -248,3 +243,30 @@ textarea {
     padding-left: 15px;
 }
 
+/* ACTIVE ^ EXPIRED STATUS STYLING */
+.Active,
+.Expired {
+    align-self: end;
+    height: fit-content;
+    height: 15px;
+    width: 20%;
+    padding: 5px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--base-color);
+    text-align: center;
+}
+
+.Active p,
+.Expired p {
+    margin: 0px;
+}
+
+.Active {
+    background-color: var(--dash-green);
+}
+
+.Expired {
+    background-color: var(--expired-bg);
+}

@@ -96,7 +96,13 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             echo "
                     </div>
                     <div class='section right-pic'>
-
+                         <!-- MEMBER STATUS DISPLAY -->
+                            <div class='fields'>
+                                <div class='" . $row["mem_stat"] . "'>
+                                    <p>" . $row["mem_stat"] . "</p>
+                                </div>
+                            </div>
+                           
                          <!-- MEMBER STATUS -->
                                 <div class='fields'>
                                     <label for='mem-status'>Member Status</label>

@@ -167,7 +167,7 @@ if (!isset($_GET['user_id'])) {
                         <!-- PASSWORD -->
                         <div class="fields">
                             <label for="user-pass">Password<span> *</span></label>
-                            <input type="password" id="user-pass" name="barangay" minlength="8" maxlength="12" value="<?php echo $psword; ?>" required>
+                            <input type="password" id="user-pass" name="barangay" minlength="8" maxlength="16" value="<?php echo $psword; ?>" required>
                         </div>
 
                          <!-- SEE PASSWORD -->
