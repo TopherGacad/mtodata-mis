@@ -1364,13 +1364,8 @@ date_default_timezone_set('Asia/Manila');
             <button>Cancel</button>
         </div>
     </div>
-    
-    <!-- <div id="loading-container">
-        <div class="loader-container">
-            <div class="loader"></div>
-        </div>
-    </div> -->
 
+    <!-- LOADING -->
     <div id="loading-container">
         <div class="background-wrapper">
         </div>

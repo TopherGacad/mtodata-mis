@@ -8,6 +8,7 @@
 
     <!-- STYLESHEET -->
     <link rel="stylesheet" href="../../public/css/termsofuse.css">
+    <link rel="stylesheet" href="../../public/css/loading.css">
     <!-- WEB ICON -->
     <link rel="icon" href="../../public/assets/browse_logo.png">
     <!-- FONT AWESOME/ICONS -->
@@ -118,7 +119,18 @@
         </div>
     </footer>
     </div>
+
+    <!-- LOADING -->
+    <div id="loading-container">
+        <div class="background-wrapper">
+        </div>
+        <div class="logo-container">
+                <img src="../../public/assets/mtodata_logo.png" alt="Logo" class="logo">
+                <div class="loading-bar"></div>
+        </div>
+    </div>
+
     
-    
+    <script src="../../services/loading.js"></script>
 </body>
 </html>
