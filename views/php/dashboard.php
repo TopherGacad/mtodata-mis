@@ -555,9 +555,6 @@ date_default_timezone_set('Asia/Manila');
                         die("Error executing the query: " . $conn->error);
                     }
 
-
-
-
                     $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date, date_created) 
                     SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_donation
                     WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_donation.transaction_code)
@@ -577,6 +574,20 @@ date_default_timezone_set('Asia/Manila');
                         die("Error executing the query: " . $conn->error);
                     }
 
+                    $updateSql = "UPDATE transaction_finance SET ";
+                    $updateSql .= "debit = CASE ";
+                    $updateSql .= "WHEN account_type IN ('Donation', 'Contribution', 'Renewal', 'New Member') THEN amount ";
+                    $updateSql .= "ELSE debit ";
+                    $updateSql .= "END, ";
+                    $updateSql .= "credit = CASE ";
+                    $updateSql .= "WHEN account_type NOT IN ('Donation', 'Contribution', 'Renewal', 'New Member') THEN amount ";
+                    $updateSql .= "ELSE credit ";
+                    $updateSql .= "END";
+                    $updateResult = $conn->query($updateSql);
+
+                    if ($updateResult === false) {
+                        die("Error executing the update query: " . $conn->error);
+                    }
 
                     // Fetch inserted data
                     $selectSql = "SELECT *,  DATE_FORMAT(date_created, '%Y-%m-%d %h:%i %p') AS new_formatted_date FROM transaction_finance ORDER BY date_created DESC";
@@ -587,25 +598,6 @@ date_default_timezone_set('Asia/Manila');
                     } else {
 
                         while ($row = $selectResult->fetch_assoc()) {
-
-
-                            if ($selectResult === false) {
-                                die("Error executing the query: " . $conn->error);
-                            }
-
-                            if ($row['account_type'] === 'Donation' || $row['account_type'] === 'Contribution' || $row['account_type'] === 'Renewal' || $row['account_type'] === 'New Member') {
-                                $add2debit = "UPDATE transaction_finance SET debit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
-                                $addResult = $conn->query($add2debit);
-                                if ($addResult === false) {
-                                    die("Error executing the query: " . $conn->error);
-                                }
-                            } else {
-                                $add2credit = "UPDATE transaction_finance SET credit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
-                                $addResult = $conn->query($add2credit);
-                                if ($addResult === false) {
-                                    die("Error executing the query: " . $conn->error);
-                                }
-                            }
 
                             echo "
                     <tr>
