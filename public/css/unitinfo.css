@@ -84,6 +84,17 @@ main{
 .btn-container {
     margin-right: 60px;
 }
+.exportBtn{
+    width: 35px;
+    margin-right: 20px;
+    padding: 10px;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+    background-color: var(--dark-blue);
+    color: var(--base-color);
+    border-radius: 5px;
+}
 .unit-search{
     padding: 8px;
     border-radius: 5px;
