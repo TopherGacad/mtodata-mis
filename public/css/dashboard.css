@@ -43,7 +43,7 @@ body {
 .top-design {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: space-between;
     width: 100vw;
     height: 6%;
     background: linear-gradient(to left, var(--dark-blue), var(--white-color));
@@ -51,10 +51,22 @@ body {
     top: 0;
 }
 
-.top-design p {
+.top-user{
+    color: var(--content-font-color);
+    z-index: 9999;
+    margin-left: 22%;
+    justify-self: flex-start;
+}
+.top-user strong{
+    color: var(--dark-blue);
+}
+.top-date{
     color: var(--base-color);
     z-index: 9999;
-    padding-right: 10px;
+    padding-right: 20px;
+    font-size: 12px;
+    text-orientation: sideways-right;
+    justify-self: flex-end;
 }
 
 /* SIDE NAV BAR */

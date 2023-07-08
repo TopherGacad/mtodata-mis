@@ -51,8 +51,11 @@ date_default_timezone_set('Asia/Manila');
 <body>
     <div class="bg-container"></div>
     <div class="top-design">
-        <p><strong>Welcome! </strong>
+        <p class="top-user"><strong>Welcome! </strong>
             <?php echo $_SESSION['email'] ?>
+        </p>
+        <p class="top-date">
+            <i id="current-date"></i>
         </p>
     </div>
 
@@ -662,7 +665,7 @@ date_default_timezone_set('Asia/Manila');
         </header>
 
         <main>
-            <table>
+            <table id="complaint-table">
                 <tr>
                     <th class="id"><abbr title="complain-btn Id">ID</abbr></th>
                     <th class="name">COMPLAINANT</th>
@@ -1370,9 +1373,12 @@ date_default_timezone_set('Asia/Manila');
         </div>
     </div>
 
-
+    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
     <script src="../../services/dashboard.js"></script>
+    <script src="../../services/exportMember.js"></script>
+    <script src="../../services/exportFinance.js"></script>
+    <script src="../../services/datetoday.js"></script>
     <script src="../../services/loading.js"></script>
 </body>
 
