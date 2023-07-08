@@ -1017,7 +1017,7 @@ date_default_timezone_set('Asia/Manila');
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="mem-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact"
+                        <input type="text" pattern="[0-9]{11}" maxlenght="11" id="mem-contact" name="contact"
                             placeholder="eg. 09592220954" required>
                         <span id="mem-contact-validation"></span> <!-- Display validation message here -->
                     </div>
