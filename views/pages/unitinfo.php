@@ -44,6 +44,8 @@ date_default_timezone_set('Asia/Manila');
             <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>Unit
                 Information</h3>
             <div class='btn-container'>
+                <abbr title="Export Report"><button class="unitExportBtn exportBtn" id="unit-export"><i
+                            class="fa-solid fa-download"></i></button></abbr>
                 <input type='text' class='unit-search' id='unit-search' placeholder='Search'>
                 <a href='../../views/pages/addunit.php'><button class='cancelBtn addunit-btn modal-btn' id='add-unit'
                         type='submit' name='add-unit'><i class='fa-solid fa-plus'></i> Add Unit</button></a>
@@ -150,6 +152,8 @@ date_default_timezone_set('Asia/Manila');
     </div>
 
     <script src='../../services/unitinfo.js'></script>
+    <script src="../../services/exportUnit.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
 </body>
 
 </html>
