@@ -20,6 +20,7 @@ $updateQuery = "UPDATE mem_info SET mem_stat = 'Expired' WHERE mem_stat = 'Activ
 mysqli_query($conn, $updateQuery);
 
 date_default_timezone_set('Asia/Manila');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -474,6 +475,9 @@ date_default_timezone_set('Asia/Manila');
                                         row.parentNode.removeChild(row);
                                         // display success message
                                         alert(xhr.responseText);
+
+                                        // Refresh the current page
+                                        location.reload();
                                     }
                                 };
                                 xhr.send("id=" + id);
@@ -529,6 +533,16 @@ date_default_timezone_set('Asia/Manila');
                         die("Connection failed: " . $conn->connect_error);
                     }
 
+                    // Delete transactions associated with non-existent member IDs
+                    $deleteTransactionSql = "DELETE FROM transaction_payment WHERE member_id NOT IN (SELECT id FROM mem_info)";
+                    $deleteTransactionResult = $conn->query($deleteTransactionSql);
+
+                    if ($deleteTransactionResult === false) {
+                        die("Error executing the query: " . $conn->error);
+                    }
+
+
+
                     // Remove deleted data from transaction_finance
                     $deleteSql = "DELETE tf FROM transaction_finance tf
                     LEFT JOIN transaction_donation td ON tf.transaction_code = td.transaction_code
@@ -565,6 +579,20 @@ date_default_timezone_set('Asia/Manila');
                         die("Error executing the query: " . $conn->error);
                     }
 
+                    $updateSql = "UPDATE transaction_finance SET ";
+                    $updateSql .= "debit = CASE ";
+                    $updateSql .= "WHEN account_type IN ('Donation', 'Contribution', 'Renewal', 'New Member') THEN amount ";
+                    $updateSql .= "ELSE debit ";
+                    $updateSql .= "END, ";
+                    $updateSql .= "credit = CASE ";
+                    $updateSql .= "WHEN account_type NOT IN ('Donation', 'Contribution', 'Renewal', 'New Member') THEN amount ";
+                    $updateSql .= "ELSE credit ";
+                    $updateSql .= "END";
+                    $updateResult = $conn->query($updateSql);
+
+                    if ($updateResult === false) {
+                        die("Error executing the update query: " . $conn->error);
+                    }
 
                     // Fetch inserted data
                     $selectSql = "SELECT *,  DATE_FORMAT(date_created, '%Y-%m-%d %h:%i %p') AS new_formatted_date FROM transaction_finance ORDER BY date_created DESC";
@@ -575,25 +603,6 @@ date_default_timezone_set('Asia/Manila');
                     } else {
 
                         while ($row = $selectResult->fetch_assoc()) {
-
-
-                            if ($selectResult === false) {
-                                die("Error executing the query: " . $conn->error);
-                            }
-
-                            if ($row['account_type'] === 'Donation' || $row['account_type'] === 'Contribution' || $row['account_type'] === 'Renewal' || $row['account_type'] === 'New Member') {
-                                $add2debit = "UPDATE transaction_finance SET debit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
-                                $addResult = $conn->query($add2debit);
-                                if ($addResult === false) {
-                                    die("Error executing the query: " . $conn->error);
-                                }
-                            } else {
-                                $add2credit = "UPDATE transaction_finance SET credit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
-                                $addResult = $conn->query($add2credit);
-                                if ($addResult === false) {
-                                    die("Error executing the query: " . $conn->error);
-                                }
-                            }
 
                             echo "
                     <tr>

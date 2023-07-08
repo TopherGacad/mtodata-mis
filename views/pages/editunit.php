@@ -56,7 +56,7 @@ if (isset($_GET['id'])) {
         </head>
 
         <body>
-            
+
             <div class="head-container">
                 <img class="main-logo" src="../../public/assets/mtodata_logo.png" alt="mtodata logo">
             </div>
@@ -247,15 +247,19 @@ if (isset($_GET['id'])) {
                         <h3>Other Info</h3>
                         <div class="main">
                             <div class="section">
+                                <!-- DISTRICT -->
                                 <div class="fields">
-                                    <label for="">District <span> *</span></label>
-                                    <input type="text" required value='<?php echo $row['district']; ?>'>
+                                    <label for="unit-district">District <span> *</span></label>
+                                    <input type="text" id="unit-district" name="unit_district" required
+                                        value='<?php echo $row['district']; ?>'>
                                 </div>
                             </div>
                             <div class="section">
+                                <!-- CONTROL PLATE -->
                                 <div class="fields">
-                                    <label for="">Control Plate <span> *</span></label>
-                                    <input type="text" required value='<?php echo $row['control_plate']; ?>'>
+                                    <label for="unit-controlplate">Control Plate <span> *</span></label>
+                                    <input type="text" id="unit-controlplate" name="unit_controlplate" required
+                                        value='<?php echo $row['control_plate']; ?>'>
                                 </div>
                             </div>
                         </div>
