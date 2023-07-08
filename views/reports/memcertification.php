@@ -14,71 +14,62 @@ $currentDate = date('Y-m-d');
     <title>Membership Certification</title>
 
     <!--Styling-->
-    <link rel="stylesheet" href="../../assets/css/reports.css" type="text/css">
+    <link rel='stylesheet' href='../../public/css/reports.css' type='text/css'>
 
-    <!--html2pdf library-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <!--es6-promise library-->
-    <script src="../../assets/js/es6-promise-master/lib/es6-promise.auto.js"></script>
-    <!--jspdf library-->
-    <script src="../../assets/js/jsPDF-master/dist/jspdf.es.min.js"></script>
-    <!--html2canvas library-->
-    <script src="../../assets/js/html2canvas-master/package.json"></script>
-    <!--html2pdf library-->
-    <script src="../../assets/js/html2pdf.js-master/dist/html2pdf.min.js"></script>
+    <!-- Include the required libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.2.8/es6-promise.auto.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
 </head>
 
 <body>
 
-    <!--Button for PDF Generation-->
-    <button id="save">Generate as PDF</button>
-  
-                <!--DB Connection-->
-                <?php
+    <!--DB Connection-->
+    <?php
 
-                //connection
-                include "db_con.php";
+    //connection
+    include "../php/db_conn.php";
 
-                //check connection
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
+    //check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-                //data retrieval
-                $sql = $sql = "SELECT * ,
+    $ID = $_GET['id'];
+
+    //data retrieval
+    $sql = $sql = "SELECT * ,
                 DATE_FORMAT(date_created, '%Y-%m-%d') AS membership_stat,
-                DATE_FORMAT(DATE_ADD(date_created, INTERVAL 2 YEAR), '%Y-%m-%d') AS expiry_date FROM `mem_info`";
-                $result = $conn->query($sql);
+                DATE_FORMAT(DATE_ADD(date_created, INTERVAL 2 YEAR), '%Y-%m-%d') AS expiry_date FROM `mem_info` WHERE id = '$ID'";
+    $result = $conn->query($sql);
 
-                if ($result === false) {
-                    die("Error executing the query: " . $conn->error);
-                }
+    if ($result === false) {
+        die("Error executing the query: " . $conn->error);
+    }
 
-                if ($result->num_rows === 0) {
-                    echo "No rows found.";
-                }
+    if ($result->num_rows === 0) {
+        echo "No rows found.";
+    }
 
-                // output data of each row
-                while ($row = $result->fetch_assoc()) {
+    // output data of each row
+    while ($row = $result->fetch_assoc()) {
 
-                    $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
-                    $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
-                    $lastName = $row["lname"];
+        $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+        $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+        $lastName = $row["lname"];
 
-                    if (empty($row["exname"])) {
-                        $lastName .= ', ';
-                    }
+        if (empty($row["exname"])) {
+            $lastName .= ', ';
+        }
 
-                    echo "
-                    <div class='container' id='container'>
+        echo "
+                    <div class='container' id='memcert-container'>
                     <div class='wrapper'>
                     <div class='header' id='cert_wrapp'>
                         <div class='top'>
-                            <img src='../../assets/img/placeholder.jpg' id='imgplaceholder'>
+                            <img src='../../public/assets/placeholder.jpg' id='imgplaceholder'>
                             <p id='top_title'>Marulas Tricycle Operators and Drivers' Association (MTODA)</p>
                             <p>3s Center Marulas, Valenzuela City, 1440</p>
                             <p>+63 (XXX) YYY ZZZZ</p>
@@ -91,7 +82,7 @@ $currentDate = date('Y-m-d');
                         </div>
                 <div class='det_con' id='cert_con'>
                     <p class='cert_wrap'>
-                        &emsp; &emsp; &emsp;This certifies that <strong>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial ."</strong>, with the License no.
+                        &emsp; &emsp; &emsp;This certifies that <strong>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</strong>, with the License no.
                         <strong>" . $row["license_no"] . "</strong>, is a valued member of
                         the Marulas Tricycle Operators and Drivers' Association (MTODA). This membership is a testament
                         to their
@@ -132,19 +123,19 @@ $currentDate = date('Y-m-d');
                         " . $currentDate . "
                     </p>
                 </div>"
-                    ;
-                }
+        ;
+    }
 
-                // close MySQL connection
-                $conn->close();
+    // close MySQL connection
+    $conn->close();
 
-                ?>
+    ?>
 
-            </div>
-        </div>
+    </div>
+    </div>
     </div>
 
-    <script src="../../assets/js/print.js"></script>
+    <script src="../../services/dashboard.js"></script>
 </body>
 
 </html>

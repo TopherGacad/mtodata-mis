@@ -31,14 +31,14 @@
 
 <div class="container" id="container">
     <div class="wrapper">
-    <div class='header' id='cert_wrapp'>
-                        <div class='top'>
-                            <img src='../../assets/img/placeholder.jpg' id='imgplaceholder'>
-                            <p id='top_title'>Marulas Tricycle Operators and Drivers' Association (MTODA)</p>
-                            <p>3s Center Marulas, Valenzuela City, 1440</p>
-                            <p>+63 (XXX) YYY ZZZZ</p>
-                        </div>
-                    </div>
+        <div class='header' id='cert_wrapp'>
+            <div class='top'>
+                <img src='public\assets\placeholder.jpg' id='imgplaceholder'>
+                <p id='top_title'>Marulas Tricycle Operators and Drivers' Association (MTODA)</p>
+                <p>3s Center Marulas, Valenzuela City, 1440</p>
+                <p>+63 (XXX) YYY ZZZZ</p>
+            </div>
+        </div>
         <div class="contents">
 
             <div class="det_wrap">

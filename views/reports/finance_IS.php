@@ -99,7 +99,7 @@ if ($result) {
         <div class='wrapper'>
             <div class='header_IS'>
                 <div class='top'>
-                    <img src='../../assets/img/placeholder.jpg' id='imgplaceholder'>
+                    <img src='public\assets\placeholder.jpg' id='imgplaceholder'>
                     <p id='top_title'>Marulas Tricycle Operators and Drivers' Association (MTODA)</p>
                     <p id='top_IS'>Income Statement</p>
                     <p id='top_IS'>For the Month of July</p>

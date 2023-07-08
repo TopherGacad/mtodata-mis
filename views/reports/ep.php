@@ -14,42 +14,35 @@ $currentDate = date('Y-m-d');
     <title>Events and Programs</title>
 
     <!--Styling-->
-    <link rel="stylesheet" href="../../assets/css/reports.css" type="text/css">
+    <link rel='stylesheet' href='../../public/css/reports.css' type='text/css'>
 
-    <!--html2pdf library-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <!--es6-promise library-->
-    <script src="../../assets/js/es6-promise-master/lib/es6-promise.auto.js"></script>
-    <!--jspdf library-->
-    <script src="../../assets/js/jsPDF-master/dist/jspdf.es.min.js"></script>
-    <!--html2canvas library-->
-    <script src="../../assets/js/html2canvas-master/package.json"></script>
-    <!--html2pdf library-->
-    <script src="../../assets/js/html2pdf.js-master/dist/html2pdf.min.js"></script>
+    <!-- Include the required libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.2.8/es6-promise.auto.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
 </head>
 
 <body>
 
-    <!--Button for PDF Generation-->
-    <button id="save">Generate as PDF</button>
-
     <!--DB Connection-->
     <?php
 
+    $currentDate = date('Y-m-d');
+
     //connection
-    include "db_con.php";
+    include "../php/db_conn.php";
 
     //check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
+    $ID = $_GET['id'];
+
     //data retrieval
-    $sql = "SELECT * FROM events_programs";
+    $sql = "SELECT *, TIME_FORMAT(ep_start, '%h:%i %p') AS ep_time FROM events_programs WHERE id = '$ID'";
     $result = $conn->query($sql);
 
     if ($result === false) {
@@ -60,14 +53,20 @@ $currentDate = date('Y-m-d');
         echo "No rows found.";
     }
 
+
+
     // output data of each row
     while ($row = $result->fetch_assoc()) {
+
+        $details = nl2br($row["ep_description"]);
+
+
         echo "
-                    <div class='container' id='container'>
+                    <div class='container' id='ep-container'>
                         <div class='wrapper'>
                         <div class='header' id='cert_wrapp'>
                         <div class='top'>
-                            <img src='../../assets/img/placeholder.jpg' id='imgplaceholder'>
+                            <img src='../../public/assets/placeholder.jpg' id='imgplaceholder'>
                             <p id='top_title'>Marulas Tricycle Operators and Drivers' Association (MTODA)</p>
                             <p>3s Center Marulas, Valenzuela City, 1440</p>
                             <p>+63 (XXX) YYY ZZZZ</p>
@@ -75,28 +74,11 @@ $currentDate = date('Y-m-d');
                     </div>
                             
                             <div class='EPName'>" . $row["ep_title"] . "</div>
-                            <p class='detret' id='center_format'>";
-        $column1 = $row["ep_start"];
-        $column2 = $row["ep_end"];
-        if (!empty($column1) && !empty($column2)) {
-            $concatenated = $column1 . ' to ' . $column2;
-            echo $concatenated;
-        } elseif (!empty($column1)) {
-            echo $column1;
-        } elseif (!empty($column2)) {
-            echo $column2;
-        } else {
-            echo "No value available";
-        }
-
-        echo "</p>
+                            <p class='detret' id='center_format'>" . $row["ep_time"] . "</p>
                             <p class='det'>Program Details:</p>
                             <div class='det_con'>
-                                <p class='det_con_Desc' id='ep_desc'>" . $row["ep_description"] . "</p>
-                                <p class='det_con_Desc' id='ep_highlights'>" . $row["ep_highlights"] . "</p>
-                                <p class='det_con_Desc' id='ep_close'>" . $row["ep_closestatement"] . "</p>
-                            </div>
-            
+                                <p class='det_con_Desc' id='ep_desc'>" . $details . "</p>
+                            </div>      
                     </div>
 ";
     }
