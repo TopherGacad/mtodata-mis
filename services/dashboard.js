@@ -39,23 +39,23 @@ const complaintCancel = document.getElementById("complaint-cancel")
 const eventCancel = document.getElementById("event-cancel")
 
 // FORM MODALS 
-adduserBtn.addEventListener("click", function() {
+adduserBtn.addEventListener("click", function () {
     userModal.style.display = "flex"
     modalBg.style.display = "block"
 })
-addmemBtn.addEventListener("click", function() {
+addmemBtn.addEventListener("click", function () {
     memberModal.style.display = "flex"
     modalBg.style.display = "block"
 })
-addfinanceBtn.addEventListener("click", function() {
+addfinanceBtn.addEventListener("click", function () {
     financeModal.style.display = "flex"
     modalBg.style.display = "block"
 })
-addComplainBtn.addEventListener("click", function() {
+addComplainBtn.addEventListener("click", function () {
     complainModal.style.display = "flex"
     modalBg.style.display = "block"
 })
-addEventBtn.addEventListener("click", function() {
+addEventBtn.addEventListener("click", function () {
     eventModal.style.display = "flex"
     modalBg.style.display = "block"
 })
@@ -118,17 +118,17 @@ function disableInputs() {
 disableInputs()
 
 // CANCEL BUTTONS
-userCancel.addEventListener("click", function() {
+userCancel.addEventListener("click", function () {
     document.getElementById("user-form").reset()
     userModal.style.display = "none"
     modalBg.style.display = "none"
 })
-memberCancel.addEventListener("click", function() {
+memberCancel.addEventListener("click", function () {
     document.getElementById("member-form").reset()
     memberModal.style.display = "none"
     modalBg.style.display = "none"
 })
-financeCancel.addEventListener("click", function() {
+financeCancel.addEventListener("click", function () {
     document.getElementById("finance-form").reset()
     financeModal.style.display = "none"
     modalBg.style.display = "none"
@@ -140,19 +140,19 @@ financeCancel.addEventListener("click", function() {
     amountInput.disabled = true;
     transDate.disabled = true;
 })
-complaintCancel.addEventListener("click", function() {
+complaintCancel.addEventListener("click", function () {
     document.getElementById("complaint-form").reset()
     complainModal.style.display = "none"
     modalBg.style.display = "none"
 })
-eventCancel.addEventListener("click", function() {
+eventCancel.addEventListener("click", function () {
     document.getElementById("event-form").reset()
     eventModal.style.display = "none"
     modalBg.style.display = "none"
 })
 
 //FI: CREATE A FUNCTION FOR SHOW PASSWORD INSTEAD OF THIS 
-seePass.addEventListener("change", function() {
+seePass.addEventListener("change", function () {
     const inputPass = document.getElementById("user-pass")
     const confirmPass = document.getElementById("user-confirmPass")
     if (inputPass.type === 'password' || confirmPass.type === 'password') {
@@ -217,7 +217,7 @@ function exportToExcel() {
     }
 
     // Save the workbook
-    workbook.xlsx.writeBuffer().then(function(buffer) {
+    workbook.xlsx.writeBuffer().then(function (buffer) {
         const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
@@ -390,11 +390,11 @@ programsSearch.addEventListener('input', () => {
 //WARNING & SUCCESS TOAST FOR ADD USER
 function checkEmailExists(email) {
 
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkemail.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
                 resolve(response === 'exists');
@@ -406,11 +406,11 @@ function checkEmailExists(email) {
 
 // Function to check if the contact number exists in the database
 function checkContactExists(contact) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkcontact.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
                 resolve(response === 'exists');
@@ -422,11 +422,11 @@ function checkContactExists(contact) {
 
 // Function to check if the username exists in the database
 function checkUsernameExists(username) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkusername.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
                 resolve(response === 'exists');
@@ -437,12 +437,12 @@ function checkUsernameExists(username) {
 }
 
 // Event listener for input changes
-document.getElementById('user-email').addEventListener('input', function() {
+document.getElementById('user-email').addEventListener('input', function () {
     var emailInput = this.value;
     var emailValidation = document.getElementById('email-validation');
 
     checkEmailExists(emailInput)
-        .then(function(exists) {
+        .then(function (exists) {
             if (exists) {
                 emailValidation.textContent = 'Email address already exist';
             } else {
@@ -455,18 +455,18 @@ document.getElementById('user-email').addEventListener('input', function() {
             var usernameValidation = document.getElementById('username-validation');
             saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '' || usernameValidation.textContent !== '';
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error(error);
         });
 });
 
 // Event listener for input changes
-document.getElementById('user-contact').addEventListener('input', function() {
+document.getElementById('user-contact').addEventListener('input', function () {
     var contactInput = this.value;
     var contactValidation = document.getElementById('contact-validation');
 
     checkContactExists(contactInput)
-        .then(function(exists) {
+        .then(function (exists) {
             if (exists) {
                 contactValidation.textContent = 'Contact number already exist';
             } else {
@@ -479,18 +479,18 @@ document.getElementById('user-contact').addEventListener('input', function() {
             var usernameValidation = document.getElementById('username-validation');
             saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '' || usernameValidation.textContent !== '';
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error(error);
         });
 });
 
 // Event listener for input changes
-document.getElementById('user-uname').addEventListener('input', function() {
+document.getElementById('user-uname').addEventListener('input', function () {
     var usernameInput = this.value;
     var usernameValidation = document.getElementById('username-validation');
 
     checkUsernameExists(usernameInput)
-        .then(function(exists) {
+        .then(function (exists) {
             if (exists) {
                 usernameValidation.textContent = 'Username already exist';
             } else {
@@ -503,12 +503,12 @@ document.getElementById('user-uname').addEventListener('input', function() {
             var contactValidation = document.getElementById('contact-validation');
             saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '' || usernameValidation.textContent !== '';
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error(error);
         });
 });
 
-document.getElementById("user-form").addEventListener("submit", function(event) {
+document.getElementById("user-form").addEventListener("submit", function (event) {
     event.preventDefault();
 
     // Check if user role is selected
@@ -519,7 +519,7 @@ document.getElementById("user-form").addEventListener("submit", function(event) 
         warningToast.style.display = "flex";
 
         // Hide toast after 3 seconds
-        setTimeout(function() {
+        setTimeout(function () {
             warningToast.style.display = "none";
         }, 3000);
         return;
@@ -529,7 +529,7 @@ document.getElementById("user-form").addEventListener("submit", function(event) 
     var formData = new FormData(this);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "../php/adduser.php", true);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 // Display success toast
@@ -538,7 +538,7 @@ document.getElementById("user-form").addEventListener("submit", function(event) 
                 modalBg.style.display = "none"
 
                 // Hide toast after 2 seconds
-                setTimeout(function() {
+                setTimeout(function () {
                     successToast.style.display = "none";
                     // Refresh the page
                     location.reload();
@@ -561,14 +561,14 @@ document.getElementById("user-form").addEventListener("submit", function(event) 
 
 
 //Add Complaint Confirmation Toast
-document.getElementById("complaint-form").addEventListener("submit", function(event) {
+document.getElementById("complaint-form").addEventListener("submit", function (event) {
     event.preventDefault();
 
     // Send an AJAX request to add the user to the database
     var formData = new FormData(this);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "../php/complaints.php", true);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 // Display success toast
@@ -577,7 +577,7 @@ document.getElementById("complaint-form").addEventListener("submit", function(ev
                 modalBg.style.display = "none"
 
                 // Hide toast after 2 seconds
-                setTimeout(function() {
+                setTimeout(function () {
                     successToast.style.display = "none";
                     // Refresh the page
                     location.reload();
@@ -602,11 +602,11 @@ document.getElementById("complaint-form").addEventListener("submit", function(ev
 //WARNING & SUCCESS TOAST FOR ADD MEMBER
 function checkMemContactExists(phone) {
 
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkmemcontact.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
                 resolve(response === 'exists');
@@ -617,13 +617,13 @@ function checkMemContactExists(phone) {
 }
 
 // Event listener for input changes in mem-contact
-document.getElementById('mem-contact').addEventListener('input', function() {
+document.getElementById('mem-contact').addEventListener('input', function () {
     var contactInput = this.value;
     var contactValidation = document.getElementById('mem-contact-validation');
     var saveButton = document.getElementById('member-form').querySelector('#save-btn');
 
     checkMemContactExists(contactInput)
-        .then(function(exists) {
+        .then(function (exists) {
             if (exists) {
                 contactValidation.textContent = 'Contact number already exist';
             } else {
@@ -631,7 +631,7 @@ document.getElementById('mem-contact').addEventListener('input', function() {
             }
 
             checkLicenseExists(document.getElementById('mem-license').value)
-                .then(function(exists) {
+                .then(function (exists) {
                     var licenseValidation = document.getElementById('license-validation');
                     if (exists) {
                         licenseValidation.textContent = 'License number already exist';
@@ -641,22 +641,22 @@ document.getElementById('mem-contact').addEventListener('input', function() {
 
                     saveButton.disabled = exists || contactValidation.textContent !== '' || licenseValidation.textContent !== '';
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.error(error);
                 });
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error(error);
         });
 });
 
 // Function to check if the license number exists in the database
 function checkLicenseExists(license_no) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checklicense.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
                 resolve(response === 'exists');
@@ -667,13 +667,13 @@ function checkLicenseExists(license_no) {
 }
 
 // Event listener for input changes in mem-license
-document.getElementById('mem-license').addEventListener('input', function() {
+document.getElementById('mem-license').addEventListener('input', function () {
     var licenseInput = this.value;
     var licenseValidation = document.getElementById('license-validation');
     var saveButton = document.getElementById('member-form').querySelector('#save-btn');
 
     checkLicenseExists(licenseInput)
-        .then(function(exists) {
+        .then(function (exists) {
             if (exists) {
                 licenseValidation.textContent = 'License number already exist';
             } else {
@@ -681,7 +681,7 @@ document.getElementById('mem-license').addEventListener('input', function() {
             }
 
             checkMemContactExists(document.getElementById('mem-contact').value)
-                .then(function(exists) {
+                .then(function (exists) {
                     var contactValidation = document.getElementById('mem-contact-validation');
                     if (exists) {
                         contactValidation.textContent = 'Contact number already exist';
@@ -691,17 +691,17 @@ document.getElementById('mem-license').addEventListener('input', function() {
 
                     saveButton.disabled = exists || licenseValidation.textContent !== '' || contactValidation.textContent !== '';
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.error(error);
                 });
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error(error);
         });
 });
 
 
-document.getElementById("member-form").addEventListener("submit", function(event) {
+document.getElementById("member-form").addEventListener("submit", function (event) {
     event.preventDefault();
 
     // Check if user role is selected
@@ -712,7 +712,7 @@ document.getElementById("member-form").addEventListener("submit", function(event
         warningToast.style.display = "flex";
 
         // Hide toast after 3 seconds
-        setTimeout(function() {
+        setTimeout(function () {
             warningToast.style.display = "none";
         }, 3000);
         return;
@@ -722,7 +722,7 @@ document.getElementById("member-form").addEventListener("submit", function(event
     var formData = new FormData(this);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "../php/addmember.php", true);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 // Display success toast
@@ -731,7 +731,7 @@ document.getElementById("member-form").addEventListener("submit", function(event
                 modalBg.style.display = "none"
 
                 // Hide toast after 2 seconds
-                setTimeout(function() {
+                setTimeout(function () {
                     successToast.style.display = "none";
                     // Refresh the page
                     location.reload();
@@ -763,22 +763,22 @@ const initialModule = selectedModule || 'dash';
 renderModule(initialModule);
 
 // Attach event listeners to the buttons
-dashBtn.addEventListener('click', function() {
+dashBtn.addEventListener('click', function () {
     renderModule('dash');
 });
-memBtn.addEventListener('click', function() {
+memBtn.addEventListener('click', function () {
     renderModule('member');
 });
-userBtn.addEventListener('click', function() {
+userBtn.addEventListener('click', function () {
     renderModule('users');
 });
-financeBtn.addEventListener('click', function() {
+financeBtn.addEventListener('click', function () {
     renderModule('finance');
 });
-complainBtn.addEventListener('click', function() {
+complainBtn.addEventListener('click', function () {
     renderModule('complain');
 });
-programsBtn.addEventListener('click', function() {
+programsBtn.addEventListener('click', function () {
     renderModule('programs');
 });
 
@@ -838,7 +838,7 @@ logoutBtn.addEventListener("click", handleLogout);
 const listItems = document.querySelectorAll("#nav-list .locked");
 
 
-listItems.forEach(function(item) {
+listItems.forEach(function (item) {
     item.style.pointerEvents = "none";
     item.style.opacity = "0.5";
 });
@@ -893,13 +893,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-window.onload = function() {
+window.onload = function () {
     if (window.location.search.includes("success")) {
         history.replaceState({}, document.title, window.location.pathname);
     }
 }
 
-listItems.forEach(function(item) {
+listItems.forEach(function (item) {
     item.style.pointerEvents = "none";
     item.style.opacity = "0.5";
 });
@@ -917,3 +917,32 @@ function countChar(val) {
         }
     }
 }
+
+function generatePDF(complaintId, fileName) {
+    const pdfUrl = '../reports/' + fileName + '?id=' + complaintId;
+  
+    const printContainer = document.createElement('div');
+    printContainer.id = 'print-container';
+    printContainer.style.display = 'none';
+    document.body.appendChild(printContainer);
+  
+    const iframe = document.createElement('iframe');
+    iframe.src = pdfUrl;
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = 'none';
+    printContainer.appendChild(iframe);
+  
+    iframe.onload = function() {
+      const printWindow = iframe.contentWindow || iframe.contentDocument.defaultView;
+      printWindow.print();
+    };
+  }
+  
+
+
+
+
+
+
+

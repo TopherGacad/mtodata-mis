@@ -20,6 +20,7 @@ $updateQuery = "UPDATE mem_info SET mem_stat = 'Expired' WHERE mem_stat = 'Activ
 mysqli_query($conn, $updateQuery);
 
 date_default_timezone_set('Asia/Manila');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +38,12 @@ date_default_timezone_set('Asia/Manila');
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;900&display=swap" rel="stylesheet">
     <!-- FONT AWESOME/ICONS -->
     <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
+
+    <!-- Include the required libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.2.8/es6-promise.auto.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
 
 </head>
@@ -114,7 +121,7 @@ date_default_timezone_set('Asia/Manila');
                     <p>" . $row['mem_count'] . "</p>
                 </div>
                 <div class='link-container memCount'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>";
             }
@@ -132,7 +139,7 @@ date_default_timezone_set('Asia/Manila');
                     <p><span>&#8369;</span>" . $row['don_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>";
             }
@@ -150,7 +157,7 @@ date_default_timezone_set('Asia/Manila');
                     <p><span>&#8369;</span>" . $row['con_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>";
             }
@@ -169,7 +176,7 @@ date_default_timezone_set('Asia/Manila');
                     <p>" . $row['com_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>
         </section>";
@@ -423,6 +430,7 @@ date_default_timezone_set('Asia/Manila');
             <td class='action'>
                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastMember(" . $row["id"] . ")'></i></abbr>
                 <a href='../../views/pages/viewuser.php?id=" . $row['id'] . "'><i class='fa-sharp fa-solid fa-eye'></i></a>
+                <i class='tools fa-solid fa-print save' data-container='memcert' onclick=\"generatePDF('" . $row["id"] . "', 'memcertification.php')\"></i>
             </td>
         </tr>";
                                 }
@@ -499,10 +507,15 @@ date_default_timezone_set('Asia/Manila');
 
                             $timestamp = date('Y-m-d H:i:s');
 
-                            // Check connection
-                            if ($conn->connect_error) {
-                                die("Connection failed: " . $conn->connect_error);
+                            // Delete transactions associated with non-existent member IDs
+                            $deleteTransactionSql = "DELETE FROM transaction_payment WHERE member_id NOT IN (SELECT id FROM mem_info)";
+                            $deleteTransactionResult = $conn->query($deleteTransactionSql);
+
+                            if ($deleteTransactionResult === false) {
+                                die("Error executing the query: " . $conn->error);
                             }
+
+
 
                             // Remove deleted data from transaction_finance
                             $deleteSql = "DELETE tf FROM transaction_finance tf
@@ -540,6 +553,20 @@ date_default_timezone_set('Asia/Manila');
                                 die("Error executing the query: " . $conn->error);
                             }
 
+                            $updateSql = "UPDATE transaction_finance SET ";
+                            $updateSql .= "debit = CASE ";
+                            $updateSql .= "WHEN account_type IN ('Donation', 'Contribution', 'Renewal', 'New Member') THEN amount ";
+                            $updateSql .= "ELSE debit ";
+                            $updateSql .= "END, ";
+                            $updateSql .= "credit = CASE ";
+                            $updateSql .= "WHEN account_type NOT IN ('Donation', 'Contribution', 'Renewal', 'New Member') THEN amount ";
+                            $updateSql .= "ELSE credit ";
+                            $updateSql .= "END";
+                            $updateResult = $conn->query($updateSql);
+
+                            if ($updateResult === false) {
+                                die("Error executing the update query: " . $conn->error);
+                            }
 
                             // Fetch inserted data
                             $selectSql = "SELECT *,  DATE_FORMAT(date_created, '%Y-%m-%d %h:%i %p') AS new_formatted_date FROM transaction_finance ORDER BY date_created DESC";
@@ -551,33 +578,14 @@ date_default_timezone_set('Asia/Manila');
 
                                 while ($row = $selectResult->fetch_assoc()) {
 
-
-                                    if ($selectResult === false) {
-                                        die("Error executing the query: " . $conn->error);
-                                    }
-
-                                    if ($row['account_type'] === 'Donation' || $row['account_type'] === 'Contribution' || $row['account_type'] === 'Renewal' || $row['account_type'] === 'New Member') {
-                                        $add2debit = "UPDATE transaction_finance SET debit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
-                                        $addResult = $conn->query($add2debit);
-                                        if ($addResult === false) {
-                                            die("Error executing the query: " . $conn->error);
-                                        }
-                                    } else {
-                                        $add2credit = "UPDATE transaction_finance SET credit = " . $row['amount'] . " WHERE transaction_code = '" . $row['transaction_code'] . "'";
-                                        $addResult = $conn->query($add2credit);
-                                        if ($addResult === false) {
-                                            die("Error executing the query: " . $conn->error);
-                                        }
-                                    }
-
                                     echo "
                     <tr>
                         <td id='id'>" . $row["ID"] . "</td>
                         <td class='name'>" . $row["account_type"] . "</td>
                         <td class='code'>" . $row["transaction_code"] . "</td>
                         <td class='amount'>&#8369;" . $row["amount"] . "</td>
-                        <td class='name'>" . $row["debit"] . "</td>
-                        <td class='name'>" . $row["credit"] . "</td>
+                        <td class='amount'>" . $row["debit"] . "</td>
+                        <td class='amount'>" . $row["credit"] . "</td>
                         <td class='name'>" . $row["new_formatted_date"] . "</td>
                         <td class='action'>" ?>
 
@@ -662,6 +670,14 @@ date_default_timezone_set('Asia/Manila');
                             <?php
                             // connect to the MySQL database
                             include "db_conn.php";
+                            // check connection
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+                            // retrieve data from the MySQL table
+                            $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, 
+                    DATE_FORMAT(complaint_details.date_created, '%Y/%m/%d %h:%i %p') AS date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.id ORDER BY date_created DESC";
+                            $result = $conn->query($sql);
 
                             // check connection
                             if ($conn->connect_error) {
@@ -684,6 +700,7 @@ date_default_timezone_set('Asia/Manila');
                             <td class='action'>
                                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
                                 <a href='../../views/pages/viewComplaint.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                                <i class='tools fa-solid fa-print save' data-container='complaints' onclick=\"generatePDF('" . $row["id"] . "', 'comp-report.php')\"></i>
                             </td>
                         </tr>";
                             }
@@ -771,7 +788,7 @@ date_default_timezone_set('Asia/Manila');
                     <td class='action'>
                         <i class='tools fa-solid fa-trash-can'></i>
                         <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
-                        <i class='tools fa-solid fa-print'></i>
+                        <i class='tools fa-solid fa-print save' data-container='ep' onclick=\"generatePDF('" . $row["id"] . "', 'ep.php')\"></i>
                     </td>
                 </tr> ";
 
@@ -843,26 +860,6 @@ date_default_timezone_set('Asia/Manila');
                                 <input type="text" maxlength="5" pattern="[A-Za-z]{2,5}" id="user-extension"
                                     name="extension" placeholder="eg. Jr, Sr">
                             </div>
-                        </div>
-                        <!-- FORM-RIGHT -->
-                        <div class="userForm-right addForm">
-
-                            <!-- USERNAME -->
-                            <div class="fields">
-                                <label for="user-uname">Username<span> *</span></label>
-                                <input type="text" id="user-uname" name="user-uname" maxlength="25"
-                                    placeholder="juandelacruz123" required>
-                                <span id="username-validation"></span> <!-- Display validation message here -->
-                            </div>
-                            <!-- EMAIL -->
-                            <div class="fields">
-                                <label for="user-email">Email Address<span> *</span></label>
-                                <input type="email" id="user-email" name="street"
-                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="juan@example.com"
-                                    required>
-                                <span id="email-validation"></span> <!-- Display validation message here -->
-                            </div>
-
                             <!-- CONTACT NUMBER -->
                             <div class="fields">
                                 <label for="mem-contact">Contact no.<span> *</span></label>
@@ -896,6 +893,277 @@ date_default_timezone_set('Asia/Manila');
                             </div>
                         </div>
                     </div>
+                </form>
+
+                <!-- WARNING TOAST -->
+                <div class="warningToast-container" id="warningToast">
+                    <div class="warningToast-left">
+                        <i class="warningToast-icon fa-solid fa-circle-info"></i>
+                    </div>
+                    <div class="warningToast-right">
+                        <p><strong>Try Again</strong> Please select user role!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOAST -->
+            <div class="successToast-container" id="user-successToast">
+                <div class="successToast-left">
+                    <i class="successToast-icon fa-solid fa-circle-check"></i>
+                </div>
+                <div class="successToast-right">
+                    <p id="event-success"><strong>Success!</strong> User successfully added.</p>
+                </div>
+            </div>
+
+            <!-- SUCCESS TOAST -->
+            <div class='success-toast-container' id='toast-success'>
+                <div class='toast-left-success'>
+                    <i class='toast-icon fa-solid fa-circle-check'></i>
+                </div>
+                <div class='toast-right'>
+                    <p id='success-con'></p>
+                </div>
+            </div>
+
+            <!-- ADD MEMBER MODAL -->
+            <div class="bg" id="bg"></div>
+            <div class="addMem-modal-container" id="member-modal-container">
+                <h2 class="modal-title">MEMBER REGISTRATION</h2>
+                <form action="../php/addmember.php" method="post" id="member-form" enctype="multipart/form-data">
+                    <div class="form-container">
+                        <!-- FORM LEFT -->
+                        <div class="memForm-left addForm">
+                            <!-- MEMBERS ROLE -->
+                            <div class="fields">
+                                <label for="select-mem">Member's role<span> *</span></label>
+                                <select name="role" id="select-mem">
+                                    <option value="" selected disabled>Select Role</option>
+                                    <option value="Officer">Officer</option>
+                                    <option value="Driver">Driver only</option>
+                                    <option value="Operator">Operator only</option>
+                                </select>
+                            </div>
+                            <!-- LASTNAME -->
+                            <div class="fields">
+                                <label for="mem-lastname">Lastname<span> *</span></label>
+                                <input type="text" id="mem-lastname" name="lastname" maxlength="25"
+                                    pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
+                            </div>
+                            <!-- FIRSTNAME -->
+                            <div class="fields">
+                                <label for="mem-firstname">Firstname<span> *</span></label>
+                                <input type="text" id="mem-firstname" name="firstname" maxlength="25"
+                                    pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
+                            </div>
+                            <!-- MIDNAME -->
+                            <div class="fields">
+                                <label for="mem-midname">Middlename</label>
+                                <input type="text" id="mem-midname" name="middlename" maxlength="25"
+                                    pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
+                            </div>
+                            <!-- EXTENSION NAME -->
+                            <div class="fields">
+                                <label for="mem-extension">Extension Name</label>
+                                <input type="text" id="mem-extension" name="extension" maxlength="5"
+                                    pattern="[A-Za-z1-9]{2,5}" placeholder="eg. Jr, Sr">
+                            </div>
+
+                            <!-- GENDER -->
+                            <div class="fields">
+                                <label for="select-gender">Sex<span> *</span></label>
+                                <select name="gender" id="select-gender" required>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="none">Prefer not to say</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <!-- FORM-RIGHT -->
+                        <div class="memForm-right addForm">
+                            <!-- STREET -->
+                            <div class="fields">
+                                <label for="mem-street">Street<span> *</span></label>
+                                <input type="text" maxlength="25" id="mem-street" name="street" required>
+                            </div>
+
+                            <!-- BARANGAY -->
+                            <div class="fields">
+                                <label for="mem-brgy">Barangay<span> *</span></label>
+                                <input type="text" maxlength="25" id="mem-brgy" name="barangay" required>
+                            </div>
+                            <!-- CITY -->
+                            <div class="fields">
+                                <label for="mem-city">City<span> *</span></label>
+                                <input type="text" maxlength="25" pattern="[A-Za-z ]{2,25}" id="mem-city" name="city"
+                                    required>
+                            </div>
+                            <!-- CONTACT NUMBER -->
+                            <div class="fields">
+                                <label for="mem-contact">Contact no.<span> *</span></label>
+                                <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact"
+                                    placeholder="eg. 09592220954" required>
+                                <span id="mem-contact-validation"></span> <!-- Display validation message here -->
+                            </div>
+                            <!-- LICENSE NUMBER -->
+                            <div class="fields">
+                                <label for="mem-license">License no.<span> *</span></label>
+                                <input type="text" id="mem-license" pattern="[A-Z]{1}[0-9]{2}-[0-9]{2}-[0-9]{6}"
+                                    name="license" placeholder="eg. A34-34-345645" required>
+                                <span id="license-validation"></span> <!-- Display validation message here -->
+                            </div>
+                            <!-- USER PROFILE PICTURE -->
+                            <div class="fields">
+                                <label for="mem-pic">Upload Profile Icon</label>
+                                <input type="file" accept=".png, .jpg, .jpeg" id="mem-pic" name="profile">
+                            </div>
+
+                            <div class="btn-container">
+                                <input type="button" value="Cancel" class="cancel-btn" id="member-cancel"
+                                    formnovalidate>
+                                <button class="save-btn" id="save-btn" type="submit">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- WARNING TOAST -->
+                <div class="warningToast-container" id="mem-warningToast">
+                    <div class="warningToast-left">
+                        <i class="warningToast-icon fa-solid fa-circle-info"></i>
+                    </div>
+                    <div class="warningToast-right">
+                        <p><strong>Try Again</strong> Please select member role!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOAST -->
+            <div class="successToast-container" id="mem-successToast">
+                <div class="successToast-left">
+                    <i class="successToast-icon fa-solid fa-circle-check"></i>
+                </div>
+                <div class="successToast-right">
+                    <p><strong>Success!</strong> Member successfully added.</p>
+                </div>
+            </div>
+
+            <!-- ADD FINANCE MODAL -->
+            <div class='bg' id='bg'></div>
+            <div class='addFinance-modal-container' id='finance-modal-container'>
+                <h2 class='modal-title'>ADD FINANCIAL RECORD</h2>
+                <form action='addfinancerecord.php' method="POST" id='finance-form'>
+                    <div class='form-container'>
+                        <!-- FORM LEFT -->
+                        <div class='financeForm-left addForm'>
+                            <!-- FINANCE TYPE -->
+                            <div class='fields'>
+                                <label for='select-type'>Finance Type<span> *</span>
+                                </label>
+                                <select name='type' id='select-type' onchange="disableInputs()" required>
+                                    <option value='' selected disabled>Select Account type</option>
+                                    <option value='Butaw'>Butaw/Contribution</option>
+                                    <option value='Donation'>Donation</option>
+                                    <option value='Expenses'>Expenses</option>
+                                </select>
+                            </div>
+                            <!-- BODY NO. -->
+                            <div class='fields'>
+                                <label for='bodynum'>Body No.<span> *</span></label>
+                                <input type='text' id='body-no' name='bodynum' pattern="[0-9]*" required disabled>
+                            </div>
+
+                            <!-- DONOR NAME -->
+                            <div class='field-container'>
+                                <div class='fields donor'>
+                                    <label for='donor-select'>Donor Name</label>
+                                    <select name='donor_select' id='donor-select' onchange='handleDonorSelection()'
+                                        required disabled>
+                                        <option selected disabled value=''>Select Donor</option>
+                                        <?php
+
+                                        // connect to the MySQL database
+                                        include "db_conn.php";
+
+                                        if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
+                                        }
+
+                                        $sql = "SELECT * FROM donor_info";
+
+                                        $result = $conn->query($sql);
+
+
+                                        while ($row = $result->fetch_assoc()) {
+
+                                            $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                                            $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                                            $lastName = $row["lname"];
+
+                                            if (empty($row["exname"])) {
+                                                $lastName .= ', ';
+                                            }
+
+                                            echo "<option value='" . $row["id"] . "'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
+                                        }
+                                        // close MySQL connection
+                                        $conn->close();
+                                        ?>
+                                    </select>
+                                </div>
+                                <!-- FORM-RIGHT -->
+                                <div class="userForm-right addForm">
+
+                                    <!-- USERNAME -->
+                                    <div class="fields">
+                                        <label for="user-uname">Username<span> *</span></label>
+                                        <input type="text" id="user-uname" name="user-uname" maxlength="25"
+                                            placeholder="juandelacruz123" required>
+                                        <span id="username-validation"></span> <!-- Display validation message here -->
+                                    </div>
+                                    <!-- EMAIL -->
+                                    <div class="fields">
+                                        <label for="user-email">Email Address<span> *</span></label>
+                                        <input type="email" id="user-email" name="street"
+                                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                            placeholder="juan@example.com" required>
+                                        <span id="email-validation"></span> <!-- Display validation message here -->
+                                    </div>
+
+                                    <!-- CONTACT NUMBER -->
+                                    <div class="fields">
+                                        <label for="mem-contact">Contact no.<span> *</span></label>
+                                        <input type="text" pattern="[0-9]{11}" id="user-contact" name="contact"
+                                            placeholder="eg. 09592220954" required>
+                                        <span id="contact-validation"></span> <!-- Display validation message here -->
+                                    </div>
+
+                                    <!-- PASSWORD -->
+                                    <div class="fields">
+                                        <label for="user-pass">Password<span> *</span></label>
+                                        <input type="password" id="user-pass" name="password" minlength="8"
+                                            maxlength="16" placeholder="8-16 characters only" required>
+                                    </div>
+                                    <!-- CONFIRM PASSWORD -->
+                                    <div class="fields">
+                                        <label for="user-confirmPass">Confirm Password<span> *</span></label>
+                                        <input type="password" id="user-confirmPass" name="city" required>
+                                    </div>
+
+                                    <!-- SEE PASSWORD -->
+                                    <div class="see-password-container">
+                                        <input class="see-pass" type="checkbox" id="see-pass">
+                                        <label class="see-pass-label" for="see-pass">See password</label>
+                                    </div>
+
+                                    <div class="btn-container">
+                                        <input type="button" value="Cancel" class="cancel-btn" id="adduser-cancel"
+                                            formnovalidate>
+                                        <button class="save-btn" id="save-btn" type="submit">Save</button>
+                                    </div>
+                                </div>
+                            </div>
                 </form>
 
                 <!-- WARNING TOAST -->
