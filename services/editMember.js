@@ -36,8 +36,9 @@ function toggle(me, other) {
     }
 }
 
-// Get the form and update button elements
+// Get the form, file upload input, and update button elements
 const editForm = document.getElementById('edit-mem');
+const fileInput = document.getElementById('mem-pic');
 const updateButton = document.getElementById('member-update');
 
 // Store the initial form data as a serialized string
@@ -52,10 +53,13 @@ editForm.addEventListener('input', function () {
     // Compare the current form data with the initial form data
     const hasChanged = currentDataString !== Array.from(initialFormData.entries()).toString();
 
-    // Enable or disable the update button based on whether the values have changed
-    updateButton.disabled = !hasChanged;
-    console.log('Button has been enabled hehe');
+    // Check if the file upload field has changed
+    const fileChanged = fileInput.files.length > 0;
+
+    // Enable or disable the update button based on whether there are changes in the form or file upload
+    updateButton.disabled = !hasChanged && !fileChanged;
 });
+
 
 function formatPattern(input) {
 
