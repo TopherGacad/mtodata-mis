@@ -42,6 +42,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>Donor's Information
             </h3>
             <div class='btn-container'>
+                <abbr title="Export Report"><button class="donorExportBtn exportBtn" id="donor-export"><i
+                            class="fa-solid fa-download"></i></button></abbr>
                 <input type='text' id='donor-search' class='unit-search' placeholder='Search'>
                 <a href='../../views/php/dashboard.php'><input type='button' value='Cancel' class='cancelBtn modal-btn'
                         id='cancel-btn'></a>
@@ -51,7 +53,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         </div>
 
         <div class='content-container'>
-            <table id='unit-table'>
+            <table id='donor-table'>
                 <tr>
                     <th class='id'>ID</th>
                     <th class='name'>Name</th>
@@ -127,6 +129,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     </div>
     
     <script src='../../services/donorinfo.js'></script>
+    <script src="../../services/exportdonor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
 </body>
 
 </html>

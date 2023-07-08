@@ -673,8 +673,6 @@ date_default_timezone_set('Asia/Manila');
                 <p>USER VIEW</p>
             </div>
             <div class="head-right">
-                <button class="complaintExportBtn exportBtn" id="complaint-export"><i
-                        class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" id="comp-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -1392,13 +1390,19 @@ date_default_timezone_set('Asia/Manila');
             <div class="loading-bar"></div>
         </div>
     </div>
+    
 
     <!-- SCRIPTS -->
+    <!-- Javascript Library for Excel -->
     <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+    <!-- Main Script for Dashboard -->
     <script src="../../services/dashboard.js"></script>
+    <!-- Script for Exporting into Excel -->
     <script src="../../services/exportMember.js"></script>
     <script src="../../services/exportFinance.js"></script>
+    <!-- Script for date today  -->
     <script src="../../services/datetoday.js"></script>
+    <!-- Script for Loading Screen -->
     <script src="../../services/loading.js"></script>
 </body>
 
