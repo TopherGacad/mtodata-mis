@@ -93,16 +93,19 @@ date_default_timezone_set('Asia/Manila');
             }
 
             // member count
-            $mem = "SELECT COUNT(id) AS mem_count FROM mem_info";
+            $mem = "SELECT COUNT(id) AS mem_count FROM mem_info WHERE mem_stat = 'Active'";
             $mem_result = $conn->query($mem);
 
-            $don = "SELECT SUM(amount) AS don_count FROM transaction_donation";
+            $don = "SELECT SUM(amount) AS don_count FROM transaction_donation
+            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $don_result = $conn->query($don);
 
-            $con = "SELECT SUM(amount) AS con_count FROM transaction_contribution";
+            $con = "SELECT SUM(amount) AS con_count FROM transaction_contribution
+            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $con_result = $conn->query($con);
 
-            $com = "SELECT COUNT(id) AS com_count FROM complaint_details";
+            $com = "SELECT COUNT(id) AS com_count FROM complaint_details
+            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $com_result = $conn->query($com);
 
             if ($mem_result) {
@@ -193,63 +196,35 @@ date_default_timezone_set('Asia/Manila');
                 <div class="table-container">
                     <table>
                         <tr>
-                            <th>Type</th>
+                            <th>Transaction Code</th>
                             <th>Debit</th>
                             <th>Credit</th>
+                            <th>Date</th>
                         </tr>
 
                         <tbody>
-                            <tr>
-                                <td>Donation</td>
-                                <td>10</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Donation</td>
-                                <td>10</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Donation</td>
-                                <td>10</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Donation</td>
-                                <td>10</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Donation</td>
-                                <td>10</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Donation</td>
-                                <td>10</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Donation</td>
-                                <td>10</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Donation</td>
-                                <td>10</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Donation</td>
-                                <td>10</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Donation</td>
-                                <td>10</td>
-                                <td>20</td>
-                            </tr>
+                            <?php
 
+                            // connect to the MySQL database
+                            include "db_conn.php";
+
+                            $selectFinance = "SELECT *, DATE_FORMAT(date_created, '%Y-%m-%d') AS new_formatted_date FROM transaction_finance ORDER BY date_created DESC";
+                            $FinaceResult = $conn->query($selectFinance);
+
+                            while ($FinRecent = $FinaceResult->fetch_assoc()) {
+                                echo "
+                                <tr>
+                                <td>" . $FinRecent['transaction_code'] . "</td>
+                                <td>" . $FinRecent['debit'] . "</td>
+                                <td>" . $FinRecent['credit'] . "</td>
+                                <td>" . $FinRecent['new_formatted_date'] . "</td>
+                                </tr>
+                                ";
+                            }
+
+                            // close MySQL connection
+                            $conn->close();
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -258,28 +233,31 @@ date_default_timezone_set('Asia/Manila');
 
                 <!-- EVENTS AND PROGRAMS ENTRY -->
                 <div class='card-header events'>
-                    <h4>Events for today (06-23-23)</h4>
+                    <h4>Scheduled Events</h4>
                 </div>
                 <div class='dash-content'>
-                    <div class='agenda-box'>
-                        <h3>Toda Christmas Party</h3>
-                        <p>2023-06-12 06:00 AM</p>
-                    </div>
+                    <?php
 
-                    <div class='agenda-box'>
-                        <h3>Toda Annual Election</h3>
-                        <p>2023-06-12 06:00 AM</p>
-                    </div>
+                    // connect to the MySQL database
+                    include "db_conn.php";
+                    $dateToday = date('ymd');
 
-                    <div class='agenda-box'>
-                        <h3>Toda Meeting for OUTING</h3>
-                        <p>2023-06-12 06:00 AM</p>
-                    </div>
+                    $showPrograms = "SELECT *, CONCAT(DATE_FORMAT(ep_date, '%Y-%m-%d'), ' ', DATE_FORMAT(ep_start, '%h:%i %p')) AS concatenated_datetime FROM events_programs 
+                    WHERE ep_date >= $dateToday ORDER BY concatenated_datetime ASC";
+                    $showProgramResult = $conn->query($showPrograms);
 
-                    <div class='agenda-box'>
-                        <h3>Toda Meeting for OUTING</h3>
-                        <p>2023-06-12 06:00 AM</p>
-                    </div>
+                    while ($EPRecent = $showProgramResult->fetch_assoc()) {
+                        echo "
+                         <div class='agenda-box'>
+                         <h3>" . $EPRecent['ep_title'] . "</h3>
+                         <p>" . $EPRecent['concatenated_datetime'] . "</p>
+                         </div>
+                         ";
+                    }
+
+                    // close MySQL connection
+                    $conn->close();
+                    ?>
                 </div>
 
             </div>
