@@ -889,9 +889,6 @@ function generatePDF(complaintId, fileName) {
       printWindow.print();
     };
   }
-  
-
-
 
 
 
