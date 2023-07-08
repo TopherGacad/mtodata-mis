@@ -115,7 +115,7 @@ if (isset($_GET['id'])) {
                                 <!-- BODY NO. -->
                                 <div class="fields">
                                     <label for="unit-bodyno">Body No. <span> *</span></label>
-                                    <input type="text" id="unit-bodyno" name="unitbody_no" required
+                                    <input type="text" id="unit-bodyno" pattern="[0-9]{4}" maxlenght="4" name="unitbody_no" required
                                         value='<?php echo $row['body_no']; ?>'>
                                 </div>
 
@@ -177,7 +177,7 @@ if (isset($_GET['id'])) {
                                 <!-- FRANCHISE NO. -->
                                 <div class="fields">
                                     <label for="unit_franno">Franchise No. <span> *</span></label>
-                                    <input type="text" id="unit-franno" name="unitfran_no" required
+                                    <input type="text" id="unit-franno" pattern="[0-9]*" name="unitfran_no" required
                                         value='<?php echo $row['franchise_no']; ?>'>
                                 </div>
                             </div>
@@ -203,7 +203,7 @@ if (isset($_GET['id'])) {
                                 <!-- AREA CODE -->
                                 <div class="fields">
                                     <label for="unit-area">Area Code <span> *</span></label>
-                                    <input type="text" id="unit-area" name="unit_area" required
+                                    <input type="text" id="unit-area" pattern="[0-9]*" name="unit_area" required
                                         value='<?php echo $row['area_code']; ?>'>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@ if (isset($_GET['id'])) {
                             <div class="section">
                                 <div class="fields">
                                     <label for="unit_motor_no">Motor No. <span> *</span></label>
-                                    <input type="text" required name="unit_motor_no" value='<?php echo $row['motor_no']; ?>'>
+                                    <input type="text" required name="unit_motor_no" pattern="[0-9]*" maxlenght="4" value='<?php echo $row['motor_no']; ?>'>
                                 </div>
 
                                 <div class="fields">
@@ -250,7 +250,7 @@ if (isset($_GET['id'])) {
                                 <!-- DISTRICT -->
                                 <div class="fields">
                                     <label for="unit-district">District <span> *</span></label>
-                                    <input type="text" id="unit-district" name="unit_district" required
+                                    <input type="text" id="unit-district" pattern="[0-9]{2}" maxlenght="2" name="unit_district" required
                                         value='<?php echo $row['district']; ?>'>
                                 </div>
                             </div>
