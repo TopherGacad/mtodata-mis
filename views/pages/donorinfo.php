@@ -63,9 +63,11 @@ if (isset($_GET['id'])) {
     <div class='content-container'>
         <form>
             <div class='ot-header'>
-                <h3><a href='../../views/pages/viewdonors.php'><i class='fa-solid fa-arrow-left'></i></a>View Donor
+                <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>View Donor
                     Information</h3>
                 <div class='btn-container'>
+                    <a href='../../views/pages/viewdonors.php?id=<?php echo $donorID ?>'><input type='button'
+                            value='Donor List' class='donorlist modal-btn ' formnovalidate></a>
                     <a href='../../views/pages/updatedonorinfo.php?id=<?php echo $donorID ?>'><input type='button'
                             value='Edit' class='cancelBtn modal-btn' formnovalidate></a>
                 </div>

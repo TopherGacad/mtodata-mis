@@ -91,10 +91,14 @@ body {
     box-shadow: var(--box-shadow);
 }
 
-.view {
+.view,
+.donorlist{
     color: var(--def-white);
     background-color: var(--primary-font-color);
     width: 70px;
+}
+.donorlist{
+    width: 80px;
 }
 
 .btn-container {
