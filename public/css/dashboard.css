@@ -150,6 +150,8 @@ section {
     text-align: center;
 }
 
+
+
 .card-header {
     display: flex;
     justify-content: space-evenly;
@@ -233,8 +235,17 @@ section {
 .botleft-dash th{
     padding: 5px;
     position: sticky;
-    top: 58px;
+    top: 80px;
 }
+
+.botleft-dash .bal {
+    padding: 10px;
+    position: sticky;
+    top: 50px;
+    background-color: var(--white-color);
+    text-align: right;
+}
+
 .entry{
     position: sticky;
     top: 0;
