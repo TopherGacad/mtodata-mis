@@ -118,7 +118,7 @@ date_default_timezone_set('Asia/Manila');
                     <p>" . $row['mem_count'] . "</p>
                 </div>
                 <div class='link-container memCount'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>";
             }
@@ -136,7 +136,7 @@ date_default_timezone_set('Asia/Manila');
                     <p><span>&#8369;</span>" . $row['don_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>";
             }
@@ -154,7 +154,7 @@ date_default_timezone_set('Asia/Manila');
                     <p><span>&#8369;</span>" . $row['con_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>";
             }
@@ -173,7 +173,7 @@ date_default_timezone_set('Asia/Manila');
                     <p>" . $row['com_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>
         </section>";
@@ -515,8 +515,8 @@ date_default_timezone_set('Asia/Manila');
                     <th class="name">TYPE</th>
                     <th class="code">CODE</th>
                     <th class="amount">AMOUNT</th>
-                    <th class="name">DEBIT</th>
-                    <th class="name">CREDIT</th>
+                    <th class="amount">DEBIT</th>
+                    <th class="amount">CREDIT</th>
                     <th class="name">DATE</th>
                     <th class="action">ACTION</th>
                 </tr>
@@ -610,8 +610,8 @@ date_default_timezone_set('Asia/Manila');
                         <td class='name'>" . $row["account_type"] . "</td>
                         <td class='code'>" . $row["transaction_code"] . "</td>
                         <td class='amount'>&#8369;" . $row["amount"] . "</td>
-                        <td class='name'>" . $row["debit"] . "</td>
-                        <td class='name'>" . $row["credit"] . "</td>
+                        <td class='amount'>" . $row["debit"] . "</td>
+                        <td class='amount'>" . $row["credit"] . "</td>
                         <td class='name'>" . $row["new_formatted_date"] . "</td>
                         <td class='action'>" ?>
 
