@@ -14,12 +14,14 @@ p {
     page-break-inside: avoid;
 }
 
+
 .container {
     background-color: white;
     margin: 0 .5in 1in;
     min-height: calc(100vh - 2in);
     box-sizing: border-box;
     position: relative;
+    padding-bottom: 50px;
 }
 
 .header {
@@ -73,9 +75,9 @@ p {
 }
 
 table {
-    width: 98%;
     margin-top: 20px;
     margin-bottom: 20px;
+    page-break-inside: avoid;
 }
 
 .mem_info {

@@ -43,8 +43,8 @@ date_default_timezone_set('Asia/Manila');
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.2.8/es6-promise.auto.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
 
 </head>
 
@@ -124,45 +124,47 @@ date_default_timezone_set('Asia/Manila');
                     <p>" . $row['mem_count'] . "</p>
                 </div>
                 <div class='link-container memCount'>
-                    <button>View Report</button>
+                    <button class='save' id='retrieve-donation' onclick=\"save_generate()\">View Report</button>
                 </div>
             </div>";
             }
 
             if ($don_result) {
                 $row = mysqli_fetch_assoc($don_result);
+                $don_count = $row['don_count'];
                 echo "
-            <!-- DONATION COUNT -->
-            <div class='card border'>
-                <div class='card-header'>
-                    <i class='card-icon fa-solid fa-hand-holding-dollar'></i>
-                    <h4 class=''>Donations Received</h4>
-                </div>
-                <div class='count-container'>
-                    <p><span>&#8369;</span>" . $row['don_count'] . "</p>
-                </div>
-                <div class='link-container'>
-                    <button>View Report</button>
-                </div>
-            </div>";
+                    <!-- DONATION COUNT -->
+                    <div class='card border'>
+                        <div class='card-header'>
+                            <i class='card-icon fa-solid fa-hand-holding-dollar'></i>
+                            <h4 class=''>Donations Received</h4>
+                        </div>
+                        <div class='count-container'>
+                            <p><span>&#8369;</span>" . ($don_count != 0 ? $don_count : "0") . "</p>
+                        </div>
+                        <div class='link-container'>
+                            <button class='save' id='retrieve1' onclick=\"save_generate1()\">View Report</button>
+                        </div>
+                    </div>";
             }
 
             if ($con_result) {
                 $row = mysqli_fetch_assoc($con_result);
+                $con_count = $row['con_count'];
                 echo "
-            <!-- CONTRIBUTION COUNT -->
-            <div class='card border'>
-                <div class='card-header'>
-                    <i class='card-icon fa-solid fa-circle-dollar-to-slot'></i>
-                    <h4 class=''>Contribution Collected</h4>
-                </div>
-                <div class='count-container'>
-                    <p><span>&#8369;</span>" . $row['con_count'] . "</p>
-                </div>
-                <div class='link-container'>
-                    <button>View Report</button>
-                </div>
-            </div>";
+                    <!-- CONTRIBUTION COUNT -->
+                    <div class='card border'>
+                        <div class='card-header'>
+                            <i class='card-icon fa-solid fa-circle-dollar-to-slot'></i>
+                            <h4 class=''>Contribution Collected</h4>
+                        </div>
+                        <div class='count-container'>
+                            <p><span>&#8369;</span>" . ($con_count != 0 ? $con_count : "0") . "</p>
+                        </div>
+                        <div class='link-container'>
+                        <button class='save' id='retrieve1' onclick=\"save_generate2()\">View Report</button>
+                        </div>
+                    </div>";
             }
 
 
@@ -1368,7 +1370,7 @@ date_default_timezone_set('Asia/Manila');
             <div class="loading-bar"></div>
         </div>
     </div>
-    
+
 
     <!-- SCRIPTS -->
     <!-- Javascript Library for Excel -->

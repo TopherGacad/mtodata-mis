@@ -1,6 +1,13 @@
 <?php
 date_default_timezone_set('Asia/Manila');
-$currentDate = date('F j, Y');
+
+// Get the start of the current month
+$startOfMonth = date('Y-m-01');
+
+// Get the current date
+$currentDate = date('Y-m-d');
+
+$currDate = date('F j, Y');
 ?>
 
 <!DOCTYPE html>
@@ -37,18 +44,16 @@ $currentDate = date('F j, Y');
             </div>
             <div class="contents">
                 <table class="report">
-                    <br>
-                    <p style="text-align: center;"><b>MEMBERSHIP STATUS REPORT</b></p>
+                    <p style="text-align: center;"><b>CONTRIBUTION REPORT</b></p>
                     <p style="text-align: center;">As of
-                        <?php echo $currentDate ?>
+                        <?php echo $currDate ?>
                     </p>
                     <thead class="report_head">
                         <tr>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Membership Status</th>
-                            <th>Date of Registration</th>
-                            <th>Expiration</th>
+                            <th>BODY NUMBER</th>
+                            <th>Transaction code</th>
+                            <th>AMOUNT</th>
+                            <th>DATE</th>
                         </tr>
                     </thead>
 
@@ -64,9 +69,9 @@ $currentDate = date('F j, Y');
                     }
 
                     //data retrieval
-                    $sql = "SELECT * , DATE_FORMAT(date_created, '%b %d, %Y') AS valid_date,
-                DATE_FORMAT(DATE_ADD(date_created, INTERVAL 2 YEAR), '%b %d, %Y') AS expiry_date FROM `mem_info`
-                ORDER BY date_created DESC";
+                    $sql = "SELECT * FROM transaction_contribution
+                    WHERE date_created BETWEEN '$startOfMonth' AND '$currentDate'
+                    ORDER BY for_date DESC;";
                     $result = $conn->query($sql);
 
                     if ($result === false) {
@@ -74,27 +79,19 @@ $currentDate = date('F j, Y');
                     }
 
                     if ($result->num_rows === 0) {
-                        echo "No rows found.";
+                        echo "<td>No Entry Found</td>";
                     }
 
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
-                        $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
-                        $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
-                        $lastName = $row["lname"];
-
-                        if (empty($row["exname"])) {
-                            $lastName .= ', ';
-                        }
 
                         echo "
                     <tbody>
                     <tr>
-                        <td>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</td>
-                        <td>" . $row["mem_role"] . "</td>
-                        <td>" . $row["mem_stat"] . "</td>
-                        <td>" . $row["valid_date"] . "</td>
-                        <td>" . $row["expiry_date"] . "</td>
+                        <td>" . $row["body_no"] . "</td>
+                        <td>" . $row["transaction_code"] . "</td>
+                        <td>" . $row["amount"] . "</td>
+                        <td>" . $row["for_date"] . "</td>
                     </tr>
                 </tbody>  
     ";
