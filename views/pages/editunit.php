@@ -34,10 +34,11 @@ if (isset($_GET['id'])) {
 
         // Fetch member information
         $memID = $row['mem_id'];
+
         $sql1 = "SELECT * FROM `mem_info` WHERE (mem_role = 'Operator' OR mem_role = 'Both')";
         $result1 = $conn->query($sql1);
 
-        ?>
+?>
         <!DOCTYPE html>
         <html lang="en">
 
@@ -115,8 +116,8 @@ if (isset($_GET['id'])) {
                                 <!-- BODY NO. -->
                                 <div class="fields">
                                     <label for="unit-bodyno">Body No. <span> *</span></label>
-                                    <input type="text" id="unit-bodyno" pattern="[0-9]{4}" maxlenght="4" name="unitbody_no" required
-                                        value='<?php echo $row['body_no']; ?>'>
+                                    <input type="text" id="unit-bodyno" pattern="[0-9]{4}" maxlenght="4" name="unitbody_no"
+                                        required value='<?php echo $row['body_no']; ?>'>
                                 </div>
 
                                 <!-- BODY COLOR -->
@@ -216,7 +217,8 @@ if (isset($_GET['id'])) {
                             <div class="section">
                                 <div class="fields">
                                     <label for="unit_motor_no">Motor No. <span> *</span></label>
-                                    <input type="text" required name="unit_motor_no" pattern="[0-9]*" maxlenght="4" value='<?php echo $row['motor_no']; ?>'>
+                                    <input type="text" required name="unit_motor_no" pattern="[0-9]*" maxlenght="4"
+                                        value='<?php echo $row['motor_no']; ?>'>
                                 </div>
 
                                 <div class="fields">
@@ -250,8 +252,8 @@ if (isset($_GET['id'])) {
                                 <!-- DISTRICT -->
                                 <div class="fields">
                                     <label for="unit-district">District <span> *</span></label>
-                                    <input type="text" id="unit-district" pattern="[0-9]{2}" maxlenght="2" name="unit_district" required
-                                        value='<?php echo $row['district']; ?>'>
+                                    <input type="text" id="unit-district" pattern="[0-9]{2}" maxlenght="2" name="unit_district"
+                                        required value='<?php echo $row['district']; ?>'>
                                 </div>
                             </div>
                             <div class="section">

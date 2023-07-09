@@ -67,8 +67,22 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                 echo "<a href='../../views/pages/editunit.php'><input type='button' value='View Unit'
                                 class='view modal-btn' id='hide-button' formnovalidate hidden></a>";
                             } else {
-                                echo "<a href='../../views/pages/editunit.php?id=" . $row['id'] . "'><input type='button' value='View Unit'
-                                class='view modal-btn' id='hide-button' formnovalidate></a>";
+
+                                // Check if the member ID exists in the unit_info table
+                                $unitID = $row['id'];
+                                $unitInfoSQL = "SELECT * FROM unit_info WHERE mem_id = '$unitID'";
+                                $unitInfoResult = mysqli_query($conn, $unitInfoSQL);
+
+                                $row101 = mysqli_fetch_assoc($unitInfoResult);
+
+                                if (mysqli_num_rows($unitInfoResult) === 0) {
+                                    // Redirect the user to addunit.php
+                                    echo "<a href='../../views/pages/addunit.php?id=" . $row['id'] . "'><input type='button' value='View Unit' class='view modal-btn' id='hide-button' formnovalidate></a>";
+                                } else {
+                                    // Redirect the user to editunit.php
+                                    echo "<a href='../../views/pages/editunit.php?id=" . $row101['id'] . "'><input type='button' value='View Unit' class='view modal-btn' id='hide-button' formnovalidate></a>";
+                                }
+
                             }
 
                             echo "
