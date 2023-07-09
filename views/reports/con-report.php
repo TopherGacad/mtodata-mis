@@ -1,12 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Manila');
 
-// Get the start of the current month
-$startOfMonth = date('Y-m-01');
-
-// Get the current date
-$currentDate = date('Y-m-d');
-
 $currDate = date('F j, Y');
 ?>
 
@@ -56,51 +50,52 @@ $currDate = date('F j, Y');
                             <th>DATE</th>
                         </tr>
                     </thead>
-
-                    <!--DB Connection-->
-                    <?php
-
-                    //connection
-                    include "../php/db_conn.php";
-
-                    //check connection
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
-
-                    //data retrieval
-                    $sql = "SELECT * FROM transaction_contribution
-                    WHERE date_created BETWEEN '$startOfMonth' AND '$currentDate'
-                    ORDER BY for_date DESC;";
-                    $result = $conn->query($sql);
-
-                    if ($result === false) {
-                        die("Error executing the query: " . $conn->error);
-                    }
-
-                    if ($result->num_rows === 0) {
-                        echo "<td>No Entry Found</td>";
-                    }
-
-                    // output data of each row
-                    while ($row = $result->fetch_assoc()) {
-
-                        echo "
                     <tbody>
-                    <tr>
-                        <td>" . $row["body_no"] . "</td>
-                        <td>" . $row["transaction_code"] . "</td>
-                        <td>" . $row["amount"] . "</td>
-                        <td>" . $row["for_date"] . "</td>
-                    </tr>
-                </tbody>  
-    ";
-                    }
 
-                    // close MySQL connection
-                    $conn->close();
+                        <!--DB Connection-->
+                        <?php
 
-                    ?>
+
+                        include "../php/db_conn.php";
+
+                        //check connection
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+
+                        //data retrieval
+                        $sql = "SELECT *
+                        FROM transaction_contribution
+                        WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
+                        AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND
+                        ORDER BY for_date DESC;";
+                        $result = $conn->query($sql);
+
+                        if ($result === false) {
+                            die("Error executing the query: " . $conn->error);
+                        }
+
+                        if ($result->num_rows === 0) {
+                            echo "<td>No Entry Found</td>";
+                        }
+
+                        // output data of each row
+                        while ($row = $result->fetch_assoc()) {
+
+                            echo "
+                            <tr>
+                            <td>" . $row["body_no"] . "</td>
+                            <td>" . $row["transaction_code"] . "</td>
+                            <td>" . $row["amount"] . "</td>
+                            <td>" . $row["for_date"] . "</td>
+                            </tr> ";
+                        }
+
+                        // close MySQL connection
+                        $conn->close();
+
+                        ?>
+                    </tbody>
                 </table>
                 <p id="end">------------ NOTHING FOLLOWS ------------</p>
             </div>
