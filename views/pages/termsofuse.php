@@ -88,7 +88,7 @@
             <details>
                 <summary>6. Limitation of Liability  </summary>
                 <ol type="a">
-                    <li>TThe Diploma in Information Communication Technology students from Polytechnic University of the Philippines shall not be liable for any direct, indirect, incidental, consequential, or special damages arising out of or in connection with the use of the MTODATA, even if advised of the possibility of such damages.</li>
+                    <li>The Diploma in Information Communication Technology students from Polytechnic University of the Philippines shall not be liable for any direct, indirect, incidental, consequential, or special damages arising out of or in connection with the use of the MTODATA, even if advised of the possibility of such damages.</li>
             </details>
 
             <details>
