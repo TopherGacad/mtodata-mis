@@ -33,7 +33,7 @@ body {
     background-image: url('../../public/assets/mtodata_bg.png');
     background-size: cover;
     background-repeat: no-repeat;
-    position: relative;
+    position: fixed;
     opacity: 0.1;
     height: 100vh;
     width: 100vw;
@@ -49,6 +49,7 @@ body {
     background: linear-gradient(to left, var(--dark-blue), var(--white-color));
     position: fixed;
     top: 0;
+    z-index: 10;
 }
 
 .top-user {
@@ -83,6 +84,7 @@ body {
     top: 0;
     left: 0;
     background-color: var(--base-color);
+    z-index: 10;
 }
 
 .header-nav {
@@ -134,14 +136,40 @@ li:hover {
 /* MAIN CONTENT */
 .dashboard-container {
     display: none;
-    height: 80vh;
+    height: 85vh;
     /*from min height: 570px*/
-    width: 75%;
     position: absolute;
+    width: 75%;
     top: 7%;
     left: 22%;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
-
+.dashboard-container::-webkit-scrollbar {
+    display: none;
+}
+.dash-content{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 0;
+}
+.top-dash{
+    
+    height: 155px;
+}
+.mid-dash{
+    
+    height: 155px;
+    margin-top: 30px;
+}
+.bottom-dash{
+    display: flex;
+    justify-content: space-between;
+    
+    height: 500px;
+    margin-top: 40px;
+}
 .border {
     border-radius: 10px;
     box-shadow: 0px 2px 2px .5px var(--box-shadow);
@@ -151,14 +179,11 @@ li:hover {
 section {
     display: flex;
     justify-content: space-between;
-    position: absolute;
-    top: 30px;
     height: 50%;
     width: 100%;
 }
 
 .card {
-    position: relative;
     height: inherit;
     width: 23%;
     text-align: center;
@@ -191,8 +216,6 @@ section {
     width: 100%;
     display: flex;
     justify-content: center;
-    position: absolute;
-    bottom: 0;
 }
 
 .link-container button {
@@ -208,12 +231,12 @@ section {
     color: var(--white-color);
 }
 
-.fa-hand-holding-dollar {
+.fa-hand-holding-dollar,.fa-money-bill-transfer{
     background-color: var(--dash-green);
     color: var(--white-color);
 }
 
-.fa-circle-dollar-to-slot {
+.fa-circle-dollar-to-slot, .fa-sack-dollar{
     background-color: var(--dash-yellow);
     color: var(--white-color);
 }
@@ -222,12 +245,12 @@ section {
     background-color: var(--dash-cyan);
     color: var(--white-color);
 }
+.fa-face-frown{
+    background-color: #999999;
+    color: var(--white-color);
+}
 
 .count-container {
-    position: absolute;
-    top: 35%;
-    left: 0;
-    right: 0;
     padding: 7px;
     font-size: 20px;
 }
@@ -238,9 +261,6 @@ section {
 }
 
 .botleft-dash {
-    position: absolute;
-    left: 0;
-    bottom: 0;
     height: 60%;
     width: 55%;
     overflow: auto;
@@ -259,9 +279,6 @@ section {
 }
 
 .botright-dash {
-    position: absolute;
-    right: 0;
-    bottom: 0;
     height: 60%;
     width: 40%;
     overflow: auto;
@@ -560,6 +577,7 @@ footer {
     background-color: var(--font-color);
     font-size: 9px;
     color: var(--dark-blue);
+    z-index: 11;
 }
 
 .flex {
