@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
-    header("Location: viewuser.php?id=$memberID&success=true");
+    header("Location: viewmem.php?id=$memberID&success=true");
     exit;
 }
 ?>

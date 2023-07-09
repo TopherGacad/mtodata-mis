@@ -619,7 +619,7 @@ date_default_timezone_set('Asia/Manila');
                                     $donationRow = mysqli_fetch_assoc($ViewSelectResult);
                                     $donorId = $donationRow['member_id'];
 
-                                    echo "<a href='../pages/viewuser.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                    echo "<a href='../pages/viewmem.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
                                 }
                             } else if ($row['account_type'] === 'Programs') {
                                 $ViewSelectSql = "SELECT program_ID FROM transaction_expenses WHERE transaction_code = '" . $row['transaction_code'] . "'";
@@ -881,7 +881,7 @@ date_default_timezone_set('Asia/Manila');
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="mem-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="user-contact" name="contact"
+                        <input type="text" pattern="[0-9]{11}" maxlength="11" id="user-contact" name="contact"
                             placeholder="eg. 09592220954" required>
                         <span id="contact-validation"></span> <!-- Display validation message here -->
                     </div>
@@ -1019,7 +1019,7 @@ date_default_timezone_set('Asia/Manila');
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="mem-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact"
+                        <input type="text" pattern="[0-9]{11}" maxlenght="11" id="mem-contact" name="contact"
                             placeholder="eg. 09592220954" required>
                         <span id="mem-contact-validation"></span> <!-- Display validation message here -->
                     </div>

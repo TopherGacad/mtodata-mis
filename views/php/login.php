@@ -34,7 +34,7 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 				$_SESSION['id'] = $row['id'];
 				header("Location: ../php/viceview.php");
 				exit();
-			} else if ($row['roles'] === 'secretary') {
+			} else if ($row['roles'] === 'Secretary') {
 				$_SESSION['email'] = $row['email'];
 				$_SESSION['id'] = $row['id'];
 				header("Location: ../php/secview.php");

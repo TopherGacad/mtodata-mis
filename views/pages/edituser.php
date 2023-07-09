@@ -91,19 +91,19 @@ if (!isset($_GET['user_id'])) {
                         <!-- FIRSTNAME -->
                         <div class="fields">
                             <label for="user-firstname">Firstname<span> *</span></label>
-                            <input type="text" id="user-firstname" name="firstname" placeholder="Firstname" value="<?php echo $F_name; ?>" required>
+                            <input type="text" id="user-firstname" name="firstname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Firstname" value="<?php echo $F_name; ?>" required>
                         </div>
 
                         <!-- MIDNAME -->
                         <div class="fields">
                             <label for="user-midname">Middlename</label>
-                            <input type="text" id="user-midname" name="middlename" placeholder="Middlename" value="<?php echo $M_name; ?>">
+                            <input type="text" id="user-midname" name="middlename" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Middlename" value="<?php echo $M_name; ?>">
                         </div>
 
                          <!-- LASTNAME -->
                         <div class="fields">
                             <label for="user-lastname">Lastname<span> *</span></label>
-                            <input type="text" id="user-lastname" name="lastname" placeholder="Lastname" value="<?php echo $L_name; ?>" required>
+                            <input type="text" id="user-lastname" name="lastname" maxlength="25" pattern="[A-Za-z ]{2,25}" placeholder="Lastname" value="<?php echo $L_name; ?>" required>
                         </div>
                     </div>
 
@@ -111,7 +111,7 @@ if (!isset($_GET['user_id'])) {
                           <!-- USERS ROLE -->
                           <div class="fields">
                             <label for="select-role">User's role<span> *</span></label>
-                            <select name="userrole" id="select-role">
+                            <select name="userrole" id="select-role" required>
                                 <option value="" disabled>Select Role</option>
                                 <option value="President" <?php if ($roles == 'President') echo 'selected'; ?>>President</option>
                                 <option value="Vice President" <?php if ($roles == 'Vice President') echo 'selected'; ?>>Vice President</option>
@@ -141,13 +141,13 @@ if (!isset($_GET['user_id'])) {
                         <!-- CONTACT NUMBER -->
                         <div class="fields">
                             <label for="mem-contact">Contact no.<span> *</span></label>
-                            <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact" placeholder="eg. 09592220954" value="<?php echo $contact; ?>" required>
+                            <input type="text" pattern="[0-9]{11}" maxlength="11" id="mem-contact" name="contact" placeholder="eg. 09592220954" value="<?php echo $contact; ?>" required>
                         </div>
 
                          <!-- EMAIL -->
                         <div class="fields">
                             <label for="user-email">Email Adress<span> *</span></label>
-                            <input type="text" id="user-email" name="email" value="<?php echo $email; ?>" required>
+                            <input type="email" id="user-email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" value="<?php echo $email; ?>" required>
                         </div>
                     </div>
                 </div>
@@ -160,7 +160,7 @@ if (!isset($_GET['user_id'])) {
                         <!-- USERNAME -->
                         <div class="fields">
                             <label for="mem-username">Username<span> *</span></label>
-                            <input type="text" id="mem-username" name="username" placeholder="Username" value="<?php echo $username; ?>">
+                            <input type="text" id="mem-username" name="username" maxlength="25" placeholder="Username" value="<?php echo $username; ?>">
                         </div>
                     </div>
                     <div class="section">

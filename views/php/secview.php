@@ -12,6 +12,15 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     header("location: login.php");
     exit();
 }
+
+// connect to the MySQL database
+include "db_conn.php";
+
+$updateQuery = "UPDATE mem_info SET mem_stat = 'Expired' WHERE mem_stat = 'Active' AND date_created < DATE_SUB(NOW(), INTERVAL 2 YEAR)";
+mysqli_query($conn, $updateQuery);
+
+date_default_timezone_set('Asia/Manila');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +31,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="../../public/css/dashboard.css">
+    <link rel="stylesheet" href="../../public/css/loading.css">
     <link rel="icon" href="../../public/assets/browse_logo.png">
 
     <!-- GOOGLE FONTS -->
@@ -29,14 +39,23 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <!-- FONT AWESOME/ICONS -->
     <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
 
+    <!-- Include the required libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.2.8/es6-promise.auto.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
 
 </head>
 
 <body>
     <div class="bg-container"></div>
     <div class="top-design">
-        <p><strong>Welcome! </strong>
+        <p class="top-user"><strong>Welcome! </strong>
             <?php echo $_SESSION['email'] ?>
+        </p>
+        <p class="top-date">
+            <i id="current-date"></i>
         </p>
     </div>
 
@@ -44,7 +63,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="side-nav">
         <header class="header-nav">
             <img class="logo" src="../../public/assets/mtodata_logo.png" alt="logo of mtodata system">
-            <p>SECRETARY PANEL</p>
+            <p>ADMIN PANEL</p>
         </header>
         <div class="item-container">
             <ul id="nav-list">
@@ -77,16 +96,19 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             }
 
             // member count
-            $mem = "SELECT COUNT(id) AS mem_count FROM mem_info";
+            $mem = "SELECT COUNT(id) AS mem_count FROM mem_info WHERE mem_stat = 'Active'";
             $mem_result = $conn->query($mem);
 
-            $don = "SELECT SUM(amount) AS don_count FROM transaction_donation";
+            $don = "SELECT SUM(amount) AS don_count FROM transaction_donation
+            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $don_result = $conn->query($don);
 
-            $con = "SELECT SUM(amount) AS con_count FROM transaction_contribution";
+            $con = "SELECT SUM(amount) AS con_count FROM transaction_contribution
+            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $con_result = $conn->query($con);
 
-            $com = "SELECT COUNT(id) AS com_count FROM complaint_details";
+            $com = "SELECT COUNT(id) AS com_count FROM complaint_details
+            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $com_result = $conn->query($com);
 
             if ($mem_result) {
@@ -102,7 +124,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <p>" . $row['mem_count'] . "</p>
                 </div>
                 <div class='link-container memCount'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>";
             }
@@ -120,7 +142,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <p><span>&#8369;</span>" . $row['don_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>";
             }
@@ -138,7 +160,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <p><span>&#8369;</span>" . $row['con_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>";
             }
@@ -157,7 +179,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <p>" . $row['com_count'] . "</p>
                 </div>
                 <div class='link-container'>
-                    
+                    <button>View Report</button>
                 </div>
             </div>
         </section>";
@@ -170,35 +192,77 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <div class='botleft-dash border'>
 
                 <!-- FINANCE ENTRY -->
-                <div class='card-header'>
+                <div class='card-header entry'>
                     <h4>Recent Financial Entry</h4>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <th>Transaction Code</th>
+                            <th>Debit</th>
+                            <th>Credit</th>
+                            <th>Date</th>
+                        </tr>
+
+                        <tbody>
+                            <?php
+
+                            // connect to the MySQL database
+                            include "db_conn.php";
+
+                            $selectFinance = "SELECT *, DATE_FORMAT(date_created, '%Y-%m-%d') AS new_formatted_date FROM transaction_finance ORDER BY date_created DESC";
+                            $FinaceResult = $conn->query($selectFinance);
+
+                            while ($FinRecent = $FinaceResult->fetch_assoc()) {
+                                echo "
+                                <tr>
+                                <td>" . $FinRecent['transaction_code'] . "</td>
+                                <td>" . $FinRecent['debit'] . "</td>
+                                <td>" . $FinRecent['credit'] . "</td>
+                                <td>" . $FinRecent['new_formatted_date'] . "</td>
+                                </tr>
+                                ";
+                            }
+
+                            // close MySQL connection
+                            $conn->close();
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class='botright-dash border'>
 
                 <!-- EVENTS AND PROGRAMS ENTRY -->
                 <div class='card-header events'>
-                    <h4>Events for today (06-23-23)</h4>
+                    <h4>Scheduled Events</h4>
                 </div>
                 <div class='dash-content'>
-                    <div class='agenda-box'>
-                        <h3>Toda Christmas Party</h3>
-                        <p>2023-06-12 06:00 AM</p>
-                    </div>
+                    <?php
 
-                    <div class='agenda-box'>
-                        <h3>Toda Annual Election</h3>
-                        <p>2023-06-12 06:00 AM</p>
-                    </div>
+                    // connect to the MySQL database
+                    include "db_conn.php";
+                    $dateToday = date('ymd');
 
-                    <div class='agenda-box'>
-                        <h3>Toda Meeting for OUTING</h3>
-                        <p>2023-06-12 06:00 AM</p>
-                    </div>
+                    $showPrograms = "SELECT *, CONCAT(DATE_FORMAT(ep_date, '%Y-%m-%d'), ' ', DATE_FORMAT(ep_start, '%h:%i %p')) AS concatenated_datetime FROM events_programs 
+                    WHERE ep_date >= $dateToday ORDER BY concatenated_datetime ASC";
+                    $showProgramResult = $conn->query($showPrograms);
+
+                    while ($EPRecent = $showProgramResult->fetch_assoc()) {
+                        echo "
+                         <div class='agenda-box'>
+                         <h3>" . $EPRecent['ep_title'] . "</h3>
+                         <p>" . $EPRecent['concatenated_datetime'] . "</p>
+                         </div>
+                         ";
+                    }
+
+                    // close MySQL connection
+                    $conn->close();
+                    ?>
                 </div>
-                <div class='link-container events-link'>
-                    
-                </div>
+
             </div>
     </div>
 
@@ -256,7 +320,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <td class='datecreated'>" . $row["date_created"] . "</td>
                         <td class='action'>
                             <abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr>
-                            <a href='../../views/pages/edituser.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                            <a href='../../views/pages/edituser.php?user_id=" . $row["user_id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
                         </td>
                     </tr>";
                     }
@@ -299,20 +363,21 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         }
     </script>
 
+
     <!-- MEMBER INFO PANE -->
     <div class="member-container" id="member-container">
         <header>
             <div class="head-left">
                 <h3>TODA MEMBERS INFORMATION</h3>
-                <p>SECRETARY VIEW</p>
+                <p>ADMIN VIEW</p>
             </div>
             <div class="head-right">
                 <abbr title="Export Report"><button class="memExportBtn exportBtn" id="mem-export"><i
                             class="fa-solid fa-download"></i></button></abbr>
                 <div class="search-container">
                     <input type="text" class="mem-search" id="mem-search" placeholder="Search">
-                    <a href="../../views/pages/addunit.php"><button class="mem-searchBtn" id="add-unit"><i
-                                class="fa-solid fa-id-card-clip"></i></button></a>
+                    <abbr title="Unit info"><a href="../../views/pages/unitinfo.php"><button class="mem-searchBtn"
+                                id="add-unit"><i class="fa-solid fa-id-card-clip"></i></button></a></abbr>
                 </div>
                 <button class="addmemBtn" id="addmem-btn"><i class="fa-solid fa-plus"></i> Add Member</button>
             </div>
@@ -344,26 +409,30 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, mem_role, license_no, mem_stat FROM mem_info ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
-                    // output data of each row
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
+                    // Check if there are any members
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+
+
+                            // Display the member information, including the updated mem_stat
                             echo "
-            <tr id='row-" . $row["id"] . "'>
-              <td class='memid'>" . $row["id"] . "</td>
-              <td class='memname'>" . $row["name"] . "</td>
-              <td class='area'>" . $row["barangay"] . "</td>
-              <td class='memrole'>" . $row["mem_role"] . "</td>
-              <td class='license'>" . $row["license_no"] . "</td>
-              <td class='status'> 
-                <div class='status-contain'>
-                  <p>" . $row["mem_stat"] . "</p>
+        <tr id='row-" . $row["id"] . "'>
+            <td class='memid'>" . $row["id"] . "</td>
+            <td class='memname'>" . $row["name"] . "</td>
+            <td class='area'>" . $row["barangay"] . "</td>
+            <td class='memrole'>" . $row["mem_role"] . "</td>
+            <td class='license'>" . $row["license_no"] . "</td>
+            <td class='status'>
+                <div class='" . $row["mem_stat"] . "'>
+                    <p>" . $row["mem_stat"] . "</p>
                 </div>
-              </td>
-              <td class='action'>
+            </td>
+            <td class='action'>
                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastMember(" . $row["id"] . ")'></i></abbr>
-                <a href='../../views/pages/editmem.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
-              </td>
-            </tr>";
+                <a href='../../views/pages/viewmem.php?id=" . $row['id'] . "'><i class='fa-sharp fa-solid fa-eye'></i></a>
+                <i class='tools fa-solid fa-print save' data-container='memcert' onclick=\"generatePDF('" . $row["id"] . "', 'memcertification.php')\"></i>
+            </td>
+        </tr>";
                         }
                     } else {
                         echo "0 results";
@@ -387,6 +456,9 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                         row.parentNode.removeChild(row);
                                         // display success message
                                         alert(xhr.responseText);
+
+                                        // Refresh the current page
+                                        location.reload();
                                     }
                                 };
                                 xhr.send("id=" + id);
@@ -409,36 +481,164 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <button class="financeExportBtn exportBtn" id="finance-export"><i
                         class="fa-solid fa-download"></i></button>
                 <div class="search-container">
-                    <input type="text" class="user-search" placeholder="Search">
-                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="text" class="user-search" id="fin-search" placeholder="Search">
+                    <a href="../../views/pages/viewdonors.php"><button class="user-searchBtn" id="add-donor"><i
+                                class="fa-solid fa-user-plus"></i></button></a>
                 </div>
                 <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
             </div>
         </header>
 
         <main>
-            <table>
+            <table id="fin-table">
                 <tr>
-                    <th><abbr title="Transaction Id">ID</abbr></th>
-                    <th>TYPE</th>
-                    <th>CODE</th>
-                    <th>AMOUNT</th>
-                    <th>DATE</th>
-                    <th>ACTION</th>
+                    <th class="id"><abbr title="Transaction Id">ID</abbr></th>
+                    <th class="name">TYPE</th>
+                    <th class="code">CODE</th>
+                    <th class="amount">AMOUNT</th>
+                    <th class="amount">DEBIT</th>
+                    <th class="amount">CREDIT</th>
+                    <th class="name">DATE</th>
+                    <th class="action">ACTION</th>
                 </tr>
 
-                <tr>
-                    <td>01</td>
-                    <td>Contribution</td>
-                    <td>CON-130423</td>
-                    <td>&#8369; 100.00</td>
-                    <td>03-23-23</td>
-                    <td>
-                        <i class="tools fa-solid fa-trash-can"></i>
-                        <i class="tools fa-solid fa-pen-to-square"></i>
+                <tbody id='fin-table-body'>
+                    <?php
+
+                    include 'db_conn.php';
+
+                    $timestamp = date('Y-m-d H:i:s');
+
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+
+                    // Delete transactions associated with non-existent member IDs
+                    $deleteTransactionSql = "DELETE FROM transaction_payment WHERE member_id NOT IN (SELECT id FROM mem_info)";
+                    $deleteTransactionResult = $conn->query($deleteTransactionSql);
+
+                    if ($deleteTransactionResult === false) {
+                        die("Error executing the query: " . $conn->error);
+                    }
+
+
+
+                    // Remove deleted data from transaction_finance
+                    $deleteSql = "DELETE tf FROM transaction_finance tf
+                    LEFT JOIN transaction_donation td ON tf.transaction_code = td.transaction_code
+                    LEFT JOIN transaction_contribution tc ON tf.transaction_code = tc.transaction_code
+                    LEFT JOIN transaction_expenses te ON tf.transaction_code = te.transaction_code
+                    LEFT JOIN transaction_payment tp ON tf.transaction_code = tp.transaction_code
+                    WHERE td.transaction_code IS NULL
+                    AND tc.transaction_code IS NULL
+                    AND te.transaction_code IS NULL
+                    AND tp.transaction_code IS NULL";
+
+                    $deleteResult = $conn->query($deleteSql);
+
+                    if ($deleteResult === false) {
+                        die("Error executing the query: " . $conn->error);
+                    }
+
+                    $sql = "INSERT INTO transaction_finance (amount, transaction_code, account_type, transaction_date, date_created) 
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_donation
+                    WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_donation.transaction_code)
+                    UNION ALL
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_contribution
+                    WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_contribution.transaction_code)
+                    UNION ALL
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_expenses
+                    WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_expenses.transaction_code)
+                    UNION ALL
+                    SELECT amount, transaction_code, transaction_type, date_created, '$timestamp' FROM transaction_payment
+                    WHERE NOT EXISTS (SELECT 1 FROM transaction_finance WHERE transaction_code = transaction_payment.transaction_code)";
+
+                    $result = $conn->query($sql);
+
+                    if ($result === false) {
+                        die("Error executing the query: " . $conn->error);
+                    }
+
+                    $updateSql = "UPDATE transaction_finance SET ";
+                    $updateSql .= "debit = CASE ";
+                    $updateSql .= "WHEN account_type IN ('Donation', 'Contribution', 'Renewal', 'New Member') THEN amount ";
+                    $updateSql .= "ELSE debit ";
+                    $updateSql .= "END, ";
+                    $updateSql .= "credit = CASE ";
+                    $updateSql .= "WHEN account_type NOT IN ('Donation', 'Contribution', 'Renewal', 'New Member') THEN amount ";
+                    $updateSql .= "ELSE credit ";
+                    $updateSql .= "END";
+                    $updateResult = $conn->query($updateSql);
+
+                    if ($updateResult === false) {
+                        die("Error executing the update query: " . $conn->error);
+                    }
+
+                    // Fetch inserted data
+                    $selectSql = "SELECT *,  DATE_FORMAT(date_created, '%Y-%m-%d %h:%i %p') AS new_formatted_date FROM transaction_finance ORDER BY date_created DESC";
+                    $selectResult = $conn->query($selectSql);
+
+                    if ($selectResult->num_rows === 0) {
+                        echo "No rows found.";
+                    } else {
+
+                        while ($row = $selectResult->fetch_assoc()) {
+
+                            echo "
+                    <tr>
+                        <td id='id'>" . $row["ID"] . "</td>
+                        <td class='name'>" . $row["account_type"] . "</td>
+                        <td class='code'>" . $row["transaction_code"] . "</td>
+                        <td class='amount'>&#8369;" . $row["amount"] . "</td>
+                        <td class='amount'>" . $row["debit"] . "</td>
+                        <td class='amount'>" . $row["credit"] . "</td>
+                        <td class='name'>" . $row["new_formatted_date"] . "</td>
+                        <td class='action'>" ?>
+
+                            <?php
+                            if ($row['account_type'] === 'Donation') {
+                                $ViewSelectSql = "SELECT donor_id FROM transaction_donation WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                                $ViewSelectResult = mysqli_query($conn, $ViewSelectSql);
+
+                                if (mysqli_num_rows($ViewSelectResult) > 0) {
+                                    // Matching row found, retrieve the donor_id
+                                    $donationRow = mysqli_fetch_assoc($ViewSelectResult);
+                                    $donorId = $donationRow['donor_id'];
+
+                                    echo "<a href='../pages/donorinfo.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                }
+                            } else if ($row['account_type'] === 'New Member' || $row['account_type'] === 'Renewal') {
+                                $ViewSelectSql = "SELECT member_id FROM transaction_payment WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                                $ViewSelectResult = mysqli_query($conn, $ViewSelectSql);
+
+                                if (mysqli_num_rows($ViewSelectResult) > 0) {
+                                    // Matching row found, retrieve the donor_id
+                                    $donationRow = mysqli_fetch_assoc($ViewSelectResult);
+                                    $donorId = $donationRow['member_id'];
+
+                                    echo "<a href='../pages/viewuser.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                }
+                            } else if ($row['account_type'] === 'Programs') {
+                                $ViewSelectSql = "SELECT program_ID FROM transaction_expenses WHERE transaction_code = '" . $row['transaction_code'] . "'";
+                                $ViewSelectResult = mysqli_query($conn, $ViewSelectSql);
+
+                                if (mysqli_num_rows($ViewSelectResult) > 0) {
+                                    // Matching row found, retrieve the donor_id
+                                    $donationRow = mysqli_fetch_assoc($ViewSelectResult);
+                                    $donorId = $donationRow['program_ID'];
+
+                                    echo "<a href='../pages/viewevents.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                }
+                            }
+                        }
+                    }
+                    $conn->close();
+                    ?>
+
                     </td>
-                </tr>
-
+                    </tr>
+                </tbody>
             </table>
         </main>
     </div>
@@ -451,10 +651,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <p>USER VIEW</p>
             </div>
             <div class="head-right">
-                <button class="complaintExportBtn exportBtn" id="complaint-export"><i
-                        class="fa-solid fa-download"></i></button>
                 <div class="search-container">
-                    <input type="text" class="user-search" placeholder="Search">
+                    <input type="text" class="user-search" id="comp-search" placeholder="Search">
                     <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </div>
                 <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New
@@ -463,16 +661,17 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         </header>
 
         <main>
-            <table>
+            <table id="complaint-table">
                 <tr>
                     <th class="id"><abbr title="complain-btn Id">ID</abbr></th>
                     <th class="name">COMPLAINANT</th>
                     <th class="contact">CONTACT NO.</th>
                     <th class="name">SUBJECT TO COMPLAINT</th>
-                    <th class="date">DATE</th>
+                    <th class="comp-date">DATE</th>
                     <th class="action">ACTION</th>
                 </tr>
-                <tbody id="user-table-body">
+
+                <tbody id="complaint-table-body">
                     <?php
                     // connect to the MySQL database
                     include "db_conn.php";
@@ -482,22 +681,24 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         die("Connection failed: " . $conn->connect_error);
                     }
                     // retrieve data from the MySQL table
-                    $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, complaint_details.date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.id ORDER BY date_created DESC";
+                    $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, 
+                    DATE_FORMAT(complaint_details.date_created, '%Y/%m/%d %h:%i %p') AS date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.id ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
                         echo "
-                        <tr>
-                            <td class = 'uid'>" . $row["id"] . "</td>
-                            <td class = 'username'>" . $row["complainant"] . "</td>
-                            <td class = 'contacts'>" . $row["phone"] . "</td>
-                            <td class = 'complaintPerson'>" . $row["complaint_person"] . "</td>
-                            <td class = 'actionDate'>" . $row["date_created"] . "</td>
+                        <tr id='complaint-" . $row["id"] . "'>
+                            <td class='uid'>" . $row["id"] . "</td>
+                            <td class='username'>" . $row["complainant"] . "</td>
+                            <td class='contacts'>" . $row["phone"] . "</td>
+                            <td class='complaintPerson'>" . $row["complaint_person"] . "</td>
+                            <td class='actionDate'>" . $row["date_created"] . "</td>
 
                             <td class='action'>
-                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastComplaint(" . $row["id"] . ")'></i></abbr>
-                                <a href='../../views/pages/editcomplaint.php'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                                <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
+                                <a href='../../views/pages/viewComplaint.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                                <i class='tools fa-solid fa-print save' data-container='complaints' onclick=\"generatePDF('" . $row["id"] . "', 'comp-report.php')\"></i>
                             </td>
                         </tr>";
                     }
@@ -506,27 +707,19 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     ?>
                     <!-- Deleting User -->
                     <script>
-                        function showToastComplaint(id) {
-                            if (confirm("Are you sure you want to delete this complaint?")) {
-                                // send AJAX request to delete the complaint from the database and remove the row from the table
+                        function deleteComplaint(id) {
+                            if (confirm("Are you sure you want to delete this Complaint?")) {
+                                // send AJAX request to delete the user from the database and remove the row from the table
                                 var xhr = new XMLHttpRequest();
                                 xhr.open("POST", "deleteComplaint.php", true);
                                 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                                 xhr.onreadystatechange = function () {
                                     if (xhr.readyState === 4 && xhr.status === 200) {
-                                        console.log("Response received:", xhr.responseText);
                                         // remove the row from the table
-                                        var rowId = "row-" + id;
-                                        console.log("Row ID:", rowId);
-                                        var row = document.getElementById(rowId);
-                                        console.log("Row element:", row);
-                                        if (row) {
-                                            row.parentNode.removeChild(row);
-                                            // display success message
-                                            alert(xhr.responseText);
-                                        } else {
-                                            console.log("Row not found");
-                                        }
+                                        var row = document.getElementById("complaint-" + id);
+                                        row.parentNode.removeChild(row);
+                                        // display success message
+                                        alert(xhr.responseText);
                                     }
                                 };
                                 xhr.send("id=" + id);
@@ -534,50 +727,74 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         }
                     </script>
                 </tbody>
+
             </table>
         </main>
-
     </div>
 
     <!-- EVENTS & PROGRAMS PANE -->
-    <div class="event-container" id="event-container">
+    <div class='event-container' id='event-container'>
         <header>
-            <div class="head-left">
+            <div class='head-left'>
                 <h3>EVENTS & PROGRAMS</h3>
                 <p>ADMIN VIEW</p>
             </div>
-            <div class="head-right">
-                <div class="search-container">
-                    <input type="text" class="user-search" placeholder="Search">
-                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <div class='head-right'>
+                <div class='search-container'>
+                    <input type='text' class='user-search' id="programs-search" placeholder='Search'>
+                    <button class='user-searchBtn'><i class='fa-solid fa-magnifying-glass'></i></button>
                 </div>
-                <button class="addEventBtn" id="addEvent-btn"><i class="fa-solid fa-plus"></i> Add Events</button>
+                <button class='addEventBtn' id='addEvent-btn'><i class='fa-solid fa-plus'></i> Add Events</button>
             </div>
         </header>
 
         <main>
             <table>
                 <tr>
-                    <th><abbr title="complain-btn Id">ID</abbr></th>
-                    <th>EVENT</th>
-                    <th>EVENT DATE</th>
-                    <th>TIME</th>
-                    <th>LOCATION</th>
-                    <th>ACTION</th>
+                    <th class="id"><abbr title='complain-btn Id'>ID</abbr></th>
+                    <th class="title">EVENT& PROGRAM TITLE</th>
+                    <th class="date">EVENT DATE</th>
+                    <th class="time">TIME</th>
+                    <th class="location">LOCATION</th>
+                    <th class="action">ACTION</th>
                 </tr>
+
+                <tbody id="programs-table-body">
+                    <?php
+                    // connect to the MySQL database
+                    include "db_conn.php";
+
+                    // check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+                    // retrieve data from the MySQL table
+                    $sql = "SELECT *, TIME_FORMAT(ep_start, '%h:%i %p') AS ep_time FROM `events_programs` ORDER BY date_created DESC";
+                    $result = $conn->query($sql);
+
+                    // output data of each row
+                    while ($row = $result->fetch_assoc()) {
+                        echo "
 
                 <tr>
-                    <td>01</td>
-                    <td>Christmas Party</td>
-                    <td>December 23, 2023</td>
-                    <td>1:00 PM</td>
-                    <td>Grand Villa</td>
-                    <td>
-                        <i class="tools fa-solid fa-trash-can"></i>
-                        <a href="../../views/pages/editprograms.php"><i class="tools fa-solid fa-pen-to-square"></i></a>
+                    <td class='id'>" . $row["id"] . "</td>
+                    <td class='title'>" . $row["ep_title"] . "</td>
+                    <td class='date'>" . $row["ep_date"] . "</td>
+                    <td class='time'>" . $row["ep_time"] . "</td>
+                    <td class='location'>" . $row["ep_location"] . "</td>
+                    <td class='action'>
+                        <i class='tools fa-solid fa-trash-can'></i>
+                        <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                        <i class='tools fa-solid fa-print save' data-container='ep' onclick=\"generatePDF('" . $row["id"] . "', 'ep.php')\"></i>
                     </td>
-                </tr>
+                </tr> ";
 
+                    }
+
+                    // close MySQL connection
+                    $conn->close();
+                    ?>
+                </tbody>
             </table>
         </main>
     </div>
@@ -587,7 +804,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <p>&copy;mtodata 2023</p>
         <div class="link-footer flex">
             <p class="border-right">PUP Institute of Technology</p>
-            <a href="#" class="border-right">Terms of Use</a>
+            <a href="../../views/pages/termsofuse.php" class="border-right">Terms of Use</a>
             <p>Version 1.0</p>
         </div>
     </footer>
@@ -598,7 +815,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="addUser-modal-container" id="user-modal-container">
         <h2 class="modal-title">ADD USER</h2>
         <form action="../php/adduser.php" method="post"
-            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
+            oninput='city.setCustomValidity(city.value != password.value ? "Passwords do not match." : "")'
             id="user-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
@@ -606,11 +823,11 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- USERS ROLE -->
                     <div class="fields">
                         <label for="select-role">User's role<span> *</span></label>
-                        <select name="userrole" id="select-role" required>
+                        <select name="userrole" id="select-role">
                             <option value="" selected disabled>Select Role</option>
                             <option value="President">President</option>
                             <option value="Vice President">Vice President</option>
-                            <option value="secretary">Secretary</option>
+                            <option value="Secretary">Secretary</option>
                             <option value="Treasurer">Treasurer</option>
                             <option value="Auditor">Auditor</option>
                         </select>
@@ -649,6 +866,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <label for="user-uname">Username<span> *</span></label>
                         <input type="text" id="user-uname" name="user-uname" maxlength="25"
                             placeholder="juandelacruz123" required>
+                        <span id="username-validation"></span> <!-- Display validation message here -->
                     </div>
                     <!-- EMAIL -->
                     <div class="fields">
@@ -661,7 +879,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="mem-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="user-contact" name="contact"
+                        <input type="text" pattern="[0-9]{11}" maxlength="11" id="user-contact" name="contact"
                             placeholder="eg. 09592220954" required>
                         <span id="contact-validation"></span> <!-- Display validation message here -->
                     </div>
@@ -695,10 +913,10 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <!-- WARNING TOAST -->
         <div class="warningToast-container" id="warningToast">
             <div class="warningToast-left">
-                <i class="warningToast-icon fa-solid fa-circle-exclamation"></i>
+                <i class="warningToast-icon fa-solid fa-circle-info"></i>
             </div>
             <div class="warningToast-right">
-                <p><strong>Try Again</strong> Please Select User Role!</p>
+                <p><strong>Try Again</strong> Please select user role!</p>
             </div>
         </div>
     </div>
@@ -709,7 +927,17 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <i class="successToast-icon fa-solid fa-circle-check"></i>
         </div>
         <div class="successToast-right">
-            <p><strong>Success!</strong> User successfully added.</p>
+            <p id="event-success"><strong>Success!</strong> User successfully added.</p>
+        </div>
+    </div>
+
+    <!-- SUCCESS TOAST -->
+    <div class='success-toast-container' id='toast-success'>
+        <div class='toast-left-success'>
+            <i class='toast-icon fa-solid fa-circle-check'></i>
+        </div>
+        <div class='toast-right'>
+            <p id='success-con'></p>
         </div>
     </div>
 
@@ -717,19 +945,18 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="bg" id="bg"></div>
     <div class="addMem-modal-container" id="member-modal-container">
         <h2 class="modal-title">MEMBER REGISTRATION</h2>
-        <form action="../php/addmember.php" method="post" id="member-form">
+        <form action="../php/addmember.php" method="post" id="member-form" enctype="multipart/form-data">
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="memForm-left addForm">
                     <!-- MEMBERS ROLE -->
                     <div class="fields">
                         <label for="select-mem">Member's role<span> *</span></label>
-                        <select name="role" id="select-mem" required>
+                        <select name="role" id="select-mem">
                             <option value="" selected disabled>Select Role</option>
                             <option value="Officer">Officer</option>
                             <option value="Driver">Driver only</option>
                             <option value="Operator">Operator only</option>
-                            <option value="Both">Driver & Operator</option>
                         </select>
                     </div>
                     <!-- LASTNAME -->
@@ -790,7 +1017,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <!-- CONTACT NUMBER -->
                     <div class="fields">
                         <label for="mem-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="mem-contact" name="contact"
+                        <input type="text" pattern="[0-9]{11}" maxlenght="11" id="mem-contact" name="contact"
                             placeholder="eg. 09592220954" required>
                         <span id="mem-contact-validation"></span> <!-- Display validation message here -->
                     </div>
@@ -817,13 +1044,14 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         <!-- WARNING TOAST -->
         <div class="warningToast-container" id="mem-warningToast">
             <div class="warningToast-left">
-                <i class="warningToast-icon fa-solid fa-circle-exclamation"></i>
+                <i class="warningToast-icon fa-solid fa-circle-info"></i>
             </div>
             <div class="warningToast-right">
-                <p><strong>Try Again</strong> Please Select User Role!</p>
+                <p><strong>Try Again</strong> Please select member role!</p>
             </div>
         </div>
     </div>
+
     <!-- TOAST -->
     <div class="successToast-container" id="mem-successToast">
         <div class="successToast-left">
@@ -835,97 +1063,104 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     </div>
 
     <!-- ADD FINANCE MODAL -->
-    <div class="bg" id="bg"></div>
-    <div class="addFinance-modal-container" id="finance-modal-container">
-        <h2 class="modal-title">ADD FINANCIAL RECORD</h2>
-        <form action="" id="finance-form">
-            <div class="form-container">
+    <div class='bg' id='bg'></div>
+    <div class='addFinance-modal-container' id='finance-modal-container'>
+        <h2 class='modal-title'>ADD FINANCIAL RECORD</h2>
+        <form action='addfinancerecord.php' method="POST" id='finance-form'>
+            <div class='form-container'>
                 <!-- FORM LEFT -->
-                <div class="financeForm-left addForm">
+                <div class='financeForm-left addForm'>
                     <!-- FINANCE TYPE -->
-                    <div class="fields">
-                        <label for="select-type">Finance Type<span> *</span>
+                    <div class='fields'>
+                        <label for='select-type'>Finance Type<span> *</span>
                         </label>
-                        <select name="type" id="select-type" onchange="disableInputs()">
-                            <option value="" selected disabled>Select Account type</option>
-                            <option value="donation">Butaw/Contribution</option>
-                            <option value="butaw">Donation</option>
-                            <option value="butaw">Expenses</option>
-                            <option value="butaw">Payment</option>
+                        <select name='type' id='select-type' onchange="disableInputs()" required>
+                            <option value='' selected disabled>Select Account type</option>
+                            <option value='Butaw'>Butaw/Contribution</option>
+                            <option value='Donation'>Donation</option>
+                            <option value='Expenses'>Expenses</option>
                         </select>
                     </div>
-                    <!-- LASTNAME -->
-                    <div class="fields">
-                        <label for="lastname">Lastname<span> *</span></label>
-                        <input type="text" id="lastname" name="lastname" placeholder="Lastname" required>
-                    </div>
-                    <!-- FIRSTNAME -->
-                    <div class="fields">
-                        <label for="firstname">Firstname<span> *</span></label>
-                        <input type="text" id="firstname" name="firstname" placeholder="Firstname" required>
-                    </div>
-                    <!-- MIDNAME -->
-                    <div class="fields">
-                        <label for="midname">Middlename</label>
-                        <input type="text" id="midname" name="middlename" placeholder="Middlename">
-                    </div>
-                    <!-- EXTENSION NAME -->
-                    <div class="fields">
-                        <label for="extension">Extension Name</label>
-                        <input type="text" pattern="[A-Za-z.]{2,5}" id="extension" name="extension"
-                            placeholder="eg. Jr, Sr">
+                    <!-- BODY NO. -->
+                    <div class='fields'>
+                        <label for='bodynum'>Body No.<span> *</span></label>
+                        <input type='text' id='body-no' name='bodynum' pattern="[0-9]*" required disabled>
                     </div>
 
-                    <!-- GENDER -->
-                    <div class="fields">
-                        <label for="select-gender">Sex<span> *</span></label>
-                        <select name="gender" id="select-gender">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="none">Prefer not to say</option>
-                        </select>
-                    </div>
+                    <!-- DONOR NAME -->
+                    <div class='field-container'>
+                        <div class='fields donor'>
+                            <label for='donor-select'>Donor Name</label>
+                            <select name='donor_select' id='donor-select' onchange='handleDonorSelection()' required
+                                disabled>
+                                <option selected disabled value=''>Select Donor</option>
+                                <?php
 
+                                // connect to the MySQL database
+                                include "db_conn.php";
+
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+
+                                $sql = "SELECT * FROM donor_info";
+
+                                $result = $conn->query($sql);
+
+
+                                while ($row = $result->fetch_assoc()) {
+
+                                    $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                                    $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                                    $lastName = $row["lname"];
+
+                                    if (empty($row["exname"])) {
+                                        $lastName .= ', ';
+                                    }
+
+                                    echo "<option value='" . $row["id"] . "'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
+                                }
+                                // close MySQL connection
+                                $conn->close();
+                                ?>
+                            </select>
+                        </div>
+
+                        <div class='fields'>
+                            <a href='../../views/pages/adddonor.php'><input type='button' id='donorbtn'
+                                    value='Add donor'></a>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- FORM-RIGHT -->
-                <div class="financeForm-right addForm">
-                    <!-- CONTACT NUMBER -->
-                    <div class="fields">
-                        <label for="contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="contact" name="contact" placeholder="eg. 09592220954"
-                            required>
-
-                    </div>
-                    <!-- ACCOUNT TYPE -->
-                    <div class="fields">
-                        <label for="acc-type">Account Type<span> *</span></label>
-                        <select name="acc-type" id="acc-type">
-                            <option value="acc-1">Account 1</option>
-                            <option value="acc-2">Account 2</option>
-                            <option value="acc-3">Account 3</option>
+                <div class='financeForm-right addForm'>
+                    <div class='fields'>
+                        <label for='expense-type'>Expense Type</label>
+                        <select name='expense_type' id='expense-type' required disabled>
+                            <option selected disabled value=''>Select Expense type</option>
+                            <option value='Expenses - Rent'>Rent</option>
+                            <option value='Expenses - Electricity'>Electricity</option>
+                            <option value='Expenses - Water'>Water</option>
                         </select>
                     </div>
 
+
                     <!-- ACCOUNT ID -->
-                    <div class="fields">
-                        <label for="acc-id">Account ID<span> *</span></label>
-                        <input type="text" id="acc-id" name="acc-id" required>
-                    </div>
-                    <!-- BODY NO. -->
-                    <div class="fields">
-                        <label for="body-no">Body No.<span> *</span></label>
-                        <input type="text" id="body-no" name="bodynum" required>
-                    </div>
-                    <!--  AMOUNT  -->
-                    <div class="fields">
-                        <label for="amount">Amount<span> *</span></label>
-                        <input type="text" id="amount" name="amount" placeholder="₱" required>
+                    <div class='fields'>
+                        <label for='trans-date'>Transaction date<span> *</span></label>
+                        <input type='date' id='trans-date' name='trans_date' required disabled>
                     </div>
 
-                    <div class="btn-container">
-                        <input type="button" value="Cancel" class="cancel-btn" id="finance-cancel" formnovalidate>
-                        <button class="save-btn" id="save-btn" type="submit">Save</button>
+                    <!--  AMOUNT  -->
+                    <div class='fields'>
+                        <label for='amount'>Amount<span> *</span></label>
+                        <input type='text' id='amount' name='amount' placeholder='₱' required disabled>
+                    </div>
+
+                    <div class='btn-container'>
+                        <input type='button' value='Cancel' class='cancel-btn' id='finance-cancel' formnovalidate>
+                        <button class='save-btn' id='save-btn' type='submit'>Save</button>
                     </div>
                 </div>
             </div>
@@ -936,9 +1171,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class="bg" id="bg"></div>
     <div class="addComplaint-modal-container" id="complaint-modal-container">
         <h2 class="modal-title">ADD COMPLAINT</h2>
-        <form action="../php/complaints.php" method="post"
-            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
-            id="complaint-form">
+        <form action="../php/complaints.php" method="post" id="complaint-form">
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="complaintForm-left addForm">
@@ -986,21 +1219,22 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 <div class="complaintForm-right addForm">
                     <!-- SUBJECT -->
                     <div class="fields">
-                        <label for="subject">Person to Complain<span> *</span></label>
-                        <input type="text" id="subject" name="subject" maxlength="30" pattern="[A-Za-z ]{2,30}"
-                            placeholder="Name of person to complain">
+                        <label for="ComplaintSubject">Person to Complain<span> *</span></label>
+                        <input type="text" id="ComplaintSubject" name="ComplaintSubject" maxlength="30"
+                            pattern="[A-Za-z ]{2,30}" placeholder="Name of person to complain">
                     </div>
 
                     <!-- BODY NUMBER -->
                     <div class="fields">
-                        <label for="subject-bodyNum">Body no.<span> *</span></label>
-                        <input type="text" id="subject-bodyNum" name="subject-bodyNum" required>
+                        <label for="complaintSubjectBody">Body no.<span> *</span></label>
+                        <input type="text" id="complaintSubjectBody" name="complaintSubjectBody" required>
                     </div>
 
                     <!-- DESCRIPTION -->
                     <div class="fields">
                         <label for="desc">Description<span> *</span></label>
-                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" required></textarea>
+                        <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" onkeyup="countChar(this)"
+                            required></textarea>
                     </div>
 
                     <div class="timeDate-container">
@@ -1024,62 +1258,91 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                 </div>
             </div>
         </form>
+        <!-- WARNING TOAST -->
+        <div class="warningToast-container" id="cmplnt-warningToast">
+            <div class="warningToast-left">
+                <i class="warningToast-icon fa-solid fa-circle-info"></i>
+            </div>
+            <div class="warningToast-right">
+                <p><strong>Try Again</strong> Placeholder warning!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="successToast-container" id="cmplnt-successToast">
+        <div class="successToast-left">
+            <i class="successToast-icon fa-solid fa-circle-check"></i>
+        </div>
+        <div class="successToast-right">
+            <p><strong>Success!</strong> Complaint successfully submitted.</p>
+        </div>
     </div>
 
     <!-- ADD EVENTS & PROGRAMS -->
-    <div class="bg" id="bg"></div>
-    <div class="addEvent-modal-container" id="event-modal-container">
-        <h2 class="modal-title">SCHEDULE AN EVENT OR PROGRAM</h2>
-        <form action="../php/adduser.php" method="post"
-            oninput='city.setCustomValidity(city.value != barangay.value ? "Passwords do not match." : "")'
-            id="event-form">
-            <div class="form-container">
+    <div class='bg' id='bg'></div>
+    <div class='addEvent-modal-container' id='event-modal-container'>
+        <h2 class='modal-title'>SCHEDULE AN EVENT OR PROGRAM</h2>
+        <form action='addevents.php' method='POST' id='event-form'>
+            <div class='form-container'>
                 <!-- FORM LEFT -->
-                <div class="complaintForm-left addForm">
+                <div class='complaintForm-left addForm'>
                     <!-- EVENT TITLE -->
-                    <div class="fields">
-                        <label for="event-title">Event Title (What)<span> *</span></label>
-                        <input type="text" id="event-title" name="event-title" maxlength="25" placeholder="Event title"
-                            required>
+                    <div class='fields'>
+                        <label for='event-title'>Title<span> *</span></label>
+                        <input type='text' id='event-title' name='event-title' placeholder='Event title' required>
                     </div>
 
                     <!-- DESCRIPTION -->
-                    <div class="fields">
-                        <label for="event-desc">Description<span> *</span></label>
-                        <textarea name="desc" id="event-desc" cols="30" rows="9" maxlength="350"></textarea>
+                    <div class='fields'>
+                        <label for='event-desc'>Description<span> *</span></label>
+                        <textarea name='desc' id='event-desc' cols='30' rows='14'></textarea>
                     </div>
                 </div>
                 <!-- FORM-RIGHT -->
-                <div class="complaintForm-right addForm">
+                <div class='complaintForm-right addForm'>
+
+                    <!--EVENT OR PROGRAM BUDGET-->
+                    <div class='fields'>
+                        <label for='events-budget'>Budget</label>
+                        <input type='text' id='events-budget' name='events-budget' disabled>
+                    </div>
+
+                    <div class='is-bud'>
+                        <input type='checkbox' id='events-isbudget' name='events-isbudget'
+                            onchange='handleBudgetCheckboxChange()'>
+                        <label for='events-isbudget'>With Budget</label>
+                    </div>
+
                     <!-- EVENT ORGANIZER -->
-                    <div class="fields">
-                        <label for="events-organizer">Event Organizer<span> *</span></label>
-                        <input type="text" id="events-organizer" name="events-organizer" maxlength="30" required>
+                    <div class='fields'>
+                        <label for='events-organizer'>Organizer</label>
+                        <input type='text' id='events-organizer' name='events-organizer'>
                     </div>
 
                     <!-- EVENT LOCATION -->
-                    <div class="fields">
-                        <label for="events-location">Event Location (Where)<span> *</span></label>
-                        <input type="text" id="events-location" name="events-location" maxlength="50" required>
+                    <div class='fields'>
+                        <label for='events-location'>Location</label>
+                        <input type='text' id='events-location' name='events-location' required>
                     </div>
 
-                    <div class="timeDate-container">
+                    <div class='timeDate-container'>
                         <!-- TIME -->
-                        <div class="fields">
-                            <label for="events-time">Time of Event (When)<span> *</span></label>
-                            <input type="time" id="events-time" name="events-time" required>
+                        <div class='fields'>
+                            <label for='events-time'>Time<span> *</span></label>
+                            <input type='time' id='events-time' name='events-time' required>
                         </div>
 
                         <!-- DATE -->
-                        <div class="fields">
-                            <label for="events-date">Date of Event (When)<span> *</span></label>
-                            <input type="date" id="events-date" name="events-date" required>
+                        <div class='fields'>
+                            <label for='events-date'>Date<span> *</span></label>
+                            <input type='date' id='events-date' name='events-date' required>
                         </div>
                     </div>
 
-                    <div class="btn-container">
-                        <input type="button" value="Cancel" class="cancel-btn" id="event-cancel" formnovalidate>
-                        <button class="save-btn" id="save-btn" type="submit">Save</button>
+                    <div class='btn-container'>
+                        <input type='button' value='Cancel' class='cancel-btn' id='event-cancel' formnovalidate>
+                        <button class='save-btn' id='save-btn' type='submit'>Save</button>
                     </div>
                 </div>
             </div>
@@ -1096,8 +1359,29 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
         </div>
     </div>
 
+    <!-- LOADING -->
+    <div id="loading-container">
+        <div class="background-wrapper">
+        </div>
+        <div class="logo-container">
+            <img src="../../public/assets/mtodata_logo.png" alt="Logo" class="logo">
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+    
+
+    <!-- SCRIPTS -->
+    <!-- Javascript Library for Excel -->
     <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+    <!-- Main Script for Dashboard -->
     <script src="../../services/dashboard.js"></script>
+    <!-- Script for Exporting into Excel -->
+    <script src="../../services/exportMember.js"></script>
+    <script src="../../services/exportFinance.js"></script>
+    <!-- Script for date today  -->
+    <script src="../../services/datetoday.js"></script>
+    <!-- Script for Loading Screen -->
+    <script src="../../services/loading.js"></script>
 </body>
 
 </html>

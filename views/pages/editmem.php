@@ -67,7 +67,7 @@ if (isset($_GET['id'])) {
                 <h3><a href='../../views/php/dashboard.php'><i class='fa-solid fa-arrow-left'></i></a>Edit Member
                     Information</h3>
                 <div class='btn-container'>
-                    <a href='viewuser.php?id=<?php echo $memberID?>'><input type='button' value='Discard'
+                    <a href='viewmem.php?id=<?php echo $memberID?>'><input type='button' value='Discard'
                             class='cancelBtn modal-btn' id='cancel-btn'></a>
                     <button id='member-update' class='update-btn modal-btn' type='submit' disabled>Update</button>
                 </div>
@@ -121,19 +121,19 @@ if (isset($_GET['id'])) {
                         <!-- FIRSTNAME -->
                         <div class='fields'>
                             <label for='mem-firstname'>Firstname<span> *</span></label>
-                            <input type='text' id='mem-firstname' name='firstname' value='<?php echo $row['fname']; ?>'>
+                            <input type='text' id='mem-firstname' name='firstname' maxlength="25" pattern="[A-Za-z ]{2,25}" value='<?php echo $row['fname']; ?>'>
                         </div>
 
                         <!-- MIDNAME -->
                         <div class='fields'>
                             <label for='mem-midname'>Middlename</label>
-                            <input type='text' id='mem-midname' name='middlename' value='<?php echo $row['mname']; ?>'>
+                            <input type='text' id='mem-midname' name='middlename' maxlength="25" pattern="[A-Za-z ]{2,25}" value='<?php echo $row['mname']; ?>'>
                         </div>
 
                         <!-- LASTNAME -->
                         <div class='fields'>
                             <label for='mem-lastname'>Lastname<span> *</span></label>
-                            <input type='text' id='mem-lastname' name='lastname' value='<?php echo $row['lname']; ?>'>
+                            <input type='text' id='mem-lastname' name='lastname' maxlength="25" pattern="[A-Za-z ]{2,25}" value='<?php echo $row['lname']; ?>'>
                         </div>
                     </div>
 
@@ -142,7 +142,7 @@ if (isset($_GET['id'])) {
                         <div class='fields'>
                             <label for='mem-extension'>Extension Name</label>
                             <input type='text' id='mem-extension' name='extension'
-                                value='<?php echo $row['exname']; ?>'>
+                            maxlength="5" pattern="[A-Za-z1-9]{2,5}" value='<?php echo $row['exname']; ?>'>
                         </div>
 
                         <!-- MEMBERS ROLE -->
@@ -174,19 +174,19 @@ if (isset($_GET['id'])) {
                         <!-- STREET -->
                         <div class='fields'>
                             <label for='mem-street'>Street<span> *</span></label>
-                            <input type='text' id='mem-street' name='street' value='<?php echo $row['street']; ?>'>
+                            <input type='text' id='mem-street' name='street' maxlength="25" value='<?php echo $row['street']; ?>'>
                         </div>
 
                         <!-- BARANGAY -->
                         <div class='fields'>
                             <label for='mem-brgy'>Barangay<span> *</span></label>
-                            <input type='text' id='mem-brgy' name='barangay' value='<?php echo $row['barangay']; ?>'>
+                            <input type='text' id='mem-brgy' name='barangay' maxlength="25" value='<?php echo $row['barangay']; ?>'>
                         </div>
 
                         <!-- CITY -->
                         <div class='fields'>
                             <label for='mem-city'>City<span> *</span></label>
-                            <input type='text' id='mem-city' name='city' value='<?php echo $row['city']; ?>'>
+                            <input type='text' id='mem-city' name='city' maxlength="25" value='<?php echo $row['city']; ?>'>
                         </div>
                     </div>
 
@@ -196,14 +196,14 @@ if (isset($_GET['id'])) {
                         <div class='fields'>
                             <label for='mem-contact'>Contact no.<span> *</span></label>
                             <input type='text' id='mem-contact' name='contact' placeholder="09XXXXXXXXX" maxlength="11"
-                                value='<?php echo $row['phone']; ?>'>
+                            pattern="[0-9]{11}" value='<?php echo $row['phone']; ?>'>
                         </div>
 
                         <!-- LICENSE NUMBER -->
                         <div class='fields'>
                             <label for='mem-license'>License no.<span> *</span></label>
                             <input type='text' id='mem-license' name='license' oninput="handleInput()"
-                                value='<?php echo $row['license_no']; ?>'>
+                            pattern="[A-Z]{1}[0-9]{2}-[0-9]{2}-[0-9]{6}" value='<?php echo $row['license_no']; ?>'>
                         </div>
                     </div>
                 </div>

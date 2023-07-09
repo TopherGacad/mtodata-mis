@@ -128,7 +128,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- BODY NO. -->
                         <div class='fields'>
                             <label for='unit-bodyno'>Body No. <span id='error_1'> *</span></label>
-                            <input type='text' id='unit-bodyno' name='unitbody_no' oninput="validate_isNum()" required>
+                            <input type='text' id='unit-bodyno' pattern="[0-9]{4}" maxlength="4" name='unitbody_no' oninput="validate_isNum()" placeholder="eg. 0001" required>
                         </div>
 
                         <!-- BODY COLOR -->
@@ -158,7 +158,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- FRANCHISE NO. -->
                         <div class='fields'>
                             <label for='unit_franno'>Franchise No. <span id='error_2'> *</span></label>
-                            <input type='text' id='unit-franno' name='unitfran_no' oninput="validate_isNum()" required>
+                            <input type='text' id='unit-franno' pattern="[0-9]*" name='unitfran_no' oninput="validate_isNum()" required>
                         </div>
                     </div>
 
@@ -181,7 +181,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- AREA CODE -->
                         <div class='fields'>
                             <label for='unit-area'>Area Code <span id='error_4'> *</span></label>
-                            <input type='text' id='unit-area' name='unit_area' oninput="validate_isNum()" required>
+                            <input type='text' id='unit-area' pattern="[0-9]*" name='unit_area' oninput="validate_isNum()" required>
                         </div>
                     </div>
                 </div>
@@ -193,7 +193,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class='section'>
                         <div class='fields'>
                             <label for='unit_motorno'>Motor No. <span id='error_3'> *</span></label>
-                            <input type='text' id='unit-motorno' name='unit_motorno' oninput="validate_isNum()"
+                            <input type='text' id='unit-motorno' pattern="[0-9]*" name='unit_motorno' oninput="validate_isNum()"
                                 required>
                         </div>
 
@@ -227,7 +227,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class='section'>
                         <div class='fields'>
                             <label for='unit_District'>District <span> *</span></label>
-                            <input type='text' id='unit-District' name='unit_District' required>
+                            <input type='text' id='unit-District' pattern="[0-9]{2}" maxlength="2" name='unit_District' required>
                         </div>
                     </div>
                     <div class='section'>
