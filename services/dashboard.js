@@ -871,47 +871,180 @@ function countChar(val) {
 
 function generatePDF(complaintId, fileName) {
     const pdfUrl = '../reports/' + fileName + '?id=' + complaintId;
-  
+
     const printContainer = document.createElement('div');
     printContainer.id = 'print-container';
     printContainer.style.display = 'none';
     document.body.appendChild(printContainer);
-  
+
     const iframe = document.createElement('iframe');
     iframe.src = pdfUrl;
     iframe.style.width = '100%';
     iframe.style.height = '100%';
     iframe.style.border = 'none';
     printContainer.appendChild(iframe);
-  
-    iframe.onload = function() {
-      const printWindow = iframe.contentWindow || iframe.contentDocument.defaultView;
-      printWindow.print();
+
+    iframe.onload = function () {
+        const printWindow = iframe.contentWindow || iframe.contentDocument.defaultView;
+        printWindow.print();
     };
+}
+//Generate Membership status Report
+
+function save_generate() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../reports/meminfo.php', true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var response = xhr.responseText;
+        var container = document.createElement('div');
+        container.innerHTML = response;
+        var memInfoContainer = container.querySelector('#container');
+        generatePDF1(memInfoContainer.innerHTML);
+      }
+    };
+    xhr.send();
   }
   
+  function generatePDF1(htmlContent) {
+    var element = document.createElement('div');
+    element.innerHTML = htmlContent;
+  
+    var options = {
+      margin: [0.5, 0.5, 0.5, 0.5],
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    
+    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
+      const totalPages = pdf.internal.getNumberOfPages();
+  
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setFont('Arial', 'italic');
+        pdf.setFontSize(10);
+        pdf.setTextColor(128);
+        pdf.setPage(i);
+        pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+      }
+      
+      // Save or display the generated PDF here
+      pdf.save('meminfo.pdf');
+    });
+  }
+
+  
+//Generate Donation Report
+
+  function save_generate1() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../reports/don-report.php', true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var response = xhr.responseText;
+        var container = document.createElement('div');
+        container.innerHTML = response;
+        var memInfoContainer = container.querySelector('#container');
+        generatePDF2(memInfoContainer.innerHTML);
+      }
+    };
+    xhr.send();
+  }
+  
+  function generatePDF2(htmlContent) {
+    var element = document.createElement('div');
+    element.innerHTML = htmlContent;
+  
+    var options = {
+      margin: [0.5, 0.5, 0.5, 0.5],
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    
+    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
+      const totalPages = pdf.internal.getNumberOfPages();
+  
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setFont('Arial', 'italic');
+        pdf.setFontSize(10);
+        pdf.setTextColor(128);
+        pdf.setPage(i);
+        pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+      }
+      
+      // Save or display the generated PDF here
+      pdf.save('donation-report.pdf');
+    });
+  }
+  
+  //Generate Contribution Report
+
+  function save_generate2() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../reports/con-report.php', true);
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        var response = xhr.responseText;
+        var container = document.createElement('div');
+        container.innerHTML = response;
+        var memInfoContainer = container.querySelector('#container');
+        generatePDF3(memInfoContainer.innerHTML);
+      }
+    };
+    xhr.send();
+  }
+  
+  function generatePDF3(htmlContent) {
+    var element = document.createElement('div');
+    element.innerHTML = htmlContent;
+  
+    var options = {
+      margin: [0.5, 0.5, 0.5, 0.5],
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    
+    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
+      const totalPages = pdf.internal.getNumberOfPages();
+  
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setFont('Arial', 'italic');
+        pdf.setFontSize(10);
+        pdf.setTextColor(128);
+        pdf.setPage(i);
+        pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+      }
+      
+      // Save or display the generated PDF here
+      pdf.save('contribution-report.pdf');
+    });
+  }
+
+
 // Get the current date
-    var currentDate = new Date();
+var currentDate = new Date();
 
-    // Array of month names
-    var monthNames = [
-        "January", "February", "March", "April", "May", "June", "July",
-        "August", "September", "October", "November", "December"
-    ];
+// Array of month names
+var monthNames = [
+    "January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"
+];
 
-    // Array of weekday names
-    var weekdayNames = [
-        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
-    ];
+// Array of weekday names
+var weekdayNames = [
+    "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+];
 
-    // Format the date as desired ("Saturday, 8 July 2023")
-    var formattedDate = weekdayNames[currentDate.getDay()] + ', ' +
-        currentDate.getDate() + ' ' +
-        monthNames[currentDate.getMonth()] + ' ' +
-        currentDate.getFullYear();
+// Format the date as desired ("Saturday, 8 July 2023")
+var formattedDate = weekdayNames[currentDate.getDay()] + ', ' +
+    currentDate.getDate() + ' ' +
+    monthNames[currentDate.getMonth()] + ' ' +
+    currentDate.getFullYear();
 
-    // Insert the formatted date into the <i> element
-    document.getElementById('current-date').innerText = formattedDate;
+// Insert the formatted date into the <i> element
+document.getElementById('current-date').innerText = formattedDate;
 
 
 

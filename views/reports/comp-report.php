@@ -23,6 +23,7 @@
 
     <?php
 
+    date_default_timezone_set('Asia/Manila');
     $currentDate = date('Y-m-d');
 
     //connection
