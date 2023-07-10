@@ -295,35 +295,37 @@ date_default_timezone_set('Asia/Manila');
                 $conn->close();
                 ?>
             </section>
-            
+
             <div class="bottom-dash">
-            <div class='botleft-dash border'>
+                <div class='botleft-dash border'>
 
-<!-- FINANCE ENTRY -->
-<div class='card-header entry'>
-    <h4>Recent Financial Entry</h4>
-</div>
+                    <!-- FINANCE ENTRY -->
+                    <div class='card-header entry'>
+                        <h4>Recent Financial Entry</h4>
+                        <button class="finance_download exportBtn" onclick="save_generate3()"><i
+                                class="fa-solid fa-download"></i></button></abbr>
+                    </div>
 
-<div class="table-container">
-    <table>
-        <tr>
-            <th>Transaction Code</th>
-            <th>Debit</th>
-            <th>Credit</th>
-            <th>Date</th>
-        </tr>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Transaction Code</th>
+                                <th>Debit</th>
+                                <th>Credit</th>
+                                <th>Date</th>
+                            </tr>
 
-        <tbody>
-            <?php
+                            <tbody>
+                                <?php
 
-            // connect to the MySQL database
-            include "db_conn.php";
+                                // connect to the MySQL database
+                                include "db_conn.php";
 
-            $selectFinance = "SELECT *, DATE_FORMAT(date_created, '%Y-%m-%d') AS new_formatted_date FROM transaction_finance ORDER BY date_created DESC";
-            $FinaceResult = $conn->query($selectFinance);
+                                $selectFinance = "SELECT *, DATE_FORMAT(date_created, '%Y-%m-%d') AS new_formatted_date FROM transaction_finance ORDER BY date_created DESC";
+                                $FinaceResult = $conn->query($selectFinance);
 
-            while ($FinRecent = $FinaceResult->fetch_assoc()) {
-                echo "
+                                while ($FinRecent = $FinaceResult->fetch_assoc()) {
+                                    echo "
                 <tr>
                 <td>" . $FinRecent['transaction_code'] . "</td>
                 <td>" . $FinRecent['debit'] . "</td>
@@ -331,48 +333,48 @@ date_default_timezone_set('Asia/Manila');
                 <td>" . $FinRecent['new_formatted_date'] . "</td>
                 </tr>
                 ";
-            }
+                                }
 
-            // close MySQL connection
-            $conn->close();
-            ?>
-        </tbody>
-    </table>
-</div>
-</div>
-<div class='botright-dash border'>
+                                // close MySQL connection
+                                $conn->close();
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class='botright-dash border'>
 
-<!-- EVENTS AND PROGRAMS ENTRY -->
-<div class='card-header events'>
-    <h4>Scheduled Events</h4>
-</div>
-<div class='dash-content'>
-    <?php
+                    <!-- EVENTS AND PROGRAMS ENTRY -->
+                    <div class='card-header events'>
+                        <h4>Scheduled Events</h4>
+                    </div>
+                    <div class='dash-content'>
+                        <?php
 
-    // connect to the MySQL database
-    include "db_conn.php";
-    $dateToday = date('ymd');
+                        // connect to the MySQL database
+                        include "db_conn.php";
+                        $dateToday = date('ymd');
 
-    $showPrograms = "SELECT *, CONCAT(DATE_FORMAT(ep_date, '%Y-%m-%d'), ' ', DATE_FORMAT(ep_start, '%h:%i %p')) AS concatenated_datetime FROM events_programs 
+                        $showPrograms = "SELECT *, CONCAT(DATE_FORMAT(ep_date, '%Y-%m-%d'), ' ', DATE_FORMAT(ep_start, '%h:%i %p')) AS concatenated_datetime FROM events_programs 
     WHERE ep_date >= $dateToday ORDER BY concatenated_datetime ASC";
-    $showProgramResult = $conn->query($showPrograms);
+                        $showProgramResult = $conn->query($showPrograms);
 
-    while ($EPRecent = $showProgramResult->fetch_assoc()) {
-        echo "
+                        while ($EPRecent = $showProgramResult->fetch_assoc()) {
+                            echo "
          <div class='agenda-box'>
          <h3>" . $EPRecent['ep_title'] . "</h3>
          <p>" . $EPRecent['concatenated_datetime'] . "</p>
          </div>
          ";
-    }
+                        }
 
-    // close MySQL connection
-    $conn->close();
-    ?>
-</div>
-</div>
+                        // close MySQL connection
+                        $conn->close();
+                        ?>
+                    </div>
+                </div>
             </div>
-           
+
         </div>
     </div>
 
