@@ -78,6 +78,7 @@ table {
     margin-top: 20px;
     margin-bottom: 20px;
     page-break-inside: avoid;
+    width: 100%;
 }
 
 .mem_info {
@@ -161,10 +162,6 @@ table tr {
     text-align: right;
 }
 
-.IS_statements {
-    border-color: white;
-}
-
 .to_hide {
     color: white;
 }
@@ -175,4 +172,6 @@ table tr {
 
 .tr_head {
     font-weight: bold;
+    padding-bottom: 10px;
 }
+
