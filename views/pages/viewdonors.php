@@ -113,7 +113,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     // close MySQL connection
                     $conn->close();
                     ?>
-                </tbody>
+                </tbody>              
             </table>
         </div>
     </main>
@@ -127,7 +127,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <p id='success-con'></p>
         </div>
     </div>
-    
+
     <script src='../../services/donorinfo.js'></script>
     <script src="../../services/exportdonor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
