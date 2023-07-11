@@ -298,10 +298,10 @@ date_default_timezone_set('Asia/Manila');
             <div class="bottom-dash">
                 <div class='botleft-dash border'>
 
-<!-- FINANCE ENTRY -->
-<div class='card-header entry'>
-    <h4>Recent Financial Entry</h4>
-</div>
+                    <!-- FINANCE ENTRY -->
+                    <div class='card-header entry'>
+                        <h4>Recent Financial Entry</h4>
+                    </div>
 
                     <div class="table-container">
                         <table>
@@ -340,7 +340,6 @@ date_default_timezone_set('Asia/Manila');
                     </div>
                 </div>
                 <div class='botright-dash border'>
-
                     <!-- EVENTS AND PROGRAMS ENTRY -->
                     <div class='card-header events'>
                         <h4>Scheduled Events</h4>
