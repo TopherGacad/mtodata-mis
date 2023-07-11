@@ -39,23 +39,23 @@ const complaintCancel = document.getElementById("complaint-cancel")
 const eventCancel = document.getElementById("event-cancel")
 
 // FORM MODALS 
-adduserBtn.addEventListener("click", function () {
+adduserBtn.addEventListener("click", function() {
     userModal.style.display = "flex"
     modalBg.style.display = "block"
 })
-addmemBtn.addEventListener("click", function () {
+addmemBtn.addEventListener("click", function() {
     memberModal.style.display = "flex"
     modalBg.style.display = "block"
 })
-addfinanceBtn.addEventListener("click", function () {
+addfinanceBtn.addEventListener("click", function() {
     financeModal.style.display = "flex"
     modalBg.style.display = "block"
 })
-addComplainBtn.addEventListener("click", function () {
+addComplainBtn.addEventListener("click", function() {
     complainModal.style.display = "flex"
     modalBg.style.display = "block"
 })
-addEventBtn.addEventListener("click", function () {
+addEventBtn.addEventListener("click", function() {
     eventModal.style.display = "flex"
     modalBg.style.display = "block"
 })
@@ -118,17 +118,17 @@ function disableInputs() {
 disableInputs()
 
 // CANCEL BUTTONS
-userCancel.addEventListener("click", function () {
+userCancel.addEventListener("click", function() {
     document.getElementById("user-form").reset()
     userModal.style.display = "none"
     modalBg.style.display = "none"
 })
-memberCancel.addEventListener("click", function () {
+memberCancel.addEventListener("click", function() {
     document.getElementById("member-form").reset()
     memberModal.style.display = "none"
     modalBg.style.display = "none"
 })
-financeCancel.addEventListener("click", function () {
+financeCancel.addEventListener("click", function() {
     document.getElementById("finance-form").reset()
     financeModal.style.display = "none"
     modalBg.style.display = "none"
@@ -140,19 +140,19 @@ financeCancel.addEventListener("click", function () {
     amountInput.disabled = true;
     transDate.disabled = true;
 })
-complaintCancel.addEventListener("click", function () {
+complaintCancel.addEventListener("click", function() {
     document.getElementById("complaint-form").reset()
     complainModal.style.display = "none"
     modalBg.style.display = "none"
 })
-eventCancel.addEventListener("click", function () {
+eventCancel.addEventListener("click", function() {
     document.getElementById("event-form").reset()
     eventModal.style.display = "none"
     modalBg.style.display = "none"
 })
 
 //FI: CREATE A FUNCTION FOR SHOW PASSWORD INSTEAD OF THIS 
-seePass.addEventListener("change", function () {
+seePass.addEventListener("change", function() {
     const inputPass = document.getElementById("user-pass")
     const confirmPass = document.getElementById("user-confirmPass")
     if (inputPass.type === 'password' || confirmPass.type === 'password') {
@@ -341,11 +341,11 @@ programsSearch.addEventListener('input', () => {
 //WARNING & SUCCESS TOAST FOR ADD USER
 function checkEmailExists(email) {
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkemail.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
                 resolve(response === 'exists');
@@ -357,11 +357,11 @@ function checkEmailExists(email) {
 
 // Function to check if the contact number exists in the database
 function checkContactExists(contact) {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkcontact.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
                 resolve(response === 'exists');
@@ -373,11 +373,11 @@ function checkContactExists(contact) {
 
 // Function to check if the username exists in the database
 function checkUsernameExists(username) {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkusername.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
                 resolve(response === 'exists');
@@ -388,12 +388,12 @@ function checkUsernameExists(username) {
 }
 
 // Event listener for input changes
-document.getElementById('user-email').addEventListener('input', function () {
+document.getElementById('user-email').addEventListener('input', function() {
     var emailInput = this.value;
     var emailValidation = document.getElementById('email-validation');
 
     checkEmailExists(emailInput)
-        .then(function (exists) {
+        .then(function(exists) {
             if (exists) {
                 emailValidation.textContent = 'Email address already exist';
             } else {
@@ -406,18 +406,18 @@ document.getElementById('user-email').addEventListener('input', function () {
             var usernameValidation = document.getElementById('username-validation');
             saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '' || usernameValidation.textContent !== '';
         })
-        .catch(function (error) {
+        .catch(function(error) {
             console.error(error);
         });
 });
 
 // Event listener for input changes
-document.getElementById('user-contact').addEventListener('input', function () {
+document.getElementById('user-contact').addEventListener('input', function() {
     var contactInput = this.value;
     var contactValidation = document.getElementById('contact-validation');
 
     checkContactExists(contactInput)
-        .then(function (exists) {
+        .then(function(exists) {
             if (exists) {
                 contactValidation.textContent = 'Contact number already exist';
             } else {
@@ -430,18 +430,18 @@ document.getElementById('user-contact').addEventListener('input', function () {
             var usernameValidation = document.getElementById('username-validation');
             saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '' || usernameValidation.textContent !== '';
         })
-        .catch(function (error) {
+        .catch(function(error) {
             console.error(error);
         });
 });
 
 // Event listener for input changes
-document.getElementById('user-uname').addEventListener('input', function () {
+document.getElementById('user-uname').addEventListener('input', function() {
     var usernameInput = this.value;
     var usernameValidation = document.getElementById('username-validation');
 
     checkUsernameExists(usernameInput)
-        .then(function (exists) {
+        .then(function(exists) {
             if (exists) {
                 usernameValidation.textContent = 'Username already exist';
             } else {
@@ -454,12 +454,12 @@ document.getElementById('user-uname').addEventListener('input', function () {
             var contactValidation = document.getElementById('contact-validation');
             saveBtn.disabled = emailValidation.textContent !== '' || contactValidation.textContent !== '' || usernameValidation.textContent !== '';
         })
-        .catch(function (error) {
+        .catch(function(error) {
             console.error(error);
         });
 });
 
-document.getElementById("user-form").addEventListener("submit", function (event) {
+document.getElementById("user-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
     // Check if user role is selected
@@ -470,7 +470,7 @@ document.getElementById("user-form").addEventListener("submit", function (event)
         warningToast.style.display = "flex";
 
         // Hide toast after 3 seconds
-        setTimeout(function () {
+        setTimeout(function() {
             warningToast.style.display = "none";
         }, 3000);
         return;
@@ -480,7 +480,7 @@ document.getElementById("user-form").addEventListener("submit", function (event)
     var formData = new FormData(this);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "../php/adduser.php", true);
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 // Display success toast
@@ -489,7 +489,7 @@ document.getElementById("user-form").addEventListener("submit", function (event)
                 modalBg.style.display = "none"
 
                 // Hide toast after 2 seconds
-                setTimeout(function () {
+                setTimeout(function() {
                     successToast.style.display = "none";
                     // Refresh the page
                     location.reload();
@@ -512,14 +512,14 @@ document.getElementById("user-form").addEventListener("submit", function (event)
 
 
 //Add Complaint Confirmation Toast
-document.getElementById("complaint-form").addEventListener("submit", function (event) {
+document.getElementById("complaint-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
     // Send an AJAX request to add the user to the database
     var formData = new FormData(this);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "../php/complaints.php", true);
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 // Display success toast
@@ -528,7 +528,7 @@ document.getElementById("complaint-form").addEventListener("submit", function (e
                 modalBg.style.display = "none"
 
                 // Hide toast after 2 seconds
-                setTimeout(function () {
+                setTimeout(function() {
                     successToast.style.display = "none";
                     // Refresh the page
                     location.reload();
@@ -553,11 +553,11 @@ document.getElementById("complaint-form").addEventListener("submit", function (e
 //WARNING & SUCCESS TOAST FOR ADD MEMBER
 function checkMemContactExists(phone) {
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checkmemcontact.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
                 resolve(response === 'exists');
@@ -568,13 +568,13 @@ function checkMemContactExists(phone) {
 }
 
 // Event listener for input changes in mem-contact
-document.getElementById('mem-contact').addEventListener('input', function () {
+document.getElementById('mem-contact').addEventListener('input', function() {
     var contactInput = this.value;
     var contactValidation = document.getElementById('mem-contact-validation');
     var saveButton = document.getElementById('member-form').querySelector('#save-btn');
 
     checkMemContactExists(contactInput)
-        .then(function (exists) {
+        .then(function(exists) {
             if (exists) {
                 contactValidation.textContent = 'Contact number already exist';
             } else {
@@ -582,7 +582,7 @@ document.getElementById('mem-contact').addEventListener('input', function () {
             }
 
             checkLicenseExists(document.getElementById('mem-license').value)
-                .then(function (exists) {
+                .then(function(exists) {
                     var licenseValidation = document.getElementById('license-validation');
                     if (exists) {
                         licenseValidation.textContent = 'License number already exist';
@@ -592,22 +592,22 @@ document.getElementById('mem-contact').addEventListener('input', function () {
 
                     saveButton.disabled = exists || contactValidation.textContent !== '' || licenseValidation.textContent !== '';
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                     console.error(error);
                 });
         })
-        .catch(function (error) {
+        .catch(function(error) {
             console.error(error);
         });
 });
 
 // Function to check if the license number exists in the database
 function checkLicenseExists(license_no) {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '../php/checklicense.php', true);
         xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var response = xhr.responseText;
                 resolve(response === 'exists');
@@ -618,13 +618,13 @@ function checkLicenseExists(license_no) {
 }
 
 // Event listener for input changes in mem-license
-document.getElementById('mem-license').addEventListener('input', function () {
+document.getElementById('mem-license').addEventListener('input', function() {
     var licenseInput = this.value;
     var licenseValidation = document.getElementById('license-validation');
     var saveButton = document.getElementById('member-form').querySelector('#save-btn');
 
     checkLicenseExists(licenseInput)
-        .then(function (exists) {
+        .then(function(exists) {
             if (exists) {
                 licenseValidation.textContent = 'License number already exist';
             } else {
@@ -632,7 +632,7 @@ document.getElementById('mem-license').addEventListener('input', function () {
             }
 
             checkMemContactExists(document.getElementById('mem-contact').value)
-                .then(function (exists) {
+                .then(function(exists) {
                     var contactValidation = document.getElementById('mem-contact-validation');
                     if (exists) {
                         contactValidation.textContent = 'Contact number already exist';
@@ -642,17 +642,17 @@ document.getElementById('mem-license').addEventListener('input', function () {
 
                     saveButton.disabled = exists || licenseValidation.textContent !== '' || contactValidation.textContent !== '';
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                     console.error(error);
                 });
         })
-        .catch(function (error) {
+        .catch(function(error) {
             console.error(error);
         });
 });
 
 
-document.getElementById("member-form").addEventListener("submit", function (event) {
+document.getElementById("member-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
     // Check if user role is selected
@@ -663,7 +663,7 @@ document.getElementById("member-form").addEventListener("submit", function (even
         warningToast.style.display = "flex";
 
         // Hide toast after 3 seconds
-        setTimeout(function () {
+        setTimeout(function() {
             warningToast.style.display = "none";
         }, 3000);
         return;
@@ -673,7 +673,7 @@ document.getElementById("member-form").addEventListener("submit", function (even
     var formData = new FormData(this);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "../php/addmember.php", true);
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 // Display success toast
@@ -682,7 +682,7 @@ document.getElementById("member-form").addEventListener("submit", function (even
                 modalBg.style.display = "none"
 
                 // Hide toast after 2 seconds
-                setTimeout(function () {
+                setTimeout(function() {
                     successToast.style.display = "none";
                     // Refresh the page
                     location.reload();
@@ -714,22 +714,22 @@ const initialModule = selectedModule || 'dash';
 renderModule(initialModule);
 
 // Attach event listeners to the buttons
-dashBtn.addEventListener('click', function () {
+dashBtn.addEventListener('click', function() {
     renderModule('dash');
 });
-memBtn.addEventListener('click', function () {
+memBtn.addEventListener('click', function() {
     renderModule('member');
 });
-userBtn.addEventListener('click', function () {
+userBtn.addEventListener('click', function() {
     renderModule('users');
 });
-financeBtn.addEventListener('click', function () {
+financeBtn.addEventListener('click', function() {
     renderModule('finance');
 });
-complainBtn.addEventListener('click', function () {
+complainBtn.addEventListener('click', function() {
     renderModule('complain');
 });
-programsBtn.addEventListener('click', function () {
+programsBtn.addEventListener('click', function() {
     renderModule('programs');
 });
 
@@ -789,7 +789,7 @@ logoutBtn.addEventListener("click", handleLogout);
 const listItems = document.querySelectorAll("#nav-list .locked");
 
 
-listItems.forEach(function (item) {
+listItems.forEach(function(item) {
     item.style.pointerEvents = "none";
     item.style.opacity = "0.5";
 });
@@ -844,13 +844,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-window.onload = function () {
+window.onload = function() {
     if (window.location.search.includes("success")) {
         history.replaceState({}, document.title, window.location.pathname);
     }
 }
 
-listItems.forEach(function (item) {
+listItems.forEach(function(item) {
     item.style.pointerEvents = "none";
     item.style.opacity = "0.5";
 });
@@ -884,7 +884,7 @@ function generatePDF(complaintId, fileName) {
     iframe.style.border = 'none';
     printContainer.appendChild(iframe);
 
-    iframe.onload = function () {
+    iframe.onload = function() {
         const printWindow = iframe.contentWindow || iframe.contentDocument.defaultView;
         printWindow.print();
     };
@@ -895,132 +895,132 @@ function save_generate() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '../reports/meminfo.php', true);
     xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var response = xhr.responseText;
-        var container = document.createElement('div');
-        container.innerHTML = response;
-        var memInfoContainer = container.querySelector('#container');
-        generatePDF1(memInfoContainer.innerHTML);
-      }
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            var container = document.createElement('div');
+            container.innerHTML = response;
+            var memInfoContainer = container.querySelector('#container');
+            generatePDF1(memInfoContainer.innerHTML);
+        }
     };
     xhr.send();
-  }
-  
-  function generatePDF1(htmlContent) {
+}
+
+function generatePDF1(htmlContent) {
     var element = document.createElement('div');
     element.innerHTML = htmlContent;
-  
-    var options = {
-      margin: [0.5, 0.5, 0.5, 0.5],
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-    
-    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
-      const totalPages = pdf.internal.getNumberOfPages();
-  
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setFont('Arial', 'italic');
-        pdf.setFontSize(10);
-        pdf.setTextColor(128);
-        pdf.setPage(i);
-        pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
-      }
-      
-      // Save or display the generated PDF here
-      pdf.save('meminfo.pdf');
-    });
-  }
 
-  
+    var options = {
+        margin: [0.5, 0.5, 0.5, 0.5],
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(element).toPdf().get('pdf').then(function(pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setFont('Arial', 'italic');
+            pdf.setFontSize(10);
+            pdf.setTextColor(128);
+            pdf.setPage(i);
+            pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+        }
+
+        // Save or display the generated PDF here
+        pdf.save('meminfo.pdf');
+    });
+}
+
+
 //Generate Donation Report
 
-  function save_generate1() {
+function save_generate1() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '../reports/don-report.php', true);
     xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var response = xhr.responseText;
-        var container = document.createElement('div');
-        container.innerHTML = response;
-        var memInfoContainer = container.querySelector('#container');
-        generatePDF2(memInfoContainer.innerHTML);
-      }
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            var container = document.createElement('div');
+            container.innerHTML = response;
+            var memInfoContainer = container.querySelector('#container');
+            generatePDF2(memInfoContainer.innerHTML);
+        }
     };
     xhr.send();
-  }
-  
-  function generatePDF2(htmlContent) {
+}
+
+function generatePDF2(htmlContent) {
     var element = document.createElement('div');
     element.innerHTML = htmlContent;
-  
-    var options = {
-      margin: [0.5, 0.5, 0.5, 0.5],
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-    
-    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
-      const totalPages = pdf.internal.getNumberOfPages();
-  
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setFont('Arial', 'italic');
-        pdf.setFontSize(10);
-        pdf.setTextColor(128);
-        pdf.setPage(i);
-        pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
-      }
-      
-      // Save or display the generated PDF here
-      pdf.save('donation-report.pdf');
-    });
-  }
-  
-  //Generate Contribution Report
 
-  function save_generate2() {
+    var options = {
+        margin: [0.5, 0.5, 0.5, 0.5],
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(element).toPdf().get('pdf').then(function(pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setFont('Arial', 'italic');
+            pdf.setFontSize(10);
+            pdf.setTextColor(128);
+            pdf.setPage(i);
+            pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+        }
+
+        // Save or display the generated PDF here
+        pdf.save('donation-report.pdf');
+    });
+}
+
+//Generate Contribution Report
+
+function save_generate2() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '../reports/con-report.php', true);
     xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var response = xhr.responseText;
-        var container = document.createElement('div');
-        container.innerHTML = response;
-        var memInfoContainer = container.querySelector('#container');
-        generatePDF3(memInfoContainer.innerHTML);
-      }
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            var container = document.createElement('div');
+            container.innerHTML = response;
+            var memInfoContainer = container.querySelector('#container');
+            generatePDF3(memInfoContainer.innerHTML);
+        }
     };
     xhr.send();
-  }
-  
-  function generatePDF3(htmlContent) {
+}
+
+function generatePDF3(htmlContent) {
     var element = document.createElement('div');
     element.innerHTML = htmlContent;
-  
+
     var options = {
-      margin: [0.5, 0.5, 0.5, 0.5],
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        margin: [0.5, 0.5, 0.5, 0.5],
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
-    
-    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
-      const totalPages = pdf.internal.getNumberOfPages();
-  
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setFont('Arial', 'italic');
-        pdf.setFontSize(10);
-        pdf.setTextColor(128);
-        pdf.setPage(i);
-        pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
-      }
-      
-      // Save or display the generated PDF here
-      pdf.save('contribution-report.pdf');
+
+    html2pdf().set(options).from(element).toPdf().get('pdf').then(function(pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setFont('Arial', 'italic');
+            pdf.setFontSize(10);
+            pdf.setTextColor(128);
+            pdf.setPage(i);
+            pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+        }
+
+        // Save or display the generated PDF here
+        pdf.save('contribution-report.pdf');
     });
-  }
+}
 
 
 // Get the current date
@@ -1047,6 +1047,23 @@ var formattedDate = weekdayNames[currentDate.getDay()] + ', ' +
 document.getElementById('current-date').innerText = formattedDate;
 
 
+// Add JavaScript code for searchable select
+var select = document.getElementById('complaint-select');
+var options = select.getElementsByTagName('option');
+var input = document.createElement('input');
+input.setAttribute('type', 'text');
+input.setAttribute('placeholder', 'Search complainant');
+select.parentNode.insertBefore(input, select);
 
+input.addEventListener('input', function() {
+    var searchValue = input.value.toLowerCase();
 
-
+    for (var i = 0; i < options.length; i++) {
+        var optionText = options[i].textContent.toLowerCase();
+        if (optionText.includes(searchValue)) {
+            options[i].style.display = '';
+        } else {
+            options[i].style.display = 'none';
+        }
+    }
+});

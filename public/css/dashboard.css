@@ -1,4 +1,5 @@
 /* COLOR */
+
 :root {
     --base-color: #FEFEFE;
     --dark-blue: #1842BD;
@@ -39,7 +40,9 @@ body {
     width: 100vw;
 }
 
+
 /* LAYOUT */
+
 .top-design {
     display: flex;
     align-items: center;
@@ -72,7 +75,9 @@ body {
     justify-self: flex-end;
 }
 
+
 /* SIDE NAV BAR */
+
 .item-container {
     margin-top: 50px;
 }
@@ -133,7 +138,9 @@ li:hover {
     transition: .5s;
 }
 
+
 /* MAIN CONTENT */
+
 .dashboard-container {
     display: none;
     height: 85vh;
@@ -145,31 +152,34 @@ li:hover {
     overflow-y: auto;
     overflow-x: hidden;
 }
+
 .dashboard-container::-webkit-scrollbar {
     display: none;
 }
-.dash-content{
+
+.dash-content {
     overflow: hidden;
     display: flex;
     flex-direction: column;
     z-index: 0;
 }
-.top-dash{
-    
+
+.top-dash {
     height: 155px;
 }
-.mid-dash{
-    
+
+.mid-dash {
     height: 155px;
     margin-top: 30px;
 }
-.bottom-dash{
+
+.bottom-dash {
     display: flex;
     justify-content: space-between;
-    
     height: 500px;
     margin-top: 40px;
 }
+
 .border {
     border-radius: 10px;
     box-shadow: 0px 2px 2px .5px var(--box-shadow);
@@ -231,12 +241,14 @@ section {
     color: var(--white-color);
 }
 
-.fa-hand-holding-dollar,.fa-money-bill-transfer{
+.fa-hand-holding-dollar,
+.fa-money-bill-transfer {
     background-color: var(--dash-green);
     color: var(--white-color);
 }
 
-.fa-circle-dollar-to-slot, .fa-sack-dollar{
+.fa-circle-dollar-to-slot,
+.fa-sack-dollar {
     background-color: var(--dash-yellow);
     color: var(--white-color);
 }
@@ -245,7 +257,8 @@ section {
     background-color: var(--dash-cyan);
     color: var(--white-color);
 }
-.fa-face-frown{
+
+.fa-face-frown {
     background-color: #999999;
     color: var(--white-color);
 }
@@ -316,7 +329,9 @@ section {
     margin: 0;
 }
 
+
 /* USER PANE */
+
 .users-container,
 .member-container,
 .finance-container,
@@ -331,7 +346,9 @@ section {
     left: 22%;
 }
 
+
 /* HEADER */
+
 header {
     display: flex;
     justify-content: space-between;
@@ -402,7 +419,7 @@ header h3 {
 
 .fields input[type="button"] {
     padding: 12px;
-    width: 110px;
+    width: 100%;
     border: none;
     font-size: 13px;
     text-align: center;
@@ -531,7 +548,9 @@ tr {
     border-bottom: 1px solid var(--border-color);
 }
 
+
 /* ACTIVE ^ EXPIRED STATUS STYLING */
+
 .Active,
 .Expired {
     height: fit-content;
@@ -567,7 +586,9 @@ tr:hover {
     cursor: pointer;
 }
 
+
 /* FOOTER */
+
 footer {
     justify-content: space-around;
     height: 5%;
@@ -596,7 +617,9 @@ footer {
     color: var(--base-color);
 }
 
+
 /* STYLES TO TOGGLE */
+
 .active {
     display: block;
 }
@@ -638,7 +661,9 @@ input[type="button"]:disabled {
     cursor: not-allowed;
 }
 
+
 /* MODALS */
+
 .addUser-modal-container,
 .addMem-modal-container,
 .addFinance-modal-container,
@@ -700,7 +725,6 @@ form {
 .fix-bud {
     display: flex;
 }
-
 
 .fields input,
 .fields select {
@@ -773,7 +797,9 @@ select {
     background-color: var(--dark-blue);
 }
 
+
 /* ADD COMPLAINT MODAL */
+
 textarea {
     resize: none;
     width: 90%;
@@ -790,7 +816,9 @@ textarea {
     gap: 20px;
 }
 
+
 /* EDIT USER MODAL */
+
 .editUser-modal-container,
 .editMember-modal-container {
     display: none;
@@ -871,6 +899,7 @@ textarea {
 
 
 /* TOAST */
+
 .toast-container,
 .show {
     display: none;
@@ -893,15 +922,12 @@ textarea {
     0% {
         transform: translateX(100%);
     }
-
     40% {
         transform: translateX(-5%);
     }
-
     80% {
         transform: translateX(0%);
     }
-
     100% {
         transform: translateX(-10px);
     }
@@ -915,15 +941,12 @@ textarea {
     0% {
         transform: translateX(-10px);
     }
-
     40% {
         transform: translateX(0%);
     }
-
     80% {
         transform: translateX(-5%);
     }
-
     100% {
         transform: translateX(calc(100% + 20px));
     }
@@ -946,7 +969,9 @@ textarea {
     }
 }
 
+
 /* ERROR TOAST */
+
 .warningToast-container {
     display: none;
     align-items: center;
@@ -987,7 +1012,9 @@ textarea {
     padding-left: 15px;
 }
 
+
 /* SUCCESSFUL TOAST NOTIF */
+
 .successToast-container {
     display: none;
     position: fixed;
@@ -1028,7 +1055,9 @@ textarea {
     padding-left: 25px;
 }
 
+
 /* ASH SUCCESS-TOAST */
+
 .success-toast-container {
     align-items: center;
     position: fixed;
@@ -1073,60 +1102,49 @@ textarea {
 
 
 /* FOR RESPONSIVENESS */
-@media screen and (min-width: 1600px) {
 
+@media screen and (min-width: 1600px) {
     /* SIDE NAVBAR */
     .side-nav {
         width: 21%;
     }
-
     .header-nav p {
         font-size: 17px;
     }
-
     .item-container {
         margin-top: 50px;
     }
-
     li {
         font-size: 17px;
         line-height: 55px;
     }
-
     /* DASHBOARD PANE */
     .dashboard-container {
         left: 23%;
     }
-
     .count-container {
         top: 20%;
         font-size: 35px;
     }
-
     /* USER PANE */
     header {
         padding: 10px;
     }
-
     header p {
         font-size: 16px;
     }
-
     header h3 {
         font-size: 20px;
     }
-
     .usermoreBtn {
         padding: 12px 13px;
         font-size: 15px;
     }
-
     .user-search,
     .mem-search {
         height: 18px;
         margin-left: 10px;
     }
-
     .adduserBtn,
     .addmemBtn,
     .addFinanceBtn,
@@ -1137,22 +1155,18 @@ textarea {
         padding: 12px 10px;
         margin-left: 10px;
     }
-
     th {
         padding: 20px;
         font-size: 18px;
     }
-
     td {
         padding: 15px 0px;
         font-size: 16px;
     }
-
     /* FOOTER */
     footer {
         font-size: 11px;
     }
-
     /* EDIT USER MODAL */
     .editUser-modal-container,
     .editMember-modal-container {
@@ -1171,7 +1185,6 @@ textarea {
         z-index: 9999;
         padding: 15px;
     }
-
     .btn-container button,
     .cancel-btn {
         width: 120px;
@@ -1183,12 +1196,10 @@ textarea {
     .item-container {
         margin-top: 80px;
     }
-
     li {
         font-size: 20px;
         line-height: 65px;
     }
-
     .adduserBtn,
     .addmemBtn,
     .addFinanceBtn,
@@ -1199,33 +1210,27 @@ textarea {
         padding: 12px 10px;
         margin-left: 10px;
     }
-
     /* EDIT USER MODAL */
     .editUser-modal-container,
     .editMember-modal-container {
         height: 60%;
         padding: 15px;
     }
-
     .user-details-container,
     .member-details-container {
         padding: 20px 20px 50px 20px;
     }
-
     .user-details-container .fa-pen-to-square {
         padding: 25px;
         font-size: 22px;
     }
-
     .details p {
         font-size: 17px;
         line-height: 7px;
     }
-
     .details h4 {
         font-size: 18px;
     }
-
     .btn-container button,
     .cancel-btn {
         width: 130px;
@@ -1234,7 +1239,6 @@ textarea {
         font-size: 18px;
     }
 }
-
 
 
 /*Reports CSS*/
@@ -1257,9 +1261,7 @@ textarea {
 .report td {
     font-size: 8pt;
     text-align: center;
-
 }
-
 
 #cert_wrapp {
     page-break-inside: avoid;
@@ -1290,8 +1292,6 @@ textarea {
     font-weight: 700;
 }
 
-.contents #end{
+.contents #end {
     text-align: center;
 }
-
-

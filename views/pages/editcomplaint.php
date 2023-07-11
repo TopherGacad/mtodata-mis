@@ -22,8 +22,8 @@ if (isset($_GET['id'])) {
     include "../php/db_conn.php";
 
     $sql = "SELECT * FROM complaint_info ci 
-            INNER JOIN complaint_details cd ON ci.id = cd.id
-            WHERE ci.id = '$complaint_id'";
+            INNER JOIN complaint_details cd ON ci.id = cd.complainant_id
+            WHERE cd.id = '$complaint_id'";
 
     $result = mysqli_query($conn, $sql);
 

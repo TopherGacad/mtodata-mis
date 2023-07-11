@@ -791,8 +791,8 @@ date_default_timezone_set('Asia/Manila');
                         die("Connection failed: " . $conn->connect_error);
                     }
                     // retrieve data from the MySQL table
-                    $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, 
-                    DATE_FORMAT(complaint_details.date_created, '%Y/%m/%d %h:%i %p') AS date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.id ORDER BY date_created DESC";
+                    $sql = "SELECT *, complaint_details.id AS id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, 
+                    DATE_FORMAT(complaint_details.date_created, '%Y/%m/%d %h:%i %p') AS date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.complainant_id ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
                     // output data of each row
@@ -807,7 +807,7 @@ date_default_timezone_set('Asia/Manila');
 
                             <td class='action'>
                                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
-                                <a href='../../views/pages/viewComplaint.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                                <a href='../../views/pages/viewComplaint.php?id=" . $row["id"] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
                                 <i class='tools fa-solid fa-print save' data-container='complaints' onclick=\"generatePDF('" . $row["id"] . "', 'comp-report.php')\"></i>
                             </td>
                         </tr>";
@@ -1285,45 +1285,62 @@ date_default_timezone_set('Asia/Manila');
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="complaintForm-left addForm">
-                    <!-- LASTNAME -->
-                    <div class="fields">
-                        <label for="complainant-lastname">Complainant Lastname<span> *</span></label>
-                        <input type="text" id="complainant-lastname" name="complaintLastname" maxlength="25"
-                            pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
+                    <div class='fields complaint'>
+                            <label for='complaint-select'>Complainant Name</label>
+                            <select name='complaint-select' id='complaint-select'>
+                                <option selected value=''>Select Complainant</option>
+                                <?php
+                                    // connect to the MySQL database
+                                    include "db_conn.php";
+
+                                    if ($conn->connect_error) {
+                                        die("Connection failed: " . $conn->connect_error);
+                                    }
+
+                                    $sql = "SELECT * FROM complaint_info";
+
+                                    $result = $conn->query($sql);
+
+                                    while ($row = $result->fetch_assoc()) {
+                                        $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                                        $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                                        $lastName = $row["lname"];
+
+                                        if (empty($row["exname"])) {
+                                            $lastName .= ', ';
+                                        }
+
+                                        $complaintId = $row["id"]; // Retrieve the ID from the complaint_info table
+
+                                        echo "<option value='" . $complaintId . "'>". $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
+                                    }
+
+                                    // close MySQL connection
+                                    $conn->close();
+                                ?>
+                            </select>
+                        </div>
+                    <!-- Date and Time -->
+                    <div class="timeDate-container">
+                        <!-- TIME -->
+                        <div class="fields">
+                            <label for="time-incident">Time of Incident<span> *</span></label>
+                            <input type="time" id="time-incident" name="time-incident" required>
+                        </div>
+
+                        <!-- DATE -->
+                        <div class="fields">
+                            <label for="date-incident">Date of Incident<span> *</span></label>
+                            <input type="date" id="date-incident" name="date-incident" required>
+                        </div>
                     </div>
-                    <!-- FIRSTNAME -->
-                    <div class="fields">
-                        <label for="complainant-firstname">Complainant Firstname<span> *</span></label>
-                        <input type="text" id="complainant-firstname" name="complaintFirstname" maxlength="25"
-                            pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
+
+                    <!-- New Complainant -->
+                    <div class='fields'>
+                        <a  href="../../views/pages/insertComplainant.php"><input type='button'
+                            value='New Complainant'></a>
                     </div>
-                    <!-- MIDNAME -->
-                    <div class="fields">
-                        <label for="complainant-midname">Complainant Middlename</label>
-                        <input type="text" id="complainant-midname" name="complaintMiddlename" maxlength="25"
-                            pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
-                    </div>
-                    <!-- EXTENSION NAME -->
-                    <div class="fields">
-                        <label for="complainant-extension">Extension Name</label>
-                        <input type="text" id="complainant-extension" name="extension" maxlength="5"
-                            pattern="[A-Za-z1-9]{2,5}" placeholder="eg. Jr, Sr">
-                    </div>
-                    <!-- GENDER -->
-                    <div class="fields">
-                        <label for="complainant-gender">Sex<span> *</span></label>
-                        <select name="gender" id="complainant-gender">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="none">Prefer not to say</option>
-                        </select>
-                    </div>
-                    <!-- CONTACT NUMBER -->
-                    <div class="fields">
-                        <label for="complainant-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="complainant-contact" name="contact"
-                            placeholder="eg. 09592220954" required>
-                    </div>
+
                 </div>
                 <!-- FORM-RIGHT -->
                 <div class="complaintForm-right addForm">
@@ -1345,20 +1362,6 @@ date_default_timezone_set('Asia/Manila');
                         <label for="desc">Description<span> *</span></label>
                         <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" onkeyup="countChar(this)"
                             required></textarea>
-                    </div>
-
-                    <div class="timeDate-container">
-                        <!-- TIME -->
-                        <div class="fields">
-                            <label for="time-incident">Time of Incident<span> *</span></label>
-                            <input type="time" id="time-incident" name="time-incident" required>
-                        </div>
-
-                        <!-- DATE -->
-                        <div class="fields">
-                            <label for="date-incident">Date of Incident<span> *</span></label>
-                            <input type="date" id="date-incident" name="date-incident" required>
-                        </div>
                     </div>
 
                     <div class="btn-container">

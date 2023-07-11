@@ -11,12 +11,12 @@ if ($conn->connect_error) {
 $id = $_POST["id"];
 
 // Prepare and execute the SQL queries to delete the rows from the respective tables
-$sql1 = "DELETE FROM complaint_info WHERE id=$id";
+
 $sql2 = "DELETE FROM complaint_details WHERE id=$id";
 
-if ($conn->query($sql1) === TRUE && $conn->query($sql2) === TRUE) {
+if ($conn->query($sql2) === TRUE) {
     // If deletion was successful for both tables, return success message
-    echo "Member deleted successfully.";
+    echo "Complaint deleted successfully.";
 } else {
     // If deletion failed, return error message
     echo "Error deleting member: " . $conn->error;

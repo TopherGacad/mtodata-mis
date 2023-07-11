@@ -54,7 +54,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         }
                             echo "
                             <a href='../../views/pages/editcomplaint.php?id=" . $complaint_id . "'><input type='button' value='Edit' name='complaint-update'
-                                class='update-btn modal-btn' id='complaint-update'></a> 
+                                class='update-btn modal-btn' id='complaint-update'></a>
                             ";
                             ?>
                     </div>
@@ -64,8 +64,11 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <h3>Complaint Information</h3>
 
                     <?php
-                    $sql = "SELECT id, CONCAT(fname, ' ', lname, ' ', exname) AS complainant, gender, phone FROM complaint_info WHERE id = $complaint_id";
-                    
+                    $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname, ' ', complaint_info.exname) AS complainant, complaint_info.gender, complaint_info.phone
+                    FROM complaint_info
+                    INNER JOIN complaint_details ON complaint_info.id = complaint_details.complainant_id
+                    WHERE complaint_details.id = $complaint_id";
+            
                     $result = mysqli_query($conn, $sql); // Execute the query and assign the result to $result
 
                     if (!$result) {
