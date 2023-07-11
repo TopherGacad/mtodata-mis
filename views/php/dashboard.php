@@ -83,7 +83,6 @@ date_default_timezone_set('Asia/Manila');
     <!-- MAIN CONTENT -->
     <!-- DASHBOARD PANE -->
     <div class='dashboard-container' id='dash-container'>
-        <div class="dash-content">
             <section class='top-dash'>
                 <?php
 
@@ -189,121 +188,13 @@ date_default_timezone_set('Asia/Manila');
                 $conn->close();
                 ?>
             </section>
-
-            <section class='mid-dash'>
-                <?php
-
-                // connect to the MySQL database
-                include "db_conn.php";
-
-                // check connection
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
-
-                // member count
-                $mem = "SELECT COUNT(id) AS mem_count FROM mem_info WHERE mem_stat = 'Active'";
-                $mem_result = $conn->query($mem);
-
-                $don = "SELECT SUM(amount) AS don_count FROM transaction_donation
-                WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
-                $don_result = $conn->query($don);
-
-                $con = "SELECT SUM(amount) AS con_count FROM transaction_contribution
-                WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
-                $con_result = $conn->query($con);
-
-                $com = "SELECT COUNT(id) AS com_count FROM complaint_details
-                WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
-                $com_result = $conn->query($com);
-
-                if ($mem_result) {
-                    $row = mysqli_fetch_assoc($mem_result);
-                    echo "
-                <!-- MEMBER COUNT -->
-                <div class='card border'>
-                    <div class='card-header'>
-                    <i class='card-icon fa-solid fa-sack-dollar'></i>
-                            <h4 class=''>Total Money Accumulated</h4>
-                    </div>
-                    <div class='count-container'>
-                        <p>" . $row['mem_count'] . "</p>
-                    </div>
-                    <div class='link-container memCount'>
-                        <button class='save' id='retrieve-donation' onclick=\"save_generate()\">View Report</button>
-                    </div>
-                </div>";
-                }
-
-                if ($don_result) {
-                    $row = mysqli_fetch_assoc($don_result);
-                    $don_count = $row['don_count'];
-                    echo "
-                        <!-- DONATION COUNT -->
-                        <div class='card border'>
-                            <div class='card-header'>
-                                <i class=' card-icon fa-solid fa-face-frown'></i>
-                                <h4 class=''>Total Amount Expenses</h4>
-                            </div>
-                            <div class='count-container'>
-                                <p><span>&#8369;</span>" . ($don_count != 0 ? $don_count : "0") . "</p>
-                            </div>
-                            <div class='link-container'>
-                                <button class='save' id='retrieve1' onclick=\"save_generate1()\">View Report</button>
-                            </div>
-                        </div>";
-                }
-
-                if ($con_result) {
-                    $row = mysqli_fetch_assoc($con_result);
-                    $con_count = $row['con_count'];
-                    echo "
-                        <!-- CONTRIBUTION COUNT -->
-                        <div class='card border'>
-                            <div class='card-header'>
-                            <i class='card-icon fa-solid fa-money-bill-transfer'></i>
-                                <h4 class=''>Total Balance</h4>
-                            </div>
-                            <div class='count-container'>
-                                <p><span>&#8369;</span>" . ($con_count != 0 ? $con_count : "0") . "</p>
-                            </div>
-                            <div class='link-container'>
-                            <button class='save' id='retrieve1' onclick=\"save_generate2()\">View Report</button>
-                            </div>
-                        </div>";
-                }
-
-
-                if ($com_result) {
-                    $row = mysqli_fetch_assoc($com_result);
-                    echo "
-                    <!-- COMPLAINTS COUNT -->
-                <div class='card border'>
-                    <div class='card-header'>
-                        <i class='card-icon fa-solid fa-file-circle-exclamation'></i>
-                        <h4 class=''>Complaints Recieved</h4>
-                    </div>
-                    <div class='count-container'>
-                        <p>" . $row['com_count'] . "</p>
-                    </div>
-                    <div class='link-container'>
-                        <button>View Report</button>
-                    </div>
-                </div>";
-                }
-                // close MySQL connection
-                $conn->close();
-                ?>
-            </section>
-
+            
             <div class="bottom-dash">
                 <div class='botleft-dash border'>
 
                     <!-- FINANCE ENTRY -->
                     <div class='card-header entry'>
                         <h4>Recent Financial Entry</h4>
-                        <button class="finance_download exportBtn" onclick="save_generate3()"><i
-                                class="fa-solid fa-download"></i></button></abbr>
                     </div>
 
                     <div class="table-container">
@@ -326,13 +217,13 @@ date_default_timezone_set('Asia/Manila');
 
                                 while ($FinRecent = $FinaceResult->fetch_assoc()) {
                                     echo "
-                <tr>
-                <td>" . $FinRecent['transaction_code'] . "</td>
-                <td>" . $FinRecent['debit'] . "</td>
-                <td>" . $FinRecent['credit'] . "</td>
-                <td>" . $FinRecent['new_formatted_date'] . "</td>
-                </tr>
-                ";
+                                    <tr>
+                                    <td>" . $FinRecent['transaction_code'] . "</td>
+                                    <td>" . $FinRecent['debit'] . "</td>
+                                    <td>" . $FinRecent['credit'] . "</td>
+                                    <td>" . $FinRecent['new_formatted_date'] . "</td>
+                                    </tr>
+                                    ";
                                 }
 
                                 // close MySQL connection
@@ -348,6 +239,7 @@ date_default_timezone_set('Asia/Manila');
                     <div class='card-header events'>
                         <h4>Scheduled Events</h4>
                     </div>
+
                     <div class='dash-content'>
                         <?php
 
@@ -356,26 +248,23 @@ date_default_timezone_set('Asia/Manila');
                         $dateToday = date('ymd');
 
                         $showPrograms = "SELECT *, CONCAT(DATE_FORMAT(ep_date, '%Y-%m-%d'), ' ', DATE_FORMAT(ep_start, '%h:%i %p')) AS concatenated_datetime FROM events_programs 
-    WHERE ep_date >= $dateToday ORDER BY concatenated_datetime ASC";
+                        WHERE ep_date >= $dateToday ORDER BY concatenated_datetime ASC";
                         $showProgramResult = $conn->query($showPrograms);
 
                         while ($EPRecent = $showProgramResult->fetch_assoc()) {
                             echo "
-         <div class='agenda-box'>
-         <h3>" . $EPRecent['ep_title'] . "</h3>
-         <p>" . $EPRecent['concatenated_datetime'] . "</p>
-         </div>
-         ";
+                            <div class='agenda-box'>
+                            <h3>" . $EPRecent['ep_title'] . "</h3>
+                            <p>" . $EPRecent['concatenated_datetime'] . "</p>
+                            </div>
+                            ";
                         }
-
                         // close MySQL connection
                         $conn->close();
                         ?>
                     </div>
                 </div>
             </div>
-
-        </div>
     </div>
 
     <!-- USER PANE -->
