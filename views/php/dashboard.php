@@ -301,6 +301,8 @@ date_default_timezone_set('Asia/Manila');
                     <!-- FINANCE ENTRY -->
                     <div class='card-header entry'>
                         <h4>Recent Financial Entry</h4>
+                        <button class="finance_download exportBtn" onclick="save_generate3()"><i
+                                class="fa-solid fa-download"></i></button></abbr>
                     </div>
 
                     <div class="table-container">
