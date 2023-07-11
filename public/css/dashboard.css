@@ -146,7 +146,7 @@ li:hover {
     display: none;
 }
 .top-dash{
-    height: 26%;
+    height: 27%;
     position: absolute;
     top: 20px;
 }
@@ -203,10 +203,10 @@ section {
 }
 
 .link-container {
-    width: 100%;
+    width:inherit;
     display: flex;
     justify-content: center;
-    position: relative;
+    position: absolute;
     bottom: 0;
 }
 
