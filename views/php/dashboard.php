@@ -239,6 +239,7 @@ date_default_timezone_set('Asia/Manila');
                     <div class='card-header events'>
                         <h4>Scheduled Events</h4>
                     </div>
+
                     <div class='dash-content'>
                         <?php
 
@@ -258,7 +259,6 @@ date_default_timezone_set('Asia/Manila');
                             </div>
                             ";
                         }
-
                         // close MySQL connection
                         $conn->close();
                         ?>
