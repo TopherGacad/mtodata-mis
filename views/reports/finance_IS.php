@@ -1,9 +1,8 @@
 <?php
-
-//connection
+// connection
 include "../php/db_conn.php";
 
-//check connection
+// check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -11,26 +10,31 @@ if ($conn->connect_error) {
 $firstDate = date('F 01, Y');
 $currDate = date('F d, Y');
 
-//data retrieval
+// data retrieval
 $sql = "SELECT account_type, SUM(amount) as total
-FROM transaction_finance 
-WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
-AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND
-GROUP BY account_type";
+        FROM transaction_finance 
+        WHERE date_created >= '2023-08-01 00:00:00'
+        AND date_created <= '2023-08-30 23:59:59'
+        GROUP BY account_type";
 
 $result = $conn->query($sql);
-
 
 if ($result === false) {
     die("Error executing the query: " . $conn->error);
 }
 
 if ($result) {
-
     $revenue = 0;
     $expenses = 0;
-
     $net = 0;
+    $don = 0;
+    $con = 0;
+    $ele = 0;
+    $ren = 0;
+    $wat = 0;
+    $pro = 0;
+    $rnw = 0;
+    $new = 0;
 
     while ($row = $result->fetch_assoc()) {
         if ($row['account_type'] === 'Donation') {
@@ -64,11 +68,29 @@ if ($result) {
         ) {
             $expenses += $row['total'];
         }
+    }
 
-        $net = $revenue - $expenses;
+    $sql1 = "SELECT SUM(CASE WHEN credit = 0 THEN amount ELSE 0 END) AS total_revenue, 
+    SUM(CASE WHEN debit = 0 THEN amount ELSE 0 END) AS total_expenses FROM transaction_finance 
+    WHERE MONTH(date_created) = MONTH(curdate()) AND YEAR(curdate()) = YEAR(curdate());";
 
+    $result1 = $conn->query($sql1);
+    $row1 = $result1->fetch_assoc();
+
+    if ($result1 === false) {
+        die("Error executing the query: " . $conn->error);
+    }
+
+    if ($result1) {
+        $revenue1 = $row1['total_revenue'];
+        $expenses1 = $row1['total_expenses'];
     }
 }
+
+$pastNetIncome = $revenue1 - $expenses1;
+$TotalRev = $pastNetIncome + $revenue;
+$net = $TotalRev - $expenses;
+
 ?>
 
 <!DOCTYPE html>
@@ -98,12 +120,6 @@ if ($result) {
 </head>
 
 <body>
-
-    <?php
-
-    //Finance Income Statements
-    echo "
-
     <div class='container-finance' id='container'>
         <div class='wrapper'>
             <div class='header_IS'>
@@ -111,101 +127,116 @@ if ($result) {
                     <img src='../../public/assets/placeholder.jpg' id='imgplaceholder'>
                     <p id='top_title'>Marulas Tricycle Operators and Drivers' Association (MTODA)</p>
                     <p id='top_IS'>Income Statement</p>
-                    <p id='top_IS' style='padding-top: 20px'>" . $firstDate . " to " . $currDate . "</p>
+                    <p id='top_IS' style='padding-top: 20px'>
+                        <?php echo $firstDate; ?> to
+                        <?php echo $currDate; ?>
+                    </p>
                 </div>
 
                 <br>
 
                 <table class='finance-table'>
-
                     <tr>
                         <td class='tr_head'>Revenues</td>
                     </tr>
-                    
+                    <?php if ($pastNetIncome != 0): ?>
+                        <tr>
+                            <td class='td_IS'>Remaining Balance</td>
+                            <td class='IS_amount'>P&emsp;
+                                <?php echo $pastNetIncome; ?>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                     <tr>
-                        <td class = 'td_IS'>Collected contributions</td>
-                        <td class='IS_amount'>P&emsp;" . $con . "</td>
+                        <td class='td_IS'>Collected contributions</td>
+                        <td class='IS_amount'>P&emsp;
+                            <?php echo $con; ?>
+                        </td>
                     </tr>
                     <tr>
-                        <td class = 'td_IS'>Renewal</td>
-                        <td class='IS_amount'>" . $rnw . "</td>
+                        <td class='td_IS'>Renewal</td>
+                        <td class='IS_amount'>
+                            <?php echo $rnw; ?>
+                        </td>
                     </tr>
                     <tr>
-                        <td class = 'td_IS'>New Members</td>
-                        <td class='IS_amount'>" . $new . "</td>
+                        <td class='td_IS'>New Members</td>
+                        <td class='IS_amount'>
+                            <?php echo $new; ?>
+                        </td>
                     </tr>
                     <tr>
-                        <td class = 'td_IS'>Donations</td>
-                        <td class='IS_amount total_IS'>" . $don . "</td>
+                        <td class='td_IS'>Donations</td>
+                        <td class='IS_amount total_IS'>
+                            <?php echo $don; ?>
+                        </td>
                     </tr>
-
                     <tr>
                         <td class='to_hide'>:</td>
                     </tr>
-
                     <tr>
-                        <td class = 'td_IS'>Total Revenues:</td>
+                        <td class='td_IS'>Total Revenues:</td>
                         <td></td>
-                        <td class='IS_amount total_IS'>P&emsp;" . $revenue . "</td>
+                        <td class='IS_amount total_IS'>P&emsp;
+                            <?php echo $TotalRev; ?>
+                        </td>
                     </tr>
-
                     <tr>
                         <td class='to_hide'>:</td>
                     </tr>
-
                     <tr>
                         <td class='tr_head'>Operating Expenses</td>
                     </tr>
-
                     <tr>
-                        <td class = 'td_IS'>Electricity expenses</td>
-                        <td class='IS_amount'>P&emsp;" . $ele . "</td>
-                    </tr>
-
-                    <tr>
-                        <td class = 'td_IS'>Water expenses</td>
-                        <td class='IS_amount'>" . $wat . "</td>
+                        <td class='td_IS'>Electricity expenses</td>
+                        <td class='IS_amount'>P&emsp;
+                            <?php echo $ele; ?>
+                        </td>
                     </tr>
                     <tr>
-                        <td class = 'td_IS'>Rent expenses</td>
-                        <td class='IS_amount'>" . $ren . "</td>
+                        <td class='td_IS'>Water expenses</td>
+                        <td class='IS_amount'>
+                            <?php echo $wat; ?>
+                        </td>
                     </tr>
                     <tr>
-                        <td class = 'td_IS'>Program expenses</td>
-                        <td class='IS_amount total_IS'>" . $pro . "</td>
+                        <td class='td_IS'>Rent expenses</td>
+                        <td class='IS_amount'>
+                            <?php echo $ren; ?>
+                        </td>
                     </tr>
-
+                    <tr>
+                        <td class='td_IS'>Program expenses</td>
+                        <td class='IS_amount total_IS'>
+                            <?php echo $pro; ?>
+                        </td>
+                    </tr>
                     <tr>
                         <td class='to_hide'>:</td>
                     </tr>
-
                     <tr>
-                        <td class = 'td_IS'>Total Expenses:</td>
+                        <td class='td_IS'>Total Expenses:</td>
                         <td></td>
-                        <td class='IS_amount total_IS'>P&emsp;" . $expenses . "</td>
-                    </tr>
-
-                    <tr>
-                        <td class='to_hide'>:</td>
+                        <td class='IS_amount total_IS'>P&emsp;
+                            <?php echo $expenses; ?>
+                        </td>
                     </tr>
                     <tr>
                         <td class='to_hide'>:</td>
                     </tr>
-
                     <tr>
-                        <td class='tr_head'>Net Income:</td>
-                        <td class='IS_amount total_IS'>P&emsp;" . $net . "</td>
+                        <td class='to_hide'>:</td>
+                    </tr>
+                    <tr>
+                        <td class='tr_head' colspan="2">Net Income:</td>
+                        <td class='IS_amount total_IS'>P&emsp;
+                            <?php echo $net; ?>
+                        </td>
                     </tr>
                 </table>
             </div>
-        </div>";
-
-
-
-    // close MySQL connection
-    $conn->close()
-
-        ?>
+        </div>
+    </div>
     <script src='../../assets/js/print.js'></script>
 </body>
 
