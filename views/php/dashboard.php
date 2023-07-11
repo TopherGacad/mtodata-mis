@@ -136,7 +136,7 @@ date_default_timezone_set('Asia/Manila');
                         <div class='card border'>
                             <div class='card-header'>
                                 <i class='card-icon fa-solid fa-hand-holding-dollar'></i>
-                                <h4 class=''>Donations Received</h4>
+                                <h4 class=''>Total Amount Recieved</h4>
                             </div>
                             <div class='count-container'>
                                 <p><span>&#8369;</span>" . ($don_count != 0 ? $don_count : "0") . "</p>
@@ -155,7 +155,7 @@ date_default_timezone_set('Asia/Manila');
                         <div class='card border'>
                             <div class='card-header'>
                                 <i class='card-icon fa-solid fa-circle-dollar-to-slot'></i>
-                                <h4 class=''>Contribution Collected</h4>
+                                <h4 class=''>Total Amount Expenses</h4>
                             </div>
                             <div class='count-container'>
                                 <p><span>&#8369;</span>" . ($con_count != 0 ? $con_count : "0") . "</p>
