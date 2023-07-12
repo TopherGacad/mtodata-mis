@@ -154,7 +154,7 @@ li:hover {
 }
 
 .top-dash {
-    height: 26%;
+    height: 27%;
     position: absolute;
     top: 20px;
 }
@@ -254,11 +254,6 @@ section {
 .count-container {
     padding: 7px;
     font-size: 20px;
-}
-
-.count-container span {
-    position: absolute;
-    left: 10px;
 }
 
 .botleft-dash {
@@ -1339,10 +1334,33 @@ textarea {
     margin-bottom: 20px;
 }
 
-.container-finance {
-    page-break-inside: avoid;
+.wrapper {
+    page-break-after: always;
 }
 
 .finance-table .td_IS {
     padding-left: 20px;
+}
+
+.finance-table2 {
+    page-break-inside: avoid;
+    border: none;
+}
+
+.finance-table2 tr {
+    border: none;
+    text-align: center;
+    padding: 0;
+    page-break-inside: avoid;
+}
+
+.finance-table2 .tr_head {
+    color: #282828;
+    background-color: white;
+}
+
+.finance-table2 td {
+    padding: 3px 0;
+    page-break-inside: avoid;
+    font-size: 9pt;
 }
