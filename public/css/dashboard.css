@@ -1280,6 +1280,69 @@ textarea {
     font-weight: 700;
 }
 
+#top_title2 {
+    font-size: 12pt;
+    font-weight: 700;
+    text-align: left;
+}
+
+.header_IS #topper {
+    display: flex;
+    justify-content: space-between;
+}
+
 .contents #end {
     text-align: center;
+}
+
+.finance-table {
+    page-break-inside: avoid;
+    border: none;
+}
+
+.finance-table tr {
+    border: none;
+    text-align: left;
+    padding: 0;
+}
+
+.finance-table td {
+    padding: 3px;
+}
+
+.finance-table .to_hide {
+    color: white;
+}
+
+.IS_amount {
+    text-align: right;
+}
+
+.IS_statements {
+    border-color: white;
+}
+
+.to_hide {
+    color: white;
+}
+
+.IS_amount.total_IS {
+    border-bottom: 1px solid black;
+}
+
+.finance-table .tr_head {
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+.header_IS {
+    margin-bottom: 20px;
+}
+
+.container-finance {
+    page-break-inside: avoid;
+}
+
+.finance-table .td_IS {
+    padding-left: 20px;
 }

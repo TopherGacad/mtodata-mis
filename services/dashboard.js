@@ -109,7 +109,7 @@ function disableInputs() {
         transDate.disabled = true;
     }
 
-    if (selectType.value === "Butaw" || selectType.value === "Donation") {
+    if (selectType.value === "Butaw" || selectType.value === "Donation" || selectType.value === "Expenses") {
         transDate.max = today;
     } else {
         transDate.removeAttribute("max");
