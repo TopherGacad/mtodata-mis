@@ -1285,6 +1285,17 @@ textarea {
     font-weight: 700;
 }
 
+#top_title2 {
+    font-size: 12pt;
+    font-weight: 700;
+    text-align: left;
+}
+
+.header_IS #topper{
+    display: flex;
+    justify-content: space-between;
+}
+
 .contents #end {
     text-align: center;
 }
@@ -1333,9 +1344,11 @@ textarea {
     margin-bottom: 20px;
 }
 
-.container-finance{
-    page-break-inside: avoid;
+.wrapper {
+    page-break-after: always;
 }
+
+
 
 .finance-table .td_IS {
     padding-left: 20px;

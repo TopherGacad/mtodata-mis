@@ -155,7 +155,7 @@ date_default_timezone_set('Asia/Manila');
                         <div class='card border'>
                             <div class='card-header'>
                                 <i class='card-icon fa-solid fa-circle-dollar-to-slot'></i>
-                                <h4 class=''>Total Amount Expenses</h4>
+                                <h4 class=''>Total Fund Balance</h4>
                             </div>
                             <div class='count-container'>
                                 <p><span>&#8369;</span>" . ($con_count != 0 ? $con_count : "0") . "</p>
@@ -1150,7 +1150,7 @@ date_default_timezone_set('Asia/Manila');
                     <!-- ACCOUNT ID -->
                     <div class='fields'>
                         <label for='trans-date'>Transaction date<span> *</span></label>
-                        <input type='date' id='trans-date' name='trans_date' required disabled>
+                        <input type='date' id='trans-date' name='trans_date' max="<?php echo date('Y-m-d'); ?>" required disabled>
                     </div>
 
                     <!--  AMOUNT  -->
