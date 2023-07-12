@@ -33,7 +33,7 @@ body {
     background-image: url('../../public/assets/mtodata_bg.png');
     background-size: cover;
     background-repeat: no-repeat;
-    position: fixed;
+    position: relative;
     opacity: 0.1;
     height: 100vh;
     width: 100vw;
@@ -49,7 +49,6 @@ body {
     background: linear-gradient(to left, var(--dark-blue), var(--white-color));
     position: fixed;
     top: 0;
-    z-index: 10;
 }
 
 .top-user {
@@ -84,7 +83,6 @@ body {
     top: 0;
     left: 0;
     background-color: var(--base-color);
-    z-index: 10;
 }
 
 .header-nav {
@@ -136,40 +134,32 @@ li:hover {
 /* MAIN CONTENT */
 .dashboard-container {
     display: none;
-    height: 85vh;
+    height: 80vh;
     /*from min height: 570px*/
     position: absolute;
     width: 75%;
     top: 7%;
     left: 22%;
-    overflow-y: auto;
-    overflow-x: hidden;
 }
+
 .dashboard-container::-webkit-scrollbar {
     display: none;
 }
-.dash-content{
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    z-index: 0;
-}
 .top-dash{
-    
-    height: 155px;
+    height: 27%;
+    position: absolute;
+    top: 20px;
 }
-.mid-dash{
-    
-    height: 155px;
-    margin-top: 30px;
-}
-.bottom-dash{
+
+.bottom-dash {
     display: flex;
     justify-content: space-between;
-    
-    height: 500px;
-    margin-top: 40px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 60%;
 }
+
 .border {
     border-radius: 10px;
     box-shadow: 0px 2px 2px .5px var(--box-shadow);
@@ -184,7 +174,7 @@ section {
 }
 
 .card {
-    height: inherit;
+    height: 100%;
     width: 23%;
     text-align: center;
 }
@@ -213,9 +203,11 @@ section {
 }
 
 .link-container {
-    width: 100%;
+    width:inherit;
     display: flex;
     justify-content: center;
+    position: absolute;
+    bottom: 0;
 }
 
 .link-container button {
@@ -231,12 +223,14 @@ section {
     color: var(--white-color);
 }
 
-.fa-hand-holding-dollar,.fa-money-bill-transfer{
+.fa-hand-holding-dollar,
+.fa-money-bill-transfer {
     background-color: var(--dash-green);
     color: var(--white-color);
 }
 
-.fa-circle-dollar-to-slot, .fa-sack-dollar{
+.fa-circle-dollar-to-slot,
+.fa-sack-dollar {
     background-color: var(--dash-yellow);
     color: var(--white-color);
 }
@@ -245,7 +239,8 @@ section {
     background-color: var(--dash-cyan);
     color: var(--white-color);
 }
-.fa-face-frown{
+
+.fa-face-frown {
     background-color: #999999;
     color: var(--white-color);
 }
@@ -261,7 +256,7 @@ section {
 }
 
 .botleft-dash {
-    height: 60%;
+    height: 100%;
     width: 55%;
     overflow: auto;
     z-index: 1;
@@ -279,7 +274,7 @@ section {
 }
 
 .botright-dash {
-    height: 60%;
+    height: 100%;
     width: 40%;
     overflow: auto;
     z-index: 1;
@@ -1290,8 +1285,58 @@ textarea {
     font-weight: 700;
 }
 
-.contents #end{
+.contents #end {
     text-align: center;
 }
 
+.finance-table {
+    page-break-inside: avoid;
+    border: none;
+}
 
+.finance-table tr {
+    border: none;
+    text-align: left;
+    padding: 0;
+}
+
+.finance-table td {
+    padding: 3px;
+}
+
+.finance-table .to_hide {
+    color: white;
+}
+
+.IS_amount {
+    text-align: right;
+}
+
+.IS_statements {
+    border-color: white;
+}
+
+.to_hide {
+    color: white;
+}
+
+.IS_amount.total_IS {
+    border-bottom: 1px solid black;
+}
+
+.finance-table .tr_head {
+    font-weight: bold;
+    padding: 10px 0;
+}
+
+.header_IS {
+    margin-bottom: 20px;
+}
+
+.container-finance{
+    page-break-inside: avoid;
+}
+
+.finance-table .td_IS {
+    padding-left: 20px;
+}
