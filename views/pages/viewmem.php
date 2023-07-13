@@ -67,8 +67,22 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                 echo "<a href='../../views/pages/editunit.php'><input type='button' value='View Unit'
                                 class='view modal-btn' id='hide-button' formnovalidate hidden></a>";
                             } else {
-                                echo "<a href='../../views/pages/editunit.php?id=" . $row['id'] . "'><input type='button' value='View Unit'
-                                class='view modal-btn' id='hide-button' formnovalidate></a>";
+
+                                // Check if the member ID exists in the unit_info table
+                                $unitID = $row['id'];
+                                $unitInfoSQL = "SELECT * FROM unit_info WHERE mem_id = '$unitID'";
+                                $unitInfoResult = mysqli_query($conn, $unitInfoSQL);
+
+                                $row101 = mysqli_fetch_assoc($unitInfoResult);
+
+                                if (mysqli_num_rows($unitInfoResult) === 0) {
+                                    // Redirect the user to addunit.php
+                                    echo "<a href='../../views/pages/addunit.php?id=" . $row['id'] . "'><input type='button' value='View Unit' class='view modal-btn' id='hide-button' formnovalidate></a>";
+                                } else {
+                                    // Redirect the user to editunit.php
+                                    echo "<a href='../../views/pages/editunit.php?id=" . $row101['id'] . "'><input type='button' value='View Unit' class='view modal-btn' id='hide-button' formnovalidate></a>";
+                                }
+
                             }
 
                             echo "
@@ -195,11 +209,71 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                             </div>
                         </div>
                     </div>";
+
+
+
                         }
                     }
                     ?>
+
+                    <div class='profile-container'>
+                        <h3>Finance Logs</h3>
+                        <div class='main'>
+
+                            <table class="finance-logs">
+                                <thead>
+                                    <tr>
+                                        <th>Transaction Code</th>
+                                        <th>Description</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    <?php
+
+                                    include "../php/db_conn.php";
+
+                                    if (isset($_GET['id'])) {
+                                        $memberID = $_GET['id'];
+
+                                        if ($conn->connect_error) {
+                                            die("Connection failed: " . $conn->connect_error);
+                                        }
+
+                                        // Query to retrieve rows from transaction_payment table
+                                        $sql = "SELECT * FROM transaction_payment WHERE member_id = '$memberID'
+                                ORDER BY date_created DESC";
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            // Loop through each row
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "
+                                        <tr>
+                                        <td>" . $row['transaction_code'] . "</td>
+                                    <td>" . $row['transaction_type'] . "</td>
+                                    <td>" . $row['amount'] . "</td>
+                                    <td>" . $row['date_created'] . "</td>
+                                    </tr>
+                                        ";
+                                            }
+                                        } else {
+                                            echo "<tr><td colspan='4'><i>No Transaction found</i></td></tr>";
+                                        }
+
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
         </form>
+
     </div>
+
 
     <!-- SUCCESS TOAST -->
     <div class='toast-container' id='toast-success'>

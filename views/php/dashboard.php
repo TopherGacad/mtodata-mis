@@ -101,7 +101,7 @@ date_default_timezone_set('Asia/Manila');
             $don = "SELECT SUM(amount) AS don_count FROM transaction_donation
                 WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $don_result = $conn->query($don);
-
+          
             $com = "SELECT COUNT(id) AS com_count FROM complaint_details
                 WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $com_result = $conn->query($com);
@@ -116,9 +116,8 @@ date_default_timezone_set('Asia/Manila');
             SUM(debit) AS total_revenue FROM transaction_finance
             WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
             AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND";
-            $Cur_Result = $conn->query($CurNet);
-
-
+            $Cur_Result = $conn->query($CurNet)
+              
             if ($mem_result) {
                 $row = mysqli_fetch_assoc($mem_result);
                 echo "
@@ -143,6 +142,7 @@ date_default_timezone_set('Asia/Manila');
 
                 $TotalRev = $row1['pastNeT'] + $row2['total_revenue'];
                 $TotalNet = $row1['pastNeT'] + $row2['curNeT'];
+              
                 echo "
                         <!-- DONATION COUNT -->
                         <div class='card border'>
@@ -157,6 +157,7 @@ date_default_timezone_set('Asia/Manila');
                                 <button class='save' id='retrieve1' onclick=\"save_generate3()\">View Report</button>
                             </div>
                         </div>
+                        
             <!-- CONTRIBUTION COUNT -->
                         <div class='card border'>
                             <div class='card-header'>
@@ -176,7 +177,6 @@ date_default_timezone_set('Asia/Manila');
             if ($com_result) {
                 $row = mysqli_fetch_assoc($com_result);
                 $com_count = $row['com_count'];
-
                 echo "
                     <!-- COMPLAINTS COUNT -->
                 <div class='card border'>
@@ -202,6 +202,8 @@ date_default_timezone_set('Asia/Manila');
                 <!-- FINANCE ENTRY -->
                 <div class='card-header entry'>
                     <h4>Recent Financial Entry</h4>
+                    <button class="finance_download exportBtn" onclick="save_generate3()"><i
+                            class="fa-solid fa-download"></i></button></abbr>
                 </div>
 
                 <div class="table-container">
@@ -271,6 +273,7 @@ date_default_timezone_set('Asia/Manila');
                 </div>
             </div>
         </div>
+
     </div>
 
     <!-- USER PANE -->
@@ -637,6 +640,22 @@ date_default_timezone_set('Asia/Manila');
 
                                     echo "<a href='../pages/viewevents.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
                                 }
+                            } else if ($row['account_type'] === 'Contribution') {
+                                $transactionCode = $row['transaction_code'];
+
+                                $sql = "SELECT unit_info.id
+                                FROM unit_info
+                                INNER JOIN transaction_contribution ON unit_info.body_no = transaction_contribution.body_no
+                                WHERE transaction_contribution.transaction_code = '$transactionCode'";
+
+                                $result = mysqli_query($conn, $sql);
+
+                                if ($row = mysqli_fetch_assoc($result)) {
+                                    $unitId = $row['id'];
+
+                                    echo "<a href='../pages/viewunit.php?id=$unitId'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                }
+
                             }
                         }
                     }
@@ -1091,7 +1110,30 @@ date_default_timezone_set('Asia/Manila');
                     <!-- BODY NO. -->
                     <div class='fields'>
                         <label for='bodynum'>Body No.<span> *</span></label>
-                        <input type='text' id='body-no' name='bodynum' pattern="[0-9]*" required disabled>
+                        <select id='body-no' name='bodynum' required disabled>
+                            <option selected disabled value=''>Select Body No.</option>
+                            <?php
+
+                            include
+                                "db_conn.php";
+
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+                            $sqlBody = "SELECT * FROM unit_info";
+                            $resultBody = $conn->query($sqlBody);
+
+
+                            while ($rowBody = $resultBody->fetch_assoc()) {
+
+                                echo "<option value='" . $rowBody["body_no"] . "'>" . $rowBody["body_no"] . "</option>";
+                            }
+
+                            // close MySQL connection
+                            $conn->close();
+                            ?>
+                        </select>
                     </div>
 
                     <!-- DONOR NAME -->

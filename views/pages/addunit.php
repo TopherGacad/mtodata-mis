@@ -53,7 +53,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
             <p id='success-con'></p>
         </div>
     </div>
-    
+
     <div class='head-container'>
         <img class='main-logo' src='../../public/assets/mtodata_logo.png' alt='mtodata logo'>
     </div>
@@ -61,7 +61,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     <div class='content-container'>
         <form name='addunit_form' method='POST' action='insertunit.php' onsubmit='return validate_form()'>
             <div class='ot-header'>
-                <h3><a href='../../views/pages/unitinfo.php'><i class='fa-solid fa-arrow-left'></i></a>Add Unit Info</h3>
+                <h3><a href='../../views/pages/unitinfo.php'><i class='fa-solid fa-arrow-left'></i></a>Add Unit Info
+                </h3>
                 <div class='btn-container'>
                     <a href='../../views/pages/unitinfo.php'><input type='button' value='Cancel'
                             class='cancelBtn modal-btn' id='cancel-btn'></a>
@@ -92,7 +93,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                 }
 
                                 // data retrieving for member's name
-                                $sql = "SELECT * FROM mem_info WHERE (mem_role = 'Operator' OR mem_role = 'Both')";
+                                $sql = "SELECT * FROM mem_info WHERE (mem_role = 'Operator' OR mem_role = 'Both')
+                                AND id NOT IN (SELECT mem_id FROM unit_info)";
                                 $result = $conn->query($sql);
 
 
@@ -104,8 +106,15 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                     if (empty($row["exname"])) {
                                         $lastName .= ', ';
                                     }
-                                    echo "<option value='" . $row['id'] . "'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
+
+                                    $selected = "";
+                                    if (isset($_GET['id']) && $_GET['id'] == $row['id']) {
+                                        $selected = "selected";
+                                    }
+
+                                    echo "<option value='" . $row['id'] . "' " . $selected . ">" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
                                 }
+
 
                                 // close MySQL connection
                                 $conn->close();
@@ -128,7 +137,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- BODY NO. -->
                         <div class='fields'>
                             <label for='unit-bodyno'>Body No. <span id='error_1'> *</span></label>
-                            <input type='text' id='unit-bodyno' pattern="[0-9]{4}" maxlength="4" name='unitbody_no' oninput="validate_isNum()" placeholder="eg. 0001" required>
+                            <input type='text' id='unit-bodyno' pattern="[0-9]{4}" maxlength="4" name='unitbody_no'
+                                oninput="validate_isNum()" placeholder="eg. 0001" required>
                         </div>
 
                         <!-- BODY COLOR -->
@@ -158,7 +168,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- FRANCHISE NO. -->
                         <div class='fields'>
                             <label for='unit_franno'>Franchise No. <span id='error_2'> *</span></label>
-                            <input type='text' id='unit-franno' pattern="[0-9]*" name='unitfran_no' oninput="validate_isNum()" required>
+                            <input type='text' id='unit-franno' pattern="[0-9]*" name='unitfran_no'
+                                oninput="validate_isNum()" required>
                         </div>
                     </div>
 
@@ -181,7 +192,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- AREA CODE -->
                         <div class='fields'>
                             <label for='unit-area'>Area Code <span id='error_4'> *</span></label>
-                            <input type='text' id='unit-area' pattern="[0-9]*" name='unit_area' oninput="validate_isNum()" required>
+                            <input type='text' id='unit-area' pattern="[0-9]*" name='unit_area'
+                                oninput="validate_isNum()" required>
                         </div>
                     </div>
                 </div>
@@ -193,8 +205,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class='section'>
                         <div class='fields'>
                             <label for='unit_motorno'>Motor No. <span id='error_3'> *</span></label>
-                            <input type='text' id='unit-motorno' pattern="[0-9]*" name='unit_motorno' oninput="validate_isNum()"
-                                required>
+                            <input type='text' id='unit-motorno' pattern="[0-9]*" name='unit_motorno'
+                                oninput="validate_isNum()" required>
                         </div>
 
                         <div class='fields'>
@@ -227,7 +239,8 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class='section'>
                         <div class='fields'>
                             <label for='unit_District'>District <span> *</span></label>
-                            <input type='text' id='unit-District' pattern="[0-9]{2}" maxlength="2" name='unit_District' required>
+                            <input type='text' id='unit-District' pattern="[0-9]{2}" maxlength="2" name='unit_District'
+                                required>
                         </div>
                     </div>
                     <div class='section'>
