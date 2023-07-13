@@ -612,7 +612,10 @@ $net = $TotalRev - $expenses;
                         $TotalCon = "SELECT SUM(amount) as totalCon
                         FROM transaction_expenses
                         WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
-                        AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND";
+                        AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND
+                        AND transaction_type <> 'Expenses - Rent'
+                        AND transaction_type <> 'Expenses - Electricity'
+                        AND transaction_type <> 'Expenses - Water'";
 
                         $resultCon = $conn->query($sqlCon);
                         $resultTotalCon = $conn->query($TotalCon);

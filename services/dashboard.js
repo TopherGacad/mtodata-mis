@@ -813,7 +813,9 @@ function handleBudgetCheckboxChange() {
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const suc = urlParams.get('success');
+    const err = urlParams.get('error');
     const toastContainers = document.getElementById('toast-success');
+    const toastContainers2 = document.getElementById('warningToast2');
 
 
     if (suc === 'true') {
@@ -840,12 +842,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
+    if (err === 'insufficient-bal') {
+        toastContainers2.style.display = 'flex';
+        document.getElementById('warning-con').innerHTML = `<strong>Warning</strong> Insufficient Balance`;
+        setTimeout(() => {
+            toastContainers2.style.display = 'none';
+        }, 3000);
+    }
 
 
 });
 
 window.onload = function () {
     if (window.location.search.includes("success")) {
+        history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    if (window.location.search.includes("error")) {
         history.replaceState({}, document.title, window.location.pathname);
     }
 }

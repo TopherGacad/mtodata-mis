@@ -116,7 +116,7 @@ date_default_timezone_set('Asia/Manila');
             SUM(debit) AS total_revenue FROM transaction_finance
             WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
             AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND";
-            $Cur_Result = $conn->query($CurNet)
+            $Cur_Result = $conn->query($CurNet);
               
             if ($mem_result) {
                 $row = mysqli_fetch_assoc($mem_result);
@@ -943,6 +943,16 @@ date_default_timezone_set('Asia/Manila');
             </div>
             <div class="warningToast-right">
                 <p><strong>Try Again</strong> Please select user role!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="warningToast-container" id="warningToast2">
+            <div class="warningToast-left">
+                <i class="warningToast-icon fa-solid fa-circle-info"></i>
+            </div>
+            <div class="warningToast-right">
+                <p id="warning-con"></p>
             </div>
         </div>
     </div>
