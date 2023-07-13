@@ -137,7 +137,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         <!-- BODY NO. -->
                         <div class='fields'>
                             <label for='unit-bodyno'>Body No. <span id='error_1'> *</span></label>
-                            <input type='text' id='unit-bodyno' pattern="[0-9]{4}" maxlength="4" name='unitbody_no'
+                            <input type='text' id='unit-bodyno' pattern="[0-9]*" maxlength="4" name='unitbody_no'
                                 oninput="validate_isNum()" placeholder="eg. 0001" required>
                         </div>
 
@@ -239,7 +239,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <div class='section'>
                         <div class='fields'>
                             <label for='unit_District'>District <span> *</span></label>
-                            <input type='text' id='unit-District' pattern="[0-9]{2}" maxlength="2" name='unit_District'
+                            <input type='text' id='unit-District' pattern="[0-9]" maxlength="2" name='unit_District'
                                 required>
                         </div>
                     </div>
