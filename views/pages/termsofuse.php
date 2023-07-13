@@ -92,7 +92,7 @@
             </details>
 
             <details>
-                <summary>7. Disclaimer of Warranties </summary>
+                <summary>7. Modifications and Termination  </summary>
                 <ol type="a">
                     <li>The Diploma in Information Communication Technology students from the Polytechnic University of the Philippines may modify, suspend, or terminate the MTODATA or any part thereof at its sole discretion and without prior notice. Diploma in Information Communication Technology students from the Polytechnic University of the Philippines may modify these Terms anytime. Continued use of the MTODATA after modifications constitutes acceptance of the modified Terms.</li>
             </details>
