@@ -20,7 +20,6 @@ $updateQuery = "UPDATE mem_info SET mem_stat = 'Expired' WHERE mem_stat = 'Activ
 mysqli_query($conn, $updateQuery);
 
 date_default_timezone_set('Asia/Manila');
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,6 +82,18 @@ date_default_timezone_set('Asia/Manila');
     <!-- MAIN CONTENT -->
     <!-- DASHBOARD PANE -->
     <div class='dashboard-container' id='dash-container'>
+        <div class="dash-header">
+            <?php
+            $startOfMonth = date('Y-m-01');
+            $formattedStartOfMonth = date('m/d/Y', strtotime($startOfMonth));
+            
+            $now = new DateTime();
+            $formattedDate = $now->format('m/d/Y');
+            echo"
+            <abbr title='Start of the Month to Current date'><h3>MONTHLY REPORT:<span class='dash-date'> (". $formattedStartOfMonth ." - " . $formattedDate .")</span></h3></abbr>
+            ";
+            ?>
+        </div>
         <section class='top-dash'>
             <?php
 
@@ -116,9 +127,8 @@ date_default_timezone_set('Asia/Manila');
             SUM(debit) AS total_revenue FROM transaction_finance
             WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
             AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND";
-            $Cur_Result = $conn->query($CurNet);
-
-
+            $Cur_Result = $conn->query($CurNet)
+              
             if ($mem_result) {
                 $row = mysqli_fetch_assoc($mem_result);
                 echo "
@@ -132,7 +142,7 @@ date_default_timezone_set('Asia/Manila');
                         <p>" . $row['mem_count'] . "</p>
                     </div>
                     <div class='link-container memCount'>
-                        <button class='save' id='retrieve-donation' onclick=\"save_generate()\">View Report</button>
+                        <abbr title='Member Info Report'><button class='save' id='retrieve-donation' onclick=\"save_generate()\">Download Report</button></abbr>
                     </div>
                 </div>";
             }
@@ -148,13 +158,13 @@ date_default_timezone_set('Asia/Manila');
                         <div class='card border'>
                             <div class='card-header'>
                                 <i class='card-icon fa-solid fa-hand-holding-dollar'></i>
-                                <h4 class=''>Total Amount Recieved</h4>
+                                <h4 class=''>Total Amount Received</h4>
                             </div>
                             <div class='count-container'>
                                 <p><span>&#8369; </span> " . ($TotalRev != 0 ? $TotalRev : "0") . "</p>
                             </div>
                             <div class='link-container'>
-                                <button class='save' id='retrieve1' onclick=\"save_generate3()\">View Report</button>
+                                <abbr title='Financial Report'><button class='save' id='retrieve1' onclick=\"save_generate3()\">Download Report</button></abbr>
                             </div>
                         </div>
             <!-- CONTRIBUTION COUNT -->
@@ -167,7 +177,7 @@ date_default_timezone_set('Asia/Manila');
                                 <p><span>&#8369; </span> " . ($TotalNet != 0 ? $TotalNet : "0") . "</p>
                             </div>
                             <div class='link-container'>
-                            <button class='save' id='retrieve1' onclick=\"save_generate2()\">View Report</button>
+                            <abbr title='Contribution Report'><button class='save' id='retrieve1' onclick=\"save_generate2()\">Download Report</button></abbr>
                             </div>
                         </div>";
             }
@@ -188,7 +198,7 @@ date_default_timezone_set('Asia/Manila');
                         <p>" . ($com_count != 0 ? $com_count : "0") . "</p>
                     </div>
                     <div class='link-container'>
-                        <button>View Report</button>
+
                     </div>
                 </div>";
                 }
@@ -199,11 +209,12 @@ date_default_timezone_set('Asia/Manila');
 
             <div class="bottom-dash">
             <div class='botleft-dash border'>
-
-<!-- FINANCE ENTRY -->
-<div class='card-header entry'>
-    <h4>Recent Financial Entry</h4>
-</div>
+                <!-- FINANCE ENTRY -->
+                <div class='card-header entry'>
+                    <h4>Recent Financial Entry</h4>
+                    <button class="finance_download exportBtn" onclick="save_generate3()"><i
+                            class="fa-solid fa-download"></i></button></abbr>
+                </div>
 
 <div class="table-container">
     <table>
@@ -234,21 +245,21 @@ date_default_timezone_set('Asia/Manila');
                 ";
             }
 
-            // close MySQL connection
-            $conn->close();
-            ?>
-        </tbody>
-    </table>
-</div>
-</div>
-<div class='botright-dash border'>
+                            // close MySQL connection
+                            $conn->close();
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class='botright-dash border'>
+                <!-- EVENTS AND PROGRAMS ENTRY -->
+                <div class='card-header events'>
+                    <h4>Scheduled Events</h4>
+                </div>
 
-<!-- EVENTS AND PROGRAMS ENTRY -->
-<div class='card-header events'>
-    <h4>Scheduled Events</h4>
-</div>
-<div class='dash-content'>
-    <?php
+                <div class='dash-content'>
+                    <?php
 
     // connect to the MySQL database
     include "db_conn.php";
@@ -258,23 +269,21 @@ date_default_timezone_set('Asia/Manila');
     WHERE ep_date >= $dateToday ORDER BY concatenated_datetime ASC";
     $showProgramResult = $conn->query($showPrograms);
 
-    while ($EPRecent = $showProgramResult->fetch_assoc()) {
-        echo "
-         <div class='agenda-box'>
-         <h3>" . $EPRecent['ep_title'] . "</h3>
-         <p>" . $EPRecent['concatenated_datetime'] . "</p>
-         </div>
-         ";
-    }
-
-    // close MySQL connection
-    $conn->close();
-    ?>
-</div>
-</div>
+                    while ($EPRecent = $showProgramResult->fetch_assoc()) {
+                        echo "
+                            <div class='agenda-box'>
+                            <h3>" . $EPRecent['ep_title'] . "</h3>
+                            <p>" . $EPRecent['concatenated_datetime'] . "</p>
+                            </div>
+                            ";
+                    }
+                    // close MySQL connection
+                    $conn->close();
+                    ?>
+                </div>
             </div>
-           
         </div>
+
     </div>
 
     <!-- USER PANE -->
@@ -1344,7 +1353,7 @@ date_default_timezone_set('Asia/Manila');
                     <!-- EVENT TITLE -->
                     <div class='fields'>
                         <label for='event-title'>Title<span> *</span></label>
-                        <input type='text' id='event-title' name='event-title' placeholder='Event title' required>
+                        <input type='text' id='event-title' name='event-title' placeholder='eg. Meeting' required>
                     </div>
 
                     <!-- DESCRIPTION -->
@@ -1359,7 +1368,7 @@ date_default_timezone_set('Asia/Manila');
                     <!--EVENT OR PROGRAM BUDGET-->
                     <div class='fields'>
                         <label for='events-budget'>Budget</label>
-                        <input type='text' id='events-budget' name='events-budget' disabled>
+                        <input type='text' id='events-budget' pattern="[0-9]*" name='events-budget' disabled>
                     </div>
 
                     <div class='is-bud'>
@@ -1436,6 +1445,7 @@ date_default_timezone_set('Asia/Manila');
     <script src="../../services/datetoday.js"></script>
     <!-- Script for Loading Screen -->
     <script src="../../services/loading.js"></script>
+    <script src="../../services/monthly.js"></script>
 </body>
 
 </html>
