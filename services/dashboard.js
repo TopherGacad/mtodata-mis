@@ -109,7 +109,7 @@ function disableInputs() {
         transDate.disabled = true;
     }
 
-    if (selectType.value === "Butaw" || selectType.value === "Donation") {
+    if (selectType.value === "Butaw" || selectType.value === "Donation" || selectType.value === "Expenses") {
         transDate.max = today;
     } else {
         transDate.removeAttribute("max");
@@ -982,7 +982,7 @@ function save_generate() {
 
   function save_generate2() {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '../reports/con-report.php', true);
+    xhr.open('GET', '../reports/balance_sheet.php', true);
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
         var response = xhr.responseText;

@@ -101,15 +101,23 @@ date_default_timezone_set('Asia/Manila');
             $don = "SELECT SUM(amount) AS don_count FROM transaction_donation
                 WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $don_result = $conn->query($don);
-
-            $con = "SELECT SUM(amount) AS con_count FROM transaction_contribution
-                WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
-            $con_result = $conn->query($con);
-
+          
             $com = "SELECT COUNT(id) AS com_count FROM complaint_details
                 WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $com_result = $conn->query($com);
 
+            $PasNet = "SELECT SUM(debit) - SUM(credit) AS pastNeT
+            FROM transaction_finance
+            WHERE date_created >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01')
+            AND date_created <= LAST_DAY(NOW() - INTERVAL 1 MONTH)";
+            $Pas_Result = $conn->query($PasNet);
+
+            $CurNet = "SELECT SUM(debit) - SUM(credit) AS curNeT,
+            SUM(debit) AS total_revenue FROM transaction_finance
+            WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
+            AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND";
+            $Cur_Result = $conn->query($CurNet)
+              
             if ($mem_result) {
                 $row = mysqli_fetch_assoc($mem_result);
                 echo "
@@ -128,9 +136,13 @@ date_default_timezone_set('Asia/Manila');
                 </div>";
             }
 
-            if ($don_result) {
-                $row = mysqli_fetch_assoc($don_result);
-                $don_count = $row['don_count'];
+            if ($Pas_Result && $Cur_Result) {
+                $row1 = mysqli_fetch_assoc($Pas_Result);
+                $row2 = mysqli_fetch_assoc($Cur_Result);
+
+                $TotalRev = $row1['pastNeT'] + $row2['total_revenue'];
+                $TotalNet = $row1['pastNeT'] + $row2['curNeT'];
+              
                 echo "
                         <!-- DONATION COUNT -->
                         <div class='card border'>
@@ -139,26 +151,21 @@ date_default_timezone_set('Asia/Manila');
                                 <h4 class=''>Total Amount Recieved</h4>
                             </div>
                             <div class='count-container'>
-                                <p><span>&#8369;</span>" . ($don_count != 0 ? $don_count : "0") . "</p>
+                                <p><span>&#8369; </span> " . ($TotalRev != 0 ? $TotalRev : "0") . "</p>
                             </div>
                             <div class='link-container'>
-                                <button class='save' id='retrieve1' onclick=\"save_generate1()\">View Report</button>
+                                <button class='save' id='retrieve1' onclick=\"save_generate3()\">View Report</button>
                             </div>
-                        </div>";
-            }
-
-            if ($con_result) {
-                $row = mysqli_fetch_assoc($con_result);
-                $con_count = $row['con_count'];
-                echo "
-                        <!-- CONTRIBUTION COUNT -->
+                        </div>
+                        
+            <!-- CONTRIBUTION COUNT -->
                         <div class='card border'>
                             <div class='card-header'>
                                 <i class='card-icon fa-solid fa-circle-dollar-to-slot'></i>
-                                <h4 class=''>Total Amount Expenses</h4>
+                                <h4 class=''>Total Fund Balance</h4>
                             </div>
                             <div class='count-container'>
-                                <p><span>&#8369;</span>" . ($con_count != 0 ? $con_count : "0") . "</p>
+                                <p><span>&#8369; </span> " . ($TotalNet != 0 ? $TotalNet : "0") . "</p>
                             </div>
                             <div class='link-container'>
                             <button class='save' id='retrieve1' onclick=\"save_generate2()\">View Report</button>
@@ -169,6 +176,7 @@ date_default_timezone_set('Asia/Manila');
 
             if ($com_result) {
                 $row = mysqli_fetch_assoc($com_result);
+                $com_count = $row['com_count'];
                 echo "
                     <!-- COMPLAINTS COUNT -->
                 <div class='card border'>
@@ -177,7 +185,7 @@ date_default_timezone_set('Asia/Manila');
                         <h4 class=''>Complaints Recieved</h4>
                     </div>
                     <div class='count-container'>
-                        <p>" . $row['com_count'] . "</p>
+                        <p>" . ($com_count != 0 ? $com_count : "0") . "</p>
                     </div>
                     <div class='link-container'>
                         <button>View Report</button>
@@ -265,7 +273,6 @@ date_default_timezone_set('Asia/Manila');
                 </div>
             </div>
         </div>
-
 
     </div>
 
@@ -1191,7 +1198,8 @@ date_default_timezone_set('Asia/Manila');
                     <!-- ACCOUNT ID -->
                     <div class='fields'>
                         <label for='trans-date'>Transaction date<span> *</span></label>
-                        <input type='date' id='trans-date' name='trans_date' required disabled>
+                        <input type='date' id='trans-date' name='trans_date' max="<?php echo date('Y-m-d'); ?>" required
+                            disabled>
                     </div>
 
                     <!--  AMOUNT  -->
