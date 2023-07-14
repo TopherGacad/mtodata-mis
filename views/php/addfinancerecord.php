@@ -112,11 +112,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 case 'Expenses - Water':
                     $financeCode = 'WAT';
                     break;
+                case 'Expenses - ':
+                    $financeCode = 'OTH';
             }
 
             if ($TotalNet < $amount) {
                 header("Location: dashboard.php?error=insufficient-bal");
             } else {
+
+                if ($expenseType === 'Expenses - ') {
+                    $remarks = $_POST['remarks'];
+                    $expenseType .= $remarks;
+                }
 
                 // Insert into expenses table
                 $insertSql = "INSERT INTO transaction_expenses (for_month, amount, transaction_code, date_created, transaction_type) VALUES ('$transactionDate', '$amount', '','$timestamp','$expenseType')";

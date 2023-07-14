@@ -1212,12 +1212,19 @@ date_default_timezone_set('Asia/Manila');
                 <div class='financeForm-right addForm'>
                     <div class='fields'>
                         <label for='expense-type'>Expense Type</label>
-                        <select name='expense_type' id='expense-type' required disabled>
+                        <select name='expense_type' id='expense-type' required disabled onchange="toggleRemarks()">
                             <option selected disabled value=''>Select Expense type</option>
                             <option value='Expenses - Rent'>Rent</option>
                             <option value='Expenses - Electricity'>Electricity</option>
                             <option value='Expenses - Water'>Water</option>
+                            <option value='Expenses - '>Others</option>
                         </select>
+                    </div>
+
+                    <!-- ACCOUNT ID -->
+                    <div class='fields' id="rem-container">
+                        <label for='remarks'>Remarks<span> *</span></label>
+                        <input type='text' id='remarks' name='remarks' disabled>
                     </div>
 
 

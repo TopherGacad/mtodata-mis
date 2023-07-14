@@ -69,6 +69,7 @@ const expenseType = document.getElementById("expense-type")
 const addDonor = document.getElementById("donorbtn")
 const amountInput = document.getElementById("amount");
 const transDate = document.getElementById("trans-date");
+const rem = document.getElementById("remarks");
 const today = new Date().toISOString().split('T')[0];
 
 function disableInputs() {
@@ -81,6 +82,7 @@ function disableInputs() {
         amountInput.value = "10";
         amountInput.disabled = false;
         transDate.disabled = false;
+        rem.disabled = true;
 
     } else if (selectType.value === "Donation") {
         bodyNo.disabled = true;
@@ -90,6 +92,7 @@ function disableInputs() {
         amountInput.value = "";
         amountInput.disabled = false;
         transDate.disabled = true;
+        rem.disabled = true;
 
     } else if (selectType.value === "Expenses") {
         bodyNo.disabled = true;
@@ -99,6 +102,7 @@ function disableInputs() {
         amountInput.value = "";
         amountInput.disabled = false;
         transDate.disabled = false;
+        rem.disabled = false;
     } else {
         bodyNo.disabled = true;
         donorName.disabled = true;
@@ -107,6 +111,7 @@ function disableInputs() {
         amountInput.value = "";
         amountInput.disabled = true;
         transDate.disabled = true;
+        rem.disabled = true;
     }
 
     if (selectType.value === "Butaw" || selectType.value === "Donation" || selectType.value === "Expenses") {
@@ -1169,7 +1174,19 @@ var formattedDate = weekdayNames[currentDate.getDay()] + ', ' +
 // Insert the formatted date into the <i> element
 document.getElementById('current-date').innerText = formattedDate;
 
-
+function toggleRemarks() {
+    var expenseType = document.getElementById('expense-type').value;
+    var remarksInput = document.getElementById('rem-container');
+    if (expenseType === 'Expenses - ') {
+      remarksInput.style.display = 'block';
+    } else {
+      remarksInput.style.display = 'none';
+    }
+  }
+  
+  // Call the toggleRemarks function initially to set the visibility based on the default selected value
+  toggleRemarks();
+  
 
 
 
