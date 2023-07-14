@@ -827,10 +827,10 @@ date_default_timezone_set('Asia/Manila');
                     <td class='action'>
                         <i class='tools fa-solid fa-trash-can'></i>
                         <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
-                        <i class='tools fa-solid fa-print save' data-container='ep' onclick=\"generatePDF('" . $row["id"] . "', 'ep.php')\"></i>
+                        <i class='tools fa-solid fa-print save' data-container='ep' onclick=\"save_generate4('" . $row["id"] . "', 'ep.php')\"></i>
                     </td>
                 </tr> ";
-
+                
                     }
 
                     // close MySQL connection

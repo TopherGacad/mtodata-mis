@@ -74,7 +74,8 @@ $currentDate = date('Y-m-d');
                     </div>
                             
                             <div class='EPName'>" . $row["ep_title"] . "</div>
-                            <p class='detret' id='center_format'>" . $row["ep_time"] . "</p>
+                            <p class='detret' id='center_format'>" . $row["ep_time"] . " at " . $row["ep_location"] . " <br><br>Program by <strong>" . $row["ep_organizer"] . "</strong></p>
+
                             <p class='det'>Program Details:</p>
                             <div class='det_con'>
                                 <p class='det_con_Desc' id='ep_desc'>" . $details . "</p>
@@ -88,13 +89,7 @@ $currentDate = date('Y-m-d');
 
     ?>
 
-    <div class="footer">
-        Footer Statements here Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit. Nunc posuere orci vitae nisl faucibus,
-        nec rutrum metus rutrum. Curabitur efficitur mi et ligula tempus,
-        eu placerat mauris porttitor. In consectetur ultrices enim,
-        ut vestibulum dui dignissim non.
-    </div>
+    <p id="end" style="text-align:center;">------------ NOTHING FOLLOWS ------------</p>
     </div>
     </div>
     </div>

@@ -1300,7 +1300,6 @@ textarea {
 
 }
 
-
 #cert_wrapp {
     page-break-inside: avoid;
 }
@@ -1423,3 +1422,44 @@ textarea {
     page-break-inside: avoid;
     font-size: 9pt;
 }
+
+.EPName {
+    font-size: 22pt;
+    margin: 50px 0 0;
+    text-align: center;
+}
+
+.det {
+    font-size: 10pt;
+    margin: 15px 0;
+    font-weight: 600;
+}
+
+.det_wrap {
+    display: flex;
+    align-items: center;
+    height: 20px;
+}
+
+.detret {
+    font-size: 9pt;
+}
+
+.det_con_Desc {
+    font-size: 9pt;
+    page-break-inside: avoid;
+}
+
+.det_con {
+    margin-bottom: 20px;
+}
+
+#center_format {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+#warningToast2 {
+    z-index: 9999;
+}
+
