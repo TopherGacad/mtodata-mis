@@ -47,3 +47,4 @@ editForm.addEventListener('input', function() {
     updateButton.disabled = !hasChanged;
     console.log('Button has been enabled for Complaint');
 });
+
