@@ -827,10 +827,10 @@ date_default_timezone_set('Asia/Manila');
                     <td class='action'>
                         <i class='tools fa-solid fa-trash-can'></i>
                         <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
-                        <i class='tools fa-solid fa-print save' data-container='ep' onclick=\"generatePDF('" . $row["id"] . "', 'ep.php')\"></i>
+                        <i class='tools fa-solid fa-print save' data-container='ep' onclick=\"save_generate4('" . $row["id"] . "', 'ep.php')\"></i>
                     </td>
                 </tr> ";
-
+                
                     }
 
                     // close MySQL connection
@@ -959,6 +959,16 @@ date_default_timezone_set('Asia/Manila');
             </div>
             <div class="warningToast-right">
                 <p><strong>Try Again</strong> Please select user role!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="warningToast-container" id="warningToast2">
+            <div class="warningToast-left">
+                <i class="warningToast-icon fa-solid fa-circle-info"></i>
+            </div>
+            <div class="warningToast-right">
+                <p id="warning-con"></p>
             </div>
         </div>
     </div>
@@ -1202,12 +1212,19 @@ date_default_timezone_set('Asia/Manila');
                 <div class='financeForm-right addForm'>
                     <div class='fields'>
                         <label for='expense-type'>Expense Type</label>
-                        <select name='expense_type' id='expense-type' required disabled>
+                        <select name='expense_type' id='expense-type' required disabled onchange="toggleRemarks()">
                             <option selected disabled value=''>Select Expense type</option>
                             <option value='Expenses - Rent'>Rent</option>
                             <option value='Expenses - Electricity'>Electricity</option>
                             <option value='Expenses - Water'>Water</option>
+                            <option value='Expenses - '>Others</option>
                         </select>
+                    </div>
+
+                    <!-- ACCOUNT ID -->
+                    <div class='fields' id="rem-container">
+                        <label for='remarks'>Remarks<span> *</span></label>
+                        <input type='text' id='remarks' name='remarks' disabled>
                     </div>
 
 

@@ -69,6 +69,7 @@ const expenseType = document.getElementById("expense-type")
 const addDonor = document.getElementById("donorbtn")
 const amountInput = document.getElementById("amount");
 const transDate = document.getElementById("trans-date");
+const rem = document.getElementById("remarks");
 const today = new Date().toISOString().split('T')[0];
 
 function disableInputs() {
@@ -81,6 +82,7 @@ function disableInputs() {
         amountInput.value = "10";
         amountInput.disabled = false;
         transDate.disabled = false;
+        rem.disabled = true;
 
     } else if (selectType.value === "Donation") {
         bodyNo.disabled = true;
@@ -90,6 +92,7 @@ function disableInputs() {
         amountInput.value = "";
         amountInput.disabled = false;
         transDate.disabled = true;
+        rem.disabled = true;
 
     } else if (selectType.value === "Expenses") {
         bodyNo.disabled = true;
@@ -99,6 +102,7 @@ function disableInputs() {
         amountInput.value = "";
         amountInput.disabled = false;
         transDate.disabled = false;
+        rem.disabled = false;
     } else {
         bodyNo.disabled = true;
         donorName.disabled = true;
@@ -107,6 +111,7 @@ function disableInputs() {
         amountInput.value = "";
         amountInput.disabled = true;
         transDate.disabled = true;
+        rem.disabled = true;
     }
 
     if (selectType.value === "Butaw" || selectType.value === "Donation" || selectType.value === "Expenses") {
@@ -483,24 +488,45 @@ document.getElementById("user-form").addEventListener("submit", function (event)
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                // Display success toast
-                var successToast = document.getElementById("user-successToast");
-                successToast.style.display = "flex";
-                modalBg.style.display = "none"
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    // Display success toast
+                    var successToast = document.getElementById("user-successToast");
+                    successToast.style.display = "flex";
+                    modalBg.style.display = "none";
 
-                // Hide toast after 2 seconds
-                setTimeout(function () {
-                    successToast.style.display = "none";
-                    // Refresh the page
-                    location.reload();
-                }, 2000);
+                    // Hide toast after 2 seconds
+                    setTimeout(function () {
+                        successToast.style.display = "none";
+                        // Refresh the page
+                        location.reload();
+                    }, 2000);
 
-                // Reset the form
-                document.getElementById("user-form").reset();
+                    // Reset the form
+                    document.getElementById("user-form").reset();
 
-                // Hide the modal
-                var userModalContainer = document.getElementById("user-modal-container");
-                userModalContainer.style.display = "none";
+                    // Hide the modal
+                    var userModalContainer = document.getElementById("user-modal-container");
+                    userModalContainer.style.display = "none";
+                } else {
+                    // Handle the error case
+                    var err = response.error;
+                    if (err === "user-role-already-exists") {
+                        // Display error toast
+                        var toastContainers2 = document.getElementById('warningToast2');
+                        var warningCon = document.getElementById('warning-con');
+                        warningCon.innerHTML = `<strong>Warning:</strong> ${response.role} Role already exists in the database`;
+                        toastContainers2.style.display = "flex";
+                        toastContainers2.style.zIndex = "9999999";
+
+                        // Hide toast after 3 seconds
+                        setTimeout(function () {
+                            toastContainers2.style.display = "none";
+                        }, 3000);
+                    } else {
+                        console.error("Error: " + err);
+                    }
+                }
             } else {
                 // Handle the error case
                 console.error("Error: " + xhr.status);
@@ -509,6 +535,7 @@ document.getElementById("user-form").addEventListener("submit", function (event)
     };
     xhr.send(formData);
 });
+
 
 
 //Add Complaint Confirmation Toast
@@ -813,7 +840,10 @@ function handleBudgetCheckboxChange() {
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const suc = urlParams.get('success');
+    const err = urlParams.get('error');
+    const role = urlParams.get('role');
     const toastContainers = document.getElementById('toast-success');
+    const toastContainers2 = document.getElementById('warningToast2');
 
 
     if (suc === 'true') {
@@ -840,12 +870,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-
-
+    if (err === 'insufficient-bal') {
+        toastContainers2.style.display = 'flex';
+        document.getElementById('warning-con').innerHTML = `<strong>Warning</strong> Insufficient Balance`;
+        setTimeout(() => {
+            toastContainers2.style.display = 'none';
+        }, 3000);
+    }
 });
 
 window.onload = function () {
     if (window.location.search.includes("success")) {
+        history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    if (window.location.search.includes("error")) {
         history.replaceState({}, document.title, window.location.pathname);
     }
 }
@@ -894,177 +933,222 @@ function generatePDF(complaintId, fileName) {
 function save_generate() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '../reports/meminfo.php', true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var response = xhr.responseText;
-        var container = document.createElement('div');
-        container.innerHTML = response;
-        var memInfoContainer = container.querySelector('#container');
-        generatePDF1(memInfoContainer.innerHTML);
-      }
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            var container = document.createElement('div');
+            container.innerHTML = response;
+            var memInfoContainer = container.querySelector('#container');
+            generatePDF1(memInfoContainer.innerHTML);
+        }
     };
     xhr.send();
-  }
-  
-  function generatePDF1(htmlContent) {
+}
+
+function generatePDF1(htmlContent) {
     var element = document.createElement('div');
     element.innerHTML = htmlContent;
-  
-    var options = {
-      margin: [0.5, 0.5, 0.5, 0.5],
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-    
-    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
-      const totalPages = pdf.internal.getNumberOfPages();
-  
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setFont('Arial', 'italic');
-        pdf.setFontSize(10);
-        pdf.setTextColor(128);
-        pdf.setPage(i);
-        pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
-      }
-      
-      // Save or display the generated PDF here
-      pdf.save('meminfo.pdf');
-    });
-  }
 
-  
+    var options = {
+        margin: [0.5, 0.5, 0.5, 0.5],
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setFont('Arial', 'italic');
+            pdf.setFontSize(10);
+            pdf.setTextColor(128);
+            pdf.setPage(i);
+            pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+        }
+
+        // Save or display the generated PDF here
+        pdf.save('meminfo.pdf');
+    });
+}
+
+
 //Generate Donation Report
 
-  function save_generate1() {
+function save_generate1() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '../reports/don-report.php', true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var response = xhr.responseText;
-        var container = document.createElement('div');
-        container.innerHTML = response;
-        var memInfoContainer = container.querySelector('#container');
-        generatePDF2(memInfoContainer.innerHTML);
-      }
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            var container = document.createElement('div');
+            container.innerHTML = response;
+            var memInfoContainer = container.querySelector('#container');
+            generatePDF2(memInfoContainer.innerHTML);
+        }
     };
     xhr.send();
-  }
-  
-  function generatePDF2(htmlContent) {
+}
+
+function generatePDF2(htmlContent) {
     var element = document.createElement('div');
     element.innerHTML = htmlContent;
-  
-    var options = {
-      margin: [0.5, 0.5, 0.5, 0.5],
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-    
-    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
-      const totalPages = pdf.internal.getNumberOfPages();
-  
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setFont('Arial', 'italic');
-        pdf.setFontSize(10);
-        pdf.setTextColor(128);
-        pdf.setPage(i);
-        pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
-      }
-      
-      // Save or display the generated PDF here
-      pdf.save('donation-report.pdf');
-    });
-  }
-  
-  //Generate Contribution Report
 
-  function save_generate2() {
+    var options = {
+        margin: [0.5, 0.5, 0.5, 0.5],
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setFont('Arial', 'italic');
+            pdf.setFontSize(10);
+            pdf.setTextColor(128);
+            pdf.setPage(i);
+            pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+        }
+
+        // Save or display the generated PDF here
+        pdf.save('donation-report.pdf');
+    });
+}
+
+//Generate Contribution Report
+
+function save_generate2() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '../reports/balance_sheet.php', true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var response = xhr.responseText;
-        var container = document.createElement('div');
-        container.innerHTML = response;
-        var memInfoContainer = container.querySelector('#container');
-        generatePDF3(memInfoContainer.innerHTML);
-      }
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            var container = document.createElement('div');
+            container.innerHTML = response;
+            var memInfoContainer = container.querySelector('#container');
+            generatePDF3(memInfoContainer.innerHTML);
+        }
     };
     xhr.send();
-  }
-  
-  function generatePDF3(htmlContent) {
+}
+
+function generatePDF3(htmlContent) {
     var element = document.createElement('div');
     element.innerHTML = htmlContent;
-  
+
     var options = {
-      margin: [0.5, 0.5, 0.5, 0.5],
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        margin: [0.5, 0.5, 0.5, 0.5],
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
-    
+
     html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
-      const totalPages = pdf.internal.getNumberOfPages();
-  
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setFont('Arial', 'italic');
-        pdf.setFontSize(10);
-        pdf.setTextColor(128);
-        pdf.setPage(i);
-        pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
-      }
-      
-      // Save or display the generated PDF here
-      pdf.save('contribution-report.pdf');
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setFont('Arial', 'italic');
+            pdf.setFontSize(10);
+            pdf.setTextColor(128);
+            pdf.setPage(i);
+            pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+        }
+
+        // Save or display the generated PDF here
+        pdf.save('contribution-report.pdf');
     });
-  }
+}
 
-  //Generate Finance Income Report
+//Generate Finance Income Report
 
-  function save_generate3() {
+function save_generate3() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '../reports/finance_IS.php', true);
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        var response = xhr.responseText;
-        var container = document.createElement('div');
-        container.innerHTML = response;
-        var memInfoContainer = container.querySelector('#container');
-        generatePDF4(memInfoContainer.innerHTML);
-      }
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            var container = document.createElement('div');
+            container.innerHTML = response;
+            var memInfoContainer = container.querySelector('#container');
+            generatePDF4(memInfoContainer.innerHTML);
+        }
     };
     xhr.send();
-  }
-  
-  function generatePDF4(htmlContent) {
+}
+
+function generatePDF4(htmlContent) {
     var element = document.createElement('div');
     element.innerHTML = htmlContent;
-  
+
     var options = {
-      margin: [0.5, 0.5, 0.5, 0.5],
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        margin: [0.5, 0.5, 0.5, 0.5],
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
-    
+
     html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
-      const totalPages = pdf.internal.getNumberOfPages();
-  
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setFont('Arial', 'italic');
-        pdf.setFontSize(10);
-        pdf.setTextColor(128);
-        pdf.setPage(i);
-        pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
-      }
-      
-      // Save or display the generated PDF here
-      pdf.save('finance-report.pdf');
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setFont('Arial', 'italic');
+            pdf.setFontSize(10);
+            pdf.setTextColor(128);
+            pdf.setPage(i);
+            pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+        }
+
+        // Save or display the generated PDF here
+        pdf.save('finance-report.pdf');
     });
-  }
+}
+
+//Generate Program Details Report
+
+function save_generate4(complaintId, fileName) {
+    const pdfUrl = '../reports/' + fileName + '?id=' + complaintId;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', pdfUrl, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            var container = document.createElement('div');
+            container.innerHTML = response;
+            var memInfoContainer = container.querySelector('#ep-container');
+            generatePDF5(memInfoContainer.innerHTML);
+        }
+    };
+    xhr.send();
+}
+
+function generatePDF5(htmlContent) {
+    var element = document.createElement('div');
+    element.innerHTML = htmlContent;
+
+    var options = {
+        margin: [0.5, 0.5, 1, .5],
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setFont('Arial', 'italic');
+            pdf.setFontSize(10);
+            pdf.setTextColor(128);
+            pdf.setPage(i);
+            pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+        }
+
+        // Save or display the generated PDF here
+        pdf.save('Program Details.pdf');
+    });
+}
 
 
 // Get the current date
@@ -1090,7 +1174,19 @@ var formattedDate = weekdayNames[currentDate.getDay()] + ', ' +
 // Insert the formatted date into the <i> element
 document.getElementById('current-date').innerText = formattedDate;
 
-
+function toggleRemarks() {
+    var expenseType = document.getElementById('expense-type').value;
+    var remarksInput = document.getElementById('rem-container');
+    if (expenseType === 'Expenses - ') {
+      remarksInput.style.display = 'block';
+    } else {
+      remarksInput.style.display = 'none';
+    }
+  }
+  
+  // Call the toggleRemarks function initially to set the visibility based on the default selected value
+  toggleRemarks();
+  
 
 
 

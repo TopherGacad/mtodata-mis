@@ -11,11 +11,21 @@ $firstDate = date('F 01, Y');
 $currDate = date('F d, Y');
 
 // data retrieval
-$sql = "SELECT account_type, SUM(amount) as total
-        FROM transaction_finance 
-        WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
-        AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND
-        GROUP BY account_type";
+$sql = "SELECT account_type, SUM(amount) AS total,
+(   SELECT SUM(amount)
+    FROM transaction_finance
+    WHERE account_type LIKE 'Expenses - %'
+    AND account_type NOT LIKE 'Expenses - Electricity'
+    AND account_type NOT LIKE 'Expenses - Water'
+    AND account_type NOT LIKE 'Expenses - Rent'
+    AND date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
+    AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND
+) AS oth_exp
+FROM transaction_finance 
+WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
+AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND
+GROUP BY account_type
+";
 
 $result = $conn->query($sql);
 
@@ -53,7 +63,20 @@ if ($result) {
             $rnw = $row['total'];
         } else if ($row['account_type'] === 'New Member') {
             $new = $row['total'];
+        } else {
+            $oth = $row['oth_exp'];
         }
+
+        $sql2 = "SELECT SUM(amount) AS oth_exp
+        FROM transaction_finance
+        WHERE account_type LIKE 'Expenses - %'
+        AND account_type NOT LIKE 'Expenses - Electricity'
+        AND account_type NOT LIKE 'Expenses - Water'
+        AND account_type NOT LIKE 'Expenses - Rent'";
+
+        $ResSql2 = $conn->query($sql2);
+        $row2 = $ResSql2->fetch_assoc();
+
 
         if (
             $row['account_type'] === 'Donation' || $row['account_type'] === 'Contribution' ||
@@ -68,6 +91,8 @@ if ($result) {
         ) {
             $expenses += $row['total'];
         }
+
+            $othExp = $row2['oth_exp'];
     }
 
     $sql1 = "SELECT SUM(debit) - SUM(credit) AS pastNeT FROM transaction_finance 
@@ -85,7 +110,8 @@ if ($result) {
 
 $pastNetIncome = $row1['pastNeT'];
 $TotalRev = $pastNetIncome + $revenue;
-$net = $TotalRev - $expenses;
+$TotalExp = $expenses + $othExp;
+$net = $TotalRev - $TotalExp;
 
 ?>
 
@@ -203,8 +229,14 @@ $net = $TotalRev - $expenses;
                     </tr>
                     <tr>
                         <td class='td_IS'>Program expenses</td>
-                        <td class='IS_amount total_IS'>
+                        <td class='IS_amount'>
                             <?php echo $pro; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class='td_IS'>Others</td>
+                        <td class='IS_amount total_IS'>
+                            <?php echo $oth; ?>
                         </td>
                     </tr>
                     <tr>
@@ -214,7 +246,7 @@ $net = $TotalRev - $expenses;
                         <td class='td_IS'>Total Expenses:</td>
                         <td></td>
                         <td class='IS_amount total_IS'>P&emsp;
-                            <?php echo $expenses; ?>
+                            <?php echo $TotalExp; ?>
                         </td>
                     </tr>
                     <tr>
@@ -612,7 +644,10 @@ $net = $TotalRev - $expenses;
                         $TotalCon = "SELECT SUM(amount) as totalCon
                         FROM transaction_expenses
                         WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
-                        AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND";
+                        AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND
+                        AND transaction_type <> 'Expenses - Rent'
+                        AND transaction_type <> 'Expenses - Electricity'
+                        AND transaction_type <> 'Expenses - Water'";
 
                         $resultCon = $conn->query($sqlCon);
                         $resultTotalCon = $conn->query($TotalCon);

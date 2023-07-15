@@ -16,10 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $location = $_POST['events-location'];
     $time = $_POST['events-time'];
     $date = $_POST['events-date'];
+    $esc_desc = addslashes($description);
 
     // Insert the data into events_programs table
     $sql = "INSERT INTO events_programs (ep_title, ep_description, ep_organizer, ep_location, ep_start, ep_date, date_created) 
-    VALUES ('$title', '$description', '$organizer', '$location', '$time', '$date','$timestamp')";
+    VALUES ('$title', '$esc_desc', '$organizer', '$location', '$time', '$date','$timestamp')";
 
     $result = $conn->query($sql);
 
