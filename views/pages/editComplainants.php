@@ -13,6 +13,26 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
     header("Location: login.php");
     exit();
 }
+
+if (isset($_GET['id'])) {
+    $complaint_id = $_GET['id'];
+
+    // Retrieve complaint information from the database using the complaint ID
+    include "../php/db_conn.php";
+
+    $sql = "SELECT * FROM complaint_info WHERE id = '$complaint_id'";
+
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) === 0) {
+        echo 'Complaint does not exist';
+    } else {
+        $row = mysqli_fetch_assoc($result);
+    }
+} else {
+    echo 'Invalid Complaint ID';
+}
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // connect to the MySQL database
@@ -23,31 +43,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Connection failed: " . mysqli_connect_error());
     }
     
-    include "../views/php/db_conn.php";
-
-    // Start of Complaint Module
-
     // Get Data from form submission
-    $complaintLastName = $_POST["complaintLastname"];
-    $complaintFirstName = $_POST["complaintFirstname"];
-    $complaintMiddleName = $_POST["complaintMiddlename"];
-    $complaintExtensionName = $_POST["extension"];
-    $complaintGender = $_POST["gender"];
-    $contactNumber = $_POST["contact"];
+    $EditComplainantFirstname = $_POST["complaintFirstname"];
+    $EditComplainantMiddlename = $_POST["complaintMiddlename"];
+    $EditComplainantLastname = $_POST["complaintLastname"];
+    $EditComplainantExtension = $_POST["extension"];
+    $EditComplainantGender = $_POST["gender"];
+    $EditComplainantContact = $_POST["contact"];
 
-    // Complainant Details
-    $sql = "INSERT INTO complaint_info (lname, fname, mname, exname, gender, phone) VALUES ('$complaintLastName', '$complaintFirstName', '$complaintMiddleName', '$complaintExtensionName', '$complaintGender', '$contactNumber')";
-        if (mysqli_query($conn, $sql)) {
-            $complaintId = mysqli_insert_id($conn);
-        } else {
-            echo "Error inserting complaint information: " . mysqli_error($conn) . "<br>";
-        }
+    // Update Complainant Details
+    $sql = "UPDATE complaint_info SET 
+                fname = '$EditComplainantFirstname', 
+                mname = '$EditComplainantMiddlename', 
+                lname = '$EditComplainantLastname', 
+                exname = '$EditComplainantExtension', 
+                gender = '$EditComplainantGender', 
+                phone = '$EditComplainantContact' 
+            WHERE id = '$complaint_id'";
 
-    mysqli_close($conn);
+    $stmt = mysqli_prepare($conn, $sql);
 
-    header("Location: ../php/dashboard.php?id=$complaint_id&success=true");
-    exit();
+    if (mysqli_stmt_execute($stmt)) {
+        echo "Complainant details updated successfully";
+        header("Location: ../php/dashboard.php");
+            exit();
+    } else {
+        echo "Error updating complainant details: " . mysqli_error($conn);
+    }
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Complaints</title>
+        <title>Edit Complaintants</title>
 
         <!-- STYLESHEET -->
         <link rel="stylesheet" href="../../public/css/editpages.css">
@@ -68,42 +93,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
     <body>
-
         <div class="head-container">
             <img class="main-logo" src="../../public/assets/mtodata_logo.png" alt="mtodata logo">
         </div>
 
         <div class="content-container">
-            <form method="post" id="complaint-form">
+            <form method="post">
                 <div class="ot-header">
                     <h3><a href="../../views/php/dashboard.php"><i class="fa-solid fa-arrow-left"></i></a>New Complainant Details</h3>
                     <div class="btn-container">
-                        <a href="../../views/php/dashboard.php"><input type="button" value="Discard" class="cancelBtn modal-btn" id="cancel-btn"></a>
-                        <button class="update-btn modal-btn" id="save-btn" type="submit">Save</button>
+                        <a href="../../../views/php/dashboard.php"><input type="button" value="Discard" class="cancelBtn modal-btn" id="cancel-btn"></a>
+                        <button class="update-btn modal-btn" id="complaint-update" type="submit" name="complaint-update">Update</button>
                     </div>
                 </div>
 
-                <!-- <input type="hidden" name="id" value=""> -->
                 <div class="user-container">
                     <h3>Complainant Information</h3>
                     <div class="main">
                         <div class="left-side-emp section">
-                        <!-- LASTNAME -->
+                            <!-- LASTNAME -->
                             <div class="fields">
                                 <label for="complaintLastname">Lastname<span> *</span></label>
-                                <input type="text" id="complaintLastname" name="complaintLastname" placeholder="Dela Cruz" required>
+                                <input type="text" id="complaintLastname" name="complaintLastname" value="<?php echo isset($row['lname']) ? $row['lname'] : ''; ?>" required>
                             </div>
 
                             <!-- FIRSTNAME -->
                             <div class="fields">
                                 <label for="complaintFirstname">Firstname<span> *</span></label>
-                                <input type="text" id="complaintFirstname" name="complaintFirstname" placeholder="Juan" required>
+                                <input type="text" id="complaintFirstname" name="complaintFirstname" value="<?php echo isset($row['fname']) ? $row['fname'] : ''; ?>" required>
                             </div>
 
                             <!-- MIDNAME -->
                             <div class="fields">
                                 <label for="complaintMiddlename">Middlename</label>
-                                <input type="text" id="complaintMiddlename" name="complaintMiddlename" placeholder="Reyes">
+                                <input type="text" id="complaintMiddlename" name="complaintMiddlename" value="<?php echo isset($row['mname']) ? $row['mname'] : ''; ?>">
                             </div>
                         </div>
 
@@ -111,28 +134,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <!-- EXTENSION NAME -->
                             <div class="fields">
                                 <label for="extension">Extension Name</label>
-                                <input type="text" pattern="[A-Za-z.]{2,5}" id="extension" name="extension" placeholder="eg. Jr, Sr">
+                                <input type="text" pattern="[A-Za-z.]{2,5}" id="extension" name="extension" placeholder="eg. Jr, Sr" value="<?php echo isset($row['exname']) ? $row['exname'] : ''; ?>">
                             </div>
 
                             <!-- GENDER -->
                             <div class="fields">
                                 <label for="gender">Sex<span> *</span></label>
                                 <select name="gender" id="gender">
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="none">Prefer not to say</option>
+                                    <option value="male" <?php if (isset($row['gender']) && $row['gender'] === 'male') echo 'selected'; ?>>Male</option>
+                                    <option value="female" <?php if (isset($row['gender']) && $row['gender'] === 'female') echo 'selected'; ?>>Female</option>
+                                    <option value="none" <?php if (isset($row['gender']) && $row['gender'] === 'none') echo 'selected'; ?>>Prefer not to say</option>
                                 </select>
                             </div>
 
                             <!-- CONTACT NUMBER -->
                             <div class="fields">
                                 <label for="contact">Contact no.<span> *</span></label>
-                                <input type="text" pattern="[0-9]{11}" id="contact" name="contact" placeholder="eg. 09592220954" required>
+                                <input type="text" pattern="[0-9]{11}" id="contact" name="contact" placeholder="eg. 09592220954" value="<?php echo isset($row['phone']) ? $row['phone'] : ''; ?>" required>
                             </div>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
+        <script src='../../services/editComplaint.js'></script>
     </body>
 </html>

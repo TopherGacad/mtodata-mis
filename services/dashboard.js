@@ -1089,25 +1089,3 @@ var formattedDate = weekdayNames[currentDate.getDay()] + ', ' +
 
 // Insert the formatted date into the <i> element
 document.getElementById('current-date').innerText = formattedDate;
-
-
-// Add JavaScript code for searchable select
-var select = document.getElementById('complaint-select');
-var options = select.getElementsByTagName('option');
-var input = document.createElement('input');
-input.setAttribute('type', 'text');
-input.setAttribute('placeholder', 'Search complainant');
-select.parentNode.insertBefore(input, select);
-
-input.addEventListener('input', function() {
-    var searchValue = input.value.toLowerCase();
-
-    for (var i = 0; i < options.length; i++) {
-        var optionText = options[i].textContent.toLowerCase();
-        if (optionText.includes(searchValue)) {
-            options[i].style.display = '';
-        } else {
-            options[i].style.display = 'none';
-        }
-    }
-});
