@@ -704,7 +704,7 @@ date_default_timezone_set('Asia/Manila');
         </main>
     </div>
 
-    <!-- COMPLAINT PANE -->
+    <!-- COMPLAINTS PANE -->
     <div class="complain-container" id="complain-container">
         <header>
             <div class="head-left">
@@ -715,7 +715,7 @@ date_default_timezone_set('Asia/Manila');
                 <div class="search-container">
                     <input type="text" class="user-search" id="comp-search" placeholder="Search">
                     <a href="../../views/pages/viewComplainants.php"><button class="user-searchBtn" id="add-complainants"><i
-                            class="fa-solid fa-id-card-clip"></i></button></a>
+                                class="fa-solid fa-user-plus"></i></i></button></a>
                 </div>
                 <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New
                     Complaint</button>
@@ -1266,7 +1266,7 @@ date_default_timezone_set('Asia/Manila');
                     <!--  AMOUNT  -->
                     <div class='fields'>
                         <label for='amount'>Amount<span> *</span></label>
-                        <input type='text' id='amount' name='amount' placeholder='₱' required disabled>
+                        <input type='number' id='amount' name='amount' pattern="[0-9]*" placeholder='₱' required disabled>
                     </div>
 
                     <div class='btn-container'>

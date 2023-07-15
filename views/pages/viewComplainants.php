@@ -134,6 +134,8 @@ $_SESSION['last_activity'] = time();
         </div>
     </main>
     <script src='../../services/viewComplainant.js'></script>
+    <script src="../../services/exportComplainant.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
 </body>
 
 </html>
