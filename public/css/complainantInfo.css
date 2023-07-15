@@ -155,22 +155,21 @@ tr:hover {
 
 td {
     padding: 10px;
-    min-width: 100px;
-    max-width: 100px;
+    min-width: 300px;
+    max-width: 300px;
     border-bottom: 1px solid var(--border-color);
 }
 
-.id {
+.compId, .action{
     min-width: 90px;
     max-width: 90px;
 }
 
 .name,
 .gender,
-.phone,
-.action {
-    text-align: left;
-    justify-content: space-between;
+.phone{
+    min-width: 300px;
+    max-width: 300px;
 }
 
 .action .fa-solid {
@@ -235,4 +234,25 @@ td {
 
 .toast-right p {
     padding-left: 15px;
+}
+
+@media screen and (min-width: 1920px){
+    td {
+        padding: 10px;
+        min-width: 340px;
+        max-width: 340px;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .compId, .action{
+        min-width: 340px;
+        max-width: 340px;
+    }
+    
+    .name,
+    .gender,
+    .phone{
+        min-width: 340px;
+        max-width: 340px;
+    }
 }

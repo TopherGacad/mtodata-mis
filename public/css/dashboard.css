@@ -440,10 +440,17 @@ header h3 {
 .donor {
     width: 66%;
 }
+.comp-contain{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 90%;
+}
 
 .fields input[type="button"] {
     padding: 12px;
-    width: 100%;
+    width: 150px;
     border: none;
     font-size: 13px;
     text-align: center;
