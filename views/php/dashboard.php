@@ -250,7 +250,7 @@ date_default_timezone_set('Asia/Manila');
                         </tbody>
                     </table>
                 </div>
-                    <abbr title="Download Financial Report"><button class="finance_download exportBtn" onclick="save_generate3()"><i
+                <abbr title="Download Financial Report"><button class="finance_download exportBtn" onclick="save_generate3()"><i
                             class="fa-solid fa-download"></i></button></abbr>
 
             </div>

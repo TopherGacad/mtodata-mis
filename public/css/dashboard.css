@@ -289,8 +289,8 @@ section {
     font-family: 'Roboto',sans-serif;
 }
 .finance_download{
-    position: sticky;
-    bottom: 10px;
+    position: absolute;
+    bottom: 20px;
     opacity: 0.6;
 }
 .finance_download:hover{
@@ -537,7 +537,6 @@ th {
 td {
     padding: 10px 5px;
 }
-
 .id,
 .action,
 .date,
