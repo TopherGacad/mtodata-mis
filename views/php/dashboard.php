@@ -695,7 +695,8 @@ date_default_timezone_set('Asia/Manila');
             <div class="head-right">
                 <div class="search-container">
                     <input type="text" class="user-search" id="comp-search" placeholder="Search">
-                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <a href="../../views/pages/viewComplainants.php"><button class="user-searchBtn" id="add-complainants"><i
+                            class="fa-solid fa-id-card-clip"></i></button></a>
                 </div>
                 <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New
                     Complaint</button>
@@ -723,8 +724,13 @@ date_default_timezone_set('Asia/Manila');
                         die("Connection failed: " . $conn->connect_error);
                     }
                     // retrieve data from the MySQL table
-                    $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, 
-                    DATE_FORMAT(complaint_details.date_created, '%Y/%m/%d %h:%i %p') AS date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.id ORDER BY date_created DESC";
+                    $sql = "SELECT complaint_details.id AS id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant,
+                    CONCAT(mem_info.fname, ' ', mem_info.lname) AS show_complaint_person,
+                     complaint_info.phone, complaint_details.complaint_person, 
+                    DATE_FORMAT(complaint_details.date_created, '%Y/%m/%d %h:%i %p') AS date_created FROM complaint_details 
+                    INNER JOIN complaint_info ON complaint_info.id = complaint_details.complainant_id
+                    LEFT JOIN mem_info ON mem_info.id = complaint_details.complaint_person
+                    ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
                     // output data of each row
@@ -734,12 +740,12 @@ date_default_timezone_set('Asia/Manila');
                             <td class='uid'>" . $row["id"] . "</td>
                             <td class='username'>" . $row["complainant"] . "</td>
                             <td class='contacts'>" . $row["phone"] . "</td>
-                            <td class='complaintPerson'>" . $row["complaint_person"] . "</td>
+                            <td class='complaintPerson'>" . $row["show_complaint_person"] . "</td>
                             <td class='actionDate'>" . $row["date_created"] . "</td>
 
                             <td class='action'>
                                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
-                                <a href='../../views/pages/viewComplaint.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                                <a href='../../views/pages/viewComplaint.php?id=" . $row["id"] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
                                 <i class='tools fa-solid fa-print save' data-container='complaints' onclick=\"generatePDF('" . $row["id"] . "', 'comp-report.php')\"></i>
                             </td>
                         </tr>";
@@ -762,6 +768,9 @@ date_default_timezone_set('Asia/Manila');
                                         row.parentNode.removeChild(row);
                                         // display success message
                                         alert(xhr.responseText);
+
+                                        // Refresh the current page
+                                        location.reload();
                                     }
                                 };
                                 xhr.send("id=" + id);
@@ -1258,61 +1267,172 @@ date_default_timezone_set('Asia/Manila');
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="complaintForm-left addForm">
-                    <!-- LASTNAME -->
-                    <div class="fields">
-                        <label for="complainant-lastname">Complainant Lastname<span> *</span></label>
-                        <input type="text" id="complainant-lastname" name="complaintLastname" maxlength="25"
-                            pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
-                    </div>
-                    <!-- FIRSTNAME -->
-                    <div class="fields">
-                        <label for="complainant-firstname">Complainant Firstname<span> *</span></label>
-                        <input type="text" id="complainant-firstname" name="complaintFirstname" maxlength="25"
-                            pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
-                    </div>
-                    <!-- MIDNAME -->
-                    <div class="fields">
-                        <label for="complainant-midname">Complainant Middlename</label>
-                        <input type="text" id="complainant-midname" name="complaintMiddlename" maxlength="25"
-                            pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
-                    </div>
-                    <!-- EXTENSION NAME -->
-                    <div class="fields">
-                        <label for="complainant-extension">Extension Name</label>
-                        <input type="text" id="complainant-extension" name="extension" maxlength="5"
-                            pattern="[A-Za-z1-9]{2,5}" placeholder="eg. Jr, Sr">
-                    </div>
-                    <!-- GENDER -->
-                    <div class="fields">
-                        <label for="complainant-gender">Sex<span> *</span></label>
-                        <select name="gender" id="complainant-gender">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="none">Prefer not to say</option>
-                        </select>
-                    </div>
-                    <!-- CONTACT NUMBER -->
-                    <div class="fields">
-                        <label for="complainant-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="complainant-contact" name="contact"
-                            placeholder="eg. 09592220954" required>
-                    </div>
+                    <div class='fields complaint'>
+                            <label for='complaint-select' required>Complainant Name<span> *</span></label>
+                            <select name='complaint-select' id='complaint-select' required>
+                                <option selected value='' required>Select Complainant</option>
+                                <?php
+                                    // connect to the MySQL database
+                                    include "db_conn.php";
+
+                                    if ($conn->connect_error) {
+                                        die("Connection failed: " . $conn->connect_error);
+                                    }
+
+                                    $sql = "SELECT * FROM complaint_info";
+
+                                    $result = $conn->query($sql);
+
+                                    while ($row = $result->fetch_assoc()) {
+                                        $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                                        $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                                        $lastName = $row["lname"];
+
+                                        if (empty($row["exname"])) {
+                                            $lastName .= ', ';
+                                        }
+
+                                        $complaintId = $row["id"]; // Retrieve the ID from the complaint_info table
+
+                                        echo "<option value='" . $complaintId . "'>". $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
+                                    }
+
+                                    // close MySQL connection
+                                    $conn->close();
+                                ?>
+                            </select>
+                        </div>
+                    <!-- New Complainant -->
+                    <div class='fields'><label for="date-incident">Not Found?<span></span></label>
+                            <a  href="../../views/pages/insertComplainant.php"><input type='button'
+                                value='New Complainant'></a>
+                        </div>
                 </div>
                 <!-- FORM-RIGHT -->
                 <div class="complaintForm-right addForm">
-                    <!-- SUBJECT -->
-                    <div class="fields">
-                        <label for="ComplaintSubject">Person to Complain<span> *</span></label>
-                        <input type="text" id="ComplaintSubject" name="ComplaintSubject" maxlength="30"
-                            pattern="[A-Za-z ]{2,30}" placeholder="Name of person to complain">
+
+                <!-- SUBJECT -->
+                <div class="fields">
+                        <label for="ComplaintSubject" required>Person to Complain<span> *</span></label>
+                        <select name='ComplaintSubject' id='ComplaintSubject' required>
+                                <option selected value='' required>Select Person to Complain</option>
+                                <?php
+                                    // connect to the MySQL database
+                                    include "db_conn.php";
+
+                                    if ($conn->connect_error) {
+                                        die("Connection failed: " . $conn->connect_error);
+                                    }
+
+                                    $sql = "SELECT * FROM mem_info";
+
+                                    $result = $conn->query($sql);
+
+                                    while ($row = $result->fetch_assoc()) {
+                                        $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                                        $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                                        $lastName = $row["lname"];
+
+                                        if (empty($row["exname"])) {
+                                            $lastName .= ', ';
+                                        }
+
+                                        $mem_info = $row["id"]; // Retrieve the ID from the complaint_info table
+
+                                        echo "<option value='" . $mem_info . "'>". $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
+                                    }
+
+                                    $id = $_GET['id'];
+
+                                    if (!empty($id)) {
+                                        $sql = "SELECT *
+                                                FROM mem_info
+                                                LEFT JOIN unit_info ON mem_info.id = unit_info.member_id
+                                                WHERE mem_info.id = '$id'";
+
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            $row = $result->fetch_assoc();
+                                            echo '<script>
+                                                var complaintSubjectBodySelect = document.getElementById("complaintSubjectBody");
+                                                complaintSubjectBodySelect.disabled = false;
+                                                var option = document.createElement("option");
+                                                option.value = "' . $row["id"] . '";
+                                                option.textContent = "' . $row["body_no"] . '";
+                                                complaintSubjectBodySelect.innerHTML = "";
+                                                complaintSubjectBodySelect.appendChild(option);
+                                                </script>';
+                                        } else {
+                                            echo '<script>document.getElementById("complaintSubjectBody").disabled = true;</script>';
+                                        }
+                                    }
+
+                                    // close MySQL connection
+                                    $conn->close();
+                                    ?>
+                            </select>
                     </div>
 
                     <!-- BODY NUMBER -->
                     <div class="fields">
-                        <label for="complaintSubjectBody">Body no.<span> *</span></label>
-                        <input type="text" id="complaintSubjectBody" name="complaintSubjectBody" required>
+                        <label for="complaintSubjectBody">Body no.</label>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="activateSelect" onchange="toggleSelect()" />
+                            <label for="activateSelect">Activate</label>
+                        </div>
+                        <select name='complaintSubjectBody' id='complaintSubjectBody' disabled>
+                            <option selected value=''>Select Body Number</option>
+                            <?php
+                            // connect to the MySQL database
+                            include "db_conn.php";
+
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+                            $sql = "SELECT * FROM unit_info";
+
+                            $result = $conn->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                $unit_info = $row["id"]; // Retrieve the ID from the complaint_info table
+                                echo "<option value='" . $unit_info . "'>". $row["body_no"] . "</option>";
+                            }
+
+                            // close MySQL connection
+                            $conn->close();
+                            ?>
+                        </select>
                     </div>
 
+                    <style>
+                        .fields {
+                            position: relative;
+                        }
+
+                        .checkbox-wrapper {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            display: flex;
+                            align-items: center;
+                            gap: 5px;
+                        }
+                    </style>
+
+                    <script>
+                        function toggleSelect() {
+                            var select = document.getElementById("complaintSubjectBody");
+                            var checkbox = document.getElementById("activateSelect");
+
+                            if (checkbox.checked) {
+                                select.disabled = false;
+                            } else {
+                                select.disabled = true;
+                            }
+                        }
+                    </script>
                     <!-- DESCRIPTION -->
                     <div class="fields">
                         <label for="desc">Description<span> *</span></label>
@@ -1320,6 +1440,7 @@ date_default_timezone_set('Asia/Manila');
                             required></textarea>
                     </div>
 
+                    <!-- Date and Time -->
                     <div class="timeDate-container">
                         <!-- TIME -->
                         <div class="fields">
@@ -1341,6 +1462,7 @@ date_default_timezone_set('Asia/Manila');
                 </div>
             </div>
         </form>
+    </div>
         <!-- WARNING TOAST -->
         <div class="warningToast-container" id="cmplnt-warningToast">
             <div class="warningToast-left">
@@ -1350,7 +1472,6 @@ date_default_timezone_set('Asia/Manila');
                 <p><strong>Try Again</strong> Placeholder warning!</p>
             </div>
         </div>
-    </div>
 
     <!-- TOAST -->
     <div class="successToast-container" id="cmplnt-successToast">

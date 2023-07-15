@@ -21,9 +21,9 @@ if (isset($_GET['id'])) {
     // Retrieve complaint information from the database using the complaint ID
     include "../php/db_conn.php";
 
-    $sql = "SELECT * FROM complaint_info ci 
-            INNER JOIN complaint_details cd ON ci.id = cd.id
-            WHERE ci.id = '$complaint_id'";
+    $sql = "SELECT * FROM complaint_details cd
+            INNER JOIN complaint_info ci ON ci.id = cd.complainant_id
+            WHERE cd.id = '$complaint_id'";
 
     $result = mysqli_query($conn, $sql);
 
@@ -51,57 +51,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Update Database
     // Edit Complaint Module
 
-    // Left Panel
-    $EditComplainantFirstname = $_POST["complaintFirstname"];
-    $EditComplainantMiddlename = $_POST["complaintMiddlename"];
-    $EditComplainantLastname = $_POST["complaintLastname"];
-    $EditComplainantExtension = $_POST["extension"];
-    $EditComplainantGender = $_POST["gender"];
-    $EditComplainantContact = $_POST["contact"];
-
     // Right Panel
-    $EditSubject = $_POST["subject"];
-    $EditBodyNumber = $_POST["subject-bodyNum"];
+    if (isset($_POST['complaintSubject'])) {
+        $EditSubject = $_POST['complaintSubject'];
+    } else {
+        // Retrieve the default value from the database
+        $defaultQuery = "SELECT id FROM complaint_details WHERE id = '$complaint_id'";
+        $defaultResult = mysqli_query($conn, $defaultQuery);
+
+        if (mysqli_num_rows($defaultResult) > 0) {
+            $defaultRow = mysqli_fetch_assoc($defaultResult);
+            $complaintantId = $defaultRow['id'];
+        }
+    } 
+    if (isset($_POST['complaintSubjectBody'])) {
+        $EditBodyNumber = $_POST['complaintSubjectBody'];
+    }
+    // Retrieve the default value for complaint-select if there's no change
+    if (isset($_POST['complaint-select'])) {
+        $complaintantId = $_POST['complaint-select'];
+    } else {
+        // Retrieve the default value from the database
+        $defaultQuery = "SELECT id FROM complaint_details WHERE id = '$complaint_id'";
+        $defaultResult = mysqli_query($conn, $defaultQuery);
+
+        if (mysqli_num_rows($defaultResult) > 0) {
+            $defaultRow = mysqli_fetch_assoc($defaultResult);
+            $complaintantId = $defaultRow['id'];
+        }
+    }
     $EditDateCreated = $_POST["date-incident"] . " " . $_POST["time-incident"];
     $EditComplaintDescription = $_POST["desc"];
 
-    // Update complaint_info table
-    $sql = "UPDATE complaint_info SET 
-                fname = '$EditComplainantFirstname', 
-                mname = '$EditComplainantMiddlename', 
-                lname = '$EditComplainantLastname', 
-                exname = '$EditComplainantExtension', 
-                gender = '$EditComplainantGender', 
-                phone = '$EditComplainantContact' 
-            WHERE id = '$complaint_id'";
+    // Check if there are changes
+    $isChanged = false;
 
-    if (mysqli_query($conn, $sql)) {
-        echo "Complainant details updated successfully";
-    } else {
-        echo "Error updating complainant details: " . mysqli_error($conn);
-        exit();
+    // Retrieve existing complaint details from the database
+    $existingDetailsQuery = "SELECT * FROM complaint_details WHERE id = '$complaint_id'";
+    $existingDetailsResult = mysqli_query($conn, $existingDetailsQuery);
+
+    if (mysqli_num_rows($existingDetailsResult) > 0) {
+        $existingDetailsRow = mysqli_fetch_assoc($existingDetailsResult);
+
+        // Compare the existing values with the new values
+        if ($existingDetailsRow['complaint_person'] != $EditSubject ||
+            $existingDetailsRow['body_no'] != $EditBodyNumber ||
+            $existingDetailsRow['details'] != $EditComplaintDescription ||
+            $existingDetailsRow['date_created'] != $EditDateCreated ||
+            $existingDetailsRow['complainant_id'] != $complaintantId
+        ) {
+            $isChanged = true;
+        }
     }
 
-    // Update complaint_details table
-    $sql = "UPDATE complaint_details SET 
-                complaint_person = '$EditSubject', 
-                body_no = '$EditBodyNumber', 
-                details = '$EditComplaintDescription', 
-                date_created = '$EditDateCreated' 
-            WHERE id = '$complaint_id'";
+    // Update complaint_details table if there are changes
+    if ($isChanged) {
+        $sql = "UPDATE complaint_details SET 
+                    complaint_person = '$EditSubject', 
+                    body_no = '$EditBodyNumber', 
+                    details = '$EditComplaintDescription', 
+                    date_created = '$EditDateCreated',
+                    complainant_id = '$complaintantId'
+                WHERE id = '$complaint_id'";
 
-    if (mysqli_query($conn, $sql)) {
-        echo "Complaint information updated successfully";
+        if (mysqli_query($conn, $sql)) {
+            echo "Complaint information updated successfully";
+        } else {
+            echo "Error updating complaint information: " . mysqli_error($conn);
+            exit();
+        }
     } else {
-        echo "Error updating complaint information: " . mysqli_error($conn);
-        exit();
+        echo "No changes detected. The complaint information remains the same.";
     }
 
     mysqli_close($conn);
 
-    header("Location: ../php/dashboard.php?id=$complaint_id&success=true");
+    header("Location: ../php/dashboard.php");
     exit();
 }
+
 ?>
 
 
@@ -142,99 +170,186 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="user-container">
                 <h3>Complainant Information</h3>
                 <div class="main">
-                    <div class="left-side-emp section">
-                       <!-- FIRSTNAME -->
+                    <div class="left-side-profile section">
                         <div class="fields">
-                            <label for="complainant-firstname">Firstname<span> *</span></label>
-                            <input type="text" id="complainant-firstname" name="complaintFirstname" placeholder="Firstname" value = "<?php echo $row['fname']; ?>" required>
-                        </div>
+                            <label for='complaint-select'>Complainant Name</label>
+                            <select name='complaint-select' id='complaint-select'>
+                                <?php
+                                // connect to the MySQL database
+                                include "../php/db_conn.php";
 
-                        <!-- MIDNAME -->
-                        <div class="fields">
-                            <label for="complainant-midname">Middlename</label>
-                            <input type="text" id="complainant-midname" name="complaintMiddlename" placeholder="Middlename" value = "<?php echo $row['mname']; ?>">
-                        </div>
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
 
-                       <!-- LASTNAME -->
-                        <div class="fields">
-                            <label for="complainant-lastname">Lastname<span> *</span></label>
-                            <input type="text" id="complainant-lastname" name="complaintLastname" placeholder="Lastname" value = "<?php echo $row['lname']; ?>" required>
-                        </div>
-                    </div>
+                                // Retrieve the default value for complaint-select if there's no change
+                                if (isset($_POST['complaint-select'])) {
+                                    $complaintantId = $_POST['complaint-select'];
+                                } else {
+                                    // Retrieve the default value from the database
+                                    $defaultQuery = "SELECT complainant_id FROM complaint_details WHERE id = '$complaint_id'";
+                                    $defaultResult = mysqli_query($conn, $defaultQuery);
 
-                    <div class="right-side-emp section">
-                        <!-- EXTENSION NAME -->
-                        <div class="fields">
-                            <label for="complainant-extension">Extension Name</label>
-                            <input type="text" pattern="[A-Za-z.]{2,5}" id="complainant-extension" name="extension" placeholder="eg. Jr, Sr" value = "<?php echo $row['exname']; ?>">
-                        </div>
+                                    if (mysqli_num_rows($defaultResult) > 0) {
+                                        $defaultRow = mysqli_fetch_assoc($defaultResult);
+                                        $complaintantId = $defaultRow['complainant_id'];
+                                    }
+                                }
 
-                        <!-- GENDER -->
-                        <div class="fields">
-                            <label for="complainant-gender">Sex<span> *</span></label>
-                            <select name="gender" id="complainant-gender" value = "<?php echo $row['gender']; ?>">
-                                <option value="male" <?php if ($row['gender'] === 'Male') echo 'selected'; ?>>Male</option>
-                                <option value="male" <?php if ($row['gender'] === 'Female') echo 'selected'; ?>>Female</option>
-                                <option value="male" <?php if ($row['gender'] === 'Prefer not to say') echo 'selected'; ?>>Prefer not to say</option>
+                                // Retrieve and display options
+                                $sql = "SELECT * FROM complaint_info";
+                                $result = $conn->query($sql);
+
+                                while ($row3 = $result->fetch_assoc()) {
+                                    $middleInitial = !empty($row3["mname"]) ? trim($row3["mname"][0]) . '.' : '';
+                                    $extensionName = !empty($row3["exname"]) ? ' ' . $row3["exname"] . '., ' : '';
+                                    $lastName = $row3["lname"];
+
+                                    if (empty($row3["exname"])) {
+                                        $lastName .= ', ';
+                                    }
+
+                                    $complainId = $row3["id"]; // Retrieve the ID from the complaint_info table
+
+                                    // Check if the option matches the default value
+                                    $selected = ($complainId == $complaintantId) ? 'selected' : '';
+
+                                    echo "<option value='" . $complainId . "' " . $selected . ">" . $lastName . $extensionName . $row3["fname"] . " " . $middleInitial . "</option>";
+                                }
+
+                                // close MySQL connection
+                                $conn->close();
+                                ?>
                             </select>
-                        </div>
-
-                        <!-- CONTACT NUMBER -->
-                        <div class="fields">
-                            <label for="complainant-contact">Contact no.<span> *</span></label>
-                            <input type="text" pattern="[0-9]{11}" id="complainant-contact" name="contact" placeholder="eg. 09592220954" value = "<?php echo $row['phone']; ?>" required>
                         </div>
                     </div>
                 </div>
+
             </div>
             
             <div class="profile-container">
                 <h3>Person to Complaint Details</h3>
                 <div class="main">
                     <div class="left-side-profile section">
-                    <div class="fields">
-                            <!-- SUBJECT -->
-                            <label for="subject">Person to Complain<span> *</span></label>
-                            <input type="text" id="subject" name="subject" value = "<?php echo $row['complaint_person']; ?>">
-                        </div>
+                        <div class="fields">
+                        <label for="complaintSubject">Select Complaint Person<span> *</span></label>
+                            <select name='complaintSubject' id='complaintSubject'>
+                                <?php
+                                    // connect to the MySQL database
+                                    include "../php/db_conn.php";
+
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+
+                                // Retrieve the default value for complaint-select if there's no change
+                                if (isset($_POST['complaint-select'])) {
+                                    $complaintantId = $_POST['complaint-select'];
+                                } else {
+                                    // Retrieve the default value from the database
+                                    $defaultQuery = "SELECT complainant_id FROM complaint_details WHERE id = '$complaint_id'";
+                                    $defaultResult = mysqli_query($conn, $defaultQuery);
+
+                                    if (mysqli_num_rows($defaultResult) > 0) {
+                                        $defaultRow = mysqli_fetch_assoc($defaultResult);
+                                        $complaintantId = $defaultRow['complainant_id'];
+                                    }
+                                }
+
+                                    $sql = "SELECT * FROM mem_info";
+
+                                    $result = $conn->query($sql);
+
+                                    while ($row2 = $result->fetch_assoc()) {
+                                        $middleInitial = !empty($row2["mname"]) ? trim($row2["mname"][0]) . '.' : '';
+                                        $extensionName = !empty($row2["exname"]) ? ' ' . $row2["exname"] . '., ' : '';
+                                        $lastName = $row2["lname"];
+
+                                        if (empty($row2["exname"])) {
+                                            $lastName .= ', ';
+                                        }
+
+                                        $complaintId = $row2["id"]; // Retrieve the ID from the complaint_info table
+
+                                        echo "<option value='" . $complaintId . "'>". $lastName . $extensionName . $row2["fname"] . " " . $middleInitial . "</option>";
+                                    }
+
+                                    // close MySQL connection
+                                    $conn->close();
+                                ?>
+                            </select>
+                        </div>  
                     </div>
 
                     <div class="right-side-profile section">
                         <!-- BODY NUMBER -->
                         <div class="fields">
-                            <label for="subject-bodyNum">Body no.<span> *</span></label>
-                            <input type="text" id="subject-bodyNum" name="subject-bodyNum" value = "<?php echo $row['body_no']; ?>">
+                            <label for="complaintSubjectBody">Body no.<span> *</span></label>
+                            <select name='complaintSubjectBody' id='complaintSubjectBody'>
+                                <?php
+                                // No need to include "db_conn.php" again here
+                                include "../php/db_conn.php";
+
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+
+                                $sql = "SELECT * FROM unit_info";
+
+                                $result = $conn->query($sql);
+
+                                // Display a default blank option if body_no is 0
+                                $selected = ($EditBodyNumber === '0') ? 'selected' : '';
+                                echo "<option value='' $selected>Select Body Number</option>";
+
+                                while ($row1 = $result->fetch_assoc()) {
+                                    $unitId = $row1["id"]; // Retrieve the body number from the unit_info table
+                                    $body_no = $row1["body_no"];
+
+                                    // Check if the option matches the default value
+                                    $selected = ($unitId == $EditBodyNumber) ? 'selected' : '';
+
+                                    echo "<option value='" . $unitId . "' " . $selected . ">" . $body_no . "</option>";
+                                }
+
+                                // close MySQL connection
+                                $conn->close();
+                                ?>
+                            </select>
                         </div>
                     </div>
+
                 </div>
             </div>
-
             <div class="password-container">
-                <h3>Complaint Description</h3>
-                <div class="main">
-                    <div class="section">
-                        <!-- TIME -->
-                        <div class="fields">
-                            <label for="time-incident">Time of Incident<span> *</span></label>
-                            <input type="time" id="time-incident" name="time-incident" value = "<?php echo substr($row['date_created'], -8, 5); ?>">
-                        </div>
+                        <h3>Complaint Description</h3>
+                        <div class="main">
+                            <div class="section">
+                                <!-- TIME -->
+                                <div class="fields">
+                                    <label for="time-incident">Time of Incident<span> *</span></label>
+                                    <input type="time" id="time-incident" name="time-incident"
+                                        value="<?php echo substr($row['date_created'], -8, 5); ?>">
+                                </div>
 
-                        <!-- DATE -->
-                        <div class="fields">
-                            <label for="date-incident">Date of Incident<span> *</span></label>
-                            <input type="date" id="date-incident" name="date-incident" value = "<?php echo substr($row['date_created'], 0, 10); ?>">
+                                <!-- DATE -->
+                                <div class="fields">
+                                    <label for="date-incident">Date of Incident<span> *</span></label>
+                                    <input type="date" id="date-incident" name="date-incident"
+                                        value="<?php echo substr($row['date_created'], 0, 10); ?>">
+                                </div>
+                            </div>
+                            <div class="section">
+                                <!-- DESCRIPTION -->
+                                <div class="fields">
+                                    <label for="desc">Description<span> *</span></label>
+                                    <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350"
+                                        onkeyup="countChar(this)"><?php echo isset($row['details']) ? htmlspecialchars($row['details']) : ''; ?></textarea>
+                                    <div id="charNum"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="section">
-                        <!-- DESCRIPTION -->
-                        <div class="fields">
-                            <label for="desc">Description<span> *</span></label>
-                            <textarea name="desc" id="desc" cols="30" rows="9" maxlength="350" onkeyup="countChar(this)"><?php echo isset($row['details']) ? htmlspecialchars($row['details']) : ''; ?></textarea>
-                            <div id="charNum"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </form>
     </div>
     <script src='../../services/editComplaint.js'></script>

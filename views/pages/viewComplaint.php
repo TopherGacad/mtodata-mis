@@ -54,7 +54,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                         }
                             echo "
                             <a href='../../views/pages/editcomplaint.php?id=" . $complaint_id . "'><input type='button' value='Edit' name='complaint-update'
-                                class='update-btn modal-btn' id='complaint-update'></a> 
+                                class='update-btn modal-btn' id='complaint-update'></a>
                             ";
                             ?>
                     </div>
@@ -64,47 +64,55 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                     <h3>Complaint Information</h3>
 
                     <?php
-                    $sql = "SELECT id, CONCAT(fname, ' ', lname, ' ', exname) AS complainant, gender, phone FROM complaint_info WHERE id = $complaint_id";
-                    
-                    $result = mysqli_query($conn, $sql); // Execute the query and assign the result to $result
+                        $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname, ' ', complaint_info.exname) AS complainant, complaint_info.gender, complaint_info.phone
+                        FROM complaint_info
+                        INNER JOIN complaint_details ON complaint_info.id = complaint_details.complainant_id
+                        WHERE complaint_details.id = $complaint_id";
 
-                    if (!$result) {
-                        echo "Error executing the query: " . mysqli_error($conn);
-                    } else {
-                        if (mysqli_num_rows($result) > 0) {
-                            $row = mysqli_fetch_assoc($result);
+                        $result = mysqli_query($conn, $sql); // Execute the query and assign the result to $result
 
-                        echo "
-                        <!-- COMPLAINANT INFORMATION -->
-                        <div class='main'>
-                            <div class='left-side-emp section'>
-                                <div class='fields'>
-                                    <label for='complainant_name'>Complainant Name</label>
-                                    <input type='text' id='complainant_name' name='complainant_name' readonly value='" . $row['complainant'] . "'>
-                                    <br>
-                                    <label for='complainant_gender'>Gender</label>
-                                    <input type='text' id='complainant_gender' readonly name='complainant_gender' value='" . $row['gender'] . "'>
-                               </div>
-                            </div>
-                            <div class='right-side-emp section'>
-                                <div class='fields'>
-                                    <label for='complainant_identification'>Complaint ID</label>
-                                    <input type='text' id='complainant_identification' readonly name='complainant_identification' value='" . $row['id'] . "'>
-                                    <br>
-                                    <label for='complainant_phone'>Phone</label>
-                                    <input type='text' id='complainant_phone' readonly name='complainant_phone' value='" . $row['phone'] . "'>
+                        if (!$result) {
+                            echo "Error executing the query: " . mysqli_error($conn);
+                        } else {
+                            if (mysqli_num_rows($result) > 0) {
+                                $row = mysqli_fetch_assoc($result);
+
+                            echo "
+                            <!-- COMPLAINANT INFORMATION -->
+                            <div class='main'>
+                                <div class='left-side-emp section'>
+                                    <div class='fields'>
+                                        <label for='complainant_name'>Complainant Name</label>
+                                        <input type='text' id='complainant_name' name='complainant_name' readonly value='" . $row['complainant'] . "'>
+                                        <br>
+                                        <label for='complainant_gender'>Gender</label>
+                                        <input type='text' id='complainant_gender' readonly name='complainant_gender' value='" . $row['gender'] . "'>
+                                </div>
+                                </div>
+                                <div class='right-side-emp section'>
+                                    <div class='fields'>
+                                        <label for='complainant_phone'>Phone</label>
+                                        <input type='text' id='complainant_phone' readonly name='complainant_phone' value='" . $row['phone'] . "'>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        ";  
-                        }
-                    }               
-                         ?>
+                            ";  
+                            }
+                        }               
+                    ?>
                     </div>
 
                     <?php
-                        $sql1 = "SELECT id, complaint_person, body_no, details, DATE_FORMAT(date_created, '%Y/%m/%d') AS date_stamp, DATE_FORMAT(date_created, ' %h:%i %p') AS time_stamp FROM `complaint_details` WHERE id = $complaint_id";
-                        $result = mysqli_query($conn, $sql1); // Execute the query and assign the result to $result
+                        $sql1 = "SELECT CONCAT(mem_info.fname, ' ', mem_info.lname) AS show_complaint_person, 
+                        complaint_details.details, unit_info.body_no AS show_body_no,
+                        DATE_FORMAT(complaint_details.date_created, '%Y/%m/%d') AS date_stamp, 
+                        DATE_FORMAT(complaint_details.date_created, ' %h:%i %p') AS time_stamp 
+                        FROM complaint_details 
+                        LEFT JOIN mem_info ON mem_info.id = complaint_details.complaint_person
+                        LEFT JOIN unit_info ON unit_info.id = complaint_details.body_no
+                        WHERE complaint_details.id = $complaint_id"; // Execute the query and assign the result to $result
+
+                        $result = mysqli_query($conn, $sql1);
 
                         if (!$result) {
                             echo "Error executing the query: " . mysqli_error($conn);
@@ -120,7 +128,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                     <!-- COMPLAINT PERSON -->
                                     <div class='fields'>
                                         <label for='complaintPerson'>Complaint Person<span> </span></label>
-                                        <input type='text' id='complaintPerson' name='complaintPerson' readonly value='" . $row['complaint_person'] . "'>
+                                        <input type='text' id='complaintPerson' name='complaintPerson' readonly value='" . $row['show_complaint_person'] . "'>
                                     </div>
                                     <div class='fields'>
                                         <label for='event-time'>Date<span> </span></label>
@@ -130,7 +138,7 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
                                 <div class='right-side-profile section'>
                                     <div class='fields'>
                                         <label for='event-time'>Body Number<span> </span></label>
-                                        <input type='timestamp' id='event-time' name='event-time' readonly value='" . $row['body_no'] . "'>
+                                        <input type='timestamp' id='event-time' name='event-time' readonly value='" . $row['show_body_no'] . "'>
                                     </div>
                                     <!-- EVENT TIME -->
                                     <div class='fields'>
