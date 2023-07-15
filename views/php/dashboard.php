@@ -216,7 +216,7 @@ date_default_timezone_set('Asia/Manila');
                 </div>
 
                 <div class="table-container">
-                    <table>
+                    <table id="dash-table">
                         <tr>
                             <th>Transaction Code</th>
                             <th>Debit</th>
@@ -226,7 +226,6 @@ date_default_timezone_set('Asia/Manila');
 
                         <tbody>
                             <?php
-
                             // connect to the MySQL database
                             include "db_conn.php";
 
@@ -234,14 +233,28 @@ date_default_timezone_set('Asia/Manila');
                             $FinaceResult = $conn->query($selectFinance);
 
                             while ($FinRecent = $FinaceResult->fetch_assoc()) {
+                                $debit = $FinRecent['debit'];
+                                $credit = $FinRecent['credit'];
+                                $rowClass = '';
+
+                                // Check if the debit value is greater than 0
+                                if ($debit > 0) {
+                                    $rowClass = 'debit-row'; // CSS class for debit rows
+                                }
+
+                                // Check if the credit value is greater than 0
+                                if ($credit > 0) {
+                                    $rowClass = 'credit-row'; // CSS class for credit rows
+                                }
+
                                 echo "
-                                    <tr>
-                                    <td>" . $FinRecent['transaction_code'] . "</td>
-                                    <td>" . $FinRecent['debit'] . "</td>
-                                    <td>" . $FinRecent['credit'] . "</td>
-                                    <td>" . $FinRecent['new_formatted_date'] . "</td>
+                                    <tr class='$rowClass'>
+                                        <td>" . $FinRecent['transaction_code'] . "</td>
+                                        <td>" . $debit . "</td>
+                                        <td>" . $credit . "</td>
+                                        <td>" . $FinRecent['new_formatted_date'] . "</td>
                                     </tr>
-                                    ";
+                                ";
                             }
 
                             // close MySQL connection
