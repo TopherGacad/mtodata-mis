@@ -38,7 +38,7 @@ date_default_timezone_set('Asia/Manila');
     <!-- FONT AWESOME/ICONS -->
     <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
 
-    <!-- Include the required libraries -->
+    <!-- JS LIBRARIES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.2.8/es6-promise.auto.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
@@ -48,7 +48,10 @@ date_default_timezone_set('Asia/Manila');
 </head>
 
 <body>
+    <!-- BACKGROUND -->
     <div class="bg-container"></div>
+
+    <!-- TOP DESIGN -->
     <div class="top-design">
         <p class="top-user"><strong>Welcome! </strong>
             <?php echo $_SESSION['email'] ?>
@@ -60,10 +63,13 @@ date_default_timezone_set('Asia/Manila');
 
     <!-- SIDE-NAV-BAR -->
     <div class="side-nav">
+        <!-- SIDENAV HEADER -->
         <header class="header-nav">
             <img class="logo" src="../../public/assets/mtodata_logo.png" alt="logo of mtodata system">
             <p>ADMIN PANEL</p>
         </header>
+
+        <!-- ITEM CONTAINER -->
         <div class="item-container">
             <ul>
                 <li id="dash-btn"><i class="fa-solid fa-house"></i> DASHBOARD</li>
@@ -1423,18 +1429,6 @@ date_default_timezone_set('Asia/Manila');
                        
                     </style>
 
-                    <script>
-                        function toggleSelect() {
-                            var select = document.getElementById("complaintSubjectBody");
-                            var checkbox = document.getElementById("activateSelect");
-
-                            if (checkbox.checked) {
-                                select.disabled = false;
-                            } else {
-                                select.disabled = true;
-                            }
-                        }
-                    </script>
                 </div>
 
                 <!-- FORM-RIGHT -->
