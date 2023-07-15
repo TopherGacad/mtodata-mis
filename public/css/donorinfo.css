@@ -246,3 +246,45 @@ td {
 .toast-right p {
     padding-left: 15px;
 }
+
+
+
+@media screen and (min-width: 1920px) {
+    
+td {
+    padding: 10px;
+    min-width: 160px;
+    max-width: 160px;
+    border-bottom: 1px solid var(--border-color);
+}
+th{
+    min-width: 160px;
+    max-width: 160px;
+}
+.id {
+    min-width: 100px;
+    max-width: 100px;
+}
+
+.name {
+    min-width: 160px;
+    max-width: 160px;
+}
+
+.gender,
+.city,
+.phone,
+.email,
+.street,
+.barangay,
+.date {
+    min-width: 160px;
+    max-width: 160px;
+}
+
+.action {
+    max-width: 100px;
+    min-width: 100px;
+}
+
+}
