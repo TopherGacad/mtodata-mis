@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            header('Location: dashboard.php?success=true');
+            header('Location: dashboard.php?success=true%events');
             exit();
         } else {
             // Error occurred while inserting data into events_programs table
