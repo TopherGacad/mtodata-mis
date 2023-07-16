@@ -844,15 +844,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const toastContainers = document.getElementById('toast-success');
     const toastContainers2 = document.getElementById('warningToast2');
 
-
-    if (suc === 'true') {
-        toastContainers.style.visibility = 'visible';
-        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Complaint saved`;
-        setTimeout(() => {
-            toastContainers.style.visibility = 'hidden';
-        }, 3000);
-    }
-
     if (suc === 'true%finance') {
         toastContainers.style.visibility = 'visible';
         document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Finance record added.`;
@@ -869,6 +860,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
+    if (suc === 'true%complaint') {
+        toastContainers.style.visibility = 'visible';
+        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Complaint added`;
+        setTimeout(() => {
+            toastContainers.style.visibility = 'hidden';
+        }, 3000);
+    }
+
     if (err === 'insufficient-bal') {
         toastContainers2.style.display = 'flex';
         document.getElementById('warning-con').innerHTML = `<strong>Warning</strong> Insufficient Balance`;
@@ -876,6 +875,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toastContainers2.style.display = 'none';
         }, 3000);
     }
+
 });
 
 window.onload = function () {

@@ -43,10 +43,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Error inserting complaint information: " . mysqli_error($conn) . "<br>";
         }
 
-    mysqli_close($conn);
+    $result = $conn->query($sql);
+    if ($result) {
+        header("Location: ../php/dashboard.php?id=$complaint_id&success=true%complaint");
+        exit();
+    }
 
-    header("Location: ../php/dashboard.php?id=$complaint_id&success=true");
-    exit();
+    mysqli_close($conn);
 }
 ?>
 
@@ -134,5 +137,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </form>
         </div>
+        <script src='../../services/editComplaint.js'></script>
     </body>
 </html>

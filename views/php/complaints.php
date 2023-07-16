@@ -25,6 +25,11 @@
         echo "Error inserting complaint information: " . mysqli_error($conn) . "<br>";
     }
 
+    $result = $conn->query($sql);
+    if ($result) {
+        header("Location: ../php/dashboard.php?id=$complaint_id&success=true%complain");
+        exit();
+    }
     // Close database connection
     mysqli_close($conn);
 ?>
