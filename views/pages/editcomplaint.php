@@ -56,17 +56,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $EditSubject = $_POST['complaintSubject'];
     } else {
         // Retrieve the default value from the database
-        $subjectDefaultQuery = "SELECT mi.id from mem_info mi
-                                INNER JOIN complaint_details cd WHERE cd.id = '$complaint_id'";
-        $subjectDefaultResult = mysqli_query($conn, $subjectDefaultQuery);
+        $defaultQuery = "SELECT complaint_person FROM complaint_details WHERE id = '$complaint_id'";
+        $defaultResult = mysqli_query($conn, $defaultQuery);
 
         if (mysqli_num_rows($defaultResult) > 0) {
-            $subjectDefaultRow = mysqli_fetch_assoc($subjectDefaultResult);
-            $subjectId = $subjectDefaultRow['mi.id'];
+            $defaultRow = mysqli_fetch_assoc($defaultResult);
+            $complaintantId = $defaultRow['complaint_person'];
         }
-    } 
+    }
     if (isset($_POST['complaintSubjectBody'])) {
         $EditBodyNumber = $_POST['complaintSubjectBody'];
+    } else {
+        // Retrieve the default value from the database
+        $defaultQuery = "SELECT body_no FROM complaint_details WHERE id = '$complaint_id'";
+        $defaultResult = mysqli_query($conn, $defaultQuery);
+
+        if (mysqli_num_rows($defaultResult) > 0) {
+            $defaultRow = mysqli_fetch_assoc($defaultResult);
+            $complaintantId = $defaultRow['body_no'];
+        }
     }
     // Retrieve the default value for complaint-select if there's no change
     if (isset($_POST['complaint-select'])) {
@@ -248,13 +256,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     $subjectId = $_POST['complaintSubject'];
                                 } else {
                                     // Retrieve the default value from the database
-                                    $subjectDefaultQuery = "SELECT mi.id from mem_info mi
-                                                            INNER JOIN complaint_details cd WHERE cd.id = '$complaint_id'";
-                                    $subjectDefaultResult = mysqli_query($conn, $subjectDefaultQuery);
-                            
+                                    $defaultQuery = "SELECT complaint_person FROM complaint_details WHERE id = '$complaint_id'";
+                                    $defaultResult = mysqli_query($conn, $defaultQuery);
+
                                     if (mysqli_num_rows($defaultResult) > 0) {
-                                        $subjectDefaultRow = mysqli_fetch_assoc($subjectDefaultResult);
-                                        $subjectId = $subjectDefaultRow['mi.id'];
+                                        $defaultRow = mysqli_fetch_assoc($defaultResult);
+                                        $subjectId = $defaultRow['complaint_person'];
                                     }
                                 }
 
@@ -273,7 +280,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                                         $complaintId = $row2["id"]; // Retrieve the ID from the complaint_info table
 
-                                        echo "<option value='" . $complaintId . "'>". $lastName . $extensionName . $row2["fname"] . " " . $middleInitial . "</option>";
+                                        $selected = ($complaintId == $subjectId) ? 'selected' : '';
+
+                                        echo "<option value='" . $complaintId . "' " . $selected . ">". $lastName . $extensionName . $row2["fname"] . " " . $middleInitial . "</option>";
                                     }
 
                                     // close MySQL connection
@@ -296,12 +305,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     die("Connection failed: " . $conn->connect_error);
                                 }
 
+                                // Retrieve the default value for complaint-select if there's no change
+                                if (isset($_POST['complaintSubjectBody'])) {
+                                    $bodyId = $_POST['complaintSubjectBody'];
+                                } else {
+                                    // Retrieve the default value from the database
+                                    $defaultQuery = "SELECT body_no FROM complaint_details WHERE id = '$complaint_id'";
+                                    $defaultResult = mysqli_query($conn, $defaultQuery);
+
+                                    if (mysqli_num_rows($defaultResult) > 0) {
+                                        $defaultRow = mysqli_fetch_assoc($defaultResult);
+                                        $bodyId = $defaultRow['body_no'];
+                                    }
+                                }
+
                                 $sql = "SELECT * FROM unit_info";
 
                                 $result = $conn->query($sql);
 
                                 // Display a default blank option if body_no is 0
-                                $selected = ($EditBodyNumber === '0') ? 'selected' : '';
+                                $selected = ($bodyId === '0') ? 'selected' : '';
                                 echo "<option value='' $selected>Select Body Number</option>";
 
                                 while ($row1 = $result->fetch_assoc()) {
@@ -309,7 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     $body_no = $row1["body_no"];
 
                                     // Check if the option matches the default value
-                                    $selected = ($unitId == $EditBodyNumber) ? 'selected' : '';
+                                    $selected = ($unitId == $bodyId) ? 'selected' : '';
 
                                     echo "<option value='" . $unitId . "' " . $selected . ">" . $body_no . "</option>";
                                 }
