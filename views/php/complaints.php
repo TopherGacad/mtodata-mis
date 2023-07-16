@@ -21,15 +21,12 @@
     $sql = "INSERT INTO complaint_details (complaint_person, body_no, details, date_created, complainant_id) VALUES ('$personToComplain', '$bodyNumber', '$description', '$dateCreated', '$complaint_id')";
     if (mysqli_query($conn, $sql)) {
         echo "Complaint details inserted successfully";
+        header("Location: ../php/dashboard.php?id=$complaint_id&success=true%complain");
+        exit();
     } else {
         echo "Error inserting complaint information: " . mysqli_error($conn) . "<br>";
     }
 
-    $result = $conn->query($sql);
-    if ($result) {
-        header("Location: ../php/dashboard.php?id=$complaint_id&success=true%complain");
-        exit();
-    }
     // Close database connection
     mysqli_close($conn);
 ?>
