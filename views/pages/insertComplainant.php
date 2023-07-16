@@ -39,16 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql = "INSERT INTO complaint_info (lname, fname, mname, exname, gender, phone) VALUES ('$complaintLastName', '$complaintFirstName', '$complaintMiddleName', '$complaintExtensionName', '$complaintGender', '$contactNumber')";
         if (mysqli_query($conn, $sql)) {
             $complaintId = mysqli_insert_id($conn);
+            header("Location: ../php/dashboard.php?id=$complaint_id&success=true%complaint");
+            exit();
         } else {
             echo "Error inserting complaint information: " . mysqli_error($conn) . "<br>";
         }
-
-    $result = $conn->query($sql);
-    if ($result) {
-        header("Location: ../php/dashboard.php?id=$complaint_id&success=true%complaint");
-        exit();
-    }
-
     mysqli_close($conn);
 }
 ?>
