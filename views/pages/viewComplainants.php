@@ -109,31 +109,32 @@ $_SESSION['last_activity'] = time();
                         <!-- Deleting Complaint -->
                         <script>
                             function deleteComplaint(id) {
-                                if (confirm("Are you sure you want to delete this Complaint?")) {
+                                if (confirm("Are you sure you want to delete this Complaintant?")) {
                                     var xhr = new XMLHttpRequest();
                                     xhr.open("POST", "../php/deleteComplainant.php", true);
                                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                    location.reload();
                                     xhr.onreadystatechange = function () {
                                         if (xhr.readyState === 4 && xhr.status === 200) {
-                                                var row1 = document.getElementById("complaint-" + id);
-                                                console.log("ID:", id); // Debug log
-                                                console.log("Row:", row1); // Debug log
-                                                if (row1) {
-                                                    console.log("Parent Node:", row.parentNode); // Debug log
-                                                    row.parentNode.removeChild(row1);
-                                                    console.log("ComplaintANT deleted successfully.");
-                                                    alert(xhr.responseText);
-                                                    location.reload();
-                                                } else {
-                                                    console.error("Row not found.");
-                                                }
+                                            console.log("ID:", id); // Debug log
+                                            var row = document.getElementById("Complaint-" + id);
+                                            console.log("Row:", row); // Debug log
+                                            if (row) {
+                                                console.log("Parent Node:", row.parentNode); // Debug log
+                                                row.parentNode.removeChild(row);
+                                                console.log("Complaintant deleted successfully.");
+                                                alert(xhr.responseText);
                                             } else {
-                                                console.error("Error: " + xhr.status);
+                                                console.error("Row not found for ID:", id);
                                             }
+                                        } else {
+                                            console.error("Error: " + xhr.status);
+                                        }
                                     };
                                     xhr.send("id=" + id);
                                 }
                             }
+
                         </script>
 
                     </tbody>
