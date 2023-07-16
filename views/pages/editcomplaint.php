@@ -56,12 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $EditSubject = $_POST['complaintSubject'];
     } else {
         // Retrieve the default value from the database
-        $defaultQuery = "SELECT id FROM complaint_details WHERE id = '$complaint_id'";
-        $defaultResult = mysqli_query($conn, $defaultQuery);
+        $subjectDefaultQuery = "SELECT mi.id from mem_info mi
+                                INNER JOIN complaint_details cd WHERE cd.id = '$complaint_id'";
+        $subjectDefaultResult = mysqli_query($conn, $subjectDefaultQuery);
 
         if (mysqli_num_rows($defaultResult) > 0) {
-            $defaultRow = mysqli_fetch_assoc($defaultResult);
-            $complaintantId = $defaultRow['id'];
+            $subjectDefaultRow = mysqli_fetch_assoc($subjectDefaultResult);
+            $subjectId = $subjectDefaultRow['mi.id'];
         }
     } 
     if (isset($_POST['complaintSubjectBody'])) {
@@ -243,16 +244,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 }
 
                                 // Retrieve the default value for complaint-select if there's no change
-                                if (isset($_POST['complaint-select'])) {
-                                    $complaintantId = $_POST['complaint-select'];
+                                if (isset($_POST['complaintSubject'])) {
+                                    $subjectId = $_POST['complaintSubject'];
                                 } else {
                                     // Retrieve the default value from the database
-                                    $defaultQuery = "SELECT complainant_id FROM complaint_details WHERE id = '$complaint_id'";
-                                    $defaultResult = mysqli_query($conn, $defaultQuery);
-
+                                    $subjectDefaultQuery = "SELECT mi.id from mem_info mi
+                                                            INNER JOIN complaint_details cd WHERE cd.id = '$complaint_id'";
+                                    $subjectDefaultResult = mysqli_query($conn, $subjectDefaultQuery);
+                            
                                     if (mysqli_num_rows($defaultResult) > 0) {
-                                        $defaultRow = mysqli_fetch_assoc($defaultResult);
-                                        $complaintantId = $defaultRow['complainant_id'];
+                                        $subjectDefaultRow = mysqli_fetch_assoc($subjectDefaultResult);
+                                        $subjectId = $subjectDefaultRow['mi.id'];
                                     }
                                 }
 

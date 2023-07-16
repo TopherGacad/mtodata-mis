@@ -576,7 +576,6 @@ document.getElementById("complaint-form").addEventListener("submit", function (e
     xhr.send(formData);
 });
 
-
 //WARNING & SUCCESS TOAST FOR ADD MEMBER
 function checkMemContactExists(phone) {
 

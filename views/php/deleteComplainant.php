@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 $id = $_POST["id"];
 
 // Prepare and execute the SQL queries to delete the rows from the respective tables
-$sql2 = "DELETE FROM complaint_details WHERE id=$id";
+$sql2 = "DELETE FROM complaint_info WHERE id=$id";
 
 if ($conn->query($sql2) === TRUE) {
     // If deletion was successful, return success message

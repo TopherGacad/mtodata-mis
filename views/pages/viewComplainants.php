@@ -22,118 +22,124 @@ $_SESSION['last_activity'] = time();
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complainant Information</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Complainant Information</title>
 
-    <!-- STYLESHEET -->
-    <link rel="stylesheet" href="../../public/css/complainantInfo.css">
-    <!-- WEB ICON -->
-    <link rel="icon" href="../../public/assets/browse_logo.png">
-    <!-- FONT AWESOME/ICONS -->
-    <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
-</head>
+        <!-- STYLESHEET -->
+        <link rel="stylesheet" href="../../public/css/complainantInfo.css">
+        <!-- WEB ICON -->
+        <link rel="icon" href="../../public/assets/browse_logo.png">
+        <!-- FONT AWESOME/ICONS -->
+        <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
+    </head>
 
-<body>
-    <main>
-        <div class="head-container">
-            <img class="main-logo" src="../../public/assets/mtodata_logo.png" alt="mtodata logo">
-        </div>
-
-        <div class="ot-header">
-            <h3><a href="../../views/php/dashboard.php"><i class="fa-solid fa-arrow-left"></i></a>Complainant's
-                Information</h3>
-            <div class="btn-container">
-                <abbr title="Export Report">
-                    <button class="complaintExportBtn exportBtn" id="complainant-export"><i
-                            class="fa-solid fa-download"></i></button>
-                </abbr>
-                <input type="text" id="complainant-search" class="unit-search" placeholder="Search">
-                <a href="../../views/php/dashboard.php">
-                    <input type="button" value="Cancel" class="cancelBtn modal-btn" id="cancel-btn">
-                </a>
-                <a href="../../views/pages/insertComplainant.php">
-                    <button class="addunit-btn modal-btn" id="add-unit" type="submit" name="add-unit"><i
-                            class="fa-solid fa-plus"></i> Add</button>
-                </a>
+    <body>
+        <main>
+            <div class="head-container">
+                <img class="main-logo" src="../../public/assets/mtodata_logo.png" alt="mtodata logo">
             </div>
-        </div>
-        <!-- COMPLAINANT INFORMATION TABLE -->
-        <div class="content-container">
-            <table id="complainant-table">
-                <tr>
-                    <th class="compId">ID</th>
-                    <th class="name">Name</th>
-                    <th class="gender">Gender</th>
-                    <th class="phone">Phone</th>
-                    <th class="action">Action</th>
-                </tr>
 
-                <tbody id="complainant-table-body">
-                    <?php
-                    // Connect to the MySQL database
-                    include "../php/db_conn.php";
+            <div class="ot-header">
+                <h3><a href="../../views/php/dashboard.php"><i class="fa-solid fa-arrow-left"></i></a>Complainant's
+                    Information</h3>
+                <div class="btn-container">
+                    <abbr title="Export Report">
+                        <button class="complaintExportBtn exportBtn" id="complainant-export"><i
+                                class="fa-solid fa-download"></i></button>
+                    </abbr>
+                    <input type="text" id="complainant-search" class="unit-search" placeholder="Search">
+                    <a href="../../views/php/dashboard.php">
+                        <input type="button" value="Cancel" class="cancelBtn modal-btn" id="cancel-btn">
+                    </a>
+                    <a href="../../views/pages/insertComplainant.php">
+                        <button class="addunit-btn modal-btn" id="add-unit" type="submit" name="add-unit"><i
+                                class="fa-solid fa-plus"></i> Add</button>
+                    </a>
+                </div>
+            </div>
+            <!-- COMPLAINANT INFORMATION TABLE -->
+            <div class="content-container">
+                <table id="complainant-table">
+                    <tr>
+                        <th class="compId">ID</th>
+                        <th class="name">Name</th>
+                        <th class="gender">Gender</th>
+                        <th class="phone">Phone</th>
+                        <th class="action">Action</th>
+                    </tr>
 
-                    $sql = "SELECT * FROM complaint_info";
-                    $result = mysqli_query($conn, $sql);
+                    <tbody id="complainant-table-body">
+                        <?php
+                        // Connect to the MySQL database
+                        include "../php/db_conn.php";
 
-                    if ($result->num_rows === 0) {
-                        echo "No rows found.";
-                    } else {
-                        while ($row = $result->fetch_assoc()) {
+                        $sql = "SELECT * FROM complaint_info";
+                        $result = mysqli_query($conn, $sql);
 
-                            $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
-                            $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
-                            $lastName = $row["lname"];
+                        if ($result->num_rows === 0) {
+                            echo "No rows found.";
+                        } else {
+                            while ($row = $result->fetch_assoc()) {
 
-                            if (empty($row["exname"])) {
-                                $lastName .= ', ';
-                            }
+                                $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                                $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                                $lastName = $row["lname"];
 
-                            echo "
-                                <tr>
-                                    <td class='compId'>" . $row['id'] . "</td>
-                                    <td class='name'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</td>
-                                    <td class='gender'>" . $row['gender'] . "</td>
-                                    <td class='phone'>" . $row['phone'] . "</td>
-                                    <td class='action'>
-                                        <i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row['id'] . ")'></i>
-                                        <a href='editComplainants.php?id=" . $row['id'] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
-                                    </td>
-                                </tr>";
-                        }
-                    }
-                    ?>
-                    <!-- Deleting Complaint -->
-                    <script>
-                        function deleteComplaint(id) {
-                            if (confirm("Are you sure you want to delete this Complaint?")) {
-                            // send AJAX request to delete the complaint from the database and remove the row from the table
-                            var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "../php/deleteComplainant.php", true);
-                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                            xhr.onreadystatechange = function() {
-                                if (xhr.readyState === 4 && xhr.status === 200) {
-                                // remove the row from the table
-                                var row = document.getElementById("complaint-" + id);
-                                row.parentNode.removeChild(row);
-                                // display success message
-                                alert(xhr.responseText);
-                                // Refresh the current page
-                                location.reload();
+                                if (empty($row["exname"])) {
+                                    $lastName .= ', ';
                                 }
-                            };
-                            xhr.send("id=" + id);
+
+                                echo "
+                                    <tr>
+                                        <td class='compId'>" . $row['id'] . "</td>
+                                        <td class='name'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</td>
+                                        <td class='gender'>" . $row['gender'] . "</td>
+                                        <td class='phone'>" . $row['phone'] . "</td>
+                                        <td class='action'>
+                                            <i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row['id'] . ")'></i>
+                                            <a href='editComplainants.php?id=" . $row['id'] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                                        </td>
+                                    </tr>";
                             }
                         }
-                    </script>
-                </tbody>
-            </table>
-        </div>
-    </main>
-    <script src='../../services/viewComplainant.js'></script>
-</body>
+                        ?>
+                        <!-- Deleting Complaint -->
+                        <script>
+                            function deleteComplaint(id) {
+                                if (confirm("Are you sure you want to delete this Complaint?")) {
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("POST", "../php/deleteComplainant.php", true);
+                                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                    xhr.onreadystatechange = function () {
+                                        if (xhr.readyState === 4 && xhr.status === 200) {
+                                                var row1 = document.getElementById("complaint-" + id);
+                                                console.log("ID:", id); // Debug log
+                                                console.log("Row:", row1); // Debug log
+                                                if (row1) {
+                                                    console.log("Parent Node:", row.parentNode); // Debug log
+                                                    row.parentNode.removeChild(row1);
+                                                    console.log("ComplaintANT deleted successfully.");
+                                                    alert(xhr.responseText);
+                                                    location.reload();
+                                                } else {
+                                                    console.error("Row not found.");
+                                                }
+                                            } else {
+                                                console.error("Error: " + xhr.status);
+                                            }
+                                    };
+                                    xhr.send("id=" + id);
+                                }
+                            }
+                        </script>
 
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <script src='../../services/viewComplainant.js'></script>
+    </body>
 </html>
