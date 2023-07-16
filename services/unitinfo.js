@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (suc === 'true') {
-        
+
         toastContainers.style.visibility = 'visible';
         toastMessage.innerHTML = `<strong>Success</strong> donor information added.`;
 
@@ -49,7 +49,7 @@ window.onload = function () {
 
         console.log('$memberID');
     }
-}; 
+};
 
 //UNIT INFO SEARCH
 const unitSearch = document.getElementById('unit-search');
@@ -82,3 +82,9 @@ unitSearch.addEventListener('input', () => {
         }
     }
 });
+
+window.onload = function () {
+    if (window.location.search.includes("success")) {
+        history.replaceState({}, document.title, window.location.pathname);
+    }
+}
