@@ -719,8 +719,6 @@ date_default_timezone_set('Asia/Manila');
                 <p>USER VIEW</p>
             </div>
             <div class="head-right">
-                <abbr title="Export Complaint"><button class="memExportBtn exportBtn" id="comp-export"><i
-                            class="fa-solid fa-download"></i></button></abbr>
                 <div class="search-container">
                     <input type="text" class="user-search" id="comp-search" placeholder="Search">
                     <a href="../../views/pages/viewComplainants.php"><button class="user-searchBtn"

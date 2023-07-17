@@ -20,7 +20,6 @@ $updateQuery = "UPDATE mem_info SET mem_stat = 'Expired' WHERE mem_stat = 'Activ
 mysqli_query($conn, $updateQuery);
 
 date_default_timezone_set('Asia/Manila');
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,17 +38,20 @@ date_default_timezone_set('Asia/Manila');
     <!-- FONT AWESOME/ICONS -->
     <script src="https://kit.fontawesome.com/aa37050208.js" crossorigin="anonymous"></script>
 
-    <!-- Include the required libraries -->
+    <!-- JS LIBRARIES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.2.8/es6-promise.auto.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
 
 </head>
 
 <body>
+    <!-- BACKGROUND -->
     <div class="bg-container"></div>
+
+    <!-- TOP DESIGN -->
     <div class="top-design">
         <p class="top-user"><strong>Welcome! </strong>
             <?php echo $_SESSION['email'] ?>
@@ -61,10 +63,13 @@ date_default_timezone_set('Asia/Manila');
 
     <!-- SIDE-NAV-BAR -->
     <div class="side-nav">
+        <!-- SIDENAV HEADER -->
         <header class="header-nav">
             <img class="logo" src="../../public/assets/mtodata_logo.png" alt="logo of mtodata system">
             <p>ADMIN PANEL</p>
         </header>
+
+        <!-- ITEM CONTAINER -->
         <div class="item-container">
             <ul id="nav-list">
                 <li id="dash-btn"><i class="fa-solid fa-house"></i> DASHBOARD</li>
@@ -83,8 +88,19 @@ date_default_timezone_set('Asia/Manila');
     <!-- MAIN CONTENT -->
     <!-- DASHBOARD PANE -->
     <div class='dashboard-container' id='dash-container'>
-        <section class='top-dash'>
+        <div class="dash-header">
+            <?php
+            $startOfMonth = date('Y-m-01');
+            $formattedStartOfMonth = date('m/d/Y', strtotime($startOfMonth));
 
+            $now = new DateTime();
+            $formattedDate = $now->format('m/d/Y');
+            echo "
+            <abbr title='Start of the Month to Current date'><h3>MONTHLY REPORT:<span class='dash-date'> (" . $formattedStartOfMonth . " - " . $formattedDate . ")</span></h3></abbr>
+            ";
+            ?>
+        </div>
+        <section class='top-dash'>
             <?php
 
             // connect to the MySQL database
@@ -100,104 +116,113 @@ date_default_timezone_set('Asia/Manila');
             $mem_result = $conn->query($mem);
 
             $don = "SELECT SUM(amount) AS don_count FROM transaction_donation
-            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
+                WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $don_result = $conn->query($don);
 
-            $con = "SELECT SUM(amount) AS con_count FROM transaction_contribution
-            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
-            $con_result = $conn->query($con);
-
             $com = "SELECT COUNT(id) AS com_count FROM complaint_details
-            WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
+                WHERE MONTH(date_created) = MONTH(CURRENT_DATE()) AND YEAR(date_created) = YEAR(CURRENT_DATE());";
             $com_result = $conn->query($com);
+
+            $PasNet = "SELECT SUM(debit) - SUM(credit) AS pastNeT
+            FROM transaction_finance
+            WHERE date_created >= DATE_FORMAT(NOW() - INTERVAL 2 MONTH, '%Y-%m-01')
+            AND date_created <= LAST_DAY(NOW() - INTERVAL 1 MONTH)";
+            $Pas_Result = $conn->query($PasNet);
+
+            $CurNet = "SELECT SUM(debit) - SUM(credit) AS curNeT,
+            SUM(debit) AS total_revenue FROM transaction_finance
+            WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
+            AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND";
+            $Cur_Result = $conn->query($CurNet);
 
             if ($mem_result) {
                 $row = mysqli_fetch_assoc($mem_result);
                 echo "
-            <!-- MEMBER COUNT -->
-            <div class='card border'>
-                <div class='card-header'>
-                    <i class='card-icon fa-solid fa-user-group'></i>
-                    <h4 class=''>Total Member Count</h4>
-                </div>
-                <div class='count-container'>
-                    <p>" . $row['mem_count'] . "</p>
-                </div>
-                <div class='link-container memCount'>
-                    <button>View Report</button>
-                </div>
-            </div>";
+                <!-- MEMBER COUNT -->
+                <div class='card border'>
+                    <div class='card-header'>
+                        <i class='card-icon fa-solid fa-user-group'></i>
+                        <h4 class=''>Total Member Count</h4>
+                    </div>
+                    <div class='count-container'>
+                        <p>" . $row['mem_count'] . "</p>
+                    </div>
+                    <div class='link-container memCount'>
+                        <abbr title='Member Info Report'><button class='save' id='retrieve-donation' onclick=\"save_generate()\">Download Report</button></abbr>
+                    </div>
+                </div>";
             }
 
-            if ($don_result) {
-                $row = mysqli_fetch_assoc($don_result);
-                echo "
-            <!-- DONATION COUNT -->
-            <div class='card border'>
-                <div class='card-header'>
-                    <i class='card-icon fa-solid fa-hand-holding-dollar'></i>
-                    <h4 class=''>Donations Received</h4>
-                </div>
-                <div class='count-container'>
-                    <p><span>&#8369;</span>" . $row['don_count'] . "</p>
-                </div>
-                <div class='link-container'>
-                    <button>View Report</button>
-                </div>
-            </div>";
-            }
+            if ($Pas_Result && $Cur_Result) {
+                $row1 = mysqli_fetch_assoc($Pas_Result);
+                $row2 = mysqli_fetch_assoc($Cur_Result);
 
-            if ($con_result) {
-                $row = mysqli_fetch_assoc($con_result);
+                $TotalRev = $row1['pastNeT'] + $row2['total_revenue'];
+                $TotalNet = $row1['pastNeT'] + $row2['curNeT'];
+
                 echo "
+                        <!-- DONATION COUNT -->
+                        <div class='card border'>
+                            <div class='card-header'>
+                                <i class='card-icon fa-solid fa-hand-holding-dollar'></i>
+                                <h4 class=''>Total Amount Received</h4>
+                            </div>
+                            <div class='count-container'>
+                                <p><span>&#8369; </span> " . ($TotalRev != 0 ? $TotalRev : "0") . "</p>
+                            </div>
+                            <div class='link-container'>
+                                <abbr title='Financial Report'><button class='save' id='retrieve1' onclick=\"save_generate3()\">Download Report</button></abbr>
+                            </div>
+                        </div>
+                        
             <!-- CONTRIBUTION COUNT -->
-            <div class='card border'>
-                <div class='card-header'>
-                    <i class='card-icon fa-solid fa-circle-dollar-to-slot'></i>
-                    <h4 class=''>Contribution Collected</h4>
-                </div>
-                <div class='count-container'>
-                    <p><span>&#8369;</span>" . $row['con_count'] . "</p>
-                </div>
-                <div class='link-container'>
-                    <button>View Report</button>
-                </div>
-            </div>";
+                        <div class='card border'>
+                            <div class='card-header'>
+                                <i class='card-icon fa-solid fa-circle-dollar-to-slot'></i>
+                                <h4 class=''>Total Fund Balance</h4>
+                            </div>
+                            <div class='count-container'>
+                                <p><span>&#8369; </span> " . ($TotalNet != 0 ? $TotalNet : "0") . "</p>
+                            </div>
+                            <div class='link-container'>
+                            <abbr title='Contribution Report'><button class='save' id='retrieve1' onclick=\"save_generate2()\">Download Report</button></abbr>
+                            </div>
+                        </div>";
             }
 
 
             if ($com_result) {
                 $row = mysqli_fetch_assoc($com_result);
+                $com_count = $row['com_count'];
                 echo "
-                <!-- COMPLAINTS COUNT -->
-            <div class='card border'>
-                <div class='card-header'>
-                    <i class='card-icon fa-solid fa-file-circle-exclamation'></i>
-                    <h4 class=''>Complaints Recieved</h4>
-                </div>
-                <div class='count-container'>
-                    <p>" . $row['com_count'] . "</p>
-                </div>
-                <div class='link-container'>
-                    <button>View Report</button>
-                </div>
-            </div>
-        </section>";
+                    <!-- COMPLAINTS COUNT -->
+                <div class='card border'>
+                    <div class='card-header'>
+                        <i class='card-icon fa-solid fa-file-circle-exclamation'></i>
+                        <h4 class=''>Complaints Recieved</h4>
+                    </div>
+                    <div class='count-container'>
+                        <p>" . ($com_count != 0 ? $com_count : "0") . "</p>
+                    </div>
+                    <div class='link-container com_count'>
+                    <abbr title='Complaint Report'><button class='save' id='retrieve-donation' onclick=\"save_generate5()\">Download Report</button></abbr>
+                    </div>
+                </div>";
             }
-
             // close MySQL connection
             $conn->close();
             ?>
+        </section>
 
+        <div class="bottom-dash">
             <div class='botleft-dash border'>
-
                 <!-- FINANCE ENTRY -->
                 <div class='card-header entry'>
                     <h4>Recent Financial Entry</h4>
                 </div>
 
                 <div class="table-container">
-                    <table>
+                    <table id="dash-table">
                         <tr>
                             <th>Transaction Code</th>
                             <th>Debit</th>
@@ -207,7 +232,6 @@ date_default_timezone_set('Asia/Manila');
 
                         <tbody>
                             <?php
-
                             // connect to the MySQL database
                             include "db_conn.php";
 
@@ -215,13 +239,27 @@ date_default_timezone_set('Asia/Manila');
                             $FinaceResult = $conn->query($selectFinance);
 
                             while ($FinRecent = $FinaceResult->fetch_assoc()) {
+                                $debit = $FinRecent['debit'];
+                                $credit = $FinRecent['credit'];
+                                $rowClass = '';
+
+                                // Check if the debit value is greater than 0
+                                if ($debit > 0) {
+                                    $rowClass = 'debit-row'; // CSS class for debit rows
+                                }
+
+                                // Check if the credit value is greater than 0
+                                if ($credit > 0) {
+                                    $rowClass = 'credit-row'; // CSS class for credit rows
+                                }
+
                                 echo "
-                                <tr>
-                                <td>" . $FinRecent['transaction_code'] . "</td>
-                                <td>" . $FinRecent['debit'] . "</td>
-                                <td>" . $FinRecent['credit'] . "</td>
-                                <td>" . $FinRecent['new_formatted_date'] . "</td>
-                                </tr>
+                                    <tr class='$rowClass'>
+                                        <td>" . $FinRecent['transaction_code'] . "</td>
+                                        <td>" . $debit . "</td>
+                                        <td>" . $credit . "</td>
+                                        <td>" . $FinRecent['new_formatted_date'] . "</td>
+                                    </tr>
                                 ";
                             }
 
@@ -231,13 +269,16 @@ date_default_timezone_set('Asia/Manila');
                         </tbody>
                     </table>
                 </div>
+                <abbr title="Download Financial Report"><button class="finance_download exportBtn"
+                        onclick="save_generate3()"><i class="fa-solid fa-download"></i></button></abbr>
+
             </div>
             <div class='botright-dash border'>
-
                 <!-- EVENTS AND PROGRAMS ENTRY -->
                 <div class='card-header events'>
-                    <h4>Scheduled Events</h4>
+                    <h4>Incoming Events</h4>
                 </div>
+
                 <div class='dash-content'>
                     <?php
 
@@ -246,24 +287,28 @@ date_default_timezone_set('Asia/Manila');
                     $dateToday = date('ymd');
 
                     $showPrograms = "SELECT *, CONCAT(DATE_FORMAT(ep_date, '%Y-%m-%d'), ' ', DATE_FORMAT(ep_start, '%h:%i %p')) AS concatenated_datetime FROM events_programs 
-                    WHERE ep_date >= $dateToday ORDER BY concatenated_datetime ASC";
+                        WHERE ep_date >= $dateToday ORDER BY concatenated_datetime ASC";
                     $showProgramResult = $conn->query($showPrograms);
 
                     while ($EPRecent = $showProgramResult->fetch_assoc()) {
                         echo "
-                         <div class='agenda-box'>
-                         <h3>" . $EPRecent['ep_title'] . "</h3>
-                         <p>" . $EPRecent['concatenated_datetime'] . "</p>
-                         </div>
-                         ";
+                            <div class='agenda-box'>
+                                <i class='fa-solid fa-calendar-day'></i>
+                                <div class='detail-contain'>
+                                    <p class='dash-title'>" . $EPRecent['ep_title'] . "</p>
+                                    <p class='dash-loc'>" . $EPRecent['ep_location'] . "</p>
+                                    <p class='dash-time'>" . $EPRecent['concatenated_datetime'] . "</p>
+                                </div>
+                            </div>
+                            ";
                     }
-
                     // close MySQL connection
                     $conn->close();
                     ?>
                 </div>
-
             </div>
+        </div>
+
     </div>
 
     <!-- USER PANE -->
@@ -372,7 +417,7 @@ date_default_timezone_set('Asia/Manila');
                 <p>ADMIN VIEW</p>
             </div>
             <div class="head-right">
-                <abbr title="Export Report"><button class="memExportBtn exportBtn" id="mem-export"><i
+                <abbr title="Export Report"><button class="compExportBtn exportBtn" id="mem-export"><i
                             class="fa-solid fa-download"></i></button></abbr>
                 <div class="search-container">
                     <input type="text" class="mem-search" id="mem-search" placeholder="Search">
@@ -406,19 +451,26 @@ date_default_timezone_set('Asia/Manila');
                     }
 
                     // retrieve data from the MySQL table with concatenated fname and lname
-                    $sql = "SELECT id, CONCAT(fname, ' ', lname) AS name, barangay, mem_role, license_no, mem_stat FROM mem_info ORDER BY date_created DESC";
+                    $sql = "SELECT * FROM mem_info ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
                     // Check if there are any members
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
+                            $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                            $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                            $lastName = $row["lname"];
+
+                            if (empty($row["exname"])) {
+                                $lastName .= ', ';
+                            }
 
 
                             // Display the member information, including the updated mem_stat
                             echo "
         <tr id='row-" . $row["id"] . "'>
             <td class='memid'>" . $row["id"] . "</td>
-            <td class='memname'>" . $row["name"] . "</td>
+            <td class='memname'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</td>
             <td class='area'>" . $row["barangay"] . "</td>
             <td class='memrole'>" . $row["mem_role"] . "</td>
             <td class='license'>" . $row["license_no"] . "</td>
@@ -617,7 +669,7 @@ date_default_timezone_set('Asia/Manila');
                                     $donationRow = mysqli_fetch_assoc($ViewSelectResult);
                                     $donorId = $donationRow['member_id'];
 
-                                    echo "<a href='../pages/viewuser.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                    echo "<a href='../pages/viewmem.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
                                 }
                             } else if ($row['account_type'] === 'Programs') {
                                 $ViewSelectSql = "SELECT program_ID FROM transaction_expenses WHERE transaction_code = '" . $row['transaction_code'] . "'";
@@ -630,6 +682,22 @@ date_default_timezone_set('Asia/Manila');
 
                                     echo "<a href='../pages/viewevents.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
                                 }
+                            } else if ($row['account_type'] === 'Contribution') {
+                                $transactionCode = $row['transaction_code'];
+
+                                $sql = "SELECT unit_info.id
+                                FROM unit_info
+                                INNER JOIN transaction_contribution ON unit_info.body_no = transaction_contribution.body_no
+                                WHERE transaction_contribution.transaction_code = '$transactionCode'";
+
+                                $result = mysqli_query($conn, $sql);
+
+                                if ($row = mysqli_fetch_assoc($result)) {
+                                    $unitId = $row['id'];
+
+                                    echo "<a href='../pages/viewunit.php?id=$unitId'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                }
+
                             }
                         }
                     }
@@ -643,7 +711,7 @@ date_default_timezone_set('Asia/Manila');
         </main>
     </div>
 
-    <!-- COMPLAINT PANE -->
+    <!-- COMPLAINTS PANE -->
     <div class="complain-container" id="complain-container">
         <header>
             <div class="head-left">
@@ -653,7 +721,8 @@ date_default_timezone_set('Asia/Manila');
             <div class="head-right">
                 <div class="search-container">
                     <input type="text" class="user-search" id="comp-search" placeholder="Search">
-                    <button class="user-searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <a href="../../views/pages/viewComplainants.php"><button class="user-searchBtn"
+                            id="add-complainants"><i class="fa-solid fa-user-plus"></i></i></button></a>
                 </div>
                 <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New
                     Complaint</button>
@@ -681,8 +750,13 @@ date_default_timezone_set('Asia/Manila');
                         die("Connection failed: " . $conn->connect_error);
                     }
                     // retrieve data from the MySQL table
-                    $sql = "SELECT complaint_info.id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant, complaint_info.phone, complaint_details.complaint_person, 
-                    DATE_FORMAT(complaint_details.date_created, '%Y/%m/%d %h:%i %p') AS date_created FROM complaint_info INNER JOIN complaint_details ON complaint_info.id = complaint_details.id ORDER BY date_created DESC";
+                    $sql = "SELECT complaint_details.id AS id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant,
+                    CONCAT(mem_info.fname, ' ', mem_info.lname) AS show_complaint_person,
+                     complaint_info.phone, complaint_details.complaint_person, 
+                    DATE_FORMAT(complaint_details.date_created, '%Y/%m/%d %h:%i %p') AS date_created FROM complaint_details 
+                    INNER JOIN complaint_info ON complaint_info.id = complaint_details.complainant_id
+                    LEFT JOIN mem_info ON mem_info.id = complaint_details.complaint_person
+                    ORDER BY date_created DESC";
                     $result = $conn->query($sql);
 
                     // output data of each row
@@ -692,12 +766,12 @@ date_default_timezone_set('Asia/Manila');
                             <td class='uid'>" . $row["id"] . "</td>
                             <td class='username'>" . $row["complainant"] . "</td>
                             <td class='contacts'>" . $row["phone"] . "</td>
-                            <td class='complaintPerson'>" . $row["complaint_person"] . "</td>
+                            <td class='complaintPerson'>" . $row["show_complaint_person"] . "</td>
                             <td class='actionDate'>" . $row["date_created"] . "</td>
 
                             <td class='action'>
                                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
-                                <a href='../../views/pages/viewComplaint.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                                <a href='../../views/pages/viewComplaint.php?id=" . $row["id"] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
                                 <i class='tools fa-solid fa-print save' data-container='complaints' onclick=\"generatePDF('" . $row["id"] . "', 'comp-report.php')\"></i>
                             </td>
                         </tr>";
@@ -705,7 +779,7 @@ date_default_timezone_set('Asia/Manila');
                     // close MySQL connection
                     $conn->close();
                     ?>
-                    <!-- Deleting User -->
+                    <!-- Complaint User -->
                     <script>
                         function deleteComplaint(id) {
                             if (confirm("Are you sure you want to delete this Complaint?")) {
@@ -720,6 +794,9 @@ date_default_timezone_set('Asia/Manila');
                                         row.parentNode.removeChild(row);
                                         // display success message
                                         alert(xhr.responseText);
+
+                                        // Refresh the current page
+                                        location.reload();
                                     }
                                 };
                                 xhr.send("id=" + id);
@@ -783,9 +860,9 @@ date_default_timezone_set('Asia/Manila');
                     <td class='time'>" . $row["ep_time"] . "</td>
                     <td class='location'>" . $row["ep_location"] . "</td>
                     <td class='action'>
-                        <i class='tools fa-solid fa-trash-can'></i>
+                    <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteEvent(" . $row["id"] . ")'></i></abbr>
                         <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
-                        <i class='tools fa-solid fa-print save' data-container='ep' onclick=\"generatePDF('" . $row["id"] . "', 'ep.php')\"></i>
+                        <i class='tools fa-solid fa-print save' data-container='ep' onclick=\"save_generate4('" . $row["id"] . "', 'ep.php')\"></i>
                     </td>
                 </tr> ";
 
@@ -794,6 +871,35 @@ date_default_timezone_set('Asia/Manila');
                     // close MySQL connection
                     $conn->close();
                     ?>
+                    <script>
+                        function deleteEvent(id) {
+                                if (confirm("Are you sure you want to delete this Event?")) {
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("POST", "../php/deleteEvent.php", true);
+                                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                    location.reload();
+                                    xhr.onreadystatechange = function () {
+                                        if (xhr.readyState === 4 && xhr.status === 200) {
+                                            console.log("ID:", id); // Debug log
+                                            var row = document.getElementById("Complaint-" + id);
+                                            console.log("Row:", row); // Debug log
+                                            if (row) {
+                                                console.log("Parent Node:", row.parentNode); // Debug log
+                                                row.parentNode.removeChild(row);
+                                                console.log("Event deleted successfully.");
+                                                alert(xhr.responseText);
+                                            } else {
+                                                console.error("Row not found for ID:", id);
+                                            }
+                                        } else {
+                                            console.error("Error: " + xhr.status);
+                                        }
+                                    };
+                                    xhr.send("id=" + id);
+                                }
+                            }
+
+                    </script>
                 </tbody>
             </table>
         </main>
@@ -919,6 +1025,16 @@ date_default_timezone_set('Asia/Manila');
                 <p><strong>Try Again</strong> Please select user role!</p>
             </div>
         </div>
+    </div>
+
+    <div class="warningToast-container" id="warningToast2">
+        <div class="warningToast-left">
+            <i class="warningToast-icon fa-solid fa-circle-info"></i>
+        </div>
+        <div class="warningToast-right">
+            <p id="warning-con"></p>
+        </div>
+    </div>
     </div>
 
     <!-- TOAST -->
@@ -1084,7 +1200,30 @@ date_default_timezone_set('Asia/Manila');
                     <!-- BODY NO. -->
                     <div class='fields'>
                         <label for='bodynum'>Body No.<span> *</span></label>
-                        <input type='text' id='body-no' name='bodynum' pattern="[0-9]*" required disabled>
+                        <select id='body-no' name='bodynum' required disabled>
+                            <option selected disabled value=''>Select Body No.</option>
+                            <?php
+
+                            include
+                                "db_conn.php";
+
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+                            $sqlBody = "SELECT * FROM unit_info";
+                            $resultBody = $conn->query($sqlBody);
+
+
+                            while ($rowBody = $resultBody->fetch_assoc()) {
+
+                                echo "<option value='" . $rowBody["body_no"] . "'>" . $rowBody["body_no"] . "</option>";
+                            }
+
+                            // close MySQL connection
+                            $conn->close();
+                            ?>
+                        </select>
                     </div>
 
                     <!-- DONOR NAME -->
@@ -1137,25 +1276,34 @@ date_default_timezone_set('Asia/Manila');
                 <div class='financeForm-right addForm'>
                     <div class='fields'>
                         <label for='expense-type'>Expense Type</label>
-                        <select name='expense_type' id='expense-type' required disabled>
+                        <select name='expense_type' id='expense-type' required disabled onchange="toggleRemarks()">
                             <option selected disabled value=''>Select Expense type</option>
                             <option value='Expenses - Rent'>Rent</option>
                             <option value='Expenses - Electricity'>Electricity</option>
                             <option value='Expenses - Water'>Water</option>
+                            <option value='Expenses - '>Others</option>
                         </select>
+                    </div>
+
+                    <!-- ACCOUNT ID -->
+                    <div class='fields' id="rem-container">
+                        <label for='remarks'>Remarks<span> *</span></label>
+                        <input type='text' id='remarks' name='remarks' disabled>
                     </div>
 
 
                     <!-- ACCOUNT ID -->
                     <div class='fields'>
                         <label for='trans-date'>Transaction date<span> *</span></label>
-                        <input type='date' id='trans-date' name='trans_date' required disabled>
+                        <input type='date' id='trans-date' name='trans_date' max="<?php echo date('Y-m-d'); ?>" required
+                            disabled>
                     </div>
 
                     <!--  AMOUNT  -->
                     <div class='fields'>
                         <label for='amount'>Amount<span> *</span></label>
-                        <input type='text' id='amount' name='amount' placeholder='₱' required disabled>
+                        <input type='number' id='amount' name='amount' pattern="[0-9]*" placeholder='₱' required
+                            disabled>
                     </div>
 
                     <div class='btn-container'>
@@ -1175,60 +1323,153 @@ date_default_timezone_set('Asia/Manila');
             <div class="form-container">
                 <!-- FORM LEFT -->
                 <div class="complaintForm-left addForm">
-                    <!-- LASTNAME -->
-                    <div class="fields">
-                        <label for="complainant-lastname">Complainant Lastname<span> *</span></label>
-                        <input type="text" id="complainant-lastname" name="complaintLastname" maxlength="25"
-                            pattern="[A-Za-z ]{2,25}" placeholder="Dela Cruz" required>
-                    </div>
-                    <!-- FIRSTNAME -->
-                    <div class="fields">
-                        <label for="complainant-firstname">Complainant Firstname<span> *</span></label>
-                        <input type="text" id="complainant-firstname" name="complaintFirstname" maxlength="25"
-                            pattern="[A-Za-z ]{2,25}" placeholder="Juan" required>
-                    </div>
-                    <!-- MIDNAME -->
-                    <div class="fields">
-                        <label for="complainant-midname">Complainant Middlename</label>
-                        <input type="text" id="complainant-midname" name="complaintMiddlename" maxlength="25"
-                            pattern="[A-Za-z ]{2,25}" placeholder="Reyes">
-                    </div>
-                    <!-- EXTENSION NAME -->
-                    <div class="fields">
-                        <label for="complainant-extension">Extension Name</label>
-                        <input type="text" id="complainant-extension" name="extension" maxlength="5"
-                            pattern="[A-Za-z1-9]{2,5}" placeholder="eg. Jr, Sr">
-                    </div>
-                    <!-- GENDER -->
-                    <div class="fields">
-                        <label for="complainant-gender">Sex<span> *</span></label>
-                        <select name="gender" id="complainant-gender">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="none">Prefer not to say</option>
+                    <div class='fields complaint'>
+                        <label for='complaint-select' required>Complainant Name<span> *</span></label>
+                        <select name='complaint-select' id='complaint-select' required>
+                            <option selected value='' required>Select Complainant</option>
+                            <?php
+                            // connect to the MySQL database
+                            include "db_conn.php";
+
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+                            $sql = "SELECT * FROM complaint_info";
+
+                            $result = $conn->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                                $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                                $lastName = $row["lname"];
+
+                                if (empty($row["exname"])) {
+                                    $lastName .= ', ';
+                                }
+
+                                $complaintId = $row["id"]; // Retrieve the ID from the complaint_info table
+                            
+                                echo "<option value='" . $complaintId . "'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
+                            }
+
+                            // close MySQL connection
+                            $conn->close();
+                            ?>
                         </select>
                     </div>
-                    <!-- CONTACT NUMBER -->
-                    <div class="fields">
-                        <label for="complainant-contact">Contact no.<span> *</span></label>
-                        <input type="text" pattern="[0-9]{11}" id="complainant-contact" name="contact"
-                            placeholder="eg. 09592220954" required>
+                    <!-- New Complainant -->
+                    <div class='fields'>
+                        <div class="comp-contain">
+                            <label for="date-incident">Add new complainant:<span></span></label>
+                            <a href="../../views/pages/insertComplainant.php"><input type='button'
+                                    value='New Complainant'></a>
+                        </div>
                     </div>
-                </div>
-                <!-- FORM-RIGHT -->
-                <div class="complaintForm-right addForm">
+
                     <!-- SUBJECT -->
                     <div class="fields">
-                        <label for="ComplaintSubject">Person to Complain<span> *</span></label>
-                        <input type="text" id="ComplaintSubject" name="ComplaintSubject" maxlength="30"
-                            pattern="[A-Za-z ]{2,30}" placeholder="Name of person to complain">
+                        <label for="ComplaintSubject" required>Person to Complain<span> *</span></label>
+                        <select name='ComplaintSubject' id='ComplaintSubject' required>
+                            <option selected value='' required>Select Person to Complain</option>
+                            <?php
+                            // connect to the MySQL database
+                            include "db_conn.php";
+
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+                            $sql = "SELECT * FROM mem_info";
+
+                            $result = $conn->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                $middleInitial = !empty($row["mname"]) ? trim($row["mname"][0]) . '.' : '';
+                                $extensionName = !empty($row["exname"]) ? ' ' . $row["exname"] . '., ' : '';
+                                $lastName = $row["lname"];
+
+                                if (empty($row["exname"])) {
+                                    $lastName .= ', ';
+                                }
+
+                                $mem_info = $row["id"]; // Retrieve the ID from the complaint_info table
+                            
+                                echo "<option value='" . $mem_info . "'>" . $lastName . $extensionName . $row["fname"] . " " . $middleInitial . "</option>";
+                            }
+
+                            $id = $_GET['id'];
+
+                            if (!empty($id)) {
+                                $sql = "SELECT *
+                                                    FROM mem_info
+                                                    LEFT JOIN unit_info ON mem_info.id = unit_info.member_id
+                                                    WHERE mem_info.id = '$id'";
+
+                                $result = $conn->query($sql);
+
+                                if ($result->num_rows > 0) {
+                                    $row = $result->fetch_assoc();
+                                    echo '<script>
+                                                    var complaintSubjectBodySelect = document.getElementById("complaintSubjectBody");
+                                                    complaintSubjectBodySelect.disabled = false;
+                                                    var option = document.createElement("option");
+                                                    option.value = "' . $row["id"] . '";
+                                                    option.textContent = "' . $row["body_no"] . '";
+                                                    complaintSubjectBodySelect.innerHTML = "";
+                                                    complaintSubjectBodySelect.appendChild(option);
+                                                    </script>';
+                                } else {
+                                    echo '<script>document.getElementById("complaintSubjectBody").disabled = true;</script>';
+                                }
+                            }
+
+                            // close MySQL connection
+                            $conn->close();
+                            ?>
+                        </select>
                     </div>
 
                     <!-- BODY NUMBER -->
                     <div class="fields">
-                        <label for="complaintSubjectBody">Body no.<span> *</span></label>
-                        <input type="text" id="complaintSubjectBody" name="complaintSubjectBody" required>
+                        <label for="complaintSubjectBody">Body no.</label>
+                        <select name='complaintSubjectBody' id='complaintSubjectBody' disabled>
+                            <option selected value=''>Select Body Number</option>
+                            <?php
+                            // connect to the MySQL database
+                            include "db_conn.php";
+
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+                            $sql = "SELECT * FROM unit_info";
+
+                            $result = $conn->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                $unit_info = $row["id"]; // Retrieve the ID from the complaint_info table
+                                echo "<option value='" . $unit_info . "'>" . $row["body_no"] . "</option>";
+                            }
+
+                            // close MySQL connection
+                            $conn->close();
+                            ?>
+                        </select>
                     </div>
+                    <div class="is-bud">
+                        <input type="checkbox" id="activateSelect" onchange="toggleSelect()" />
+                        <label for="activateSelect">Activate</label>
+                    </div>
+
+                    <style>
+
+                    </style>
+
+                </div>
+
+                <!-- FORM-RIGHT -->
+                <div class="complaintForm-right addForm">
 
                     <!-- DESCRIPTION -->
                     <div class="fields">
@@ -1237,6 +1478,7 @@ date_default_timezone_set('Asia/Manila');
                             required></textarea>
                     </div>
 
+                    <!-- Date and Time -->
                     <div class="timeDate-container">
                         <!-- TIME -->
                         <div class="fields">
@@ -1258,14 +1500,14 @@ date_default_timezone_set('Asia/Manila');
                 </div>
             </div>
         </form>
-        <!-- WARNING TOAST -->
-        <div class="warningToast-container" id="cmplnt-warningToast">
-            <div class="warningToast-left">
-                <i class="warningToast-icon fa-solid fa-circle-info"></i>
-            </div>
-            <div class="warningToast-right">
-                <p><strong>Try Again</strong> Placeholder warning!</p>
-            </div>
+    </div>
+    <!-- WARNING TOAST -->
+    <div class="warningToast-container" id="cmplnt-warningToast">
+        <div class="warningToast-left">
+            <i class="warningToast-icon fa-solid fa-circle-info"></i>
+        </div>
+        <div class="warningToast-right">
+            <p><strong>Try Again</strong> Placeholder warning!</p>
         </div>
     </div>
 
@@ -1290,7 +1532,7 @@ date_default_timezone_set('Asia/Manila');
                     <!-- EVENT TITLE -->
                     <div class='fields'>
                         <label for='event-title'>Title<span> *</span></label>
-                        <input type='text' id='event-title' name='event-title' placeholder='Event title' required>
+                        <input type='text' id='event-title' name='event-title' placeholder='eg. Meeting' required>
                     </div>
 
                     <!-- DESCRIPTION -->
@@ -1305,7 +1547,7 @@ date_default_timezone_set('Asia/Manila');
                     <!--EVENT OR PROGRAM BUDGET-->
                     <div class='fields'>
                         <label for='events-budget'>Budget</label>
-                        <input type='text' id='events-budget' name='events-budget' disabled>
+                        <input type='text' id='events-budget' pattern="[0-9]*" name='events-budget' disabled>
                     </div>
 
                     <div class='is-bud'>
@@ -1368,7 +1610,7 @@ date_default_timezone_set('Asia/Manila');
             <div class="loading-bar"></div>
         </div>
     </div>
-    
+
 
     <!-- SCRIPTS -->
     <!-- Javascript Library for Excel -->
@@ -1382,6 +1624,7 @@ date_default_timezone_set('Asia/Manila');
     <script src="../../services/datetoday.js"></script>
     <!-- Script for Loading Screen -->
     <script src="../../services/loading.js"></script>
+    <script src="../../services/monthly.js"></script>
 </body>
 
 </html>
