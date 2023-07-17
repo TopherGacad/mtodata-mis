@@ -37,7 +37,14 @@
     $ID = $_GET['id'];
 
     //data retrieval
-    $sql = "SELECT *, DATE_FORMAT(date_created, '%Y-%m-%d') AS complaint_date FROM complaint_details WHERE id = '$ID'";
+    $sql = "SELECT complaint_details.id AS id, CONCAT(complaint_info.fname, ' ', complaint_info.lname) AS complainant,
+                    CONCAT(mem_info.fname, ' ', mem_info.lname) AS show_complaint_person,
+                    unit_info.body_no AS show_body_no, DATE_FORMAT(complaint_details.date_created, '%Y/%m/%d %h:%i %p') AS complaint_date,
+                    complaint_info.phone, complaint_details.complaint_person, complaint_details.details AS details FROM complaint_details 
+                    INNER JOIN complaint_info ON complaint_info.id = complaint_details.complainant_id
+                    INNER JOIN mem_info ON mem_info.id = complaint_details.complaint_person
+                    LEFT JOIN unit_info ON unit_info.id = complaint_details.body_no WHERE complaint_details.id = $ID";
+                    
     $result = $conn->query($sql);
 
     if ($result === false) {
@@ -50,9 +57,6 @@
 
     // output data of each row
     while ($row = $result->fetch_assoc()) {
-
-        $details = nl2br($row["details"]);
-
 
         echo "
 
@@ -75,23 +79,27 @@
                     <p class='det'>Date: &nbsp</p>
                     <p class='detret'>" . $currentDate . "</p>
                 </div>
-                <br>
-                <div class='det_wrap'>
+                <br><div class='det_wrap'>
                     <p class='det'>Complainant: &nbsp</p>
-                    <p class='detret'>" . $row["complaint_person"] . "</p>
+                    <p class='detret'>" . $row["complainant"] . "</p>
                 </div>
+                
                 <div class='det_wrap'>
                     <p class='det'>Complaint Date: &nbsp</p>
                     <p class='detret'>" . $row["complaint_date"] . "</p>
                 </div>
                 <div class='det_wrap'>
                     <p class='det'>Subject of Complaint: &nbsp</p>
-                    <p class='detret'>" . $row["body_no"] . "</p>
+                    <p class='detret'>" . $row["show_complaint_person"] . "</p>
+                </div>
+                <div class='det_wrap'>
+                    <p class='det'>Body Number: &nbsp</p>
+                    <p class='detret'>" . $row["show_body_no"] . "</p>
                 </div>
                 <br>
                 <p class='det'>Details: </p>
                 <div class='det_con'>
-                    <p class='det_con_Desc'>" . $details . "</p>
+                    <p class='det_con_Desc'>" . $row["details"] . "</p>
                 </div>
 
     ";
@@ -103,11 +111,6 @@
     ?>
 
     <div class='footer'>
-        Footer Statements here Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit. Nunc posuere orci vitae nisl faucibus,
-        nec rutrum metus rutrum. Curabitur efficitur mi et ligula tempus,
-        eu placerat mauris porttitor. In consectetur ultrices enim,
-        ut vestibulum dui dignissim non.
     </div>
     </div>
     </div>
