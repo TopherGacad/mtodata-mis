@@ -862,7 +862,7 @@ date_default_timezone_set('Asia/Manila');
                                             if (row) {
                                                 console.log("Parent Node:", row.parentNode); // Debug log
                                                 row.parentNode.removeChild(row);
-                                                console.log("Delete deleted successfully.");
+                                                console.log("Event deleted successfully.");
                                                 alert(xhr.responseText);
                                             } else {
                                                 console.error("Row not found for ID:", id);
