@@ -849,7 +849,7 @@ date_default_timezone_set('Asia/Manila');
                     ?>
                     <script>
                         function deleteEvent(id) {
-                                if (confirm("Are you sure you want to delete this Complaintant?")) {
+                                if (confirm("Are you sure you want to delete this Event?")) {
                                     var xhr = new XMLHttpRequest();
                                     xhr.open("POST", "../php/deleteEvent.php", true);
                                     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -862,7 +862,7 @@ date_default_timezone_set('Asia/Manila');
                                             if (row) {
                                                 console.log("Parent Node:", row.parentNode); // Debug log
                                                 row.parentNode.removeChild(row);
-                                                console.log("Complaintant deleted successfully.");
+                                                console.log("Delete deleted successfully.");
                                                 alert(xhr.responseText);
                                             } else {
                                                 console.error("Row not found for ID:", id);
