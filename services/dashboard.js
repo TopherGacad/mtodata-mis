@@ -54,6 +54,7 @@ addfinanceBtn.addEventListener("click", function () {
 addComplainBtn.addEventListener("click", function () {
     complainModal.style.display = "flex"
     modalBg.style.display = "block"
+   
 })
 addEventBtn.addEventListener("click", function () {
     eventModal.style.display = "flex"
@@ -72,8 +73,8 @@ const transDate = document.getElementById("trans-date");
 const rem = document.getElementById("remarks");
 const today = new Date().toISOString().split('T')[0];
 
+//DISABLE INPUTS FOR FINANCE
 function disableInputs() {
-
     if (selectType.value === "Butaw") {
         bodyNo.disabled = false;
         donorName.disabled = true;
@@ -151,9 +152,11 @@ complaintCancel.addEventListener("click", function () {
     modalBg.style.display = "none"
 })
 eventCancel.addEventListener("click", function () {
+    var budgetInput = document.getElementById('events-budget');
     document.getElementById("event-form").reset()
     eventModal.style.display = "none"
     modalBg.style.display = "none"
+    budgetInput.disabled = true;
 })
 
 //FI: CREATE A FUNCTION FOR SHOW PASSWORD INSTEAD OF THIS 
@@ -1231,6 +1234,14 @@ function toggleRemarks() {
   // Call the toggleRemarks function initially to set the visibility based on the default selected value
   toggleRemarks();
   
+  function toggleSelect() {
+    var select = document.getElementById("complaintSubjectBody");
+    var checkbox = document.getElementById("activateSelect");
 
-
+    if (checkbox.checked) {
+        select.disabled = false;
+    } else {
+        select.disabled = true;
+    }
+}
 
