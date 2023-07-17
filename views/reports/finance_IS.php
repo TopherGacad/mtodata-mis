@@ -45,6 +45,7 @@ if ($result) {
     $pro = 0;
     $rnw = 0;
     $new = 0;
+    $oth = 0;
 
     while ($row = $result->fetch_assoc()) {
         if ($row['account_type'] === 'Donation') {
@@ -562,7 +563,8 @@ $net = $TotalRev - $TotalExp;
                         $TotalCon = "SELECT SUM(amount) as totalCon
                         FROM transaction_expenses
                         WHERE date_created >= DATE_FORMAT(CURDATE(), '%Y-%m-01 00:00:00')
-                        AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND";
+                        AND date_created <= CURDATE() + INTERVAL 1 DAY - INTERVAL 1 SECOND
+                        AND transaction_type <> 'Programs'";
 
                         $resultCon = $conn->query($sqlCon);
                         $resultTotalCon = $conn->query($TotalCon);
