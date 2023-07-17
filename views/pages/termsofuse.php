@@ -20,7 +20,6 @@
         <img class="main-logo" src="../../public/assets/mtodata_logo.png" alt="mtodata logo">
         <ul>
             <a href="../../views/php/dashboard.php"><li>Dashboard</li></a>
-            <a href="#"><li>About us</li></a>
         </ul>
     </div>
 
