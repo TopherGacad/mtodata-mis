@@ -205,7 +205,7 @@ date_default_timezone_set('Asia/Manila');
                         <p>" . ($com_count != 0 ? $com_count : "0") . "</p>
                     </div>
                     <div class='link-container com_count'>
-                    <abbr title='Member Info Report'><button class='save' id='retrieve-donation' onclick=\"save_generate5()\">Download Report</button></abbr>
+                    <abbr title='Complaint Report'><button class='save' id='retrieve-donation' onclick=\"save_generate5()\">Download Report</button></abbr>
                     </div>
                 </div>";
             }
@@ -774,14 +774,14 @@ date_default_timezone_set('Asia/Manila');
                             <td class='action'>
                                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
                                 <a href='../../views/pages/viewComplaint.php?id=" . $row["id"] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
-                                <i class='tools fa-solid fa-print save' data-container='complaints' onclick=\"generatePDF6('" . $row["id"] . "', 'comp-report.php')\"></i>
+                                <i class='tools fa-solid fa-print save' data-container='complaints' onclick=\"generatePDF('" . $row["id"] . "', 'comp-report.php')\"></i>
                             </td>
                         </tr>";
                     }
                     // close MySQL connection
                     $conn->close();
                     ?>
-                    <!-- Deleting User -->
+                    <!-- Complaint User -->
                     <script>
                         function deleteComplaint(id) {
                             if (confirm("Are you sure you want to delete this Complaint?")) {
@@ -862,7 +862,7 @@ date_default_timezone_set('Asia/Manila');
                     <td class='time'>" . $row["ep_time"] . "</td>
                     <td class='location'>" . $row["ep_location"] . "</td>
                     <td class='action'>
-                        <i class='tools fa-solid fa-trash-can'></i>
+                    <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteEvent(" . $row["id"] . ")'></i></abbr>
                         <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
                         <i class='tools fa-solid fa-print save' data-container='ep' onclick=\"save_generate4('" . $row["id"] . "', 'ep.php')\"></i>
                     </td>
@@ -873,6 +873,35 @@ date_default_timezone_set('Asia/Manila');
                     // close MySQL connection
                     $conn->close();
                     ?>
+                    <script>
+                        function deleteEvent(id) {
+                                if (confirm("Are you sure you want to delete this Event?")) {
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("POST", "../php/deleteEvent.php", true);
+                                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                    location.reload();
+                                    xhr.onreadystatechange = function () {
+                                        if (xhr.readyState === 4 && xhr.status === 200) {
+                                            console.log("ID:", id); // Debug log
+                                            var row = document.getElementById("Complaint-" + id);
+                                            console.log("Row:", row); // Debug log
+                                            if (row) {
+                                                console.log("Parent Node:", row.parentNode); // Debug log
+                                                row.parentNode.removeChild(row);
+                                                console.log("Event deleted successfully.");
+                                                alert(xhr.responseText);
+                                            } else {
+                                                console.error("Row not found for ID:", id);
+                                            }
+                                        } else {
+                                            console.error("Error: " + xhr.status);
+                                        }
+                                    };
+                                    xhr.send("id=" + id);
+                                }
+                            }
+
+                    </script>
                 </tbody>
             </table>
         </main>
