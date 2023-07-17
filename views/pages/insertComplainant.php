@@ -39,14 +39,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql = "INSERT INTO complaint_info (lname, fname, mname, exname, gender, phone) VALUES ('$complaintLastName', '$complaintFirstName', '$complaintMiddleName', '$complaintExtensionName', '$complaintGender', '$contactNumber')";
         if (mysqli_query($conn, $sql)) {
             $complaintId = mysqli_insert_id($conn);
+            header("Location: ../php/dashboard.php?id=$complaint_id&success=true%complaint");
+            exit();
         } else {
             echo "Error inserting complaint information: " . mysqli_error($conn) . "<br>";
         }
-
     mysqli_close($conn);
-
-    header("Location: ../php/dashboard.php?id=$complaint_id&success=true");
-    exit();
 }
 ?>
 
@@ -56,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Complaints</title>
+        <title>Add Complaintant</title>
 
         <!-- STYLESHEET -->
         <link rel="stylesheet" href="../../public/css/editpages.css">
@@ -134,5 +132,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </form>
         </div>
+        <script src='../../services/editComplaint.js'></script>
     </body>
 </html>

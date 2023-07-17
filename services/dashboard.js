@@ -579,7 +579,6 @@ document.getElementById("complaint-form").addEventListener("submit", function (e
     xhr.send(formData);
 });
 
-
 //WARNING & SUCCESS TOAST FOR ADD MEMBER
 function checkMemContactExists(phone) {
 
@@ -848,15 +847,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const toastContainers = document.getElementById('toast-success');
     const toastContainers2 = document.getElementById('warningToast2');
 
-
-    if (suc === 'true') {
-        toastContainers.style.visibility = 'visible';
-        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Complaint saved`;
-        setTimeout(() => {
-            toastContainers.style.visibility = 'hidden';
-        }, 3000);
-    }
-
     if (suc === 'true%finance') {
         toastContainers.style.visibility = 'visible';
         document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Finance record added.`;
@@ -873,6 +863,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
+    if (suc === 'true%complaint') {
+        toastContainers.style.visibility = 'visible';
+        document.getElementById('success-con').innerHTML = `<strong>Successful</strong> Complaint added`;
+        setTimeout(() => {
+            toastContainers.style.visibility = 'hidden';
+        }, 3000);
+    }
+
     if (err === 'insufficient-bal') {
         toastContainers2.style.display = 'flex';
         document.getElementById('warning-con').innerHTML = `<strong>Warning</strong> Insufficient Balance`;
@@ -880,6 +878,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toastContainers2.style.display = 'none';
         }, 3000);
     }
+
 });
 
 window.onload = function () {
@@ -1037,6 +1036,7 @@ function save_generate2() {
     xhr.send();
 }
 
+
 function generatePDF3(htmlContent) {
     var element = document.createElement('div');
     element.innerHTML = htmlContent;
@@ -1105,6 +1105,50 @@ function generatePDF4(htmlContent) {
 
         // Save or display the generated PDF here
         pdf.save('finance-report.pdf');
+    });
+}
+
+//Generate Complaint Report
+function save_generate5() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '../reports/comp-report.php', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = xhr.responseText;
+            var container = document.createElement('div');
+            container.innerHTML = response;
+            var compInfoContainer = container.querySelector('#container');
+            generatePDF6(compInfoContainer.innerHTML);
+        }
+    };
+    xhr.send();
+}
+
+
+function generatePDF6(htmlContent) {
+    var element = document.createElement('div');
+    element.innerHTML = htmlContent;
+
+    var options = {
+        margin: [0.5, 0.5, 0.5, 0.5],
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    html2pdf().set(options).from(element).toPdf().get('pdf').then(function (pdf) {
+        const totalPages = pdf.internal.getNumberOfPages();
+
+        for (let i = 1; i <= totalPages; i++) {
+            pdf.setFont('Arial', 'italic');
+            pdf.setFontSize(10);
+            pdf.setTextColor(128);
+            pdf.setPage(i);
+            pdf.text(i + ' of ' + totalPages, pdf.internal.pageSize.getWidth() - 0.75, pdf.internal.pageSize.getHeight() - 0.5);
+        }
+
+        // Save or display the generated PDF here
+        pdf.save('complaint-report.pdf');
     });
 }
 

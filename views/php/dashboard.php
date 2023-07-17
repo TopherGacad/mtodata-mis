@@ -204,8 +204,8 @@ date_default_timezone_set('Asia/Manila');
                     <div class='count-container'>
                         <p>" . ($com_count != 0 ? $com_count : "0") . "</p>
                     </div>
-                    <div class='link-container'>
-
+                    <div class='link-container com_count'>
+                    <abbr title='Member Info Report'><button class='save' id='retrieve-donation' onclick=\"save_generate5()\">Download Report</button></abbr>
                     </div>
                 </div>";
             }
@@ -417,7 +417,7 @@ date_default_timezone_set('Asia/Manila');
                 <p>ADMIN VIEW</p>
             </div>
             <div class="head-right">
-                <abbr title="Export Report"><button class="memExportBtn exportBtn" id="mem-export"><i
+                <abbr title="Export Report"><button class="compExportBtn exportBtn" id="mem-export"><i
                             class="fa-solid fa-download"></i></button></abbr>
                 <div class="search-container">
                     <input type="text" class="mem-search" id="mem-search" placeholder="Search">
@@ -719,6 +719,8 @@ date_default_timezone_set('Asia/Manila');
                 <p>USER VIEW</p>
             </div>
             <div class="head-right">
+                <abbr title="Export Complaint"><button class="memExportBtn exportBtn" id="comp-export"><i
+                            class="fa-solid fa-download"></i></button></abbr>
                 <div class="search-container">
                     <input type="text" class="user-search" id="comp-search" placeholder="Search">
                     <a href="../../views/pages/viewComplainants.php"><button class="user-searchBtn"
@@ -772,7 +774,7 @@ date_default_timezone_set('Asia/Manila');
                             <td class='action'>
                                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
                                 <a href='../../views/pages/viewComplaint.php?id=" . $row["id"] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
-                                <i class='tools fa-solid fa-print save' data-container='complaints' onclick=\"generatePDF('" . $row["id"] . "', 'comp-report.php')\"></i>
+                                <i class='tools fa-solid fa-print save' data-container='complaints' onclick=\"generatePDF6('" . $row["id"] . "', 'comp-report.php')\"></i>
                             </td>
                         </tr>";
                     }
