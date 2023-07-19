@@ -66,7 +66,7 @@ date_default_timezone_set('Asia/Manila');
         <!-- SIDENAV HEADER -->
         <header class="header-nav">
             <img class="logo" src="../../public/assets/mtodata_logo.png" alt="logo of mtodata system">
-            <p>ADMIN PANEL</p>
+            <p>VICE PRESIDENT PANEL</p>
         </header>
 
         <!-- ITEM CONTAINER -->
@@ -316,7 +316,7 @@ date_default_timezone_set('Asia/Manila');
         <header>
             <div class="head-left">
                 <h3>USER TYPE MANAGEMENT</h3>
-                <p>ADMIN VIEW</p>
+                <p>VICE PRESIDENT VIEW</p>
             </div>
             <div class="head-right">
                 <div class="search-container">
@@ -414,7 +414,7 @@ date_default_timezone_set('Asia/Manila');
         <header>
             <div class="head-left">
                 <h3>TODA MEMBERS INFORMATION</h3>
-                <p>ADMIN VIEW</p>
+                <p>VICE PRESIDENT VIEW</p>
             </div>
             <div class="head-right">
                 <abbr title="Export Report"><button class="compExportBtn exportBtn" id="mem-export"><i
@@ -716,7 +716,7 @@ date_default_timezone_set('Asia/Manila');
         <header>
             <div class="head-left">
                 <h3>COMPLAINTS</h3>
-                <p>USER VIEW</p>
+                <p>VICE PRESIDENT VIEW</p>
             </div>
             <div class="head-right">
                 <div class="search-container">
@@ -814,7 +814,7 @@ date_default_timezone_set('Asia/Manila');
         <header>
             <div class='head-left'>
                 <h3>EVENTS & PROGRAMS</h3>
-                <p>ADMIN VIEW</p>
+                <p>VICE PRESIDENT VIEW</p>
             </div>
             <div class='head-right'>
                 <div class='search-container'>

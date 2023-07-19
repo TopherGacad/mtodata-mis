@@ -185,7 +185,7 @@ date_default_timezone_set('Asia/Manila');
                                 <p><span>&#8369; </span> " . ($TotalNet != 0 ? $TotalNet : "0") . "</p>
                             </div>
                             <div class='link-container'>
-                            <abbr title='Contribution Report'><button class='save' id='retrieve1' onclick=\"save_generate2()\">Download Report</button></abbr>
+                            <abbr title='Expenses Report'><button class='save' id='retrieve1' onclick=\"save_generate2()\">Download Report</button></abbr>
                             </div>
                         </div>";
             }
@@ -205,7 +205,7 @@ date_default_timezone_set('Asia/Manila');
                         <p>" . ($com_count != 0 ? $com_count : "0") . "</p>
                     </div>
                     <div class='link-container com_count'>
-                    <abbr title='Complaint Report'><button class='save' id='retrieve-donation' onclick=\"save_generate5()\">Download Report</button></abbr>
+                    
                     </div>
                 </div>";
             }
@@ -365,7 +365,7 @@ date_default_timezone_set('Asia/Manila');
                         <td class='datecreated'>" . $row["date_created"] . "</td>
                         <td class='action'>
                             <abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr>
-                            <a href='../../views/pages/edituser.php?user_id=" . $row["user_id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                            <abbr title='Edit'><a href='../../views/pages/edituser.php?user_id=" . $row["user_id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a></abbr>
                         </td>
                     </tr>";
                     }
@@ -414,7 +414,7 @@ date_default_timezone_set('Asia/Manila');
         <header>
             <div class="head-left">
                 <h3>TODA MEMBERS INFORMATION</h3>
-                <p>ADMIN VIEW</p>
+                <p>SECRETARY VIEW</p>
             </div>
             <div class="head-right">
                 <abbr title="Export Report"><button class="compExportBtn exportBtn" id="mem-export"><i
@@ -527,7 +527,7 @@ date_default_timezone_set('Asia/Manila');
         <header>
             <div class="head-left">
                 <h3>FINANCE</h3>
-                <p>FINANCE STAFF VIEW</p>
+                <p>TREASURER VIEW</p>
             </div>
             <div class="head-right">
                 <button class="financeExportBtn exportBtn" id="finance-export"><i
@@ -716,7 +716,7 @@ date_default_timezone_set('Asia/Manila');
         <header>
             <div class="head-left">
                 <h3>COMPLAINTS</h3>
-                <p>USER VIEW</p>
+                <p>VICE PRESIDENT VIEW</p>
             </div>
             <div class="head-right">
                 <div class="search-container">
@@ -814,7 +814,7 @@ date_default_timezone_set('Asia/Manila');
         <header>
             <div class='head-left'>
                 <h3>EVENTS & PROGRAMS</h3>
-                <p>ADMIN VIEW</p>
+                <p>VICE PRESIDENT VIEW</p>
             </div>
             <div class='head-right'>
                 <div class='search-container'>
@@ -910,7 +910,7 @@ date_default_timezone_set('Asia/Manila');
         <p>&copy;mtodata 2023</p>
         <div class="link-footer flex">
             <p class="border-right">PUP Institute of Technology</p>
-            <a href="../../views/pages/termsofuse.php" class="border-right">Terms of Use</a>
+            <!-- <a href="../../views/pages/termsofuse.php" class="border-right">Terms of Use</a> -->
             <p>Version 1.0</p>
         </div>
     </footer>
