@@ -365,7 +365,7 @@ date_default_timezone_set('Asia/Manila');
                         <td class='datecreated'>" . $row["date_created"] . "</td>
                         <td class='action'>
                             <abbr title='Delete'><i class='tools fa-solid fa-trash-can'></i></abbr>
-                            <a href='../../views/pages/edituser.php?user_id=" . $row["user_id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a>
+                            <abbr title='Edit'><a href='../../views/pages/edituser.php?user_id=" . $row["user_id"] . "'><i class='tools fa-solid fa-pen-to-square'></i></a></abbr>
                         </td>
                     </tr>";
                     }
