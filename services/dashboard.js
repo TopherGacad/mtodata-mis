@@ -1060,7 +1060,7 @@ function generatePDF3(htmlContent) {
         }
 
         // Save or display the generated PDF here
-        pdf.save('contribution-report.pdf');
+        pdf.save('Expenses report.pdf');
     });
 }
 
