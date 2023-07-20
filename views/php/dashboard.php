@@ -935,7 +935,6 @@ date_default_timezone_set('Asia/Manila');
                             <option value="Vice President">Vice President</option>
                             <option value="Secretary">Secretary</option>
                             <option value="Treasurer">Treasurer</option>
-                            <option value="Auditor">Auditor</option>
                         </select>
                     </div>
 
