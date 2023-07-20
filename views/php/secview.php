@@ -185,7 +185,7 @@ date_default_timezone_set('Asia/Manila');
                                 <p><span>&#8369; </span> " . ($TotalNet != 0 ? $TotalNet : "0") . "</p>
                             </div>
                             <div class='link-container'>
-                            <abbr title='Contribution Report'><button class='save' id='retrieve1' onclick=\"save_generate2()\">Download Report</button></abbr>
+                            <abbr title='Expenses Report'><button class='save' id='retrieve1' onclick=\"save_generate2()\">Download Report</button></abbr>
                             </div>
                         </div>";
             }
@@ -205,7 +205,7 @@ date_default_timezone_set('Asia/Manila');
                         <p>" . ($com_count != 0 ? $com_count : "0") . "</p>
                     </div>
                     <div class='link-container com_count'>
-                    <abbr title='Complaint Report'><button class='save' id='retrieve-donation' onclick=\"save_generate5()\">Download Report</button></abbr>
+                   
                     </div>
                 </div>";
             }
@@ -421,7 +421,7 @@ date_default_timezone_set('Asia/Manila');
                             class="fa-solid fa-download"></i></button></abbr>
                 <div class="search-container">
                     <input type="text" class="mem-search" id="mem-search" placeholder="Search">
-                    <abbr title="Unit info"><a href="../../views/pages/unitinfo.php"><button class="mem-searchBtn"
+                    <abbr title="Unit info"><a href="../../views/pages/unitinfo_sec.php"><button class="mem-searchBtn"
                                 id="add-unit"><i class="fa-solid fa-id-card-clip"></i></button></a></abbr>
                 </div>
                 <button class="addmemBtn" id="addmem-btn"><i class="fa-solid fa-plus"></i> Add Member</button>
@@ -481,7 +481,7 @@ date_default_timezone_set('Asia/Manila');
             </td>
             <td class='action'>
                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastMember(" . $row["id"] . ")'></i></abbr>
-                <a href='../../views/pages/viewmem.php?id=" . $row['id'] . "'><i class='fa-sharp fa-solid fa-eye'></i></a>
+                <a href='../../views/pages/viewmem_sec.php?id=" . $row['id'] . "'><i class='fa-sharp fa-solid fa-eye'></i></a>
                 <i class='tools fa-solid fa-print save' data-container='memcert' onclick=\"generatePDF('" . $row["id"] . "', 'memcertification.php')\"></i>
             </td>
         </tr>";
@@ -669,7 +669,7 @@ date_default_timezone_set('Asia/Manila');
                                     $donationRow = mysqli_fetch_assoc($ViewSelectResult);
                                     $donorId = $donationRow['member_id'];
 
-                                    echo "<a href='../pages/viewmem.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                    echo "<a href='../pages/viewmem_sec.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
                                 }
                             } else if ($row['account_type'] === 'Programs') {
                                 $ViewSelectSql = "SELECT program_ID FROM transaction_expenses WHERE transaction_code = '" . $row['transaction_code'] . "'";
@@ -695,7 +695,7 @@ date_default_timezone_set('Asia/Manila');
                                 if ($row = mysqli_fetch_assoc($result)) {
                                     $unitId = $row['id'];
 
-                                    echo "<a href='../pages/viewunit.php?id=$unitId'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                    echo "<a href='../pages/viewunit_sec.php?id=$unitId'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
                                 }
 
                             }

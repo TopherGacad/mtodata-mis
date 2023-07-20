@@ -450,8 +450,17 @@ header h3 {
     flex-direction: row;
     width: 90%;
 }
-
-.fields input[type="button"] {
+.add-donor{
+    padding: 12px;
+    width: 110%;
+    border: none;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--base-color);
+    background-color: var(--dark-blue);
+}
+.add-complainant{
     padding: 12px;
     width: 150px;
     border: none;
@@ -461,7 +470,6 @@ header h3 {
     color: var(--base-color);
     background-color: var(--dark-blue);
 }
-
 .is-bud {
     display: flex;
     align-items: center;
@@ -1094,7 +1102,6 @@ textarea {
 .toast-right p {
     padding-left: 25px;
 }
-
 
 /* FOR RESPONSIVENESS */
 @media screen and (min-width: 1600px) {

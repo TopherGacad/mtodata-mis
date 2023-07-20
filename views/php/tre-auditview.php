@@ -185,7 +185,7 @@ date_default_timezone_set('Asia/Manila');
                                 <p><span>&#8369; </span> " . ($TotalNet != 0 ? $TotalNet : "0") . "</p>
                             </div>
                             <div class='link-container'>
-                            <abbr title='Contribution Report'><button class='save' id='retrieve1' onclick=\"save_generate2()\">Download Report</button></abbr>
+                            <abbr title='Expenses Report'><button class='save' id='retrieve1' onclick=\"save_generate2()\">Download Report</button></abbr>
                             </div>
                         </div>";
             }
@@ -205,7 +205,7 @@ date_default_timezone_set('Asia/Manila');
                         <p>" . ($com_count != 0 ? $com_count : "0") . "</p>
                     </div>
                     <div class='link-container com_count'>
-                    <abbr title='Complaint Report'><button class='save' id='retrieve-donation' onclick=\"save_generate5()\">Download Report</button></abbr>
+                   
                     </div>
                 </div>";
             }
@@ -481,7 +481,7 @@ date_default_timezone_set('Asia/Manila');
             </td>
             <td class='action'>
                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='showToastMember(" . $row["id"] . ")'></i></abbr>
-                <a href='../../views/pages/viewmem.php?id=" . $row['id'] . "'><i class='fa-sharp fa-solid fa-eye'></i></a>
+                <a href='../../views/pages/viewmem_tres.php?id=" . $row['id'] . "'><i class='fa-sharp fa-solid fa-eye'></i></a>
                 <i class='tools fa-solid fa-print save' data-container='memcert' onclick=\"generatePDF('" . $row["id"] . "', 'memcertification.php')\"></i>
             </td>
         </tr>";
@@ -534,7 +534,7 @@ date_default_timezone_set('Asia/Manila');
                         class="fa-solid fa-download"></i></button>
                 <div class="search-container">
                     <input type="text" class="user-search" id="fin-search" placeholder="Search">
-                    <a href="../../views/pages/viewdonors.php"><button class="user-searchBtn" id="add-donor"><i
+                    <a href="../../views/pages/viewdonors_tres.php"><button class="user-searchBtn" id="add-donor"><i
                                 class="fa-solid fa-user-plus"></i></button></a>
                 </div>
                 <button class="addFinanceBtn" id="addFinance-btn"><i class="fa-solid fa-plus"></i> Add Record</button>
@@ -658,7 +658,7 @@ date_default_timezone_set('Asia/Manila');
                                     $donationRow = mysqli_fetch_assoc($ViewSelectResult);
                                     $donorId = $donationRow['donor_id'];
 
-                                    echo "<a href='../pages/donorinfo.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                    echo "<a href='../pages/donorinfo_tres.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
                                 }
                             } else if ($row['account_type'] === 'New Member' || $row['account_type'] === 'Renewal') {
                                 $ViewSelectSql = "SELECT member_id FROM transaction_payment WHERE transaction_code = '" . $row['transaction_code'] . "'";
@@ -669,7 +669,7 @@ date_default_timezone_set('Asia/Manila');
                                     $donationRow = mysqli_fetch_assoc($ViewSelectResult);
                                     $donorId = $donationRow['member_id'];
 
-                                    echo "<a href='../pages/viewmem.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                    echo "<a href='../pages/viewmem_tres.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
                                 }
                             } else if ($row['account_type'] === 'Programs') {
                                 $ViewSelectSql = "SELECT program_ID FROM transaction_expenses WHERE transaction_code = '" . $row['transaction_code'] . "'";
@@ -680,7 +680,7 @@ date_default_timezone_set('Asia/Manila');
                                     $donationRow = mysqli_fetch_assoc($ViewSelectResult);
                                     $donorId = $donationRow['program_ID'];
 
-                                    echo "<a href='../pages/viewevents.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                    echo "<a href='../pages/viewevents_tres.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
                                 }
                             } else if ($row['account_type'] === 'Contribution') {
                                 $transactionCode = $row['transaction_code'];
@@ -861,7 +861,7 @@ date_default_timezone_set('Asia/Manila');
                     <td class='location'>" . $row["ep_location"] . "</td>
                     <td class='action'>
                     <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteEvent(" . $row["id"] . ")'></i></abbr>
-                        <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                        <a href='../../views/pages/viewevents_tres.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
                         <i class='tools fa-solid fa-print save' data-container='ep' onclick=\"save_generate4('" . $row["id"] . "', 'ep.php')\"></i>
                     </td>
                 </tr> ";
@@ -898,6 +898,8 @@ date_default_timezone_set('Asia/Manila');
                                     xhr.send("id=" + id);
                                 }
                             }
+
+                            document.getElementbyId()
 
                     </script>
                 </tbody>
@@ -1266,7 +1268,7 @@ date_default_timezone_set('Asia/Manila');
                         </div>
 
                         <div class='fields'>
-                            <a href='../../views/pages/adddonor.php'><input type='button' id='donorbtn'
+                            <a href='../../views/pages/adddonor_tres.php'><input type='button' class="add-donor" id='donorbtn'
                                     value='Add donor'></a>
                         </div>
                     </div>
@@ -1363,7 +1365,7 @@ date_default_timezone_set('Asia/Manila');
                         <div class="comp-contain">
                             <label for="date-incident">Add new complainant:<span></span></label>
                             <a href="../../views/pages/insertComplainant.php"><input type='button'
-                                    value='New Complainant'></a>
+                                    class="add-complainant" value='New Complainant'></a>
                         </div>
                     </div>
 

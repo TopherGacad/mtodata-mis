@@ -1267,7 +1267,7 @@ date_default_timezone_set('Asia/Manila');
 
                         <div class='fields'>
                             <a href='../../views/pages/adddonor.php'><input type='button' id='donorbtn'
-                                    value='Add donor'></a>
+                                    class="add-donor" value='Add donor'></a>
                         </div>
                     </div>
                 </div>
@@ -1363,7 +1363,7 @@ date_default_timezone_set('Asia/Manila');
                         <div class="comp-contain">
                             <label for="date-incident">Add new complainant:<span></span></label>
                             <a href="../../views/pages/insertComplainant.php"><input type='button'
-                                    value='New Complainant'></a>
+                                    class="add-complainant" value='New Complainant'></a>
                         </div>
                     </div>
 

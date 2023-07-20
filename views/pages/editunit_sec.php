@@ -63,12 +63,12 @@ if (isset($_GET['id'])) {
             </div>
             <div class="content-container">
 
-                <form action="updateunit.php?id=<?php echo $unitID ?>" method="POST">
+                <form action="updateunit_sec.php?id=<?php echo $unitID ?>" method="POST">
                     <div class="ot-header">
-                        <h3><a href="../../views/pages/unitinfo.php"><i class="fa-solid fa-arrow-left"></i></a>Edit Unit
+                        <h3><a href="../../views/pages/unitinfo_sec.php"><i class="fa-solid fa-arrow-left"></i></a>Edit Unit
                             Information</h3>
                         <div class="btn-container">
-                            <a href="../../views/pages/unitinfo.php"><input type="button" value="Discard"
+                            <a href="../../views/pages/unitinfo_sec.php"><input type="button" value="Discard"
                                     class="cancelBtn modal-btn" id="cancel-btn"></a>
                             <button class="update-btn modal-btn" id="user-update" type="submit"
                                 name="user-update">Update</button>

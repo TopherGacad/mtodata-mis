@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (mysqli_query($conn, $sql)) {
         echo "Complainant details updated successfully";
-        header("Location: ../php/dashboard.php");
+        header("Location: ../php/viceview.php");
         exit();
     } else {
         echo "Error updating complainant details: " . mysqli_error($conn);
@@ -95,9 +95,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="content-container">
         <form method="post" id="form-complaint">
             <div class="ot-header">
-                <h3><a href="../../views/php/dashboard.php"><i class="fa-solid fa-arrow-left"></i></a>Edit Complainant Details</h3>
+                <h3><a href="../../views/php/viceview.php"><i class="fa-solid fa-arrow-left"></i></a>Edit Complainant Details</h3>
                 <div class="btn-container">
-                    <a href="../../views/php/dashboard.php"><input type="button" value="Discard" class="cancelBtn modal-btn" id="cancel-btn"></a>
+                    <a href="../../views/php/viceview.php"><input type="button" value="Discard" class="cancelBtn modal-btn" id="cancel-btn"></a>
                     <button class="update-btn modal-btn" id="complaint-update" type="submit" name="complaint-update" disabled>Update</button>
                 </div>
             </div>

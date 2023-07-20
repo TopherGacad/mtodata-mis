@@ -185,7 +185,7 @@ date_default_timezone_set('Asia/Manila');
                                 <p><span>&#8369; </span> " . ($TotalNet != 0 ? $TotalNet : "0") . "</p>
                             </div>
                             <div class='link-container'>
-                            <abbr title='Contribution Report'><button class='save' id='retrieve1' onclick=\"save_generate2()\">Download Report</button></abbr>
+                            <abbr title='Expenses Report'><button class='save' id='retrieve1' onclick=\"save_generate2()\">Download Report</button></abbr>
                             </div>
                         </div>";
             }
@@ -205,7 +205,7 @@ date_default_timezone_set('Asia/Manila');
                         <p>" . ($com_count != 0 ? $com_count : "0") . "</p>
                     </div>
                     <div class='link-container com_count'>
-                    <abbr title='Complaint Report'><button class='save' id='retrieve-donation' onclick=\"save_generate5()\">Download Report</button></abbr>
+                   
                     </div>
                 </div>";
             }
@@ -680,7 +680,7 @@ date_default_timezone_set('Asia/Manila');
                                     $donationRow = mysqli_fetch_assoc($ViewSelectResult);
                                     $donorId = $donationRow['program_ID'];
 
-                                    echo "<a href='../pages/viewevents.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
+                                    echo "<a href='../pages/viewevents_vice.php?id=" . $donorId . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>";
                                 }
                             } else if ($row['account_type'] === 'Contribution') {
                                 $transactionCode = $row['transaction_code'];
@@ -721,7 +721,7 @@ date_default_timezone_set('Asia/Manila');
             <div class="head-right">
                 <div class="search-container">
                     <input type="text" class="user-search" id="comp-search" placeholder="Search">
-                    <a href="../../views/pages/viewComplainants.php"><button class="user-searchBtn"
+                    <a href="../../views/pages/viewComplainants_vice.php"><button class="user-searchBtn"
                             id="add-complainants"><i class="fa-solid fa-user-plus"></i></i></button></a>
                 </div>
                 <button class="addComplainBtn" id="addComplain-btn"><i class="fa-solid fa-plus"></i> New
@@ -771,7 +771,7 @@ date_default_timezone_set('Asia/Manila');
 
                             <td class='action'>
                                 <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteComplaint(" . $row["id"] . ")'></i></abbr>
-                                <a href='../../views/pages/viewComplaint.php?id=" . $row["id"] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                                <a href='../../views/pages/viewComplaint_vice.php?id=" . $row["id"] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
                                 <i class='tools fa-solid fa-print save' data-container='complaints' onclick=\"generatePDF('" . $row["id"] . "', 'comp-report.php')\"></i>
                             </td>
                         </tr>";
@@ -861,7 +861,7 @@ date_default_timezone_set('Asia/Manila');
                     <td class='location'>" . $row["ep_location"] . "</td>
                     <td class='action'>
                     <abbr title='Delete'><i class='tools fa-solid fa-trash-can' onclick='deleteEvent(" . $row["id"] . ")'></i></abbr>
-                        <a href='../../views/pages/viewevents.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
+                        <a href='../../views/pages/viewevents_vice.php?id=" . $row['id'] . "'><i class='tools fa-sharp fa-solid fa-eye'></i></a>
                         <i class='tools fa-solid fa-print save' data-container='ep' onclick=\"save_generate4('" . $row["id"] . "', 'ep.php')\"></i>
                     </td>
                 </tr> ";
