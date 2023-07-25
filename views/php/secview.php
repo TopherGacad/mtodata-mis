@@ -1267,7 +1267,7 @@ date_default_timezone_set('Asia/Manila');
 
                         <div class='fields'>
                             <a href='../../views/pages/adddonor.php'><input type='button' id='donorbtn'
-                                    value='Add donor'></a>
+                                    class="add-donor" value='Add donor'></a>
                         </div>
                     </div>
                 </div>
